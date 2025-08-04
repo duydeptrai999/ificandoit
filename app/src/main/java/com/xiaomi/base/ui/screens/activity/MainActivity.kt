@@ -4,6 +4,12 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.xiaomi.base.preview.registerAllPreviews
 import com.xiaomi.base.ui.screens.camera.CameraScreen
@@ -25,7 +31,10 @@ class MainActivity : AppCompatActivity() {
         }
         setContent {
             BaseAppTheme {
-                CameraScreen()
+                // Direct camera screen launch
+                CameraScreen(
+                    onNavigateBack = { finish() }
+                )
             }
         }
     }

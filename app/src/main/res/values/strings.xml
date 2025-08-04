@@ -67,4 +67,28 @@
     
     <!-- Keep legacy strings for backward compatibility -->
     <string name="popular">Popular</string> <!-- Kept for backward compatibility -->
+    
+    <!-- Camera Screen Strings -->
+    <string name="back">Back</string>
+    <string name="toggle_filters">Toggle Filters</string>
+    <string name="filters">Filters</string>
+    <string name="gallery">Gallery</string>
+    <string name="capture_photo">Capture Photo</string>
+    <string name="switch_camera">Switch Camera</string>
+    <string name="camera_error">Camera Error</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="camera_permission_required">Camera Permission Required</string>
+    <string name="camera_permission_rationale">This app needs camera permission to take photos and apply filters in real-time.</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="camera_permission_denied">Camera Permission Denied</string>
+    <string name="camera_permission_denied_message">Camera permission is required to use this feature. Please grant permission in app settings.</string>
+    <string name="try_again">Try Again</string>
+    
+    <!-- Filter Names -->
+    <string name="filter_original">Original</string>
+    <string name="filter_sepia">Sepia</string>
+    <string name="filter_black_white">B&amp;W</string>
+    <string name="filter_vintage">Vintage</string>
+    <string name="filter_cool">Cool</string>
+    <string name="filter_warm">Warm</string>
 </resources>

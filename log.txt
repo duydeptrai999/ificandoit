@@ -1,2 +1,10 @@
-e: file:///Users/trungkientn/Dev2/HuyDev/Android-Compose-Base/app/src/main/java/com/xiaomi/base/ui/kit/components/specialized/XiaomiTooltips.kt:788:82 Unresolved reference 'medium'.
-e: file:///Users/trungkientn/Dev2/HuyDev/Android-Compose-Base/app/src/main/java/com/xiaomi/base/ui/kit/components/specialized/XiaomiTooltips.kt:797:88 Unresolved reference 'small'.
+2025-08-04 16:51:37.442  9028-9077  gralloc4                com.xiaomi.base                      I  @set_metadata: update dataspace from GM (0x00000000 -> 0x08010000)
+2025-08-04 16:51:37.448  9028-9077  GLRenderer              com.xiaomi.base                      E  Failed to compile shader: 0:2: P0005: #version must be on the first line in a program and only whitespace are allowed in the declaration
+2025-08-04 16:51:37.448  9028-9077  GLRenderer              com.xiaomi.base                      E  Failed to create filter shader program
+2025-08-04 16:51:37.448  9028-9077  CameraTextureView       com.xiaomi.base                      D  Filter applied: COOL
+2025-08-04 16:51:37.455  9028-9068  gralloc4                com.xiaomi.base                      I  @set_metadata: update dataspace from GM (0x00000000 -> 0x08010000)
+2025-08-04 16:51:37.459  9028-9077  com.xiaomi.base         com.xiaomi.base                      I  createIfNeeded: Recreate new EGLImage since dataspace changed
+2025-08-04 16:51:37.461  9028-9077  mali_config             com.xiaomi.base                      I  @get_buffer_dataspace_setting: update dataspace from GE (0x00000000 -> 0x08020000)
+2025-08-04 16:51:37.462  9028-9077  com.xiaomi.base         com.xiaomi.base                      E  == MALI DEBUG ===eglp_winsys_populate_image_templates ==12288
+2025-08-04 16:51:37.465  9028-9077  com.xiaomi.base         com.xiaomi.base                      I  createIfNeeded: Recreate new EGLImage since dataspace changed
+2025-08-04 16:51:37.468  9028-9077  com.xiaomi.base         com.xiaomi.base                      E  == MALI DEBUG ===eglp_winsys_populate_image_templates ==12288
