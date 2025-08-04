@@ -9,8 +9,6 @@ import com.xiaomi.base.data.model.mapper.ItemMapper
 import com.xiaomi.base.data.repository.CategoryRepositoryImpl
 import com.xiaomi.base.data.repository.ItemRepositoryImpl
 import com.xiaomi.base.data.repository.UserDataRepositoryImpl
-import com.xiaomi.base.data.repository.local.LocalCategoryRepository as LocalCategoryRepositoryImpl
-import com.xiaomi.base.data.repository.local.LocalItemRepository as LocalItemRepositoryImpl
 import com.xiaomi.base.domain.repository.CategoryRepository
 import com.xiaomi.base.domain.repository.ItemRepository
 import com.xiaomi.base.domain.repository.UserDataRepository
@@ -21,6 +19,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import com.xiaomi.base.data.repository.local.LocalCategoryRepository as LocalCategoryRepositoryImpl
+import com.xiaomi.base.data.repository.local.LocalItemRepository as LocalItemRepositoryImpl
 
 /**
  * Dagger Hilt module that provides repository-related dependencies.
@@ -28,7 +28,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
-    
     /**
      * Provides an ItemMapper instance.
      *
@@ -39,7 +38,7 @@ object RepositoryModule {
     fun provideItemMapper(): ItemMapper {
         return ItemMapper()
     }
-    
+
     /**
      * Provides a CategoryMapper instance.
      *
@@ -50,9 +49,7 @@ object RepositoryModule {
     fun provideCategoryMapper(): CategoryMapper {
         return CategoryMapper()
     }
-    
 
-    
     /**
      * Provides an ItemRepository implementation.
      *
@@ -61,12 +58,10 @@ object RepositoryModule {
      */
     @Provides
     @Singleton
-    fun provideItemRepository(
-        apiService: ApiService
-    ): ItemRepository {
+    fun provideItemRepository(apiService: ApiService): ItemRepository {
         return ItemRepositoryImpl(apiService)
     }
-    
+
     /**
      * Provides a CategoryRepository implementation.
      *
@@ -75,14 +70,10 @@ object RepositoryModule {
      */
     @Provides
     @Singleton
-    fun provideCategoryRepository(
-        apiService: ApiService
-    ): CategoryRepository {
+    fun provideCategoryRepository(apiService: ApiService): CategoryRepository {
         return CategoryRepositoryImpl(apiService)
     }
-    
 
-    
     /**
      * Provides a LocalItemRepository instance.
      *
@@ -94,7 +85,7 @@ object RepositoryModule {
     fun provideLocalItemRepository(favoriteItemDao: FavoriteItemDao): LocalItemRepository {
         return LocalItemRepositoryImpl(favoriteItemDao)
     }
-    
+
     /**
      * Provides a LocalCategoryRepository instance.
      *
@@ -106,7 +97,7 @@ object RepositoryModule {
     fun provideLocalCategoryRepository(favoriteCategoryDao: FavoriteCategoryDao): LocalCategoryRepository {
         return LocalCategoryRepositoryImpl(favoriteCategoryDao)
     }
-    
+
     /**
      * Provides a UserDataRepository implementation.
      *
@@ -118,5 +109,4 @@ object RepositoryModule {
     fun provideUserDataRepository(userDataDao: UserDataDao): UserDataRepository {
         return UserDataRepositoryImpl(userDataDao)
     }
-
 }

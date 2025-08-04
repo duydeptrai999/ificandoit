@@ -18,10 +18,10 @@ class CategoryMapper {
             id = dto.id,
             name = dto.name,
             description = dto.description,
-            imageUrl = dto.imagePath
+            imageUrl = dto.imagePath,
         )
     }
-    
+
     /**
      * Convert from domain model to data model.
      *
@@ -33,10 +33,10 @@ class CategoryMapper {
             id = domain.id,
             name = domain.name,
             description = domain.description,
-            imagePath = domain.imageUrl
+            imagePath = domain.imageUrl,
         )
     }
-    
+
     /**
      * Convert a list of data models to domain models.
      *

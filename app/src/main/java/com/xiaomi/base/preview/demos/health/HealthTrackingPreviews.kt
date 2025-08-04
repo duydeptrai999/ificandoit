@@ -45,7 +45,7 @@ fun registerHealthTrackingPreviews() {
             content = { HealthDashboardPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "step_counter",
@@ -59,7 +59,7 @@ fun registerHealthTrackingPreviews() {
             content = { StepCounterPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "heart_rate_monitor",
@@ -73,7 +73,7 @@ fun registerHealthTrackingPreviews() {
             content = { HeartRateMonitorPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "water_intake_tracker",
@@ -87,7 +87,7 @@ fun registerHealthTrackingPreviews() {
             content = { WaterIntakeTrackerPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "sleep_analysis",
@@ -141,7 +141,7 @@ fun HealthDashboardPreview() {
                         }
                     }
                 }
-                
+
                 item {
                     // Quick Stats Row
                     Row(
@@ -157,7 +157,7 @@ fun HealthDashboardPreview() {
                             color = Color(0xFF4CAF50),
                             modifier = Modifier.weight(1f)
                         )
-                        
+
                         HealthStatCard(
                             title = "Water",
                             value = "6",
@@ -169,7 +169,7 @@ fun HealthDashboardPreview() {
                         )
                     }
                 }
-                
+
                 item {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -184,7 +184,7 @@ fun HealthDashboardPreview() {
                             color = Color(0xFF9C27B0),
                             modifier = Modifier.weight(1f)
                         )
-                        
+
                         HealthStatCard(
                             title = "Heart Rate",
                             value = "72",
@@ -196,7 +196,7 @@ fun HealthDashboardPreview() {
                         )
                     }
                 }
-                
+
                 item {
                     // Recent Activities
                     Card(
@@ -210,9 +210,9 @@ fun HealthDashboardPreview() {
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold
                             )
-                            
+
                             Spacer(modifier = Modifier.height(12.dp))
-                            
+
                             ActivityItem(
                                 title = "Morning Run",
                                 subtitle = "3.2 km • 25 min",
@@ -220,7 +220,7 @@ fun HealthDashboardPreview() {
                                 icon = Icons.Default.DirectionsRun,
                                 color = Color(0xFF4CAF50)
                             )
-                            
+
                             ActivityItem(
                                 title = "Meditation",
                                 subtitle = "10 min session",
@@ -228,7 +228,7 @@ fun HealthDashboardPreview() {
                                 icon = Icons.Default.SelfImprovement,
                                 color = Color(0xFF9C27B0)
                             )
-                            
+
                             ActivityItem(
                                 title = "Water Reminder",
                                 subtitle = "Drink more water",
@@ -255,7 +255,7 @@ fun StepCounterPreview() {
             var steps by remember { mutableStateOf(8547) }
             val goal = 10000
             val progress = (steps.toFloat() / goal).coerceAtMost(1f)
-            
+
             InteractiveDemo(
                 title = "Step Counter Widget",
                 description = "Interactive step counter with progress ring",
@@ -296,7 +296,7 @@ fun StepCounterPreview() {
                             strokeWidth = 12.dp,
                             color = if (progress >= 1f) Color(0xFF4CAF50) else MaterialTheme.colorScheme.primary
                         )
-                        
+
                         // Content
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally
@@ -307,21 +307,21 @@ fun StepCounterPreview() {
                                 modifier = Modifier.size(32.dp),
                                 tint = MaterialTheme.colorScheme.primary
                             )
-                            
+
                             Spacer(modifier = Modifier.height(8.dp))
-                            
+
                             Text(
                                 text = steps.toString(),
                                 style = MaterialTheme.typography.headlineMedium,
                                 fontWeight = FontWeight.Bold
                             )
-                            
+
                             Text(
                                 text = "of $goal steps",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
-                            
+
                             if (progress >= 1f) {
                                 Text(
                                     text = "Goal Achieved! 🎉",
@@ -348,7 +348,7 @@ fun HeartRateMonitorPreview() {
         ) {
             var heartRate by remember { mutableStateOf(72) }
             var isMonitoring by remember { mutableStateOf(false) }
-            
+
             InteractiveDemo(
                 title = "Heart Rate Monitor",
                 description = "Real-time heart rate monitoring with pulse animation",
@@ -390,7 +390,7 @@ fun HeartRateMonitorPreview() {
                                     repeatMode = androidx.compose.animation.core.RepeatMode.Reverse
                                 )
                             )
-                            
+
                             Icon(
                                 imageVector = Icons.Default.Favorite,
                                 contentDescription = "Heart",
@@ -402,7 +402,7 @@ fun HeartRateMonitorPreview() {
                                     },
                                 tint = Color(0xFFF44336)
                             )
-                            
+
                             // Heart Rate Display
                             Row(
                                 verticalAlignment = Alignment.Bottom,
@@ -420,14 +420,14 @@ fun HeartRateMonitorPreview() {
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
-                            
+
                             // Status
                             Text(
                                 text = if (isMonitoring) "Monitoring..." else "Tap Start to begin",
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
-                            
+
                             // Heart Rate Zone
                             val zone = when (heartRate) {
                                 in 0..60 -> "Resting" to Color(0xFF4CAF50)
@@ -435,7 +435,7 @@ fun HeartRateMonitorPreview() {
                                 in 101..150 -> "Elevated" to Color(0xFFFF9800)
                                 else -> "High" to Color(0xFFF44336)
                             }
-                            
+
                             Surface(
                                 shape = RoundedCornerShape(16.dp),
                                 color = zone.second.copy(alpha = 0.1f)
@@ -466,7 +466,7 @@ fun WaterIntakeTrackerPreview() {
             var glassesConsumed by remember { mutableStateOf(6) }
             val dailyGoal = 8
             val progress = (glassesConsumed.toFloat() / dailyGoal).coerceAtMost(1f)
-            
+
             InteractiveDemo(
                 title = "Water Intake Tracker",
                 description = "Interactive water consumption tracking",
@@ -524,7 +524,7 @@ fun WaterIntakeTrackerPreview() {
                                         shape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp, bottomStart = 20.dp, bottomEnd = 20.dp)
                                     )
                             )
-                            
+
                             // Water drop icon
                             Icon(
                                 imageVector = Icons.Default.WaterDrop,
@@ -533,24 +533,24 @@ fun WaterIntakeTrackerPreview() {
                                 tint = Color.White
                             )
                         }
-                        
+
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         // Progress text
                         Text(
                             text = "$glassesConsumed / $dailyGoal glasses",
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold
                         )
-                        
+
                         Text(
                             text = "${(progress * 100).toInt()}% of daily goal",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        
+
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         // Progress bar
                         LinearProgressIndicator(
                             progress = progress,
@@ -560,9 +560,9 @@ fun WaterIntakeTrackerPreview() {
                                 .clip(RoundedCornerShape(4.dp)),
                             color = Color(0xFF2196F3)
                         )
-                        
+
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         // Encouragement message
                         if (progress >= 1f) {
                             Text(
@@ -618,7 +618,7 @@ fun SleepAnalysisPreview() {
                                 color = Color(0xFF9C27B0)
                             )
                         }
-                        
+
                         Surface(
                             shape = CircleShape,
                             color = Color(0xFF9C27B0).copy(alpha = 0.1f)
@@ -633,41 +633,41 @@ fun SleepAnalysisPreview() {
                             )
                         }
                     }
-                    
+
                     Spacer(modifier = Modifier.height(20.dp))
-                    
+
                     // Sleep phases
                     Text(
                         text = "Sleep Phases",
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Spacer(modifier = Modifier.height(12.dp))
-                    
+
                     SleepPhaseItem(
                         phase = "Deep Sleep",
                         duration = "2h 15m",
                         percentage = 31,
                         color = Color(0xFF1976D2)
                     )
-                    
+
                     SleepPhaseItem(
                         phase = "Light Sleep",
                         duration = "4h 32m",
                         percentage = 62,
                         color = Color(0xFF42A5F5)
                     )
-                    
+
                     SleepPhaseItem(
                         phase = "REM Sleep",
                         duration = "36m",
                         percentage = 7,
                         color = Color(0xFF9C27B0)
                     )
-                    
+
                     Spacer(modifier = Modifier.height(20.dp))
-                    
+
                     // Sleep quality
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -678,13 +678,13 @@ fun SleepAnalysisPreview() {
                             value = "85%",
                             subtitle = "Good"
                         )
-                        
+
                         SleepMetric(
                             title = "Efficiency",
                             value = "92%",
                             subtitle = "Excellent"
                         )
-                        
+
                         SleepMetric(
                             title = "Restfulness",
                             value = "78%",
@@ -725,7 +725,7 @@ fun HealthStatCard(
                     modifier = Modifier.size(24.dp),
                     tint = color
                 )
-                
+
                 Text(
                     text = "${(progress * 100).toInt()}%",
                     style = MaterialTheme.typography.labelMedium,
@@ -733,23 +733,23 @@ fun HealthStatCard(
                     fontWeight = FontWeight.SemiBold
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = value,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Text(
                 text = goal,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             LinearProgressIndicator(
                 progress = progress,
                 modifier = Modifier
@@ -792,9 +792,9 @@ fun ActivityItem(
                 )
             }
         }
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -809,7 +809,7 @@ fun ActivityItem(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         Text(
             text = time,
             style = MaterialTheme.typography.labelMedium,
@@ -836,9 +836,9 @@ fun SleepPhaseItem(
                 .size(12.dp)
                 .background(color, CircleShape)
         )
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -853,7 +853,7 @@ fun SleepPhaseItem(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         Text(
             text = "$percentage%",
             style = MaterialTheme.typography.labelMedium,

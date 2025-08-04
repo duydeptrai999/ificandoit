@@ -37,9 +37,9 @@ import kotlin.math.roundToInt
 
 /**
  * Xiaomi Slider
- * 
+ *
  * A Material Design 3 slider component with Xiaomi design tokens.
- * 
+ *
  * @param value Current value of the slider
  * @param onValueChange Callback when the slider value changes
  * @param modifier Modifier to be applied to the slider
@@ -77,9 +77,9 @@ fun XiaomiSlider(
 
 /**
  * Xiaomi Range Slider
- * 
+ *
  * A slider that allows selecting a range of values.
- * 
+ *
  * @param value Current range value of the slider
  * @param onValueChange Callback when the slider range changes
  * @param modifier Modifier to be applied to the slider
@@ -114,9 +114,9 @@ fun XiaomiRangeSlider(
 
 /**
  * Xiaomi Labeled Slider
- * 
+ *
  * A slider with an associated label and value display.
- * 
+ *
  * @param value Current value of the slider
  * @param onValueChange Callback when the slider value changes
  * @param label The label text for the slider
@@ -159,7 +159,7 @@ fun XiaomiLabeledSlider(
                     MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
                 }
             )
-            
+
             if (showValue) {
                 Text(
                     text = valueFormatter(value),
@@ -173,7 +173,7 @@ fun XiaomiLabeledSlider(
                 )
             }
         }
-        
+
         if (description != null) {
             Text(
                 text = description,
@@ -185,7 +185,7 @@ fun XiaomiLabeledSlider(
                 }
             )
         }
-        
+
         XiaomiSlider(
             value = value,
             onValueChange = onValueChange,
@@ -199,9 +199,9 @@ fun XiaomiLabeledSlider(
 
 /**
  * Xiaomi Icon Slider
- * 
+ *
  * A slider with icons on both ends.
- * 
+ *
  * @param value Current value of the slider
  * @param onValueChange Callback when the slider value changes
  * @param modifier Modifier to be applied to the component
@@ -237,7 +237,7 @@ fun XiaomiIconSlider(
                 MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f)
             }
         )
-        
+
         XiaomiSlider(
             value = value,
             onValueChange = onValueChange,
@@ -246,7 +246,7 @@ fun XiaomiIconSlider(
             steps = steps,
             modifier = Modifier.weight(1f)
         )
-        
+
         Icon(
             imageVector = endIcon,
             contentDescription = null,
@@ -262,9 +262,9 @@ fun XiaomiIconSlider(
 
 /**
  * Xiaomi Stepped Slider
- * 
+ *
  * A slider with visible step indicators.
- * 
+ *
  * @param value Current value of the slider
  * @param onValueChange Callback when the slider value changes
  * @param steps Number of steps in the slider
@@ -295,7 +295,7 @@ fun XiaomiSteppedSlider(
             steps = steps - 1,
             modifier = Modifier.fillMaxWidth()
         )
-        
+
         if (stepLabels != null && stepLabels.size == steps + 1) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -319,9 +319,9 @@ fun XiaomiSteppedSlider(
 
 /**
  * Xiaomi Custom Color Slider
- * 
+ *
  * A slider with custom colors.
- * 
+ *
  * @param value Current value of the slider
  * @param onValueChange Callback when the slider value changes
  * @param modifier Modifier to be applied to the slider
@@ -361,9 +361,9 @@ fun XiaomiCustomColorSlider(
 
 /**
  * Xiaomi Vertical Slider
- * 
+ *
  * A vertically oriented slider.
- * 
+ *
  * @param value Current value of the slider
  * @param onValueChange Callback when the slider value changes
  * @param modifier Modifier to be applied to the slider
@@ -391,7 +391,7 @@ fun XiaomiVerticalSlider(
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        
+
         // Placeholder for vertical slider implementation
         XiaomiSlider(
             value = value,
@@ -420,12 +420,12 @@ fun XiaomiSlidersPreview() {
                     "Slider Variants",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var sliderValue1 by remember { mutableFloatStateOf(0.5f) }
                 var sliderValue2 by remember { mutableFloatStateOf(0.3f) }
                 var sliderValue3 by remember { mutableFloatStateOf(0.7f) }
                 var rangeValue by remember { mutableStateOf(0.2f..0.8f) }
-                
+
                 // Basic sliders
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -433,13 +433,13 @@ fun XiaomiSlidersPreview() {
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     XiaomiSlider(
                         value = 0.5f,
                         onValueChange = {},
                         modifier = Modifier.fillMaxWidth()
                     )
-                    
+
                     XiaomiSlider(
                         value = 0.3f,
                         onValueChange = {},
@@ -447,7 +447,7 @@ fun XiaomiSlidersPreview() {
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
-                
+
                 // Labeled slider
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -455,7 +455,7 @@ fun XiaomiSlidersPreview() {
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     XiaomiLabeledSlider(
                         value = sliderValue1,
                         onValueChange = { sliderValue1 = it },
@@ -466,7 +466,7 @@ fun XiaomiSlidersPreview() {
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
-                
+
                 // Icon slider
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -474,14 +474,14 @@ fun XiaomiSlidersPreview() {
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     XiaomiIconSlider(
                         value = sliderValue2,
                         onValueChange = { sliderValue2 = it },
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
-                
+
                 // Stepped slider
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -489,7 +489,7 @@ fun XiaomiSlidersPreview() {
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     XiaomiSteppedSlider(
                         value = sliderValue3 * 4,
                         onValueChange = { sliderValue3 = it / 4 },
@@ -498,7 +498,7 @@ fun XiaomiSlidersPreview() {
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
-                
+
                 // Range slider
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -506,13 +506,13 @@ fun XiaomiSlidersPreview() {
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     XiaomiRangeSlider(
                         value = rangeValue,
                         onValueChange = { rangeValue = it },
                         modifier = Modifier.fillMaxWidth()
                     )
-                    
+
                     Text(
                         "Range: ${"%.1f".format(rangeValue.start)} - ${"%.1f".format(rangeValue.endInclusive)}",
                         style = MaterialTheme.typography.bodySmall,
@@ -539,11 +539,11 @@ fun XiaomiCustomSlidersPreview() {
                     "Custom Color Sliders",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var redValue by remember { mutableFloatStateOf(0.5f) }
                 var greenValue by remember { mutableFloatStateOf(0.3f) }
                 var blueValue by remember { mutableFloatStateOf(0.7f) }
-                
+
                 // Red slider
                 XiaomiLabeledSlider(
                     value = redValue * 255,
@@ -553,7 +553,7 @@ fun XiaomiCustomSlidersPreview() {
                     valueFormatter = { it.roundToInt().toString() },
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 XiaomiCustomColorSlider(
                     value = redValue,
                     onValueChange = { redValue = it },
@@ -561,7 +561,7 @@ fun XiaomiCustomSlidersPreview() {
                     activeTrackColor = Color.Red,
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 // Green slider
                 XiaomiLabeledSlider(
                     value = greenValue * 255,
@@ -571,7 +571,7 @@ fun XiaomiCustomSlidersPreview() {
                     valueFormatter = { it.roundToInt().toString() },
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 XiaomiCustomColorSlider(
                     value = greenValue,
                     onValueChange = { greenValue = it },
@@ -579,7 +579,7 @@ fun XiaomiCustomSlidersPreview() {
                     activeTrackColor = Color.Green,
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 // Blue slider
                 XiaomiLabeledSlider(
                     value = blueValue * 255,
@@ -589,7 +589,7 @@ fun XiaomiCustomSlidersPreview() {
                     valueFormatter = { it.roundToInt().toString() },
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 XiaomiCustomColorSlider(
                     value = blueValue,
                     onValueChange = { blueValue = it },
@@ -597,7 +597,7 @@ fun XiaomiCustomSlidersPreview() {
                     activeTrackColor = Color.Blue,
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 // Color preview
                 Surface(
                     modifier = Modifier
@@ -626,9 +626,9 @@ fun XiaomiSlidersDarkPreview() {
                     "Dark Theme Sliders",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var brightness by remember { mutableFloatStateOf(0.7f) }
-                
+
                 XiaomiLabeledSlider(
                     value = brightness * 100,
                     onValueChange = { brightness = it / 100 },
@@ -638,7 +638,7 @@ fun XiaomiSlidersDarkPreview() {
                     valueFormatter = { "${it.roundToInt()}%" },
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 XiaomiIconSlider(
                     value = brightness,
                     onValueChange = { brightness = it },

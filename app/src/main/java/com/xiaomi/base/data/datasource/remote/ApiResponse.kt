@@ -13,17 +13,15 @@ import com.google.gson.annotations.SerializedName
 data class ApiResponse<T>(
     @SerializedName("status")
     val status: String,
-    
     @SerializedName("data")
     val data: T? = null,
-    
     @SerializedName("message")
-    val message: String? = null
+    val message: String? = null,
 ) {
     companion object {
         const val STATUS_SUCCESS = "success"
         const val STATUS_ERROR = "error"
-        
+
         /**
          * Create a success response.
          *
@@ -33,7 +31,7 @@ data class ApiResponse<T>(
         fun <T> success(data: T): ApiResponse<T> {
             return ApiResponse(STATUS_SUCCESS, data)
         }
-        
+
         /**
          * Create an error response.
          *
@@ -44,7 +42,7 @@ data class ApiResponse<T>(
             return ApiResponse(STATUS_ERROR, message = message)
         }
     }
-    
+
     /**
      * Check if the response was successful.
      *

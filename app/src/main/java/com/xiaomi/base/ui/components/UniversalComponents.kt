@@ -64,9 +64,9 @@ fun MetricCard(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 verticalAlignment = Alignment.Bottom
             ) {
@@ -76,7 +76,7 @@ fun MetricCard(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
                 )
-                
+
                 if (unit != null) {
                     Text(
                         text = " $unit",
@@ -85,7 +85,7 @@ fun MetricCard(
                         modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
                     )
                 }
-                
+
                 trend?.let { trendDirection ->
                     Spacer(modifier = Modifier.width(8.dp))
                     Icon(
@@ -129,9 +129,9 @@ fun ProgressChart(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Simple visualization placeholder
             Box(
                 modifier = Modifier
@@ -224,9 +224,9 @@ private fun CompactCardContent(
                     shape = RoundedCornerShape(8.dp)
                 )
         )
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -237,7 +237,7 @@ private fun CompactCardContent(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            
+
             item.description?.let { desc ->
                 Text(
                     text = desc,
@@ -248,7 +248,7 @@ private fun CompactCardContent(
                 )
             }
         }
-        
+
         IconButton(onClick = { onFavoriteClick(item) }) {
             Icon(
                 imageVector = if (item.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
@@ -272,7 +272,7 @@ private fun StandardCardContent(
                 .height(120.dp)
                 .background(MaterialTheme.colorScheme.surfaceVariant)
         )
-        
+
         Column(
             modifier = Modifier.padding(12.dp)
         ) {
@@ -291,7 +291,7 @@ private fun StandardCardContent(
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
-                    
+
                     item.description?.let { desc ->
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
@@ -303,7 +303,7 @@ private fun StandardCardContent(
                         )
                     }
                 }
-                
+
                 IconButton(onClick = { onFavoriteClick(item) }) {
                     Icon(
                         imageVector = if (item.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
@@ -312,9 +312,9 @@ private fun StandardCardContent(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -326,7 +326,7 @@ private fun StandardCardContent(
                         Text(text = "★ ${item.score}")
                     }
                 }
-                
+
                 // Status chip
                 StatusChip(status = item.status)
             }
@@ -341,7 +341,7 @@ private fun DetailedCardContent(
 ) {
     Column {
         StandardCardContent(item, onFavoriteClick)
-        
+
         // Additional details
         if (item.tags.isNotEmpty()) {
             LazyRow(
@@ -397,9 +397,9 @@ fun MediaViewer(
                         modifier = Modifier.size(48.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     Text(
                         text = "${mediaType.name} Viewer",
                         style = MaterialTheme.typography.bodyMedium,
@@ -407,7 +407,7 @@ fun MediaViewer(
                     )
                 }
             }
-            
+
             // Edit button if available
             onEdit?.let { editAction ->
                 FloatingActionButton(
@@ -441,7 +441,7 @@ fun StatusChip(
         ItemStatus.ARCHIVED -> Color(0xFF795548) to "Archived"
         ItemStatus.DELETED -> Color(0xFFF44336) to "Deleted"
     }
-    
+
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp),
@@ -487,4 +487,4 @@ data class StatItem(
     val value: String,
     val unit: String? = null,
     val trend: TrendDirection? = null
-) 
+)

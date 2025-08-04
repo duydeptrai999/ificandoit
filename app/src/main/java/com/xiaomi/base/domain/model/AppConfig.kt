@@ -9,15 +9,15 @@ data class AppConfig(
     val value: String,
     val category: ConfigCategory,
     val isUserEditable: Boolean = false,
-    val description: String? = null
+    val description: String? = null,
 )
 
 /**
  * Categories for organizing app configuration
  */
 enum class ConfigCategory {
-    UI,                // User interface settings
-    BEHAVIOR,          // App behavior configurations  
-    INTEGRATION,       // Third-party integrations
-    USER_PREFERENCE    // User-specific preferences
-} 
+    UI, // User interface settings
+    BEHAVIOR, // App behavior configurations
+    INTEGRATION, // Third-party integrations
+    USER_PREFERENCE, // User-specific preferences
+}

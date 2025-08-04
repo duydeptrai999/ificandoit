@@ -25,7 +25,7 @@ class ProcessContentUseCase @Inject constructor(
         parameters: Map<String, Any> = emptyMap()
     ): Flow<ProcessingResult> = flow {
         emit(ProcessingResult.Loading)
-        
+
         try {
             itemRepository.getItemDetails(itemId).collect { item ->
                 val processedItem = when (action) {
@@ -38,16 +38,16 @@ class ProcessContentUseCase @Inject constructor(
                     ContentAction.VALIDATE -> validateItem(item, parameters)
                     ContentAction.OPTIMIZE -> optimizeItem(item, parameters)
                 }
-                
+
                 // Note: No saveItem method in repository, processing is for analysis only
                 emit(ProcessingResult.Success(processedItem))
             }
-            
+
         } catch (e: Exception) {
             emit(ProcessingResult.Error(e.message ?: "Processing failed"))
         }
     }
-    
+
     /**
      * Process user data with specified operation
      */
@@ -58,10 +58,10 @@ class ProcessContentUseCase @Inject constructor(
         parameters: Map<String, Any> = emptyMap()
     ): Flow<ProcessingResult> = flow {
         emit(ProcessingResult.Loading)
-        
+
         try {
             val userData = userDataRepository.getUserDataByType(userId, dataType)
-            
+
             // Process data based on operation
             val processedData = when (operation) {
                 DataOperation.AGGREGATE -> aggregateData(userData, parameters)
@@ -73,14 +73,14 @@ class ProcessContentUseCase @Inject constructor(
                 DataOperation.BACKUP -> backupData(userData, parameters)
                 DataOperation.SYNC -> syncData(userData, parameters)
             }
-            
+
             emit(ProcessingResult.Success(processedData))
-            
+
         } catch (e: Exception) {
             emit(ProcessingResult.Error(e.message ?: "Data processing failed"))
         }
     }
-    
+
     /**
      * Batch process multiple items
      */
@@ -90,24 +90,24 @@ class ProcessContentUseCase @Inject constructor(
         parameters: Map<String, Any> = emptyMap()
     ): Flow<BatchProcessingResult> = flow {
         emit(BatchProcessingResult.Started(itemIds.size))
-        
+
         val results = mutableListOf<ProcessingResult>()
-        
+
         itemIds.forEachIndexed { index, itemId ->
             applyAction(itemId, action, parameters).collect { result ->
                 results.add(result)
                 emit(BatchProcessingResult.Progress(index + 1, itemIds.size, result))
             }
         }
-        
+
         val successful = results.count { it is ProcessingResult.Success }
         val failed = results.count { it is ProcessingResult.Error }
-        
+
         emit(BatchProcessingResult.Completed(successful, failed, results))
     }
-    
+
     // ===== Private Processing Methods =====
-    
+
     private suspend fun duplicateItem(
         item: Item,
         parameters: Map<String, Any>
@@ -118,7 +118,7 @@ class ProcessContentUseCase @Inject constructor(
             status = com.xiaomi.base.domain.model.ItemStatus.DRAFT
         )
     }
-    
+
     private suspend fun transformItem(
         item: Item,
         parameters: Map<String, Any>
@@ -128,7 +128,7 @@ class ProcessContentUseCase @Inject constructor(
             metadata = item.metadata + parameters
         )
     }
-    
+
     private suspend fun enhanceItem(
         item: Item,
         parameters: Map<String, Any>
@@ -137,7 +137,7 @@ class ProcessContentUseCase @Inject constructor(
         val enhancedScore = (item.score * 1.1f).coerceAtMost(10f)
         return item.copy(score = enhancedScore)
     }
-    
+
     private suspend fun compressItem(
         item: Item,
         parameters: Map<String, Any>
@@ -147,7 +147,7 @@ class ProcessContentUseCase @Inject constructor(
             metadata = item.metadata + mapOf<String, Any>("compressed" to true)
         )
     }
-    
+
     private suspend fun exportItem(
         item: Item,
         parameters: Map<String, Any>
@@ -157,7 +157,7 @@ class ProcessContentUseCase @Inject constructor(
             metadata = item.metadata + mapOf<String, Any>("exportFormat" to format)
         )
     }
-    
+
     private suspend fun analyzeItem(
         item: Item,
         parameters: Map<String, Any>
@@ -172,7 +172,7 @@ class ProcessContentUseCase @Inject constructor(
             metadata = item.metadata + analysis
         )
     }
-    
+
     private suspend fun validateItem(
         item: Item,
         parameters: Map<String, Any>
@@ -182,7 +182,7 @@ class ProcessContentUseCase @Inject constructor(
             metadata = item.metadata + mapOf<String, Any>("isValid" to isValid)
         )
     }
-    
+
     private suspend fun optimizeItem(
         item: Item,
         parameters: Map<String, Any>
@@ -192,9 +192,9 @@ class ProcessContentUseCase @Inject constructor(
             metadata = item.metadata + mapOf<String, Any>("optimized" to true)
         )
     }
-    
+
     // ===== Data Processing Methods =====
-    
+
     private suspend fun aggregateData(
         userData: Flow<List<UserData>>,
         parameters: Map<String, Any>
@@ -202,7 +202,7 @@ class ProcessContentUseCase @Inject constructor(
         // Aggregate user data - implementation depends on data type
         return "Aggregated data"
     }
-    
+
     private suspend fun filterData(
         userData: Flow<List<UserData>>,
         parameters: Map<String, Any>
@@ -210,7 +210,7 @@ class ProcessContentUseCase @Inject constructor(
         // Filter data based on criteria
         return "Filtered data"
     }
-    
+
     private suspend fun transformData(
         userData: Flow<List<UserData>>,
         parameters: Map<String, Any>
@@ -218,7 +218,7 @@ class ProcessContentUseCase @Inject constructor(
         // Transform data format/structure
         return "Transformed data"
     }
-    
+
     private suspend fun validateData(
         userData: Flow<List<UserData>>,
         parameters: Map<String, Any>
@@ -226,7 +226,7 @@ class ProcessContentUseCase @Inject constructor(
         // Validate data integrity
         return "Validation results"
     }
-    
+
     private suspend fun analyzeData(
         userData: Flow<List<UserData>>,
         parameters: Map<String, Any>
@@ -234,7 +234,7 @@ class ProcessContentUseCase @Inject constructor(
         // Analyze data patterns/insights
         return "Analysis results"
     }
-    
+
     private suspend fun exportData(
         userData: Flow<List<UserData>>,
         parameters: Map<String, Any>
@@ -242,7 +242,7 @@ class ProcessContentUseCase @Inject constructor(
         // Export data in specified format
         return "Exported data"
     }
-    
+
     private suspend fun backupData(
         userData: Flow<List<UserData>>,
         parameters: Map<String, Any>
@@ -250,7 +250,7 @@ class ProcessContentUseCase @Inject constructor(
         // Create backup of data
         return "Backup created"
     }
-    
+
     private suspend fun syncData(
         userData: Flow<List<UserData>>,
         parameters: Map<String, Any>
@@ -302,4 +302,4 @@ sealed class BatchProcessingResult {
         val failed: Int,
         val results: List<ProcessingResult>
     ) : BatchProcessingResult()
-} 
+}

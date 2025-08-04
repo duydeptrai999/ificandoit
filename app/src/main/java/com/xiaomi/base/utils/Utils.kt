@@ -17,7 +17,7 @@ fun formatDuration(durationMs: Long): String {
     val minutes = seconds / 60
     val hours = minutes / 60
     val days = hours / 24
-    
+
     return when {
         days > 0 -> "${days}d ${hours % 24}h"
         hours > 0 -> "${hours}h ${minutes % 60}m"
@@ -33,7 +33,7 @@ fun formatRelativeTime(timestamp: Long): String {
     val minutes = seconds / 60
     val hours = minutes / 60
     val days = hours / 24
-    
+
     return when {
         days > 0 -> "${days} day${if (days > 1) "s" else ""} ago"
         hours > 0 -> "${hours} hour${if (hours > 1) "s" else ""} ago"
@@ -45,7 +45,7 @@ fun formatRelativeTime(timestamp: Long): String {
 // Performance calculation utilities
 fun calculateHealthScore(metrics: Map<String, Double>): Double {
     if (metrics.isEmpty()) return 0.0
-    
+
     val weights = mapOf(
         "cpu" to 0.3,
         "memory" to 0.3,
@@ -53,32 +53,32 @@ fun calculateHealthScore(metrics: Map<String, Double>): Double {
         "network" to 0.1,
         "storage" to 0.1
     )
-    
+
     var totalScore = 0.0
     var totalWeight = 0.0
-    
+
     metrics.forEach { (key, value) ->
         val weight = weights[key] ?: 0.1
         totalScore += value * weight
         totalWeight += weight
     }
-    
+
     return if (totalWeight > 0) totalScore / totalWeight else 0.0
 }
 
 fun calculateTrend(values: List<Double>): String {
     if (values.size < 2) return "stable"
-    
+
     val recent = values.takeLast(min(5, values.size))
     val older = values.dropLast(min(5, values.size)).takeLast(min(5, values.size))
-    
+
     if (older.isEmpty()) return "stable"
-    
+
     val recentAvg = recent.average()
     val olderAvg = older.average()
-    
+
     val change = (recentAvg - olderAvg) / olderAvg
-    
+
     return when {
         change > 0.1 -> "increasing"
         change < -0.1 -> "decreasing"
@@ -88,15 +88,15 @@ fun calculateTrend(values: List<Double>): String {
 
 fun calculateCorrelation(x: List<Double>, y: List<Double>): Double {
     if (x.size != y.size || x.isEmpty()) return 0.0
-    
+
     val n = x.size
     val meanX = x.average()
     val meanY = y.average()
-    
+
     var numerator = 0.0
     var sumXSquared = 0.0
     var sumYSquared = 0.0
-    
+
     for (i in x.indices) {
         val deltaX = x[i] - meanX
         val deltaY = y[i] - meanY
@@ -104,7 +104,7 @@ fun calculateCorrelation(x: List<Double>, y: List<Double>): Double {
         sumXSquared += deltaX * deltaX
         sumYSquared += deltaY * deltaY
     }
-    
+
     val denominator = sqrt(sumXSquared * sumYSquared)
     return if (denominator != 0.0) numerator / denominator else 0.0
 }

@@ -47,9 +47,9 @@ data class XiaomiBreadcrumbItem(
 
 /**
  * Xiaomi Breadcrumbs
- * 
+ *
  * A navigation breadcrumb component following Material Design 3 principles.
- * 
+ *
  * @param items List of breadcrumb items
  * @param modifier Modifier to be applied to the breadcrumbs
  * @param separator Custom separator between breadcrumb items
@@ -76,15 +76,15 @@ fun XiaomiBreadcrumbs(
     separatorColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
 ) {
     if (items.isEmpty()) return
-    
+
     val displayItems = if (items.size > maxItems && maxItems > 2) {
-        listOf(items.first()) + 
+        listOf(items.first()) +
         listOf(XiaomiBreadcrumbItem("ellipsis", "...", enabled = false)) +
         items.takeLast(maxItems - 2)
     } else {
         items
     }
-    
+
     CompositionLocalProvider(LocalContentColor provides contentColor) {
         LazyRow(
             modifier = modifier,
@@ -101,7 +101,7 @@ fun XiaomiBreadcrumbs(
                         isLast = index == displayItems.lastIndex,
                         showHomeIcon = showHomeIcon && index == 0
                     )
-                    
+
                     if (index < displayItems.lastIndex) {
                         CompositionLocalProvider(LocalContentColor provides separatorColor) {
                             separator()
@@ -128,7 +128,7 @@ private fun XiaomiBreadcrumbItem(
     } else {
         MaterialTheme.typography.bodyMedium
     }
-    
+
     val contentColor = if (isLast) {
         LocalContentColor.current
     } else if (item.enabled && item.onClick != null) {
@@ -136,7 +136,7 @@ private fun XiaomiBreadcrumbItem(
     } else {
         LocalContentColor.current.copy(alpha = 0.7f)
     }
-    
+
     val itemModifier = if (item.enabled && item.onClick != null && !isLast) {
         modifier
             .clip(RoundedCornerShape(4.dp))
@@ -145,7 +145,7 @@ private fun XiaomiBreadcrumbItem(
     } else {
         modifier.padding(horizontal = 4.dp, vertical = 2.dp)
     }
-    
+
     Row(
         modifier = itemModifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -166,7 +166,7 @@ private fun XiaomiBreadcrumbItem(
                 tint = contentColor
             )
         }
-        
+
         Text(
             text = item.title,
             style = textStyle,
@@ -179,9 +179,9 @@ private fun XiaomiBreadcrumbItem(
 
 /**
  * Xiaomi Simple Breadcrumbs
- * 
+ *
  * A simplified breadcrumb component with basic styling.
- * 
+ *
  * @param items List of breadcrumb items
  * @param onItemClick Callback when a breadcrumb item is clicked
  * @param modifier Modifier to be applied to the breadcrumbs
@@ -201,7 +201,7 @@ fun XiaomiSimpleBreadcrumbs(
             } else null
         )
     }
-    
+
     XiaomiBreadcrumbs(
         items = breadcrumbItems,
         modifier = modifier
@@ -210,9 +210,9 @@ fun XiaomiSimpleBreadcrumbs(
 
 /**
  * Xiaomi Compact Breadcrumbs
- * 
+ *
  * A compact breadcrumb component that shows only the last few items.
- * 
+ *
  * @param items List of breadcrumb items
  * @param modifier Modifier to be applied to the breadcrumbs
  * @param maxVisibleItems Maximum number of visible items
@@ -232,9 +232,9 @@ fun XiaomiCompactBreadcrumbs(
 
 /**
  * Xiaomi Icon Breadcrumbs
- * 
+ *
  * Breadcrumbs with icons for each item.
- * 
+ *
  * @param items List of breadcrumb items with icons
  * @param modifier Modifier to be applied to the breadcrumbs
  * @param showHomeIcon Whether to show home icon for the first item
@@ -254,9 +254,9 @@ fun XiaomiIconBreadcrumbs(
 
 /**
  * Xiaomi Custom Separator Breadcrumbs
- * 
+ *
  * Breadcrumbs with a custom separator.
- * 
+ *
  * @param items List of breadcrumb items
  * @param separator Custom separator composable
  * @param modifier Modifier to be applied to the breadcrumbs
@@ -290,7 +290,7 @@ fun XiaomiBreadcrumbsPreview() {
                     "Breadcrumb Variants",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 // Basic breadcrumbs
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -307,7 +307,7 @@ fun XiaomiBreadcrumbsPreview() {
                         )
                     )
                 }
-                
+
                 // With home icon
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -325,7 +325,7 @@ fun XiaomiBreadcrumbsPreview() {
                         showHomeIcon = true
                     )
                 }
-                
+
                 // Compact breadcrumbs
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -345,7 +345,7 @@ fun XiaomiBreadcrumbsPreview() {
                         maxVisibleItems = 3
                     )
                 }
-                
+
                 // Simple breadcrumbs
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -377,7 +377,7 @@ fun XiaomiBreadcrumbsDarkPreview() {
                     "Dark Theme Breadcrumbs",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 XiaomiBreadcrumbs(
                     items = listOf(
                         XiaomiBreadcrumbItem("1", "Home", onClick = {}),
@@ -387,7 +387,7 @@ fun XiaomiBreadcrumbsDarkPreview() {
                     ),
                     showHomeIcon = true
                 )
-                
+
                 XiaomiCustomSeparatorBreadcrumbs(
                     items = listOf(
                         XiaomiBreadcrumbItem("1", "Root", onClick = {}),
@@ -422,7 +422,7 @@ fun XiaomiBreadcrumbsLongPathPreview() {
                     "Long Path Breadcrumbs",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 XiaomiBreadcrumbs(
                     items = listOf(
                         XiaomiBreadcrumbItem("1", "Home", onClick = {}),

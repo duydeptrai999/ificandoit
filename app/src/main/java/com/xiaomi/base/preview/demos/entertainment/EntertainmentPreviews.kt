@@ -115,14 +115,14 @@ fun MusicPlayer() {
         isPlaying = true,
         isFavorite = true
     )
-    
+
     val recentSongs = listOf(
         Song("Hotel California", "Eagles", "Hotel California", "6:30", Color(0xFF2196F3)),
         Song("Stairway to Heaven", "Led Zeppelin", "Led Zeppelin IV", "8:02", Color(0xFF4CAF50)),
         Song("Sweet Child O' Mine", "Guns N' Roses", "Appetite for Destruction", "5:03", Color(0xFFFF9800)),
         Song("Imagine", "John Lennon", "Imagine", "3:07", Color(0xFFF44336))
     )
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -136,15 +136,15 @@ fun MusicPlayer() {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             NowPlayingCard(currentSong)
         }
-        
+
         item {
             PlayerControls()
         }
-        
+
         item {
             Text(
                 text = "Recently Played",
@@ -152,7 +152,7 @@ fun MusicPlayer() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         items(recentSongs) { song ->
             SongItem(song)
         }
@@ -175,13 +175,13 @@ fun VideoStreaming() {
         Movie("Inception", "Thriller", "2010", "8.8", "2h 28m", Color(0xFF9C27B0)),
         Movie("Interstellar", "Sci-Fi", "2014", "8.6", "2h 49m", Color(0xFF4CAF50))
     )
-    
+
     val tvShows = listOf(
         TVShow("Breaking Bad", "Drama", 5, 62, "9.5", Color(0xFFFF9800)),
         TVShow("Game of Thrones", "Fantasy", 8, 73, "9.3", Color(0xFFF44336)),
         TVShow("The Office", "Comedy", 9, 201, "9.0", Color(0xFF607D8B))
     )
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -195,7 +195,7 @@ fun VideoStreaming() {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             Text(
                 text = "Featured Movies",
@@ -203,7 +203,7 @@ fun VideoStreaming() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         item {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -213,7 +213,7 @@ fun VideoStreaming() {
                 }
             }
         }
-        
+
         item {
             Text(
                 text = "Popular TV Shows",
@@ -221,7 +221,7 @@ fun VideoStreaming() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         items(tvShows) { show ->
             TVShowItem(show)
         }
@@ -244,13 +244,13 @@ fun GamingHub() {
         Game("The Witcher 3", "RPG", "9.3", "$39.99", "PC", Color(0xFF9C27B0)),
         Game("Red Dead Redemption 2", "Action", "9.7", "$49.99", "PC", Color(0xFF795548))
     )
-    
+
     val myGames = listOf(
         Game("Minecraft", "Sandbox", "9.0", "Owned", "PC", Color(0xFF4CAF50), true),
         Game("Among Us", "Social", "8.2", "Owned", "Mobile", Color(0xFFF44336), true),
         Game("Fall Guys", "Party", "7.8", "Owned", "PC", Color(0xFFFF9800), true)
     )
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -264,11 +264,11 @@ fun GamingHub() {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             GamingStatsRow()
         }
-        
+
         item {
             Text(
                 text = "Featured Games",
@@ -276,7 +276,7 @@ fun GamingHub() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         item {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -286,7 +286,7 @@ fun GamingHub() {
                 }
             }
         }
-        
+
         item {
             Text(
                 text = "My Games",
@@ -294,7 +294,7 @@ fun GamingHub() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         items(myGames) { game ->
             GameItem(game)
         }
@@ -321,13 +321,13 @@ fun PodcastPlayer() {
         cover = Color(0xFF2196F3),
         isSubscribed = true
     )
-    
+
     val recentPodcasts = listOf(
         Podcast("Startup Stories", "Business Weekly", "Business", "32:15", 89, Color(0xFF4CAF50)),
         Podcast("Health & Wellness", "Dr. Smith", "Health", "28:45", 156, Color(0xFFFF9800)),
         Podcast("Comedy Hour", "Laugh Track", "Comedy", "55:20", 234, Color(0xFFF44336))
     )
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -341,15 +341,15 @@ fun PodcastPlayer() {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             NowPlayingPodcastCard(currentPodcast)
         }
-        
+
         item {
             PodcastControls()
         }
-        
+
         item {
             Text(
                 text = "Recent Episodes",
@@ -357,7 +357,7 @@ fun PodcastPlayer() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         items(recentPodcasts) { podcast ->
             PodcastItem(podcast)
         }
@@ -381,7 +381,7 @@ fun LiveStreaming() {
         LiveStream("Music Session", "MusicLover", "Music", "5.7K", Color(0xFF2196F3)),
         LiveStream("Art Tutorial", "ArtistPro", "Art", "3.1K", Color(0xFFFF9800))
     )
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -395,11 +395,11 @@ fun LiveStreaming() {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             StreamingStatsRow()
         }
-        
+
         item {
             Text(
                 text = "Live Now",
@@ -407,7 +407,7 @@ fun LiveStreaming() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         items(liveStreams) { stream ->
             LiveStreamCard(stream)
         }
@@ -443,9 +443,9 @@ fun NowPlayingCard(song: Song) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -456,20 +456,20 @@ fun NowPlayingCard(song: Song) {
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                
+
                 Text(
                     text = song.artist,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                 )
-                
+
                 Text(
                     text = song.album,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.5f)
                 )
             }
-            
+
             IconButton(
                 onClick = { }
             ) {
@@ -502,21 +502,21 @@ fun PlayerControls() {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 LinearProgressIndicator(
                     progress = 0.43f,
                     modifier = Modifier.weight(1f).padding(horizontal = 16.dp)
                 )
-                
+
                 Text(
                     text = "5:55",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Control buttons
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -529,7 +529,7 @@ fun PlayerControls() {
                         contentDescription = "Shuffle"
                     )
                 }
-                
+
                 IconButton(onClick = { }) {
                     Icon(
                         imageVector = Icons.Default.SkipPrevious,
@@ -537,7 +537,7 @@ fun PlayerControls() {
                         modifier = Modifier.size(32.dp)
                     )
                 }
-                
+
                 FloatingActionButton(
                     onClick = { },
                     modifier = Modifier.size(56.dp)
@@ -548,7 +548,7 @@ fun PlayerControls() {
                         modifier = Modifier.size(32.dp)
                     )
                 }
-                
+
                 IconButton(onClick = { }) {
                     Icon(
                         imageVector = Icons.Default.SkipNext,
@@ -556,7 +556,7 @@ fun PlayerControls() {
                         modifier = Modifier.size(32.dp)
                     )
                 }
-                
+
                 IconButton(onClick = { }) {
                     Icon(
                         imageVector = Icons.Default.Repeat,
@@ -593,9 +593,9 @@ fun SongItem(song: Song) {
                 )
             }
         }
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -606,20 +606,20 @@ fun SongItem(song: Song) {
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            
+
             Text(
                 text = song.artist,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         Text(
             text = song.duration,
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        
+
         IconButton(
             onClick = { }
         ) {
@@ -654,7 +654,7 @@ fun MovieCard(movie: Movie) {
                     )
                 }
             }
-            
+
             Column(
                 modifier = Modifier.padding(12.dp)
             ) {
@@ -665,15 +665,15 @@ fun MovieCard(movie: Movie) {
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                
+
                 Text(
                     text = "${movie.genre} • ${movie.year}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Spacer(modifier = Modifier.height(4.dp))
-                
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -683,9 +683,9 @@ fun MovieCard(movie: Movie) {
                         tint = Color(0xFFFFD700),
                         modifier = Modifier.size(16.dp)
                     )
-                    
+
                     Spacer(modifier = Modifier.width(4.dp))
-                    
+
                     Text(
                         text = movie.rating,
                         style = MaterialTheme.typography.bodySmall,
@@ -722,9 +722,9 @@ fun TVShowItem(show: TVShow) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -733,20 +733,20 @@ fun TVShowItem(show: TVShow) {
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Text(
                     text = show.genre,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = "${show.seasons} seasons • ${show.episodes} episodes",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Column(
                 horizontalAlignment = Alignment.End
             ) {
@@ -759,16 +759,16 @@ fun TVShowItem(show: TVShow) {
                         tint = Color(0xFFFFD700),
                         modifier = Modifier.size(16.dp)
                     )
-                    
+
                     Spacer(modifier = Modifier.width(4.dp))
-                    
+
                     Text(
                         text = show.rating,
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.SemiBold
                     )
                 }
-                
+
                 if (show.isWatching) {
                     Surface(
                         shape = RoundedCornerShape(12.dp),
@@ -799,14 +799,14 @@ fun GamingStatsRow() {
             icon = Icons.Default.SportsEsports,
             color = MaterialTheme.colorScheme.primary
         )
-        
+
         GamingStatCard(
             title = "Hours Played",
             value = "1,247",
             icon = Icons.Default.Schedule,
             color = Color(0xFF4CAF50)
         )
-        
+
         GamingStatCard(
             title = "Achievements",
             value = "89",
@@ -835,16 +835,16 @@ fun GamingStatCard(
                 tint = color,
                 modifier = Modifier.size(24.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = value,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = color
             )
-            
+
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodySmall,
@@ -877,7 +877,7 @@ fun GameCard(game: Game) {
                     )
                 }
             }
-            
+
             Column(
                 modifier = Modifier.padding(12.dp)
             ) {
@@ -888,15 +888,15 @@ fun GameCard(game: Game) {
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                
+
                 Text(
                     text = game.genre,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Spacer(modifier = Modifier.height(4.dp))
-                
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -908,7 +908,7 @@ fun GameCard(game: Game) {
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.primary
                     )
-                    
+
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -918,9 +918,9 @@ fun GameCard(game: Game) {
                             tint = Color(0xFFFFD700),
                             modifier = Modifier.size(16.dp)
                         )
-                        
+
                         Spacer(modifier = Modifier.width(4.dp))
-                        
+
                         Text(
                             text = game.rating,
                             style = MaterialTheme.typography.bodySmall
@@ -957,9 +957,9 @@ fun GameItem(game: Game) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -968,14 +968,14 @@ fun GameItem(game: Game) {
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Text(
                     text = "${game.genre} • ${game.platform}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             if (game.isOwned) {
                 Surface(
                     shape = RoundedCornerShape(12.dp),
@@ -1031,9 +1031,9 @@ fun NowPlayingPodcastCard(podcast: Podcast) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -1042,7 +1042,7 @@ fun NowPlayingPodcastCard(podcast: Podcast) {
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                 )
-                
+
                 Text(
                     text = podcast.title,
                     style = MaterialTheme.typography.titleMedium,
@@ -1050,14 +1050,14 @@ fun NowPlayingPodcastCard(podcast: Podcast) {
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                
+
                 Text(
                     text = podcast.host,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                 )
             }
-            
+
             IconButton(
                 onClick = { }
             ) {
@@ -1090,21 +1090,21 @@ fun PodcastControls() {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 LinearProgressIndicator(
                     progress = 0.28f,
                     modifier = Modifier.weight(1f).padding(horizontal = 16.dp)
                 )
-                
+
                 Text(
                     text = "45:30",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Control buttons
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -1117,7 +1117,7 @@ fun PodcastControls() {
                         contentDescription = "Replay 10s"
                     )
                 }
-                
+
                 IconButton(onClick = { }) {
                     Icon(
                         imageVector = Icons.Default.SkipPrevious,
@@ -1125,7 +1125,7 @@ fun PodcastControls() {
                         modifier = Modifier.size(32.dp)
                     )
                 }
-                
+
                 FloatingActionButton(
                     onClick = { },
                     modifier = Modifier.size(56.dp)
@@ -1136,7 +1136,7 @@ fun PodcastControls() {
                         modifier = Modifier.size(32.dp)
                     )
                 }
-                
+
                 IconButton(onClick = { }) {
                     Icon(
                         imageVector = Icons.Default.SkipNext,
@@ -1144,7 +1144,7 @@ fun PodcastControls() {
                         modifier = Modifier.size(32.dp)
                     )
                 }
-                
+
                 IconButton(onClick = { }) {
                     Icon(
                         imageVector = Icons.Default.Forward30,
@@ -1181,9 +1181,9 @@ fun PodcastItem(podcast: Podcast) {
                 )
             }
         }
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -1194,20 +1194,20 @@ fun PodcastItem(podcast: Podcast) {
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            
+
             Text(
                 text = "${podcast.host} • ${podcast.category}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         Text(
             text = podcast.duration,
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        
+
         IconButton(
             onClick = { }
         ) {
@@ -1230,13 +1230,13 @@ fun StreamingStatsRow() {
             value = "1,247",
             color = Color(0xFFF44336)
         )
-        
+
         StreamingStatCard(
             title = "Total Viewers",
             value = "89.2K",
             color = Color(0xFF4CAF50)
         )
-        
+
         StreamingStatCard(
             title = "Following",
             value = "156",
@@ -1263,7 +1263,7 @@ fun StreamingStatCard(
                 fontWeight = FontWeight.Bold,
                 color = color
             )
-            
+
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodySmall,
@@ -1297,7 +1297,7 @@ fun LiveStreamCard(stream: LiveStream) {
                         )
                     }
                 }
-                
+
                 if (stream.isLive) {
                     Surface(
                         shape = RoundedCornerShape(4.dp),
@@ -1315,7 +1315,7 @@ fun LiveStreamCard(stream: LiveStream) {
                         )
                     }
                 }
-                
+
                 Surface(
                     shape = RoundedCornerShape(4.dp),
                     color = Color.Black.copy(alpha = 0.7f),
@@ -1331,7 +1331,7 @@ fun LiveStreamCard(stream: LiveStream) {
                     )
                 }
             }
-            
+
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
@@ -1342,9 +1342,9 @@ fun LiveStreamCard(stream: LiveStream) {
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                
+
                 Spacer(modifier = Modifier.height(4.dp))
-                
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -1355,7 +1355,7 @@ fun LiveStreamCard(stream: LiveStream) {
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     Surface(
                         shape = RoundedCornerShape(12.dp),
                         color = MaterialTheme.colorScheme.primaryContainer
@@ -1388,7 +1388,7 @@ fun registerEntertainmentPreviews() {
             content = { MusicPlayerPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "video_streaming",
@@ -1402,7 +1402,7 @@ fun registerEntertainmentPreviews() {
             content = { VideoStreamingPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "gaming_hub",
@@ -1416,7 +1416,7 @@ fun registerEntertainmentPreviews() {
             content = { GamingHubPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "podcast_player",
@@ -1430,7 +1430,7 @@ fun registerEntertainmentPreviews() {
             content = { PodcastPlayerPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "live_streaming",

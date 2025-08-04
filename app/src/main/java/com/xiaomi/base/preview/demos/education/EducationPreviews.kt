@@ -132,19 +132,19 @@ fun ELearningDashboard() {
         totalHours = 127,
         certificates = 3
     )
-    
+
     val enrolledCourses = listOf(
         Course("1", "Android Development", "Dr. Smith", "Programming", "40 hours", 25, 4.8f, "$99", Color(0xFF4CAF50), 0.65f, true),
         Course("2", "UI/UX Design", "Jane Wilson", "Design", "30 hours", 20, 4.6f, "$79", Color(0xFF9C27B0), 0.30f, true),
         Course("3", "Data Science", "Prof. Johnson", "Data", "50 hours", 35, 4.9f, "$129", Color(0xFF2196F3), 0.15f, true)
     )
-    
+
     val recentAssignments = listOf(
         Assignment("1", "Mobile App Project", "Create a simple Android app", "Dec 15, 2024", AssignmentStatus.PENDING),
         Assignment("2", "Design Portfolio", "Submit your design portfolio", "Dec 10, 2024", AssignmentStatus.SUBMITTED, submittedDate = "Dec 8, 2024"),
         Assignment("3", "Data Analysis Report", "Analyze the provided dataset", "Dec 5, 2024", AssignmentStatus.GRADED, "A-", "Dec 4, 2024")
     )
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -158,11 +158,11 @@ fun ELearningDashboard() {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             LearningStatsRow(currentUser)
         }
-        
+
         item {
             Text(
                 text = "Continue Learning",
@@ -170,11 +170,11 @@ fun ELearningDashboard() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         items(enrolledCourses) { course ->
             EnrolledCourseCard(course)
         }
-        
+
         item {
             Text(
                 text = "Recent Assignments",
@@ -182,7 +182,7 @@ fun ELearningDashboard() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         items(recentAssignments) { assignment ->
             AssignmentCard(assignment)
         }
@@ -214,7 +214,7 @@ fun CourseDetail() {
         isEnrolled = true,
         difficulty = "Intermediate"
     )
-    
+
     val lessons = listOf(
         Lesson("1", "Introduction to Android", "15 min", LessonType.VIDEO, true),
         Lesson("2", "Setting up Development Environment", "20 min", LessonType.VIDEO, true),
@@ -224,7 +224,7 @@ fun CourseDetail() {
         Lesson("6", "Building Your First App", "45 min", LessonType.ASSIGNMENT, false, true),
         Lesson("7", "Advanced Topics", "35 min", LessonType.READING, false, true)
     )
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -234,11 +234,11 @@ fun CourseDetail() {
         item {
             CourseHeader(course)
         }
-        
+
         item {
             CourseProgressCard(course)
         }
-        
+
         item {
             Text(
                 text = "Course Content",
@@ -246,7 +246,7 @@ fun CourseDetail() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         items(lessons) { lesson ->
             LessonItem(lesson)
         }
@@ -274,7 +274,7 @@ fun QuizInterface() {
         bestScore = 85,
         attempts = 2
     )
-    
+
     val currentQuestion = Question(
         id = "1",
         question = "What is the main component used to display a list of items in Android?",
@@ -288,11 +288,11 @@ fun QuizInterface() {
         explanation = "RecyclerView is the recommended component for displaying lists as it's more efficient and flexible.",
         selectedAnswer = null
     )
-    
+
     var selectedAnswer by remember { mutableStateOf<Int?>(null) }
     var timeRemaining by remember { mutableStateOf("14:32") }
     var currentQuestionNumber by remember { mutableStateOf(3) }
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -302,11 +302,11 @@ fun QuizInterface() {
         item {
             QuizHeader(quiz, timeRemaining, currentQuestionNumber)
         }
-        
+
         item {
             QuizProgressIndicator(currentQuestionNumber, quiz.questions)
         }
-        
+
         item {
             QuestionCard(
                 question = currentQuestion,
@@ -314,7 +314,7 @@ fun QuizInterface() {
                 onAnswerSelected = { selectedAnswer = it }
             )
         }
-        
+
         item {
             QuizNavigationButtons(
                 canGoBack = currentQuestionNumber > 1,
@@ -346,20 +346,20 @@ fun StudentProgress() {
         totalHours = 127,
         certificates = 3
     )
-    
+
     val certificates = listOf(
         Certificate("1", "Android Development Fundamentals", "Nov 15, 2024", "Dr. Smith", "A", Color(0xFF4CAF50)),
         Certificate("2", "UI/UX Design Principles", "Oct 22, 2024", "Jane Wilson", "A-", Color(0xFF9C27B0)),
         Certificate("3", "Introduction to Programming", "Sep 10, 2024", "Prof. Johnson", "B+", Color(0xFF2196F3))
     )
-    
+
     val skillProgress = listOf(
         "Android Development" to 0.85f,
         "UI/UX Design" to 0.70f,
         "Data Analysis" to 0.45f,
         "Project Management" to 0.60f
     )
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -373,11 +373,11 @@ fun StudentProgress() {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             StudentProfileCard(student)
         }
-        
+
         item {
             Text(
                 text = "Skill Progress",
@@ -385,11 +385,11 @@ fun StudentProgress() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         items(skillProgress) { (skill, progress) ->
             SkillProgressItem(skill, progress)
         }
-        
+
         item {
             Text(
                 text = "Certificates Earned",
@@ -397,7 +397,7 @@ fun StudentProgress() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         items(certificates) { certificate ->
             CertificateCard(certificate)
         }
@@ -422,10 +422,10 @@ fun AssignmentSubmission() {
         dueDate = "December 15, 2024",
         status = AssignmentStatus.PENDING
     )
-    
+
     var submissionText by remember { mutableStateOf("") }
     var selectedFiles by remember { mutableStateOf(listOf<String>()) }
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -439,11 +439,11 @@ fun AssignmentSubmission() {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             AssignmentDetailsCard(assignment)
         }
-        
+
         item {
             Text(
                 text = "Submission",
@@ -451,7 +451,7 @@ fun AssignmentSubmission() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         item {
             SubmissionForm(
                 submissionText = submissionText,
@@ -460,7 +460,7 @@ fun AssignmentSubmission() {
                 onFilesSelected = { selectedFiles = it }
             )
         }
-        
+
         item {
             SubmissionActions(assignment)
         }
@@ -480,21 +480,21 @@ fun LearningStatsRow(student: Student) {
             icon = Icons.Default.School,
             color = MaterialTheme.colorScheme.primary
         )
-        
+
         LearningStatCard(
             title = "Completed",
             value = student.coursesCompleted.toString(),
             icon = Icons.Default.CheckCircle,
             color = Color(0xFF4CAF50)
         )
-        
+
         LearningStatCard(
             title = "Hours",
             value = student.totalHours.toString(),
             icon = Icons.Default.Schedule,
             color = Color(0xFFFF9800)
         )
-        
+
         LearningStatCard(
             title = "Certificates",
             value = student.certificates.toString(),
@@ -524,16 +524,16 @@ fun LearningStatCard(
                 tint = color,
                 modifier = Modifier.size(24.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = value,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = color
             )
-            
+
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodySmall,
@@ -568,9 +568,9 @@ fun EnrolledCourseCard(course: Course) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -581,29 +581,29 @@ fun EnrolledCourseCard(course: Course) {
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                
+
                 Text(
                     text = "by ${course.instructor}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 LinearProgressIndicator(
                     progress = course.progress,
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 Spacer(modifier = Modifier.height(4.dp))
-                
+
                 Text(
                     text = "${(course.progress * 100).toInt()}% complete",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             IconButton(
                 onClick = { }
             ) {
@@ -635,12 +635,12 @@ fun AssignmentCard(assignment: Assignment) {
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.weight(1f)
                 )
-                
+
                 AssignmentStatusBadge(assignment.status)
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = assignment.description,
                 style = MaterialTheme.typography.bodyMedium,
@@ -648,9 +648,9 @@ fun AssignmentCard(assignment: Assignment) {
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -661,7 +661,7 @@ fun AssignmentCard(assignment: Assignment) {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 if (assignment.grade != null) {
                     Text(
                         text = "Grade: ${assignment.grade}",
@@ -683,7 +683,7 @@ fun AssignmentStatusBadge(status: AssignmentStatus) {
         AssignmentStatus.GRADED -> Color(0xFF4CAF50) to "Graded"
         AssignmentStatus.OVERDUE -> Color(0xFFF44336) to "Overdue"
     }
-    
+
     Surface(
         shape = RoundedCornerShape(12.dp),
         color = color.copy(alpha = 0.2f)
@@ -727,9 +727,9 @@ fun CourseHeader(course: Course) {
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.width(16.dp))
-                
+
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -739,15 +739,15 @@ fun CourseHeader(course: Course) {
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
-                    
+
                     Text(
                         text = "by ${course.instructor}",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -757,25 +757,25 @@ fun CourseHeader(course: Course) {
                             tint = Color(0xFFFFD700),
                             modifier = Modifier.size(16.dp)
                         )
-                        
+
                         Spacer(modifier = Modifier.width(4.dp))
-                        
+
                         Text(
                             text = course.rating.toString(),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
-                        
+
                         Spacer(modifier = Modifier.width(16.dp))
-                        
+
                         Text(
                             text = "${course.lessons} lessons",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                         )
-                        
+
                         Spacer(modifier = Modifier.width(16.dp))
-                        
+
                         Text(
                             text = course.duration,
                             style = MaterialTheme.typography.bodySmall,
@@ -806,7 +806,7 @@ fun CourseProgressCard(course: Course) {
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Text(
                     text = "${(course.progress * 100).toInt()}%",
                     style = MaterialTheme.typography.titleMedium,
@@ -814,16 +814,16 @@ fun CourseProgressCard(course: Course) {
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             LinearProgressIndicator(
                 progress = course.progress,
                 modifier = Modifier.fillMaxWidth()
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "${(course.lessons * course.progress).toInt()} of ${course.lessons} lessons completed",
                 style = MaterialTheme.typography.bodySmall,
@@ -840,14 +840,14 @@ fun LessonItem(lesson: Lesson) {
         lesson.isLocked -> MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
         else -> MaterialTheme.colorScheme.primary
     }
-    
+
     val icon = when (lesson.type) {
         LessonType.VIDEO -> Icons.Default.PlayArrow
         LessonType.READING -> Icons.Default.Article
         LessonType.QUIZ -> Icons.Default.Quiz
         LessonType.ASSIGNMENT -> Icons.Default.Assignment
     }
-    
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -887,9 +887,9 @@ fun LessonItem(lesson: Lesson) {
                 }
             }
         }
-        
+
         Spacer(modifier = Modifier.width(16.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -903,14 +903,14 @@ fun LessonItem(lesson: Lesson) {
                     MaterialTheme.colorScheme.onSurface
                 }
             )
-            
+
             Text(
                 text = "${lesson.type.name.lowercase().replaceFirstChar { it.uppercase() }} • ${lesson.duration}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         if (!lesson.isLocked && !lesson.isCompleted) {
             IconButton(
                 onClick = { }
@@ -946,7 +946,7 @@ fun QuizHeader(quiz: Quiz, timeRemaining: String, currentQuestion: Int) {
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
-                
+
                 Surface(
                     shape = RoundedCornerShape(8.dp),
                     color = Color(0xFFF44336).copy(alpha = 0.2f)
@@ -961,9 +961,9 @@ fun QuizHeader(quiz: Quiz, timeRemaining: String, currentQuestion: Int) {
                             tint = Color(0xFFF44336),
                             modifier = Modifier.size(16.dp)
                         )
-                        
+
                         Spacer(modifier = Modifier.width(4.dp))
-                        
+
                         Text(
                             text = timeRemaining,
                             style = MaterialTheme.typography.labelMedium,
@@ -973,9 +973,9 @@ fun QuizHeader(quiz: Quiz, timeRemaining: String, currentQuestion: Int) {
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Question $currentQuestion of ${quiz.questions}",
                 style = MaterialTheme.typography.bodyMedium,
@@ -997,16 +997,16 @@ fun QuizProgressIndicator(currentQuestion: Int, totalQuestions: Int) {
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Text(
                 text = "$currentQuestion/$totalQuestions",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         LinearProgressIndicator(
             progress = currentQuestion.toFloat() / totalQuestions,
             modifier = Modifier.fillMaxWidth()
@@ -1031,16 +1031,16 @@ fun QuestionCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             question.options.forEachIndexed { index, option ->
                 AnswerOption(
                     text = option,
                     isSelected = selectedAnswer == index,
                     onClick = { onAnswerSelected(index) }
                 )
-                
+
                 if (index < question.options.size - 1) {
                     Spacer(modifier = Modifier.height(8.dp))
                 }
@@ -1081,9 +1081,9 @@ fun AnswerOption(
                 selected = isSelected,
                 onClick = onClick
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodyMedium
@@ -1111,21 +1111,21 @@ fun QuizNavigationButtons(
                 contentDescription = "Previous",
                 modifier = Modifier.size(18.dp)
             )
-            
+
             Spacer(modifier = Modifier.width(8.dp))
-            
+
             Text("Previous")
         }
-        
+
         Button(
             onClick = { },
             enabled = canGoNext
         ) {
             Text(if (isLastQuestion) "Submit" else "Next")
-            
+
             if (!isLastQuestion) {
                 Spacer(modifier = Modifier.width(8.dp))
-                
+
                 Icon(
                     imageVector = Icons.Default.ArrowForward,
                     contentDescription = "Next",
@@ -1164,9 +1164,9 @@ fun StudentProfileCard(student: Student) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -1176,15 +1176,15 @@ fun StudentProfileCard(student: Student) {
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
-                
+
                 Text(
                     text = student.email,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Text(
                     text = "${student.totalHours} hours of learning",
                     style = MaterialTheme.typography.bodySmall,
@@ -1208,21 +1208,21 @@ fun SkillProgressItem(skill: String, progress: Float) {
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Text(
                 text = "${(progress * 100).toInt()}%",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         LinearProgressIndicator(
             progress = progress,
             modifier = Modifier.fillMaxWidth()
         )
-        
+
         Spacer(modifier = Modifier.height(8.dp))
     }
 }
@@ -1252,9 +1252,9 @@ fun CertificateCard(certificate: Certificate) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -1265,20 +1265,20 @@ fun CertificateCard(certificate: Certificate) {
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                
+
                 Text(
                     text = "Issued by ${certificate.instructor}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = certificate.issueDate,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Column(
                 horizontalAlignment = Alignment.End
             ) {
@@ -1316,17 +1316,17 @@ fun AssignmentDetailsCard(assignment: Assignment) {
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = assignment.description,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -1337,7 +1337,7 @@ fun AssignmentDetailsCard(assignment: Assignment) {
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                     )
-                    
+
                     Text(
                         text = assignment.dueDate,
                         style = MaterialTheme.typography.bodyMedium,
@@ -1345,7 +1345,7 @@ fun AssignmentDetailsCard(assignment: Assignment) {
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }
-                
+
                 AssignmentStatusBadge(assignment.status)
             }
         }
@@ -1370,9 +1370,9 @@ fun SubmissionForm(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             OutlinedTextField(
                 value = submissionText,
                 onValueChange = onTextChange,
@@ -1382,17 +1382,17 @@ fun SubmissionForm(
                     .height(120.dp),
                 maxLines = 5
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Text(
                 text = "Attachments",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             OutlinedButton(
                 onClick = { },
                 modifier = Modifier.fillMaxWidth()
@@ -1401,15 +1401,15 @@ fun SubmissionForm(
                     imageVector = Icons.Default.AttachFile,
                     contentDescription = "Attach Files"
                 )
-                
+
                 Spacer(modifier = Modifier.width(8.dp))
-                
+
                 Text("Attach Files")
             }
-            
+
             if (selectedFiles.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 selectedFiles.forEach { file ->
                     Row(
                         modifier = Modifier
@@ -1422,15 +1422,15 @@ fun SubmissionForm(
                             contentDescription = "File",
                             modifier = Modifier.size(16.dp)
                         )
-                        
+
                         Spacer(modifier = Modifier.width(8.dp))
-                        
+
                         Text(
                             text = file,
                             style = MaterialTheme.typography.bodySmall,
                             modifier = Modifier.weight(1f)
                         )
-                        
+
                         IconButton(
                             onClick = { },
                             modifier = Modifier.size(24.dp)
@@ -1460,7 +1460,7 @@ fun SubmissionActions(assignment: Assignment) {
         ) {
             Text("Save Draft")
         }
-        
+
         Button(
             onClick = { },
             modifier = Modifier.weight(1f)
@@ -1485,7 +1485,7 @@ fun registerEducationPreviews() {
             content = { ELearningDashboardPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "course_detail",
@@ -1499,7 +1499,7 @@ fun registerEducationPreviews() {
             content = { CourseDetailPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "quiz_interface",
@@ -1513,7 +1513,7 @@ fun registerEducationPreviews() {
             content = { QuizInterfacePreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "student_progress",
@@ -1527,7 +1527,7 @@ fun registerEducationPreviews() {
             content = { StudentProgressPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "assignment_submission",

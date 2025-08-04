@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface UserProfileDao : BaseDao<UserProfileEntity> {
-    
     /**
      * Get a user profile by its ID.
      *
@@ -19,7 +18,7 @@ interface UserProfileDao : BaseDao<UserProfileEntity> {
      */
     @Query("SELECT * FROM user_profiles WHERE userId = :userId LIMIT 1")
     suspend fun getUserProfile(userId: String): UserProfileEntity?
-    
+
     /**
      * Get a user profile by its ID as a Flow.
      *
@@ -28,7 +27,7 @@ interface UserProfileDao : BaseDao<UserProfileEntity> {
      */
     @Query("SELECT * FROM user_profiles WHERE userId = :userId LIMIT 1")
     fun getUserProfileFlow(userId: String): Flow<UserProfileEntity?>
-    
+
     /**
      * Get all user profiles.
      *
@@ -36,7 +35,7 @@ interface UserProfileDao : BaseDao<UserProfileEntity> {
      */
     @Query("SELECT * FROM user_profiles ORDER BY lastActiveDate DESC")
     fun getAllUserProfiles(): Flow<List<UserProfileEntity>>
-    
+
     /**
      * Update user's last active date.
      *
@@ -44,7 +43,7 @@ interface UserProfileDao : BaseDao<UserProfileEntity> {
      */
     @Query("UPDATE user_profiles SET lastActiveDate = datetime('now') WHERE userId = :userId")
     suspend fun updateLastActiveDate(userId: String)
-    
+
     /**
      * Search user profiles by display name.
      *
@@ -53,4 +52,4 @@ interface UserProfileDao : BaseDao<UserProfileEntity> {
      */
     @Query("SELECT * FROM user_profiles WHERE displayName LIKE '%' || :query || '%' ORDER BY displayName ASC")
     fun searchUserProfiles(query: String): Flow<List<UserProfileEntity>>
-} 
+}

@@ -37,10 +37,10 @@ import androidx.compose.material.icons.filled.ShoppingCart
 
 /**
  * Xiaomi Base UI Kit Badge
- * 
+ *
  * A Material Design 3 badge component with Xiaomi design tokens.
  * Used to display small amounts of information like notification counts.
- * 
+ *
  * @param modifier Modifier to be applied to the badge
  * @param containerColor The background color of the badge
  * @param contentColor The color of the content inside the badge
@@ -63,9 +63,9 @@ fun XiaomiBadge(
 
 /**
  * Xiaomi Base UI Kit Badged Box
- * 
+ *
  * A container that positions a badge relative to its content.
- * 
+ *
  * @param badge The badge composable to be displayed
  * @param modifier Modifier to be applied to the badged box
  * @param content The main content that the badge will be positioned relative to
@@ -86,9 +86,9 @@ fun XiaomiBadgedBox(
 
 /**
  * Xiaomi Notification Badge
- * 
+ *
  * A specialized badge for showing notification counts.
- * 
+ *
  * @param count The number to display in the badge
  * @param modifier Modifier to be applied to the badge
  * @param maxCount Maximum count to display before showing "+" (e.g., "99+")
@@ -127,9 +127,9 @@ fun XiaomiNotificationBadge(
 
 /**
  * Xiaomi Status Badge
- * 
+ *
  * A badge for showing status information with different colors.
- * 
+ *
  * @param text The text to display in the badge
  * @param status The status type that determines the color
  * @param modifier Modifier to be applied to the badge
@@ -162,7 +162,7 @@ fun XiaomiStatusBadge(
             MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
-    
+
     XiaomiBadge(
         modifier = modifier,
         containerColor = colors.first,
@@ -179,9 +179,9 @@ fun XiaomiStatusBadge(
 
 /**
  * Xiaomi Dot Badge
- * 
+ *
  * A simple dot indicator without text content.
- * 
+ *
  * @param modifier Modifier to be applied to the badge
  * @param color The color of the dot
  * @param size The size of the dot
@@ -202,9 +202,9 @@ fun XiaomiDotBadge(
 
 /**
  * Xiaomi Custom Badge
- * 
+ *
  * A customizable badge with flexible content and styling.
- * 
+ *
  * @param modifier Modifier to be applied to the badge
  * @param containerColor The background color of the badge
  * @param contentColor The color of the content inside the badge
@@ -264,14 +264,14 @@ fun XiaomiBadgesPreview() {
                 XiaomiBadge {
                     Text("New")
                 }
-                
+
                 XiaomiBadge {
                     Text("99+")
                 }
-                
+
                 XiaomiDotBadge()
             }
-            
+
             // Badged icons
             Text("Badged Icons", style = MaterialTheme.typography.titleMedium)
             Row(
@@ -289,7 +289,7 @@ fun XiaomiBadgesPreview() {
                         modifier = Modifier.size(24.dp)
                     )
                 }
-                
+
                 XiaomiBadgedBox(
                     badge = {
                         XiaomiNotificationBadge(count = 123)
@@ -301,7 +301,7 @@ fun XiaomiBadgesPreview() {
                         modifier = Modifier.size(24.dp)
                     )
                 }
-                
+
                 XiaomiBadgedBox(
                     badge = {
                         XiaomiDotBadge()
@@ -314,7 +314,7 @@ fun XiaomiBadgesPreview() {
                     )
                 }
             }
-            
+
             // Status badges
             Text("Status Badges", style = MaterialTheme.typography.titleMedium)
             Row(
@@ -326,7 +326,7 @@ fun XiaomiBadgesPreview() {
                 XiaomiStatusBadge("Error", BadgeStatus.Error)
                 XiaomiStatusBadge("Info", BadgeStatus.Info)
             }
-            
+
             // Custom badges
             Text("Custom Badges", style = MaterialTheme.typography.titleMedium)
             Row(
@@ -344,7 +344,7 @@ fun XiaomiBadgesPreview() {
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                     )
                 }
-                
+
                 XiaomiCustomBadge(
                     containerColor = MaterialTheme.colorScheme.tertiary,
                     shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp)
@@ -395,7 +395,7 @@ fun XiaomiBadgesDarkPreview() {
                         modifier = Modifier.size(24.dp)
                     )
                 }
-                
+
                 XiaomiStatusBadge("Online", BadgeStatus.Success)
                 XiaomiStatusBadge("Offline", BadgeStatus.Error)
             }

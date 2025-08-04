@@ -14,4 +14,4 @@ data class UserData(
     val unit: String? = null, // Optional unit for numeric values
     val timestamp: Date,
     val metadata: Map<String, Any> = emptyMap()
-) 
+)

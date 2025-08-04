@@ -27,10 +27,10 @@ import com.xiaomi.base.ui.kit.foundation.shapes.ComponentShapes
 
 /**
  * Xiaomi Base UI Kit Floating Action Button Component
- * 
+ *
  * A Material Design 3 floating action button implementation with Xiaomi design tokens.
  * FABs are used for the primary action in an application.
- * 
+ *
  * @param onClick Called when the FAB is clicked
  * @param modifier Modifier to be applied to the FAB
  * @param shape Defines the FAB's shape and corner radius
@@ -65,7 +65,7 @@ fun XiaomiFAB(
 
 /**
  * Xiaomi Small Floating Action Button
- * 
+ *
  * A smaller variant of the FAB for secondary actions.
  */
 @Composable
@@ -93,7 +93,7 @@ fun XiaomiSmallFAB(
 
 /**
  * Xiaomi Large Floating Action Button
- * 
+ *
  * A larger variant of the FAB for prominent primary actions.
  */
 @Composable
@@ -121,9 +121,9 @@ fun XiaomiLargeFAB(
 
 /**
  * Xiaomi Extended Floating Action Button
- * 
+ *
  * An extended FAB that includes both an icon and text label.
- * 
+ *
  * @param text The text label to display
  * @param icon The icon to display
  * @param onClick Called when the FAB is clicked
@@ -182,7 +182,7 @@ fun XiaomiFABsPreview() {
                     )
                 }
             )
-            
+
             // Small FAB
             XiaomiSmallFAB(
                 onClick = { },
@@ -194,7 +194,7 @@ fun XiaomiFABsPreview() {
                     )
                 }
             )
-            
+
             // Large FAB
             XiaomiLargeFAB(
                 onClick = { },
@@ -206,7 +206,7 @@ fun XiaomiFABsPreview() {
                     )
                 }
             )
-            
+
             // Extended FAB
             XiaomiExtendedFAB(
                 text = { Text("Create") },
@@ -239,7 +239,7 @@ fun XiaomiFABsDarkPreview() {
                     )
                 }
             )
-            
+
             XiaomiExtendedFAB(
                 text = { Text("Create") },
                 icon = {

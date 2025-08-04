@@ -14,24 +14,20 @@ data class FavoriteCategoryEntity(
      */
     @PrimaryKey
     val categoryId: Int,
-    
     /**
      * The name of the category.
      */
     val name: String,
-    
     /**
      * The description of the category.
      */
     val description: String?,
-    
     /**
      * The path to the image representing the category.
      */
     val imagePath: String?,
-    
     /**
      * The date when the category was added to favorites.
      */
-    val addedDate: Date = Date()
+    val addedDate: Date = Date(),
 )

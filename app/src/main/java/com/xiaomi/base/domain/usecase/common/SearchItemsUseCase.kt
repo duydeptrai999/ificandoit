@@ -26,7 +26,7 @@ class SearchItemsUseCase @Inject constructor(
         // TODO: Implement actual search when API supports it
         return itemRepository.getPopularItems()
     }
-    
+
     /**
      * Get items by category
      */
@@ -36,7 +36,7 @@ class SearchItemsUseCase @Inject constructor(
     ): Flow<PagingData<Item>> {
         return itemRepository.getItemsByCategory(categoryId)
     }
-    
+
     /**
      * Get items by status
      * Note: Using popular items as fallback until status filtering is implemented
@@ -48,7 +48,7 @@ class SearchItemsUseCase @Inject constructor(
         // TODO: Implement status filtering when repository supports it
         return itemRepository.getPopularItems()
     }
-    
+
     /**
      * Get trending items (based on score, views, recent activity)
      */
@@ -58,7 +58,7 @@ class SearchItemsUseCase @Inject constructor(
     ): Flow<PagingData<Item>> {
         return itemRepository.getTrendingItems()
     }
-    
+
     /**
      * Get featured/highlighted items
      * Note: Using popular items as fallback
@@ -66,7 +66,7 @@ class SearchItemsUseCase @Inject constructor(
     suspend fun getFeatured(): Flow<PagingData<Item>> {
         return itemRepository.getPopularItems()
     }
-    
+
     /**
      * Get recommended items for user
      * Note: Using top rated items as fallback
@@ -77,7 +77,7 @@ class SearchItemsUseCase @Inject constructor(
     ): Flow<PagingData<Item>> {
         return itemRepository.getTopRatedItems()
     }
-    
+
     /**
      * Get items by tags
      * Note: Using popular items as fallback
@@ -136,4 +136,4 @@ enum class TimeFrame {
 data class DateRange(
     val startDate: Long,
     val endDate: Long
-) 
+)

@@ -38,10 +38,10 @@ import com.xiaomi.base.ui.kit.foundation.XiaomiPreviewTheme
 
 /**
  * Xiaomi Base UI Kit Top App Bar
- * 
+ *
  * A Material Design 3 top app bar component with Xiaomi design tokens.
  * Provides navigation and actions for the current screen.
- * 
+ *
  * @param title The title to be displayed in the app bar
  * @param modifier Modifier to be applied to the app bar
  * @param navigationIcon Optional navigation icon at the start of the app bar
@@ -74,9 +74,9 @@ fun XiaomiTopAppBar(
 
 /**
  * Xiaomi Center Aligned Top App Bar
- * 
+ *
  * A top app bar with center-aligned title.
- * 
+ *
  * @param title The title to be displayed in the app bar
  * @param modifier Modifier to be applied to the app bar
  * @param navigationIcon Optional navigation icon at the start of the app bar
@@ -109,9 +109,9 @@ fun XiaomiCenterAlignedTopAppBar(
 
 /**
  * Xiaomi Medium Top App Bar
- * 
+ *
  * A medium-sized top app bar with larger title area.
- * 
+ *
  * @param title The title to be displayed in the app bar
  * @param modifier Modifier to be applied to the app bar
  * @param navigationIcon Optional navigation icon at the start of the app bar
@@ -144,9 +144,9 @@ fun XiaomiMediumTopAppBar(
 
 /**
  * Xiaomi Large Top App Bar
- * 
+ *
  * A large-sized top app bar with prominent title area.
- * 
+ *
  * @param title The title to be displayed in the app bar
  * @param modifier Modifier to be applied to the app bar
  * @param navigationIcon Optional navigation icon at the start of the app bar
@@ -179,9 +179,9 @@ fun XiaomiLargeTopAppBar(
 
 /**
  * Xiaomi Simple Top App Bar
- * 
+ *
  * A simplified top app bar with just title and optional back button.
- * 
+ *
  * @param title The title text to be displayed
  * @param onNavigationClick Callback for navigation icon click
  * @param modifier Modifier to be applied to the app bar
@@ -225,9 +225,9 @@ fun XiaomiSimpleTopAppBar(
 
 /**
  * Xiaomi Search Top App Bar
- * 
+ *
  * A top app bar optimized for search functionality.
- * 
+ *
  * @param title The title text to be displayed
  * @param onNavigationClick Callback for navigation icon click
  * @param onSearchClick Callback for search icon click
@@ -280,9 +280,9 @@ fun XiaomiSearchTopAppBar(
 
 /**
  * Xiaomi Menu Top App Bar
- * 
+ *
  * A top app bar with menu icon for navigation drawer.
- * 
+ *
  * @param title The title text to be displayed
  * @param onMenuClick Callback for menu icon click
  * @param modifier Modifier to be applied to the app bar
@@ -321,9 +321,9 @@ fun XiaomiMenuTopAppBar(
 
 /**
  * Xiaomi Action Top App Bar
- * 
+ *
  * A top app bar with common action patterns.
- * 
+ *
  * @param title The title text to be displayed
  * @param onNavigationClick Callback for navigation icon click
  * @param modifier Modifier to be applied to the app bar
@@ -380,9 +380,9 @@ fun XiaomiActionTopAppBar(
 
 /**
  * Xiaomi Modal Top App Bar
- * 
+ *
  * A top app bar for modal screens with close button.
- * 
+ *
  * @param title The title text to be displayed
  * @param onCloseClick Callback for close icon click
  * @param modifier Modifier to be applied to the app bar
@@ -433,13 +433,13 @@ fun XiaomiAppBarsPreview() {
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(16.dp)
             )
-            
+
             // Simple Top App Bar
             XiaomiSimpleTopAppBar(
                 title = "Simple App Bar",
                 onNavigationClick = { }
             )
-            
+
             // Center Aligned Top App Bar
             XiaomiCenterAlignedTopAppBar(
                 title = {
@@ -466,14 +466,14 @@ fun XiaomiAppBarsPreview() {
                     }
                 }
             )
-            
+
             // Search Top App Bar
             XiaomiSearchTopAppBar(
                 title = "Search App Bar",
                 onNavigationClick = { },
                 onSearchClick = { }
             )
-            
+
             // Menu Top App Bar
             XiaomiMenuTopAppBar(
                 title = "Menu App Bar",
@@ -487,7 +487,7 @@ fun XiaomiAppBarsPreview() {
                     }
                 }
             )
-            
+
             // Action Top App Bar
             XiaomiActionTopAppBar(
                 title = "Action App Bar",
@@ -504,7 +504,7 @@ fun XiaomiAppBarsPreview() {
                     }
                 }
             )
-            
+
             // Modal Top App Bar
             XiaomiModalTopAppBar(
                 title = "Modal App Bar",
@@ -552,9 +552,9 @@ fun XiaomiLargeAppBarsPreview() {
                     }
                 }
             )
-            
+
             androidx.compose.foundation.layout.Spacer(modifier = Modifier.padding(8.dp))
-            
+
             // Large Top App Bar
             XiaomiLargeTopAppBar(
                 title = {
@@ -597,7 +597,7 @@ fun XiaomiAppBarsDarkPreview() {
                 title = "Dark Theme",
                 onNavigationClick = { }
             )
-            
+
             XiaomiSearchTopAppBar(
                 title = "Search in Dark",
                 onSearchClick = { }

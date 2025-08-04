@@ -2,11 +2,11 @@ package com.xiaomi.base.ui.kit.templates
 
 /**
  * Xiaomi Templates - Pre-built Screen Templates
- * 
+ *
  * This file provides organized access to pre-built screen templates
  * that combine multiple components to create common UI patterns.
  * These templates serve as starting points for rapid development.
- * 
+ *
  * Inspired by ComposeX organization patterns for better developer experience.
  */
 
@@ -28,15 +28,15 @@ import com.xiaomi.base.ui.kit.foundation.spacing.spacing
 
 /**
  * Authentication Templates
- * 
+ *
  * Pre-built templates for authentication flows including
  * login, registration, password reset, and onboarding.
  */
 object XiaomiAuthTemplates {
-    
+
     /**
      * Basic Login Screen Template
-     * 
+     *
      * A simple login screen with email/password fields and login button.
      */
     @Composable
@@ -59,14 +59,14 @@ object XiaomiAuthTemplates {
                 style = MaterialTheme.typography.displaySmall,
                 color = MaterialTheme.colorScheme.primary
             )
-            
+
             Text(
                 text = "Sign in to your account",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = MaterialTheme.spacing.Small)
             )
-            
+
             // Form area (placeholder)
             XiaomiContainment.Cards.Basic(
                 modifier = Modifier.padding(vertical = MaterialTheme.spacing.XXL)
@@ -79,7 +79,7 @@ object XiaomiAuthTemplates {
                         text = "Email and password fields would go here",
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    
+
                     XiaomiActions.Buttons.Primary(
                         onClick = onLoginClick,
                         modifier = Modifier.fillMaxSize()
@@ -88,14 +88,14 @@ object XiaomiAuthTemplates {
                     }
                 }
             }
-            
+
             // Additional actions
             XiaomiActions.Buttons.Text(
                 onClick = onForgotPasswordClick
             ) {
                 Text("Forgot Password?")
             }
-            
+
             XiaomiActions.Buttons.Text(
                 onClick = onSignUpClick
             ) {
@@ -103,7 +103,7 @@ object XiaomiAuthTemplates {
             }
         }
     }
-    
+
     /**
      * Registration Screen Template
      */
@@ -125,14 +125,14 @@ object XiaomiAuthTemplates {
                 style = MaterialTheme.typography.displaySmall,
                 color = MaterialTheme.colorScheme.primary
             )
-            
+
             Text(
                 text = "Join us today",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = MaterialTheme.spacing.Small)
             )
-            
+
             // Registration form placeholder
             XiaomiContainment.Cards.Basic(
                 modifier = Modifier.padding(vertical = MaterialTheme.spacing.XXL)
@@ -145,7 +145,7 @@ object XiaomiAuthTemplates {
                         text = "Registration form fields would go here",
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    
+
                     XiaomiActions.Buttons.Primary(
                         onClick = onRegisterClick,
                         modifier = Modifier.fillMaxSize()
@@ -154,7 +154,7 @@ object XiaomiAuthTemplates {
                     }
                 }
             }
-            
+
             XiaomiActions.Buttons.Text(
                 onClick = onSignInClick
             ) {
@@ -166,15 +166,15 @@ object XiaomiAuthTemplates {
 
 /**
  * Dashboard Templates
- * 
+ *
  * Pre-built templates for dashboard and home screens
  * with various layouts and content organization patterns.
  */
 object XiaomiDashboardTemplates {
-    
+
     /**
      * Basic Dashboard Template
-     * 
+     *
      * A simple dashboard with header, stats cards, and content sections.
      */
     @Composable
@@ -204,7 +204,7 @@ object XiaomiDashboardTemplates {
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             // Stats cards
             Column(
                 verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.Medium)
@@ -224,7 +224,7 @@ object XiaomiDashboardTemplates {
                         )
                     }
                 }
-                
+
                 XiaomiContainment.Cards.Basic {
                     Column(
                         modifier = Modifier.padding(MaterialTheme.spacing.Large)
@@ -247,12 +247,12 @@ object XiaomiDashboardTemplates {
 
 /**
  * Onboarding Templates
- * 
+ *
  * Pre-built templates for user onboarding flows
  * including welcome screens, feature introductions, and setup wizards.
  */
 object XiaomiOnboardingTemplates {
-    
+
     /**
      * Welcome Screen Template
      */
@@ -274,14 +274,14 @@ object XiaomiOnboardingTemplates {
                 style = MaterialTheme.typography.displayMedium,
                 color = MaterialTheme.colorScheme.primary
             )
-            
+
             Text(
                 text = "Discover amazing features and possibilities",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = MaterialTheme.spacing.Medium)
             )
-            
+
             Column(
                 modifier = Modifier.padding(top = MaterialTheme.spacing.XXL),
                 verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.Medium)
@@ -292,7 +292,7 @@ object XiaomiOnboardingTemplates {
                 ) {
                     Text("Get Started")
                 }
-                
+
                 XiaomiActions.Buttons.Text(
                     onClick = onSkipClick
                 ) {
@@ -305,12 +305,12 @@ object XiaomiOnboardingTemplates {
 
 /**
  * Profile Templates
- * 
+ *
  * Pre-built templates for user profile screens
  * including profile viewing, editing, and settings.
  */
 object XiaomiProfileTemplates {
-    
+
     /**
      * Basic Profile Screen Template
      */
@@ -345,7 +345,7 @@ object XiaomiProfileTemplates {
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     XiaomiActions.Buttons.Outlined(
                         onClick = onEditClick,
                         modifier = Modifier.padding(top = MaterialTheme.spacing.Medium)
@@ -354,7 +354,7 @@ object XiaomiProfileTemplates {
                     }
                 }
             }
-            
+
             // Profile actions
             Column(
                 verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.Medium)
@@ -368,7 +368,7 @@ object XiaomiProfileTemplates {
                         modifier = Modifier.padding(MaterialTheme.spacing.Large)
                     )
                 }
-                
+
                 XiaomiActions.Buttons.Text(
                     onClick = onLogoutClick
                 ) {
@@ -384,11 +384,11 @@ object XiaomiProfileTemplates {
 
 /**
  * Template Registry
- * 
+ *
  * Central registry for all available templates
  */
 object XiaomiTemplateRegistry {
-    
+
     /**
      * Get all available template categories
      */
@@ -398,7 +398,7 @@ object XiaomiTemplateRegistry {
         "Onboarding" to listOf("Welcome", "Feature Tour", "Setup Wizard"),
         "Profile" to listOf("Basic Profile", "Detailed Profile", "Settings")
     )
-    
+
     /**
      * Get template count by category
      */

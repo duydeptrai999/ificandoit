@@ -231,7 +231,7 @@ data class DataGovernanceConfig(
 /**
  * Data Governance Component
  * Comprehensive data governance and management
- * 
+ *
  * @param config Data governance configuration
  * @param onAssetSelected Callback when data asset is selected
  * @param onPolicyAction Callback when policy action is taken
@@ -247,7 +247,7 @@ fun DataGovernanceComponent(
     var dataPolicies by remember { mutableStateOf<List<DataPolicy>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
     val context = LocalContext.current
-    
+
     LaunchedEffect(config) {
         isLoading = true
         delay(1000) // Simulate loading
@@ -255,7 +255,7 @@ fun DataGovernanceComponent(
         dataPolicies = generateMockDataPolicies()
         isLoading = false
     }
-    
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -264,9 +264,9 @@ fun DataGovernanceComponent(
             selectedTab = selectedTab,
             onTabSelected = { selectedTab = it }
         )
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         // Tab content
         if (isLoading) {
             LoadingIndicator()
@@ -298,7 +298,7 @@ fun DataGovernanceComponent(
 /**
  * Data Catalog Component
  * Browse and manage data assets
- * 
+ *
  * @param assets List of data assets
  * @param onAssetClick Callback when asset is clicked
  * @param onAssetAction Callback when action is taken on asset
@@ -312,13 +312,13 @@ fun DataCatalogComponent(
     var searchQuery by remember { mutableStateOf("") }
     var selectedClassification by remember { mutableStateOf<DataClassification?>(null) }
     var selectedType by remember { mutableStateOf<DataType?>(null) }
-    
+
     val filteredAssets = assets.filter { asset ->
         (searchQuery.isEmpty() || asset.name.contains(searchQuery, ignoreCase = true)) &&
         (selectedClassification == null || asset.classification == selectedClassification) &&
         (selectedType == null || asset.type == selectedType)
     }
-    
+
     Column {
         // Search and filters
         DataCatalogFilters(
@@ -329,9 +329,9 @@ fun DataCatalogComponent(
             selectedType = selectedType,
             onTypeSelected = { selectedType = it }
         )
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         // Assets list
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -350,7 +350,7 @@ fun DataCatalogComponent(
 /**
  * Data Policy Management Component
  * Manage data governance policies
- * 
+ *
  * @param policies List of data policies
  * @param onPolicyClick Callback when policy is clicked
  * @param onPolicyAction Callback when action is taken on policy
@@ -363,12 +363,12 @@ fun DataPolicyManagementComponent(
 ) {
     var selectedPolicyType by remember { mutableStateOf<PolicyType?>(null) }
     var selectedStatus by remember { mutableStateOf<PolicyStatus?>(null) }
-    
+
     val filteredPolicies = policies.filter { policy ->
         (selectedPolicyType == null || policy.type == selectedPolicyType) &&
         (selectedStatus == null || policy.status == selectedStatus)
     }
-    
+
     Column {
         // Policy filters
         DataPolicyFilters(
@@ -377,9 +377,9 @@ fun DataPolicyManagementComponent(
             selectedStatus = selectedStatus,
             onStatusSelected = { selectedStatus = it }
         )
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         // Policies list
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -398,7 +398,7 @@ fun DataPolicyManagementComponent(
 /**
  * Data Lineage Visualization Component
  * Visualize data flow and dependencies
- * 
+ *
  * @param assetId ID of the asset to show lineage for
  * @param lineage Data lineage information
  */
@@ -418,9 +418,9 @@ fun DataLineageVisualizationComponent(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             if (lineage != null) {
                 // Sources
                 if (lineage.sources.isNotEmpty()) {
@@ -429,9 +429,9 @@ fun DataLineageVisualizationComponent(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     lineage.sources.forEach { source ->
                         LineageNodeCard(
                             name = source.name,
@@ -440,10 +440,10 @@ fun DataLineageVisualizationComponent(
                             icon = Icons.Default.Input
                         )
                     }
-                    
+
                     Spacer(modifier = Modifier.height(16.dp))
                 }
-                
+
                 // Transformations
                 if (lineage.transformations.isNotEmpty()) {
                     Text(
@@ -451,9 +451,9 @@ fun DataLineageVisualizationComponent(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     lineage.transformations.forEach { transformation ->
                         LineageNodeCard(
                             name = transformation.name,
@@ -462,10 +462,10 @@ fun DataLineageVisualizationComponent(
                             icon = Icons.Default.Transform
                         )
                     }
-                    
+
                     Spacer(modifier = Modifier.height(16.dp))
                 }
-                
+
                 // Destinations
                 if (lineage.destinations.isNotEmpty()) {
                     Text(
@@ -473,9 +473,9 @@ fun DataLineageVisualizationComponent(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     lineage.destinations.forEach { destination ->
                         LineageNodeCard(
                             name = destination.name,
@@ -513,7 +513,7 @@ private fun DataGovernanceTabRow(
         "Quality",
         "Compliance"
     )
-    
+
     TabRow(
         selectedTabIndex = selectedTab
     ) {
@@ -563,7 +563,7 @@ private fun DataLineageTab(
     assets: List<DataAsset>
 ) {
     var selectedAsset by remember { mutableStateOf<DataAsset?>(null) }
-    
+
     Column {
         // Asset selector
         Card(
@@ -577,9 +577,9 @@ private fun DataLineageTab(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 LazyColumn(
                     modifier = Modifier.height(200.dp)
                 ) {
@@ -600,9 +600,9 @@ private fun DataLineageTab(
                 }
             }
         }
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         // Lineage visualization
         selectedAsset?.let { asset ->
             DataLineageVisualizationComponent(
@@ -629,7 +629,7 @@ private fun QualityMonitoringTab(
                 assets = assets
             )
         }
-        
+
         items(assets.take(10)) { asset ->
             DataQualityCard(
                 asset = asset,
@@ -657,7 +657,7 @@ private fun ComplianceTrackingTab(
                 policies = policies
             )
         }
-        
+
         items(assets.filter { it.complianceStatus != ComplianceStatus.COMPLIANT }) { asset ->
             ComplianceIssueCard(
                 asset = asset
@@ -697,18 +697,18 @@ private fun DataCatalogFilters(
                 },
                 modifier = Modifier.fillMaxWidth()
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             // Classification filter
             Text(
                 text = "Classification:",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -717,7 +717,7 @@ private fun DataCatalogFilters(
                     onClick = { onClassificationSelected(null) },
                     label = { Text("All") }
                 )
-                
+
                 DataClassification.values().take(4).forEach { classification ->
                     FilterChip(
                         selected = selectedClassification == classification,
@@ -726,18 +726,18 @@ private fun DataCatalogFilters(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             // Type filter
             Text(
                 text = "Type:",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -746,7 +746,7 @@ private fun DataCatalogFilters(
                     onClick = { onTypeSelected(null) },
                     label = { Text("All") }
                 )
-                
+
                 DataType.values().take(4).forEach { type ->
                     FilterChip(
                         selected = selectedType == type,
@@ -775,7 +775,7 @@ private fun DataAssetCard(
         DataClassification.RESTRICTED -> Color(0xFFFF5722)
         DataClassification.TOP_SECRET -> Color(0xFFD32F2F)
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         onClick = onClick
@@ -796,14 +796,14 @@ private fun DataAssetCard(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Text(
                         text = asset.description,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Badge(
                     containerColor = classificationColor
                 ) {
@@ -814,9 +814,9 @@ private fun DataAssetCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -827,14 +827,14 @@ private fun DataAssetCard(
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     Text(
                         text = "Type: ${asset.type.name.replace("_", " ")}",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Column(
                     horizontalAlignment = Alignment.End
                 ) {
@@ -843,7 +843,7 @@ private fun DataAssetCard(
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     Text(
                         text = formatFileSize(asset.size),
                         style = MaterialTheme.typography.bodySmall,
@@ -851,9 +851,9 @@ private fun DataAssetCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -866,7 +866,7 @@ private fun DataAssetCard(
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
-                
+
                 OutlinedButton(
                     onClick = { onAction("lineage") },
                     modifier = Modifier.height(32.dp)
@@ -876,7 +876,7 @@ private fun DataAssetCard(
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
-                
+
                 OutlinedButton(
                     onClick = { onAction("quality") },
                     modifier = Modifier.height(32.dp)
@@ -913,9 +913,9 @@ private fun DataPolicyFilters(
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -924,7 +924,7 @@ private fun DataPolicyFilters(
                     onClick = { onTypeSelected(null) },
                     label = { Text("All") }
                 )
-                
+
                 PolicyType.values().take(4).forEach { type ->
                     FilterChip(
                         selected = selectedType == type,
@@ -933,18 +933,18 @@ private fun DataPolicyFilters(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             // Status filter
             Text(
                 text = "Status:",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -953,7 +953,7 @@ private fun DataPolicyFilters(
                     onClick = { onStatusSelected(null) },
                     label = { Text("All") }
                 )
-                
+
                 PolicyStatus.values().forEach { status ->
                     FilterChip(
                         selected = selectedStatus == status,
@@ -982,7 +982,7 @@ private fun DataPolicyCard(
         PolicyStatus.DEPRECATED -> Color(0xFFFF5722)
         PolicyStatus.UNDER_REVIEW -> Color(0xFF2196F3)
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         onClick = onClick
@@ -1003,14 +1003,14 @@ private fun DataPolicyCard(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Text(
                         text = policy.description,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Badge(
                     containerColor = statusColor
                 ) {
@@ -1021,9 +1021,9 @@ private fun DataPolicyCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -1034,14 +1034,14 @@ private fun DataPolicyCard(
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     Text(
                         text = "Owner: ${policy.owner}",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Column(
                     horizontalAlignment = Alignment.End
                 ) {
@@ -1050,7 +1050,7 @@ private fun DataPolicyCard(
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     Text(
                         text = "Rules: ${policy.rules.size}",
                         style = MaterialTheme.typography.bodySmall,
@@ -1058,9 +1058,9 @@ private fun DataPolicyCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -1073,7 +1073,7 @@ private fun DataPolicyCard(
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
-                
+
                 if (policy.status == PolicyStatus.DRAFT) {
                     Button(
                         onClick = { onAction("activate") },
@@ -1085,7 +1085,7 @@ private fun DataPolicyCard(
                         )
                     }
                 }
-                
+
                 OutlinedButton(
                     onClick = { onAction("edit") },
                     modifier = Modifier.height(32.dp)
@@ -1130,9 +1130,9 @@ private fun LineageNodeCard(
                 modifier = Modifier.size(24.dp),
                 tint = MaterialTheme.colorScheme.primary
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -1141,7 +1141,7 @@ private fun LineageNodeCard(
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Medium
                 )
-                
+
                 Text(
                     text = "$type • $location",
                     style = MaterialTheme.typography.bodySmall,
@@ -1164,7 +1164,7 @@ private fun DataQualityOverviewCard(
     } else {
         0
     }
-    
+
     val qualityDistribution = assets.groupBy {
         when (it.qualityScore) {
             in 90..100 -> "Excellent"
@@ -1173,7 +1173,7 @@ private fun DataQualityOverviewCard(
             else -> "Poor"
         }
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -1188,9 +1188,9 @@ private fun DataQualityOverviewCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -1200,19 +1200,19 @@ private fun DataQualityOverviewCard(
                     value = "$averageQuality/100",
                     icon = Icons.Default.Assessment
                 )
-                
+
                 QualityMetric(
                     title = "Excellent",
                     value = (qualityDistribution["Excellent"]?.size ?: 0).toString(),
                     icon = Icons.Default.Star
                 )
-                
+
                 QualityMetric(
                     title = "Good",
                     value = (qualityDistribution["Good"]?.size ?: 0).toString(),
                     icon = Icons.Default.ThumbUp
                 )
-                
+
                 QualityMetric(
                     title = "Needs Work",
                     value = ((qualityDistribution["Fair"]?.size ?: 0) + (qualityDistribution["Poor"]?.size ?: 0)).toString(),
@@ -1241,16 +1241,16 @@ private fun QualityMetric(
             modifier = Modifier.size(24.dp),
             tint = MaterialTheme.colorScheme.onPrimaryContainer
         )
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         Text(
             text = value,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onPrimaryContainer
         )
-        
+
         Text(
             text = title,
             style = MaterialTheme.typography.labelSmall,
@@ -1283,7 +1283,7 @@ private fun DataQualityCard(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Text(
                     text = "${metrics.overallScore}/100",
                     style = MaterialTheme.typography.titleMedium,
@@ -1295,9 +1295,9 @@ private fun DataQualityCard(
                     }
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             // Quality dimensions
             QualityDimension("Completeness", metrics.completeness)
             QualityDimension("Accuracy", metrics.accuracy)
@@ -1328,7 +1328,7 @@ private fun QualityDimension(
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.width(80.dp)
         )
-        
+
         LinearProgressIndicator(
             progress = score / 100f,
             modifier = Modifier
@@ -1341,7 +1341,7 @@ private fun QualityDimension(
                 else -> MaterialTheme.colorScheme.error
             }
         )
-        
+
         Text(
             text = "$score%",
             style = MaterialTheme.typography.bodySmall,
@@ -1362,7 +1362,7 @@ private fun ComplianceOverviewCard(
     val compliantAssets = assets.count { it.complianceStatus == ComplianceStatus.COMPLIANT }
     val activePolicies = policies.count { it.status == PolicyStatus.ACTIVE }
     val nonCompliantAssets = assets.count { it.complianceStatus == ComplianceStatus.NON_COMPLIANT }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -1377,9 +1377,9 @@ private fun ComplianceOverviewCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -1389,13 +1389,13 @@ private fun ComplianceOverviewCard(
                     value = "$compliantAssets/${assets.size}",
                     icon = Icons.Default.CheckCircle
                 )
-                
+
                 ComplianceMetric(
                     title = "Active Policies",
                     value = activePolicies.toString(),
                     icon = Icons.Default.Policy
                 )
-                
+
                 ComplianceMetric(
                     title = "Issues",
                     value = nonCompliantAssets.toString(),
@@ -1424,16 +1424,16 @@ private fun ComplianceMetric(
             modifier = Modifier.size(24.dp),
             tint = MaterialTheme.colorScheme.onPrimaryContainer
         )
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         Text(
             text = value,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onPrimaryContainer
         )
-        
+
         Text(
             text = title,
             style = MaterialTheme.typography.labelSmall,
@@ -1456,7 +1456,7 @@ private fun ComplianceIssueCard(
         ComplianceStatus.UNDER_REVIEW -> MaterialTheme.colorScheme.primary
         else -> MaterialTheme.colorScheme.onSurfaceVariant
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -1475,9 +1475,9 @@ private fun ComplianceIssueCard(
                 modifier = Modifier.size(24.dp),
                 tint = statusColor
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -1486,14 +1486,14 @@ private fun ComplianceIssueCard(
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Medium
                 )
-                
+
                 Text(
                     text = "Status: ${asset.complianceStatus.name.replace("_", " ")}",
                     style = MaterialTheme.typography.bodySmall,
                     color = statusColor
                 )
             }
-            
+
             OutlinedButton(
                 onClick = { /* Handle remediation */ },
                 modifier = Modifier.height(32.dp)
@@ -1696,11 +1696,11 @@ private fun formatFileSize(bytes: Long): String {
     val units = arrayOf("B", "KB", "MB", "GB", "TB")
     var size = bytes.toDouble()
     var unitIndex = 0
-    
+
     while (size >= 1024 && unitIndex < units.size - 1) {
         size /= 1024
         unitIndex++
     }
-    
+
     return "%.1f %s".format(size, units[unitIndex])
 }

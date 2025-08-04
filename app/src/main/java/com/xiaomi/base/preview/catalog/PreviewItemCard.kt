@@ -87,13 +87,13 @@ fun CompactCardContent(item: PreviewItem) {
                 modifier = Modifier.size(20.dp),
                 tint = Color(item.category.color)
             )
-            
+
             DifficultyBadge(
                 difficulty = item.difficulty,
                 isCompact = true
             )
         }
-        
+
         // Title
         Text(
             text = item.title,
@@ -102,7 +102,7 @@ fun CompactCardContent(item: PreviewItem) {
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
-        
+
         // Description
         Text(
             text = item.description,
@@ -111,7 +111,7 @@ fun CompactCardContent(item: PreviewItem) {
             maxLines = 3,
             overflow = TextOverflow.Ellipsis
         )
-        
+
         // Footer with tags and estimated time
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -122,7 +122,7 @@ fun CompactCardContent(item: PreviewItem) {
                     isCompact = true
                 )
             }
-            
+
             if (item.estimatedTime.isNotEmpty()) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -194,14 +194,14 @@ fun ExpandedCardContent(item: PreviewItem) {
                     )
                 }
             }
-            
+
             Text(
                 text = item.category.displayName,
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         // Right side - Content
         Column(
             modifier = Modifier.weight(1f),
@@ -219,15 +219,15 @@ fun ExpandedCardContent(item: PreviewItem) {
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.weight(1f)
                 )
-                
+
                 Spacer(modifier = Modifier.width(8.dp))
-                
+
                 DifficultyBadge(
                     difficulty = item.difficulty,
                     isCompact = false
                 )
             }
-            
+
             // Description
             Text(
                 text = item.description,
@@ -236,7 +236,7 @@ fun ExpandedCardContent(item: PreviewItem) {
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
-            
+
             // Tags
             if (item.tags.isNotEmpty()) {
                 TagRow(
@@ -244,7 +244,7 @@ fun ExpandedCardContent(item: PreviewItem) {
                     isCompact = false
                 )
             }
-            
+
             // Footer with metadata
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -269,7 +269,7 @@ fun ExpandedCardContent(item: PreviewItem) {
                         )
                     }
                 }
-                
+
                 Icon(
                     imageVector = Icons.Default.ChevronRight,
                     contentDescription = "View details",
@@ -308,14 +308,14 @@ fun DifficultyBadge(
     isCompact: Boolean = false
 ) {
     val (backgroundColor, contentColor) = when (difficulty) {
-        PreviewDifficulty.BEGINNER -> 
+        PreviewDifficulty.BEGINNER ->
             MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer
-        PreviewDifficulty.INTERMEDIATE -> 
+        PreviewDifficulty.INTERMEDIATE ->
             MaterialTheme.colorScheme.secondaryContainer to MaterialTheme.colorScheme.onSecondaryContainer
-        PreviewDifficulty.ADVANCED -> 
+        PreviewDifficulty.ADVANCED ->
             MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer
     }
-    
+
     Surface(
         shape = RoundedCornerShape(if (isCompact) 6.dp else 8.dp),
         color = backgroundColor
@@ -350,7 +350,7 @@ fun TagRow(
 ) {
     val displayTags = tags.take(maxTags)
     val remainingCount = tags.size - displayTags.size
-    
+
     Row(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -361,7 +361,7 @@ fun TagRow(
                 isCompact = isCompact
             )
         }
-        
+
         if (remainingCount > 0) {
             Text(
                 text = "+$remainingCount",

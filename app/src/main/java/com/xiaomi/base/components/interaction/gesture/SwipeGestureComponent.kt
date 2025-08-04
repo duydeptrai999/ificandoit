@@ -52,7 +52,7 @@ data class SwipeGestureState(
 /**
  * Swipe Gesture Component
  * Detects swipe gestures and provides callbacks
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param config Configuration for swipe gesture detection
  * @param onSwipe Callback when a swipe is detected
@@ -73,10 +73,10 @@ fun SwipeGestureComponent(
 ) {
     var gestureState by remember { mutableStateOf(SwipeGestureState()) }
     var startPosition by remember { mutableStateOf(Offset.Zero) }
-    
+
     val density = LocalDensity.current
     val thresholdPx = with(density) { config.threshold.dp.toPx() }
-    
+
     Box(
         modifier = modifier.pointerInput(Unit) {
             detectDragGestures(
@@ -96,13 +96,13 @@ fun SwipeGestureComponent(
                         config
                     )
                     val distance = calculateSwipeDistance(finalOffset)
-                    
+
                     if (direction != SwipeDirection.NONE && distance >= thresholdPx) {
                         onSwipe?.invoke(direction, distance)
                     }
-                    
+
                     onSwipeEnd?.invoke(direction, distance)
-                    
+
                     gestureState = if (config.resetOnRelease) {
                         SwipeGestureState()
                     } else {
@@ -118,13 +118,13 @@ fun SwipeGestureComponent(
                     )
                     val distance = calculateSwipeDistance(newOffset)
                     val progress = (distance / thresholdPx).coerceIn(0f, 1f)
-                    
+
                     gestureState = gestureState.copy(
                         offset = newOffset,
                         direction = direction,
                         progress = progress
                     )
-                    
+
                     if (config.enableDrag) {
                         onDrag?.invoke(newOffset)
                     }
@@ -139,7 +139,7 @@ fun SwipeGestureComponent(
 /**
  * Swipe to Dismiss Component
  * Component that can be swiped to dismiss
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param dismissThreshold Threshold for dismissal (0.0 to 1.0)
  * @param directions Allowed swipe directions for dismissal
@@ -176,7 +176,7 @@ fun SwipeToDismissComponent(
 /**
  * Swipe to Action Component
  * Component that reveals actions when swiped
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param leftAction Action revealed when swiping right
  * @param rightAction Action revealed when swiping left
@@ -218,7 +218,7 @@ fun SwipeToActionComponent(
             } else if (state.offset.x < 0 && rightAction != null) {
                 rightAction()
             }
-            
+
             // Main content with offset
             Box(
                 modifier = Modifier.offset {
@@ -237,7 +237,7 @@ fun SwipeToActionComponent(
 /**
  * Pull to Refresh Component
  * Component that implements pull-to-refresh pattern
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param isRefreshing Whether refresh is currently active
  * @param onRefresh Callback when refresh is triggered
@@ -278,7 +278,7 @@ fun PullToRefreshComponent(
             if (state.direction == SwipeDirection.DOWN && state.progress > 0) {
                 refreshIndicator(state.progress)
             }
-            
+
             // Main content
             content()
         }
@@ -288,7 +288,7 @@ fun PullToRefreshComponent(
 /**
  * Directional Swipe Component
  * Component that handles specific directional swipes
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param direction Specific direction to detect
  * @param threshold Distance threshold for detection
@@ -330,7 +330,7 @@ private fun determineSwipeDirection(
 ): SwipeDirection {
     val absX = abs(offset.x)
     val absY = abs(offset.y)
-    
+
     return when {
         config.enableHorizontal && absX > absY && absX > threshold -> {
             if (offset.x > 0) SwipeDirection.RIGHT else SwipeDirection.LEFT
@@ -363,7 +363,7 @@ class SwipeGestureUtils {
             enableVertical = false,
             enableDrag = enableDrag
         )
-        
+
         /**
          * Create a swipe gesture config for vertical swipes only
          */
@@ -376,7 +376,7 @@ class SwipeGestureUtils {
             enableVertical = true,
             enableDrag = enableDrag
         )
-        
+
         /**
          * Create a swipe gesture config for dismiss gestures
          */
@@ -387,7 +387,7 @@ class SwipeGestureUtils {
             enableDrag = true,
             resetOnRelease = false
         )
-        
+
         /**
          * Calculate swipe velocity
          */

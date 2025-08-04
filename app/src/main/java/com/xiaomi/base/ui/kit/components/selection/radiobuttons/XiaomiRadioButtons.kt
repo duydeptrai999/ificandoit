@@ -43,9 +43,9 @@ data class XiaomiRadioOption(
 
 /**
  * Xiaomi Radio Button
- * 
+ *
  * A Material Design 3 radio button component with Xiaomi design tokens.
- * 
+ *
  * @param selected Whether the radio button is selected
  * @param onClick Callback when the radio button is clicked
  * @param modifier Modifier to be applied to the radio button
@@ -74,9 +74,9 @@ fun XiaomiRadioButton(
 
 /**
  * Xiaomi Labeled Radio Button
- * 
+ *
  * A radio button with an associated label that can be clicked to select the radio button.
- * 
+ *
  * @param selected Whether the radio button is selected
  * @param onClick Callback when the radio button is clicked
  * @param label The label text for the radio button
@@ -96,7 +96,7 @@ fun XiaomiLabeledRadioButton(
     labelFirst: Boolean = false
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    
+
     Row(
         modifier = modifier
             .selectable(
@@ -134,7 +134,7 @@ fun XiaomiLabeledRadioButton(
                     )
                 }
             }
-            
+
             XiaomiRadioButton(
                 selected = selected,
                 onClick = null,
@@ -148,7 +148,7 @@ fun XiaomiLabeledRadioButton(
                 enabled = enabled,
                 interactionSource = interactionSource
             )
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = label,
@@ -178,9 +178,9 @@ fun XiaomiLabeledRadioButton(
 
 /**
  * Xiaomi Radio Button Group
- * 
+ *
  * A group of radio buttons where only one can be selected at a time.
- * 
+ *
  * @param options List of radio button options
  * @param selectedOptionId The ID of the currently selected option
  * @param onOptionSelected Callback when an option is selected
@@ -210,7 +210,7 @@ fun XiaomiRadioButtonGroup(
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
-        
+
         options.forEach { option ->
             XiaomiLabeledRadioButton(
                 selected = selectedOptionId == option.id,
@@ -226,9 +226,9 @@ fun XiaomiRadioButtonGroup(
 
 /**
  * Xiaomi Horizontal Radio Button Group
- * 
+ *
  * A horizontal layout of radio buttons.
- * 
+ *
  * @param options List of radio button options
  * @param selectedOptionId The ID of the currently selected option
  * @param onOptionSelected Callback when an option is selected
@@ -261,9 +261,9 @@ fun XiaomiHorizontalRadioButtonGroup(
 
 /**
  * Xiaomi Compact Radio Button
- * 
+ *
  * A smaller radio button for use in dense layouts.
- * 
+ *
  * @param selected Whether the radio button is selected
  * @param onClick Callback when the radio button is clicked
  * @param modifier Modifier to be applied to the radio button
@@ -286,9 +286,9 @@ fun XiaomiCompactRadioButton(
 
 /**
  * Xiaomi Custom Color Radio Button
- * 
+ *
  * A radio button with custom colors.
- * 
+ *
  * @param selected Whether the radio button is selected
  * @param onClick Callback when the radio button is clicked
  * @param modifier Modifier to be applied to the radio button
@@ -319,9 +319,9 @@ fun XiaomiCustomColorRadioButton(
 
 /**
  * Xiaomi Card Radio Button
- * 
+ *
  * A radio button displayed as a selectable card.
- * 
+ *
  * @param selected Whether the radio button is selected
  * @param onClick Callback when the radio button is clicked
  * @param label The label text for the radio button
@@ -399,7 +399,7 @@ fun XiaomiCardRadioButton(
                     )
                 }
             }
-            
+
             XiaomiRadioButton(
                 selected = selected,
                 onClick = null,
@@ -425,7 +425,7 @@ fun XiaomiRadioButtonsPreview() {
                     "Radio Button Variants",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 // Basic radio buttons
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -452,7 +452,7 @@ fun XiaomiRadioButtonsPreview() {
                         )
                     }
                 }
-                
+
                 // Labeled radio buttons
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -460,23 +460,23 @@ fun XiaomiRadioButtonsPreview() {
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     var selectedOption by remember { mutableStateOf("option1") }
-                    
+
                     XiaomiLabeledRadioButton(
                         selected = selectedOption == "option1",
                         onClick = { selectedOption = "option1" },
                         label = "Option 1",
                         description = "This is the first option with description"
                     )
-                    
+
                     XiaomiLabeledRadioButton(
                         selected = selectedOption == "option2",
                         onClick = { selectedOption = "option2" },
                         label = "Option 2",
                         labelFirst = true
                     )
-                    
+
                     XiaomiLabeledRadioButton(
                         selected = selectedOption == "option3",
                         onClick = { selectedOption = "option3" },
@@ -484,7 +484,7 @@ fun XiaomiRadioButtonsPreview() {
                         enabled = false
                     )
                 }
-                
+
                 // Compact radio buttons
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -528,7 +528,7 @@ fun XiaomiRadioButtonGroupPreview() {
             ) {
                 var selectedTheme by remember { mutableStateOf("light") }
                 var selectedSize by remember { mutableStateOf("medium") }
-                
+
                 // Vertical group
                 XiaomiRadioButtonGroup(
                     options = listOf(
@@ -552,14 +552,14 @@ fun XiaomiRadioButtonGroupPreview() {
                     onOptionSelected = { selectedTheme = it },
                     title = "Theme Preference"
                 )
-                
+
                 // Horizontal group
                 Text(
                     "Text Size",
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Medium
                 )
-                
+
                 XiaomiHorizontalRadioButtonGroup(
                     options = listOf(
                         XiaomiRadioOption(id = "small", label = "Small"),
@@ -589,9 +589,9 @@ fun XiaomiCardRadioButtonsPreview() {
                     "Card Radio Buttons",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var selectedPlan by remember { mutableStateOf("basic") }
-                
+
                 XiaomiCardRadioButton(
                     selected = selectedPlan == "basic",
                     onClick = { selectedPlan = "basic" },
@@ -599,7 +599,7 @@ fun XiaomiCardRadioButtonsPreview() {
                     description = "Perfect for individuals and small teams",
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 XiaomiCardRadioButton(
                     selected = selectedPlan == "pro",
                     onClick = { selectedPlan = "pro" },
@@ -607,7 +607,7 @@ fun XiaomiCardRadioButtonsPreview() {
                     description = "Advanced features for growing businesses",
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 XiaomiCardRadioButton(
                     selected = selectedPlan == "enterprise",
                     onClick = { selectedPlan = "enterprise" },
@@ -635,16 +635,16 @@ fun XiaomiRadioButtonsDarkPreview() {
                     "Dark Theme Radio Buttons",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var selectedOption by remember { mutableStateOf("option1") }
-                
+
                 XiaomiLabeledRadioButton(
                     selected = selectedOption == "option1",
                     onClick = { selectedOption = "option1" },
                     label = "Dark mode option",
                     description = "Optimized for low-light environments"
                 )
-                
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {

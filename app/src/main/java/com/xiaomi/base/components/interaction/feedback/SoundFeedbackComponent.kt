@@ -36,7 +36,7 @@ enum class SoundFeedbackType {
 /**
  * Sound Feedback Component
  * Provides audio feedback for user interactions
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param soundType Type of sound feedback to provide
  * @param enabled Whether sound feedback is enabled
@@ -59,7 +59,7 @@ fun SoundFeedbackComponent(
     val soundController = rememberSoundFeedbackController()
     val interactionSource = remember { MutableInteractionSource() }
     val scope = rememberCoroutineScope()
-    
+
     val performSoundFeedback = {
         if (enabled) {
             scope.launch {
@@ -72,7 +72,7 @@ fun SoundFeedbackComponent(
             }
         }
     }
-    
+
     Box(
         modifier = modifier.then(
             if (onClick != null) {
@@ -96,7 +96,7 @@ fun SoundFeedbackComponent(
 /**
  * Sound Click Component
  * Simplified component for click sound feedback
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param enabled Whether sound feedback is enabled
  * @param volume Volume level (0.0 to 1.0)
@@ -124,7 +124,7 @@ fun SoundClickComponent(
 /**
  * Sound Success Component
  * Component for success sound feedback
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param enabled Whether sound feedback is enabled
  * @param volume Volume level (0.0 to 1.0)
@@ -152,7 +152,7 @@ fun SoundSuccessComponent(
 /**
  * Sound Error Component
  * Component for error sound feedback
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param enabled Whether sound feedback is enabled
  * @param volume Volume level (0.0 to 1.0)
@@ -185,32 +185,32 @@ class SoundFeedbackController(private val context: Context) {
     private var soundPool: SoundPool? = null
     private val soundMap = mutableMapOf<SoundFeedbackType, Int>()
     private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    
+
     init {
         initializeSoundPool()
         loadDefaultSounds()
     }
-    
+
     private fun initializeSoundPool() {
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
             .build()
-        
+
         soundPool = SoundPool.Builder()
             .setMaxStreams(10)
             .setAudioAttributes(audioAttributes)
             .build()
     }
-    
+
     private fun loadDefaultSounds() {
         // Load system sounds (these would be actual sound files in a real implementation)
         // For now, we'll use system sound effects
     }
-    
+
     suspend fun playSound(type: SoundFeedbackType, volume: Float = 1.0f) {
         if (!isSoundEnabled()) return
-        
+
         // Use system sound effects for basic feedback
         when (type) {
             SoundFeedbackType.CLICK, SoundFeedbackType.BUTTON_PRESS -> {
@@ -228,10 +228,10 @@ class SoundFeedbackController(private val context: Context) {
             }
         }
     }
-    
+
     suspend fun playCustomSound(soundRes: Int, volume: Float = 1.0f) {
         if (!isSoundEnabled()) return
-        
+
         soundPool?.let { pool ->
             val soundId = pool.load(context, soundRes, 1)
             pool.setOnLoadCompleteListener { _, _, status ->
@@ -241,7 +241,7 @@ class SoundFeedbackController(private val context: Context) {
             }
         }
     }
-    
+
     private fun playCustomSoundEffect(type: SoundFeedbackType, volume: Float) {
         // This would play custom sound effects based on type
         // For now, we'll use system sounds as fallback
@@ -279,16 +279,16 @@ class SoundFeedbackController(private val context: Context) {
             }
         }
     }
-    
+
     private fun isSoundEnabled(): Boolean {
         return audioManager.ringerMode != AudioManager.RINGER_MODE_SILENT
     }
-    
+
     fun release() {
         soundPool?.release()
         soundPool = null
     }
-    
+
     // Convenience methods
     suspend fun click(volume: Float = 1.0f) = playSound(SoundFeedbackType.CLICK, volume)
     suspend fun success(volume: Float = 1.0f) = playSound(SoundFeedbackType.SUCCESS, volume)
@@ -310,7 +310,7 @@ class SoundFeedbackController(private val context: Context) {
 @Composable
 fun rememberSoundFeedbackController(): SoundFeedbackController {
     val context = LocalContext.current
-    
+
     return remember {
         SoundFeedbackController(context)
     }
@@ -329,7 +329,7 @@ class SoundFeedbackUtils {
             val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
             return audioManager.ringerMode != AudioManager.RINGER_MODE_SILENT
         }
-        
+
         /**
          * Get system volume for sound effects
          */
@@ -339,7 +339,7 @@ class SoundFeedbackUtils {
             val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_SYSTEM)
             return if (maxVolume > 0) currentVolume.toFloat() / maxVolume else 0f
         }
-        
+
         /**
          * Play system sound effect
          */

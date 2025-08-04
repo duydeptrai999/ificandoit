@@ -181,7 +181,7 @@ data class PerformanceConfig(
 /**
  * Performance Optimization Component
  * Comprehensive performance monitoring and optimization
- * 
+ *
  * @param config Performance configuration
  * @param onIssueDetected Callback when performance issue is detected
  * @param onOptimizationApplied Callback when optimization is applied
@@ -199,35 +199,35 @@ fun PerformanceOptimizationComponent(
     var benchmarkResults by remember { mutableStateOf<List<PerformanceBenchmark>>(emptyList()) }
     var isMonitoring by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    
+
     LaunchedEffect(config) {
         if (config.enableRealTimeMonitoring) {
             isMonitoring = true
             while (isMonitoring) {
                 val newMetrics = collectPerformanceMetrics(context)
                 performanceMetrics = (performanceMetrics + newMetrics).takeLast(config.maxHistorySize)
-                
+
                 // Detect issues
                 if (config.enableIssueDetection) {
                     val issues = detectPerformanceIssues(newMetrics, config.alertThresholds)
                     issues.forEach { onIssueDetected(it) }
                     performanceIssues = (performanceIssues + issues).distinctBy { it.id }
                 }
-                
+
                 // Generate recommendations
                 optimizationRecommendations = generateOptimizationRecommendations(performanceIssues)
-                
+
                 delay(config.monitoringInterval)
             }
         }
     }
-    
+
     DisposableEffect(Unit) {
         onDispose {
             isMonitoring = false
         }
     }
-    
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -237,17 +237,17 @@ fun PerformanceOptimizationComponent(
             onToggleMonitoring = { isMonitoring = !isMonitoring },
             metrics = performanceMetrics.takeLast(10)
         )
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         // Tab navigation
         PerformanceTabRow(
             selectedTab = selectedTab,
             onTabSelected = { selectedTab = it }
         )
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         // Tab content
         when (selectedTab) {
             0 -> MetricsTab(
@@ -276,7 +276,7 @@ fun PerformanceOptimizationComponent(
 /**
  * Real-time Performance Monitor Component
  * Displays live performance metrics
- * 
+ *
  * @param metrics List of performance metrics
  * @param refreshInterval Refresh interval in milliseconds
  */
@@ -287,14 +287,14 @@ fun RealTimePerformanceMonitorComponent(
 ) {
     var currentMetrics by remember { mutableStateOf<List<PerformanceMetric>>(emptyList()) }
     val context = LocalContext.current
-    
+
     LaunchedEffect(refreshInterval) {
         while (true) {
             currentMetrics = collectPerformanceMetrics(context)
             delay(refreshInterval)
         }
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -306,9 +306,9 @@ fun RealTimePerformanceMonitorComponent(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -323,7 +323,7 @@ fun RealTimePerformanceMonitorComponent(
 /**
  * Performance Benchmark Component
  * Run and display performance benchmarks
- * 
+ *
  * @param onBenchmarkComplete Callback when benchmark completes
  */
 @Composable
@@ -334,7 +334,7 @@ fun PerformanceBenchmarkComponent(
     var currentBenchmark by remember { mutableStateOf<PerformanceBenchmark?>(null) }
     var progress by remember { mutableStateOf(0f) }
     val context = LocalContext.current
-    
+
     LaunchedEffect(isRunning) {
         if (isRunning) {
             val benchmark = runPerformanceBenchmark(context) { progressValue ->
@@ -346,7 +346,7 @@ fun PerformanceBenchmarkComponent(
             progress = 0f
         }
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -358,23 +358,23 @@ fun PerformanceBenchmarkComponent(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             if (isRunning) {
                 Column {
                     Text(
                         text = "Running benchmark...",
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     LinearProgressIndicator(
                         progress = progress,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    
+
                     Text(
                         text = "${(progress * 100).roundToInt()}%",
                         style = MaterialTheme.typography.bodySmall,
@@ -394,7 +394,7 @@ fun PerformanceBenchmarkComponent(
                     Text("Run Benchmark")
                 }
             }
-            
+
             currentBenchmark?.let { benchmark ->
                 Spacer(modifier = Modifier.height(16.dp))
                 BenchmarkResultCard(benchmark = benchmark)
@@ -406,7 +406,7 @@ fun PerformanceBenchmarkComponent(
 /**
  * Optimization Suggestions Component
  * Display and apply optimization recommendations
- * 
+ *
  * @param recommendations List of optimization recommendations
  * @param onApplyOptimization Callback when optimization is applied
  */
@@ -416,7 +416,7 @@ fun OptimizationSuggestionsComponent(
     onApplyOptimization: (OptimizationRecommendation) -> Unit = {}
 ) {
     val sortedRecommendations = recommendations.sortedByDescending { it.priority }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -428,9 +428,9 @@ fun OptimizationSuggestionsComponent(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             if (sortedRecommendations.isEmpty()) {
                 Text(
                     text = "No optimization suggestions available",
@@ -487,14 +487,14 @@ private fun PerformanceStatusHeader(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Text(
                     text = if (isMonitoring) "Active" else "Inactive",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -505,13 +505,13 @@ private fun PerformanceStatusHeader(
                         .map { it.value }
                         .average()
                         .takeIf { !it.isNaN() } ?: 0.0
-                    
+
                     Text(
                         text = "CPU: ${avgCpuUsage.roundToInt()}%",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
-                
+
                 Switch(
                     checked = isMonitoring,
                     onCheckedChange = { onToggleMonitoring() }
@@ -535,7 +535,7 @@ private fun PerformanceTabRow(
         "Optimizations",
         "Benchmarks"
     )
-    
+
     TabRow(
         selectedTabIndex = selectedTab
     ) {
@@ -557,14 +557,14 @@ private fun MetricsTab(
     metrics: List<PerformanceMetric>
 ) {
     val groupedMetrics = metrics.groupBy { it.type }
-    
+
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         item {
             MetricsOverviewCard(metrics = metrics)
         }
-        
+
         items(groupedMetrics.entries.toList()) { (type, typeMetrics) ->
             MetricTypeCard(
                 type = type,
@@ -588,7 +588,7 @@ private fun IssuesTab(
         item {
             IssuesOverviewCard(issues = issues)
         }
-        
+
         items(issues.sortedByDescending { it.severity.ordinal }) { issue ->
             PerformanceIssueCard(
                 issue = issue,
@@ -626,7 +626,7 @@ private fun BenchmarkTab(
         item {
             PerformanceBenchmarkComponent()
         }
-        
+
         items(benchmarks.sortedByDescending { it.executedAt }) { benchmark ->
             BenchmarkResultCard(benchmark = benchmark)
         }
@@ -643,7 +643,7 @@ private fun MetricsOverviewCard(
     val recentMetrics = metrics.takeLast(50)
     val criticalIssues = recentMetrics.count { it.severity == PerformanceSeverity.CRITICAL }
     val highIssues = recentMetrics.count { it.severity == PerformanceSeverity.HIGH }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -658,9 +658,9 @@ private fun MetricsOverviewCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -670,19 +670,19 @@ private fun MetricsOverviewCard(
                     value = recentMetrics.size.toString(),
                     icon = Icons.Default.Analytics
                 )
-                
+
                 OverviewMetric(
                     title = "Critical Issues",
                     value = criticalIssues.toString(),
                     icon = Icons.Default.Error
                 )
-                
+
                 OverviewMetric(
                     title = "High Issues",
                     value = highIssues.toString(),
                     icon = Icons.Default.Warning
                 )
-                
+
                 OverviewMetric(
                     title = "Health Score",
                     value = calculateHealthScore(recentMetrics).toString(),
@@ -711,16 +711,16 @@ private fun OverviewMetric(
             modifier = Modifier.size(24.dp),
             tint = MaterialTheme.colorScheme.onPrimaryContainer
         )
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         Text(
             text = value,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onPrimaryContainer
         )
-        
+
         Text(
             text = title,
             style = MaterialTheme.typography.labelSmall,
@@ -740,7 +740,7 @@ private fun MetricTypeCard(
 ) {
     val latestMetric = metrics.maxByOrNull { it.timestamp }
     val averageValue = metrics.map { it.value }.average().takeIf { !it.isNaN() } ?: 0.0
-    
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -757,7 +757,7 @@ private fun MetricTypeCard(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 latestMetric?.let { metric ->
                     Badge(
                         containerColor = getSeverityColor(metric.severity)
@@ -770,9 +770,9 @@ private fun MetricTypeCard(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             latestMetric?.let { metric ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -782,16 +782,16 @@ private fun MetricTypeCard(
                         text = "Current: ${metric.value.roundToInt()} ${metric.unit}",
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    
+
                     Text(
                         text = "Avg: ${averageValue.roundToInt()} ${metric.unit}",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 LinearProgressIndicator(
                     progress = (metric.value / metric.threshold).toFloat().coerceIn(0f, 1f),
                     modifier = Modifier.fillMaxWidth(),
@@ -828,14 +828,14 @@ private fun RealTimeMetricCard(
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Medium
                 )
-                
+
                 Text(
                     text = metric.source,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Column(
                 horizontalAlignment = Alignment.End
             ) {
@@ -845,7 +845,7 @@ private fun RealTimeMetricCard(
                     fontWeight = FontWeight.Bold,
                     color = getSeverityColor(metric.severity)
                 )
-                
+
                 Text(
                     text = metric.severity.name,
                     style = MaterialTheme.typography.labelSmall,
@@ -867,7 +867,7 @@ private fun IssuesOverviewCard(
     val criticalIssues = issues.count { it.severity == PerformanceSeverity.CRITICAL }
     val inProgressIssues = issues.count { it.status == IssueStatus.IN_PROGRESS }
     val resolvedIssues = issues.count { it.status == IssueStatus.RESOLVED }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -882,9 +882,9 @@ private fun IssuesOverviewCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -894,19 +894,19 @@ private fun IssuesOverviewCard(
                     value = openIssues.toString(),
                     icon = Icons.Default.ErrorOutline
                 )
-                
+
                 IssueMetric(
                     title = "Critical",
                     value = criticalIssues.toString(),
                     icon = Icons.Default.Error
                 )
-                
+
                 IssueMetric(
                     title = "In Progress",
                     value = inProgressIssues.toString(),
                     icon = Icons.Default.Pending
                 )
-                
+
                 IssueMetric(
                     title = "Resolved",
                     value = resolvedIssues.toString(),
@@ -934,15 +934,15 @@ private fun IssueMetric(
             contentDescription = title,
             modifier = Modifier.size(20.dp)
         )
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         Text(
             text = value,
             style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.Bold
         )
-        
+
         Text(
             text = title,
             style = MaterialTheme.typography.labelSmall,
@@ -981,14 +981,14 @@ private fun PerformanceIssueCard(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Text(
                         text = issue.description,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Badge(
                     containerColor = getSeverityColor(issue.severity)
                 ) {
@@ -999,23 +999,23 @@ private fun PerformanceIssueCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Text(
                 text = "Impact: ${issue.impact}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Text(
                 text = "Components: ${issue.affectedComponents.joinToString(", ")}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -1028,7 +1028,7 @@ private fun PerformanceIssueCard(
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
-                
+
                 if (issue.status == IssueStatus.OPEN) {
                     Button(
                         onClick = { onAction("resolve") },
@@ -1059,7 +1059,7 @@ private fun OptimizationRecommendationCard(
         ImplementationEffort.HIGH -> Color(0xFFFF5722)
         ImplementationEffort.VERY_HIGH -> Color(0xFFD32F2F)
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -1079,14 +1079,14 @@ private fun OptimizationRecommendationCard(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Text(
                         text = recommendation.description,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Column(
                     horizontalAlignment = Alignment.End
                 ) {
@@ -1095,7 +1095,7 @@ private fun OptimizationRecommendationCard(
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Badge(
                         containerColor = effortColor
                     ) {
@@ -1107,23 +1107,23 @@ private fun OptimizationRecommendationCard(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Text(
                 text = "Estimated Impact: ${recommendation.estimatedImpact}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Text(
                 text = "Strategy: ${recommendation.strategy.name.replace("_", " ")}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -1136,7 +1136,7 @@ private fun OptimizationRecommendationCard(
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
-                
+
                 Button(
                     onClick = onApply,
                     modifier = Modifier.height(32.dp)
@@ -1163,7 +1163,7 @@ private fun BenchmarkResultCard(
         benchmark.score >= 60 -> Color(0xFFFF9800)
         else -> MaterialTheme.colorScheme.error
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -1181,14 +1181,14 @@ private fun BenchmarkResultCard(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Text(
                         text = benchmark.description,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Text(
                     text = "${benchmark.score}/100",
                     style = MaterialTheme.typography.titleLarge,
@@ -1196,9 +1196,9 @@ private fun BenchmarkResultCard(
                     color = scoreColor
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -1208,14 +1208,14 @@ private fun BenchmarkResultCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = "Environment: ${benchmark.environment}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Text(
                 text = "Device: ${benchmark.deviceInfo.manufacturer} ${benchmark.deviceInfo.model}",
                 style = MaterialTheme.typography.bodySmall,
@@ -1247,7 +1247,7 @@ private fun getSeverityColor(severity: PerformanceSeverity): Color {
  */
 private fun calculateHealthScore(metrics: List<PerformanceMetric>): Int {
     if (metrics.isEmpty()) return 100
-    
+
     val severityWeights = mapOf(
         PerformanceSeverity.CRITICAL to 0.0,
         PerformanceSeverity.HIGH to 0.3,
@@ -1255,11 +1255,11 @@ private fun calculateHealthScore(metrics: List<PerformanceMetric>): Int {
         PerformanceSeverity.LOW to 0.8,
         PerformanceSeverity.INFO to 1.0
     )
-    
+
     val averageScore = metrics.map { metric ->
         severityWeights[metric.severity] ?: 0.5
     }.average()
-    
+
     return (averageScore * 100).roundToInt()
 }
 
@@ -1366,18 +1366,18 @@ private suspend fun runPerformanceBenchmark(
 ): PerformanceBenchmark {
     val startTime = System.currentTimeMillis()
     val metrics = mutableListOf<PerformanceMetric>()
-    
+
     // Simulate benchmark tests
     for (i in 1..10) {
         onProgress(i / 10f)
         delay(200)
-        
+
         metrics.addAll(collectPerformanceMetrics(context))
     }
-    
+
     val endTime = System.currentTimeMillis()
     val duration = endTime - startTime
-    
+
     return PerformanceBenchmark(
         id = "benchmark-${System.currentTimeMillis()}",
         name = "Performance Benchmark",

@@ -36,8 +36,8 @@ import kotlin.random.Random
 
 /**
  * Xiaomi Performance Components - Performance Monitoring UI
- * 
- * This file contains performance monitoring and system metrics components following 
+ *
+ * This file contains performance monitoring and system metrics components following
  * Material Design 3 principles with Xiaomi's design language. These components provide
  * visual representations of system performance, resource usage, and optimization tools.
  */
@@ -115,12 +115,12 @@ fun XiaomiPerformanceDashboard(
                 onOptimize = onOptimize
             )
         }
-        
+
         // System Information
         item {
             XiaomiSystemInfoCard(systemInfo = systemInfo)
         }
-        
+
         // Performance Metrics Grid
         items(metrics.chunked(2)) { metricPair ->
             Row(
@@ -134,7 +134,7 @@ fun XiaomiPerformanceDashboard(
                         modifier = Modifier.weight(1f)
                     )
                 }
-                
+
                 // Fill remaining space if odd number of metrics
                 if (metricPair.size == 1) {
                     Spacer(modifier = Modifier.weight(1f))
@@ -156,7 +156,7 @@ fun XiaomiPerformanceScore(
 ) {
     val averageScore = metrics.map { 1f - it.value }.average().toFloat()
     val scorePercentage = (averageScore * 100).toInt()
-    
+
     val status = when {
         scorePercentage >= 90 -> PerformanceStatus.EXCELLENT
         scorePercentage >= 75 -> PerformanceStatus.GOOD
@@ -164,7 +164,7 @@ fun XiaomiPerformanceScore(
         scorePercentage >= 40 -> PerformanceStatus.POOR
         else -> PerformanceStatus.CRITICAL
     }
-    
+
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -183,9 +183,9 @@ fun XiaomiPerformanceScore(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Circular Progress Score
             Box(
                 contentAlignment = Alignment.Center
@@ -196,7 +196,7 @@ fun XiaomiPerformanceScore(
                     strokeWidth = 12.dp,
                     color = getStatusColor(status)
                 )
-                
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -213,9 +213,9 @@ fun XiaomiPerformanceScore(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(20.dp))
-            
+
             Button(
                 onClick = onOptimize,
                 modifier = Modifier.fillMaxWidth(),
@@ -253,7 +253,7 @@ fun XiaomiPerformanceMetricCard(
                     PerformanceMetricType.GPU -> Icons.Default.Computer
         PerformanceMetricType.TEMPERATURE -> Icons.Default.Thermostat
     }
-    
+
     Card(
         onClick = onClick,
         modifier = modifier,
@@ -279,7 +279,7 @@ fun XiaomiPerformanceMetricCard(
                     tint = getStatusColor(metric.status),
                     modifier = Modifier.size(24.dp)
                 )
-                
+
                 Text(
                     text = "${(metric.value * 100).toInt()}${metric.unit}",
                     style = MaterialTheme.typography.titleMedium,
@@ -287,18 +287,18 @@ fun XiaomiPerformanceMetricCard(
                     color = getStatusColor(metric.status)
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = metric.label,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             LinearProgressIndicator(
                 progress = metric.value,
                 modifier = Modifier.fillMaxWidth(),
@@ -344,9 +344,9 @@ fun XiaomiSystemInfoCard(
                     fontWeight = FontWeight.Bold
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -372,7 +372,7 @@ fun XiaomiPerformanceChart(
     modifier: Modifier = Modifier
 ) {
     val chartColor = MaterialTheme.colorScheme.primary
-    
+
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -392,16 +392,16 @@ fun XiaomiPerformanceChart(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Text(
                     text = "Last 24h",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Canvas(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -437,14 +437,14 @@ fun XiaomiCircularProgress(
         ),
         label = "progress"
     )
-    
+
     Canvas(
         modifier = modifier.size(size)
     ) {
         val strokeWidthPx = strokeWidth.toPx()
         val radius = (size.toPx() - strokeWidthPx) / 2
         val center = Offset(size.toPx() / 2, size.toPx() / 2)
-        
+
         // Background circle
         drawCircle(
             color = backgroundColor,
@@ -452,7 +452,7 @@ fun XiaomiCircularProgress(
             center = center,
             style = Stroke(width = strokeWidthPx, cap = StrokeCap.Round)
         )
-        
+
         // Progress arc
         drawArc(
             color = color,
@@ -477,38 +477,38 @@ fun DrawScope.drawPerformanceChart(
     color: Color
 ) {
     if (dataPoints.size < 2) return
-    
+
     val maxValue = dataPoints.maxOfOrNull { it.value } ?: 1f
     val minValue = dataPoints.minOfOrNull { it.value } ?: 0f
     val valueRange = maxValue - minValue
-    
+
     val path = Path()
     val stepX = size.width / (dataPoints.size - 1)
-    
+
     dataPoints.forEachIndexed { index, point ->
         val x = index * stepX
         val normalizedValue = if (valueRange > 0) (point.value - minValue) / valueRange else 0.5f
         val y = size.height - (normalizedValue * size.height)
-        
+
         if (index == 0) {
             path.moveTo(x, y)
         } else {
             path.lineTo(x, y)
         }
     }
-    
+
     drawPath(
         path = path,
         color = color,
         style = Stroke(width = 3.dp.toPx(), cap = StrokeCap.Round)
     )
-    
+
     // Draw data points
     dataPoints.forEachIndexed { index, point ->
         val x = index * stepX
         val normalizedValue = if (valueRange > 0) (point.value - minValue) / valueRange else 0.5f
         val y = size.height - (normalizedValue * size.height)
-        
+
         drawCircle(
             color = color,
             radius = 4.dp.toPx(),
@@ -569,7 +569,7 @@ fun XiaomiPerformanceDashboardPreview() {
                 PerformanceMetric(PerformanceMetricType.BATTERY, 0.23f, "Battery Usage", "%", PerformanceStatus.EXCELLENT),
                 PerformanceMetric(PerformanceMetricType.STORAGE, 0.78f, "Storage Usage", "%", PerformanceStatus.POOR)
             )
-            
+
             val sampleSystemInfo = SystemInfo(
                 deviceName = "Xiaomi 13 Pro",
                 osVersion = "Android 14",
@@ -578,7 +578,7 @@ fun XiaomiPerformanceDashboardPreview() {
                 cpuCores = 8,
                 batteryLevel = 85
             )
-            
+
             XiaomiPerformanceDashboard(
                 metrics = sampleMetrics,
                 systemInfo = sampleSystemInfo
@@ -602,12 +602,12 @@ fun XiaomiPerformanceChartPreview() {
                         value = 0.3f + Random.nextFloat() * 0.4f
                     )
                 }
-                
+
                 XiaomiPerformanceChart(
                     dataPoints = sampleData,
                     metricType = PerformanceMetricType.CPU
                 )
-                
+
                 XiaomiPerformanceChart(
                     dataPoints = sampleData.map { it.copy(value = it.value * 1.2f) },
                     metricType = PerformanceMetricType.MEMORY
@@ -627,7 +627,7 @@ fun XiaomiPerformanceMetricsPreview() {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text("Performance Metrics")
-                
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
@@ -641,7 +641,7 @@ fun XiaomiPerformanceMetricsPreview() {
                         ),
                         modifier = Modifier.weight(1f)
                     )
-                    
+
                     XiaomiPerformanceMetricCard(
                         metric = PerformanceMetric(
                             PerformanceMetricType.MEMORY,
@@ -653,7 +653,7 @@ fun XiaomiPerformanceMetricsPreview() {
                         modifier = Modifier.weight(1f)
                     )
                 }
-                
+
                 XiaomiCircularProgress(
                     progress = 0.75f,
                     size = 100.dp
@@ -673,7 +673,7 @@ fun XiaomiPerformanceDarkPreview() {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text("Dark Theme Performance")
-                
+
                 val sampleSystemInfo = SystemInfo(
                     deviceName = "Xiaomi 13 Pro",
                     osVersion = "Android 14",
@@ -682,9 +682,9 @@ fun XiaomiPerformanceDarkPreview() {
                     cpuCores = 8,
                     batteryLevel = 85
                 )
-                
+
                 XiaomiSystemInfoCard(systemInfo = sampleSystemInfo)
-                
+
                 XiaomiCircularProgress(
                     progress = 0.85f,
                     size = 80.dp

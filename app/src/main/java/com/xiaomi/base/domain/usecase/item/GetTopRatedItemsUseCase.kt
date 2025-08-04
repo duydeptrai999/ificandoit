@@ -11,15 +11,17 @@ import javax.inject.Inject
  *
  * @property itemRepository The repository for item operations.
  */
-class GetTopRatedItemsUseCase @Inject constructor(
-    private val itemRepository: ItemRepository
-) {
-    /**
-     * Execute the use case to get a paginated list of top rated items.
-     *
-     * @return A Flow emitting PagingData of top rated items.
-     */
-    operator fun invoke(): Flow<PagingData<Item>> {
-        return itemRepository.getTopRatedItems()
+class GetTopRatedItemsUseCase
+    @Inject
+    constructor(
+        private val itemRepository: ItemRepository,
+    ) {
+        /**
+         * Execute the use case to get a paginated list of top rated items.
+         *
+         * @return A Flow emitting PagingData of top rated items.
+         */
+        operator fun invoke(): Flow<PagingData<Item>> {
+            return itemRepository.getTopRatedItems()
+        }
     }
-}

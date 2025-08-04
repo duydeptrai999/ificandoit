@@ -51,16 +51,16 @@ fun BiometricAuthCard(
                     tint = if (isAuthenticationEnabled) Blue else Color.Gray,
                     modifier = Modifier.size(32.dp)
                 )
-                
+
                 Spacer(modifier = Modifier.width(12.dp))
-                
+
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = "Biometric Authentication",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     if (lastAuthenticationTime != null) {
                         Text(
                             text = "Last authenticated: $lastAuthenticationTime",
@@ -69,7 +69,7 @@ fun BiometricAuthCard(
                         )
                     }
                 }
-                
+
                 IconButton(onClick = onSettingsClicked) {
                     Icon(
                         imageVector = Icons.Default.Settings,
@@ -78,9 +78,9 @@ fun BiometricAuthCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -98,7 +98,7 @@ fun BiometricAuthCard(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("Authenticate")
                 }
-                
+
                 OutlinedButton(
                     onClick = onSettingsClicked,
                     modifier = Modifier.weight(1f)
@@ -140,9 +140,9 @@ fun BiometricStatusCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             BiometricMethodRow(
                 icon = Icons.Default.Fingerprint,
                 title = "Fingerprint",
@@ -150,9 +150,9 @@ fun BiometricStatusCard(
                 enabled = fingerprintEnabled,
                 onToggle = onToggleFingerprint
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             BiometricMethodRow(
                 icon = Icons.Default.Face,
                 title = "Face Unlock",
@@ -160,9 +160,9 @@ fun BiometricStatusCard(
                 enabled = faceUnlockEnabled,
                 onToggle = onToggleFaceUnlock
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             BiometricMethodRow(
                 icon = Icons.Default.RecordVoiceOver,
                 title = "Voice Recognition",
@@ -202,9 +202,9 @@ fun BiometricMethodRow(
                 modifier = Modifier.size(20.dp)
             )
         }
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
@@ -217,7 +217,7 @@ fun BiometricMethodRow(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         Switch(
             checked = enabled,
             onCheckedChange = onToggle
@@ -249,18 +249,18 @@ fun BiometricSecurityCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Security Level
             Text(
                 text = "Security Level",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -273,9 +273,9 @@ fun BiometricSecurityCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Encryption Toggle
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -298,9 +298,9 @@ fun BiometricSecurityCard(
                     onCheckedChange = onToggleEncryption
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             // Fallback Toggle
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -339,21 +339,21 @@ fun SecurityLevelChip(
         selected && level == "Low" -> Red.copy(alpha = 0.1f)
         else -> Color.Transparent
     }
-    
+
     val borderColor = when {
         selected && level == "High" -> Green
         selected && level == "Medium" -> Orange
         selected && level == "Low" -> Red
         else -> Color.Gray.copy(alpha = 0.3f)
     }
-    
+
     val textColor = when {
         selected && level == "High" -> Green
         selected && level == "Medium" -> Orange
         selected && level == "Low" -> Red
         else -> MaterialTheme.colorScheme.onSurface
     }
-    
+
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
@@ -376,9 +376,9 @@ class BiometricAuthenticationHelper(
     private val activity: FragmentActivity,
     private val executor: Executor
 ) {
-    
+
     private var biometricPrompt: BiometricPrompt? = null
-    
+
     fun setupBiometricPrompt(
         onAuthenticationSucceeded: (BiometricPrompt.AuthenticationResult) -> Unit,
         onAuthenticationError: (Int, CharSequence) -> Unit,
@@ -389,21 +389,21 @@ class BiometricAuthenticationHelper(
                 super.onAuthenticationSucceeded(result)
                 onAuthenticationSucceeded(result)
             }
-            
+
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
                 onAuthenticationError(errorCode, errString)
             }
-            
+
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
                 onAuthenticationFailed()
             }
         }
-        
+
         biometricPrompt = BiometricPrompt(activity as androidx.fragment.app.FragmentActivity, executor, authenticationCallback)
     }
-    
+
     fun authenticate(
         title: String = "Biometric Authentication",
         subtitle: String = "Use your biometric credential to authenticate",
@@ -416,10 +416,10 @@ class BiometricAuthenticationHelper(
             .setDescription(description)
             .setNegativeButtonText(negativeButtonText)
             .build()
-        
+
         biometricPrompt?.authenticate(promptInfo)
     }
-    
+
     fun authenticateWithCrypto(
         cryptoObject: BiometricPrompt.CryptoObject,
         title: String = "Biometric Authentication",
@@ -433,7 +433,7 @@ class BiometricAuthenticationHelper(
             .setDescription(description)
             .setNegativeButtonText(negativeButtonText)
             .build()
-        
+
         biometricPrompt?.authenticate(promptInfo, cryptoObject)
     }
 }
@@ -450,7 +450,7 @@ fun BiometricStatusIndicator(
         !isEnrolled -> Triple(Orange, Icons.Default.Warning, "Not Enrolled")
         else -> Triple(Green, Icons.Default.CheckCircle, "Ready")
     }
-    
+
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
@@ -461,9 +461,9 @@ fun BiometricStatusIndicator(
             tint = color,
             modifier = Modifier.size(16.dp)
         )
-        
+
         Spacer(modifier = Modifier.width(4.dp))
-        
+
         Text(
             text = text,
             style = MaterialTheme.typography.bodySmall,
@@ -495,9 +495,9 @@ fun BiometricEnrollmentCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Fingerprint Enrollment
             EnrollmentMethodCard(
                 icon = Icons.Default.Fingerprint,
@@ -506,9 +506,9 @@ fun BiometricEnrollmentCard(
                 enrolled = fingerprintEnrolled,
                 onEnroll = onEnrollFingerprint
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             // Face Enrollment
             EnrollmentMethodCard(
                 icon = Icons.Default.Face,
@@ -560,9 +560,9 @@ fun EnrollmentMethodCard(
                     modifier = Modifier.size(20.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = title,
@@ -575,7 +575,7 @@ fun EnrollmentMethodCard(
                     color = if (enrolled) Green else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             if (!enrolled) {
                 Button(
                     onClick = onEnroll,

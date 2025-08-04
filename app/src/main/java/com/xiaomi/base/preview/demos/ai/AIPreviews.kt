@@ -46,7 +46,7 @@ fun registerAIPreviews() {
             content = { AIChatbotPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "voice_assistant",
@@ -60,7 +60,7 @@ fun registerAIPreviews() {
             content = { VoiceAssistantPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "image_recognition",
@@ -74,7 +74,7 @@ fun registerAIPreviews() {
             content = { ImageRecognitionPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "ai_writing_assistant",
@@ -88,7 +88,7 @@ fun registerAIPreviews() {
             content = { AIWritingAssistantPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "ai_recommendation",
@@ -120,10 +120,10 @@ fun AIChatbotPreview() {
                     ChatMessage("It's a mobile app development project", isUser = true, timestamp = "10:32 AM")
                 )
             }
-            
+
             var isTyping by remember { mutableStateOf(false) }
             var newMessage by remember { mutableStateOf("") }
-            
+
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
@@ -155,9 +155,9 @@ fun AIChatbotPreview() {
                                 )
                             }
                         }
-                        
+
                         Spacer(modifier = Modifier.width(12.dp))
-                        
+
                         Column {
                             Text(
                                 text = "AI Assistant",
@@ -173,7 +173,7 @@ fun AIChatbotPreview() {
                         }
                     }
                 }
-                
+
                 // Messages
                 LazyColumn(
                     modifier = Modifier
@@ -185,14 +185,14 @@ fun AIChatbotPreview() {
                     items(messages) { message ->
                         ChatMessageBubble(message = message)
                     }
-                    
+
                     if (isTyping) {
                         item {
                             TypingIndicator()
                         }
                     }
                 }
-                
+
                 // Quick suggestions
                 LazyRow(
                     contentPadding = PaddingValues(horizontal = 16.dp),
@@ -216,9 +216,9 @@ fun AIChatbotPreview() {
                         }
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 // Input field
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -235,9 +235,9 @@ fun AIChatbotPreview() {
                             modifier = Modifier.weight(1f),
                             shape = RoundedCornerShape(24.dp)
                         )
-                        
+
                         Spacer(modifier = Modifier.width(8.dp))
-                        
+
                         FloatingActionButton(
                             onClick = {
                                 if (newMessage.isNotBlank()) {
@@ -272,7 +272,7 @@ fun VoiceAssistantPreview() {
             var isProcessing by remember { mutableStateOf(false) }
             var recognizedText by remember { mutableStateOf("") }
             var response by remember { mutableStateOf("") }
-            
+
             InteractiveDemo(
                 title = "AI Writing Assistant",
                 description = "Smart writing suggestions and improvements",
@@ -291,7 +291,7 @@ fun VoiceAssistantPreview() {
                         ) {
                             Text(if (isListening) "Stop" else "Start Listening")
                         }
-                        
+
                         Button(
                             onClick = {
                                 isProcessing = false
@@ -321,7 +321,7 @@ fun VoiceAssistantPreview() {
                             isActive = isListening,
                             modifier = Modifier.height(80.dp)
                         )
-                        
+
                         // Microphone button
                         val micScale by animateFloatAsState(
                             targetValue = if (isListening) 1.2f else 1f,
@@ -330,7 +330,7 @@ fun VoiceAssistantPreview() {
                                 repeatMode = RepeatMode.Reverse
                             )
                         )
-                        
+
                         FloatingActionButton(
                             onClick = { isListening = !isListening },
                             modifier = Modifier
@@ -348,7 +348,7 @@ fun VoiceAssistantPreview() {
                                 tint = Color.White
                             )
                         }
-                        
+
                         // Status text
                         Text(
                             text = when {
@@ -360,7 +360,7 @@ fun VoiceAssistantPreview() {
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        
+
                         // Recognized text
                         if (recognizedText.isNotEmpty()) {
                             Card(
@@ -385,7 +385,7 @@ fun VoiceAssistantPreview() {
                                 }
                             }
                         }
-                        
+
                         // AI response
                         if (response.isNotEmpty()) {
                             Card(
@@ -439,7 +439,7 @@ fun ImageRecognitionPreview() {
         ) {
             var isAnalyzing by remember { mutableStateOf(false) }
             var analysisComplete by remember { mutableStateOf(false) }
-            
+
             val detectedObjects = remember {
                 listOf(
                     DetectedObject("Person", 0.95f, "Standing in the center"),
@@ -448,7 +448,7 @@ fun ImageRecognitionPreview() {
                     DetectedObject("Car", 0.78f, "Blue sedan, partially visible")
                 )
             }
-            
+
             InteractiveDemo(
                 title = "AI Image Analysis",
                 description = "Real-time object detection and analysis",
@@ -464,7 +464,7 @@ fun ImageRecognitionPreview() {
                         ) {
                             Text("Analyze Image")
                         }
-                        
+
                         Button(
                             onClick = {
                                 isAnalyzing = false
@@ -474,7 +474,7 @@ fun ImageRecognitionPreview() {
                         ) {
                             Text("Complete Analysis")
                         }
-                        
+
                         Button(
                             onClick = {
                                 isAnalyzing = false
@@ -538,9 +538,9 @@ fun ImageRecognitionPreview() {
                                 }
                             }
                         }
-                        
+
                         Spacer(modifier = Modifier.height(20.dp))
-                        
+
                         // Analysis results
                         if (analysisComplete) {
                             Text(
@@ -548,16 +548,16 @@ fun ImageRecognitionPreview() {
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold
                             )
-                            
+
                             Spacer(modifier = Modifier.height(12.dp))
-                            
+
                             detectedObjects.forEach { obj ->
                                 DetectedObjectItem(obj)
                                 Spacer(modifier = Modifier.height(8.dp))
                             }
-                            
+
                             Spacer(modifier = Modifier.height(16.dp))
-                            
+
                             // Summary
                             Card(
                                 colors = CardDefaults.cardColors(
@@ -607,7 +607,7 @@ fun AIWritingAssistantPreview() {
         ) {
             var text by remember { mutableStateOf("The quick brown fox jumps over the lazy dog. This sentence contains every letter of the alphabet.") }
             var showSuggestions by remember { mutableStateOf(true) }
-            
+
             val suggestions = remember {
                 listOf(
                     WritingSuggestion("Grammar", "Consider using 'leaps' instead of 'jumps' for better flow", SuggestionType.GRAMMAR),
@@ -615,7 +615,7 @@ fun AIWritingAssistantPreview() {
                     WritingSuggestion("Clarity", "Consider breaking this into two sentences for better readability", SuggestionType.CLARITY)
                 )
             }
-            
+
             InteractiveDemo(
                 title = "Writing Assistant",
                 description = "AI-powered writing suggestions and improvements",
@@ -628,7 +628,7 @@ fun AIWritingAssistantPreview() {
                         ) {
                             Text(if (showSuggestions) "Hide Suggestions" else "Show Suggestions")
                         }
-                        
+
                         Button(
                             onClick = {
                                 text = "The agile brown fox leaps gracefully over the sleepy dog."
@@ -654,9 +654,9 @@ fun AIWritingAssistantPreview() {
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold
                             )
-                            
+
                             Spacer(modifier = Modifier.height(12.dp))
-                            
+
                             OutlinedTextField(
                                 value = text,
                                 onValueChange = { text = it },
@@ -676,7 +676,7 @@ fun AIWritingAssistantPreview() {
                             )
                         }
                     }
-                    
+
                     // AI suggestions
                     if (showSuggestions) {
                         Card(
@@ -700,9 +700,9 @@ fun AIWritingAssistantPreview() {
                                         fontWeight = FontWeight.SemiBold
                                     )
                                 }
-                                
+
                                 Spacer(modifier = Modifier.height(12.dp))
-                                
+
                                 suggestions.forEach { suggestion ->
                                     WritingSuggestionItem(suggestion)
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -710,7 +710,7 @@ fun AIWritingAssistantPreview() {
                             }
                         }
                     }
-                    
+
                     // Writing stats
                     Card(
                         modifier = Modifier.fillMaxWidth(),
@@ -766,7 +766,7 @@ fun AIRecommendationPreview() {
                     )
                 )
             }
-            
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
@@ -803,7 +803,7 @@ fun AIRecommendationPreview() {
                         }
                     }
                 }
-                
+
                 items(recommendations) { recommendation ->
                     RecommendationCard(recommendation)
                 }
@@ -917,7 +917,7 @@ fun TypingIndicator() {
                             repeatMode = RepeatMode.Reverse
                         )
                     )
-                    
+
                     Box(
                         modifier = Modifier
                             .size(8.dp)
@@ -926,7 +926,7 @@ fun TypingIndicator() {
                                 CircleShape
                             )
                     )
-                    
+
                     if (index < 2) {
                         Spacer(modifier = Modifier.width(4.dp))
                     }
@@ -954,7 +954,7 @@ fun VoiceWaveform(
                     repeatMode = RepeatMode.Reverse
                 )
             )
-            
+
             Box(
                 modifier = Modifier
                     .width(3.dp)
@@ -964,7 +964,7 @@ fun VoiceWaveform(
                         RoundedCornerShape(1.5.dp)
                     )
             )
-            
+
             if (index < 19) {
                 Spacer(modifier = Modifier.width(2.dp))
             }
@@ -999,7 +999,7 @@ fun DetectedObjectItem(obj: DetectedObject) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Surface(
                 shape = RoundedCornerShape(12.dp),
                 color = when {
@@ -1042,7 +1042,7 @@ fun WritingSuggestionItem(suggestion: WritingSuggestion) {
                 SuggestionType.STYLE -> Color(0xFF2196F3)
                 SuggestionType.CLARITY -> Color(0xFF4CAF50)
             }
-            
+
             Surface(
                 shape = RoundedCornerShape(4.dp),
                 color = typeColor.copy(alpha = 0.1f),
@@ -1055,9 +1055,9 @@ fun WritingSuggestionItem(suggestion: WritingSuggestion) {
                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.width(8.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -1072,7 +1072,7 @@ fun WritingSuggestionItem(suggestion: WritingSuggestion) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             IconButton(
                 onClick = { /* Apply suggestion */ },
                 modifier = Modifier.size(32.dp)
@@ -1138,7 +1138,7 @@ fun RecommendationCard(recommendation: Recommendation) {
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Surface(
                     shape = RoundedCornerShape(8.dp),
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
@@ -1152,9 +1152,9 @@ fun RecommendationCard(recommendation: Recommendation) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Surface(
                 shape = RoundedCornerShape(6.dp),
                 color = MaterialTheme.colorScheme.surfaceVariant
@@ -1166,9 +1166,9 @@ fun RecommendationCard(recommendation: Recommendation) {
                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Text(
                 text = "Why this recommendation?",
                 style = MaterialTheme.typography.labelMedium,

@@ -32,7 +32,7 @@ import com.xiaomi.base.ui.kit.foundation.XiaomiTheme
 
 /**
  * Xiaomi Bottom Navigation Components
- * 
+ *
  * This file contains bottom navigation components following Material Design 3 principles
  * with Xiaomi's design language. These components provide various bottom navigation styles
  * including standard, floating, and custom implementations.
@@ -135,7 +135,7 @@ private fun StandardBottomNav(
     ) {
         items.forEach { item ->
             val selected = selectedRoute == item.route
-            
+
             NavigationBarItem(
                 icon = {
                     XiaomiBottomNavIcon(
@@ -152,7 +152,7 @@ private fun StandardBottomNav(
                     )
                 },
                 selected = selected,
-                onClick = { 
+                onClick = {
                     if (item.enabled) {
                         onItemSelected(item.route)
                     }
@@ -192,11 +192,11 @@ private fun FloatingBottomNav(
         ) {
             items.forEach { item ->
                 val selected = selectedRoute == item.route
-                
+
                 XiaomiFloatingNavItem(
                     item = item,
                     selected = selected,
-                    onClick = { 
+                    onClick = {
                         if (item.enabled) {
                             onItemSelected(item.route)
                         }
@@ -236,11 +236,11 @@ private fun PillBottomNav(
         ) {
             items.forEach { item ->
                 val selected = selectedRoute == item.route
-                
+
                 XiaomiPillNavItem(
                     item = item,
                     selected = selected,
-                    onClick = { 
+                    onClick = {
                         if (item.enabled) {
                             onItemSelected(item.route)
                         }
@@ -271,11 +271,11 @@ private fun MinimalBottomNav(
     ) {
         items.forEach { item ->
             val selected = selectedRoute == item.route
-            
+
             XiaomiMinimalNavItem(
                 item = item,
                 selected = selected,
-                onClick = { 
+                onClick = {
                     if (item.enabled) {
                         onItemSelected(item.route)
                     }
@@ -300,7 +300,7 @@ fun XiaomiBottomNavIcon(
         animationSpec = tween(200),
         label = "icon_scale"
     )
-    
+
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
@@ -310,7 +310,7 @@ fun XiaomiBottomNavIcon(
             contentDescription = item.label,
             modifier = Modifier.scale(scale)
         )
-        
+
         // Badge
         item.badge?.let { badge ->
             Badge(
@@ -344,7 +344,7 @@ private fun XiaomiFloatingNavItem(
         animationSpec = tween(200),
         label = "background_color"
     )
-    
+
     val contentColor by animateColorAsState(
         targetValue = if (selected) {
             MaterialTheme.colorScheme.onPrimaryContainer
@@ -354,7 +354,7 @@ private fun XiaomiFloatingNavItem(
         animationSpec = tween(200),
         label = "content_color"
     )
-    
+
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
@@ -376,7 +376,7 @@ private fun XiaomiFloatingNavItem(
                 tint = contentColor,
                 modifier = Modifier.size(24.dp)
             )
-            
+
             item.badge?.let { badge ->
                 Badge(
                     modifier = Modifier.align(Alignment.TopEnd)
@@ -388,7 +388,7 @@ private fun XiaomiFloatingNavItem(
                 }
             }
         }
-        
+
         if (selected) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
@@ -422,7 +422,7 @@ private fun XiaomiPillNavItem(
         animationSpec = tween(200),
         label = "pill_color"
     )
-    
+
     val contentColor by animateColorAsState(
         targetValue = if (selected) {
             MaterialTheme.colorScheme.onPrimary
@@ -432,7 +432,7 @@ private fun XiaomiPillNavItem(
         animationSpec = tween(200),
         label = "pill_content_color"
     )
-    
+
     Box(
         modifier = modifier
             .clip(CircleShape)
@@ -457,7 +457,7 @@ private fun XiaomiPillNavItem(
                     tint = contentColor,
                     modifier = Modifier.size(20.dp)
                 )
-                
+
                 item.badge?.let { badge ->
                     Badge(
                         modifier = Modifier.align(Alignment.TopEnd)
@@ -469,7 +469,7 @@ private fun XiaomiPillNavItem(
                     }
                 }
             }
-            
+
             if (selected) {
                 Text(
                     text = item.label,
@@ -501,13 +501,13 @@ private fun XiaomiMinimalNavItem(
         animationSpec = tween(200),
         label = "minimal_content_color"
     )
-    
+
     val scale by animateFloatAsState(
         targetValue = if (selected) 1.1f else 1f,
         animationSpec = tween(200),
         label = "minimal_scale"
     )
-    
+
     Column(
         modifier = modifier
             .clickable(
@@ -529,7 +529,7 @@ private fun XiaomiMinimalNavItem(
                     .size(24.dp)
                     .scale(scale)
             )
-            
+
             item.badge?.let { badge ->
                 Badge(
                     modifier = Modifier.align(Alignment.TopEnd)
@@ -541,9 +541,9 @@ private fun XiaomiMinimalNavItem(
                 }
             }
         }
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         Text(
             text = item.label,
             style = MaterialTheme.typography.labelSmall,
@@ -553,7 +553,7 @@ private fun XiaomiMinimalNavItem(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
-        
+
         // Selection indicator
         if (selected) {
             Spacer(modifier = Modifier.height(2.dp))
@@ -583,7 +583,7 @@ fun XiaomiAdaptiveBottomNavigation(
         items.size == 4 -> XiaomiBottomNavStyle.FLOATING
         else -> XiaomiBottomNavStyle.STANDARD
     }
-    
+
     XiaomiBottomNavigationBar(
         items = items,
         selectedRoute = selectedRoute,
@@ -626,7 +626,7 @@ fun XiaomiBottomNavigationStandardPreview() {
                     label = "Profile"
                 )
             )
-            
+
             XiaomiBottomNavigationBar(
                 items = items,
                 selectedRoute = "home",
@@ -669,7 +669,7 @@ fun XiaomiBottomNavigationFloatingPreview() {
                     label = "Settings"
                 )
             )
-            
+
             XiaomiBottomNavigationBar(
                 items = items,
                 selectedRoute = "explore",
@@ -705,7 +705,7 @@ fun XiaomiBottomNavigationPillPreview() {
                     label = "Account"
                 )
             )
-            
+
             XiaomiBottomNavigationBar(
                 items = items,
                 selectedRoute = "analytics",
@@ -748,7 +748,7 @@ fun XiaomiBottomNavigationMinimalPreview() {
                     label = "More"
                 )
             )
-            
+
             XiaomiBottomNavigationBar(
                 items = items,
                 selectedRoute = "downloads",
@@ -773,7 +773,7 @@ fun XiaomiBottomNavigationDarkPreview() {
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.padding(16.dp)
                 )
-                
+
                 val items = listOf(
                     XiaomiBottomNavItem(
                         route = "home",
@@ -801,9 +801,9 @@ fun XiaomiBottomNavigationDarkPreview() {
                         label = "Profile"
                     )
                 )
-                
+
                 Spacer(modifier = Modifier.weight(1f))
-                
+
                 XiaomiBottomNavigationBar(
                     items = items,
                     selectedRoute = "notifications",

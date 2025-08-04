@@ -29,7 +29,7 @@ fun PreviewContainer(
         isDarkTheme -> darkColorScheme()
         else -> lightColorScheme()
     }
-    
+
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography(),
@@ -89,7 +89,7 @@ fun ThemeSelector(
                 text = "Theme",
                 style = MaterialTheme.typography.labelMedium
             )
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -98,7 +98,7 @@ fun ThemeSelector(
                     onClick = { onThemeChange(false) },
                     label = { Text("Light") }
                 )
-                
+
                 FilterChip(
                     selected = isDarkTheme,
                     onClick = { onThemeChange(true) },
@@ -142,7 +142,7 @@ fun DeviceSizeSelector(
                 text = "Device Size",
                 style = MaterialTheme.typography.labelMedium
             )
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -218,17 +218,17 @@ fun PreviewSettingsPanel(
                 text = "Preview Settings",
                 style = MaterialTheme.typography.titleMedium
             )
-            
+
             ThemeSelector(
                 isDarkTheme = isDarkTheme,
                 onThemeChange = onThemeChange
             )
-            
+
             DeviceSizeSelector(
                 selectedSize = deviceSize,
                 onSizeChange = onDeviceSizeChange
             )
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -238,7 +238,7 @@ fun PreviewSettingsPanel(
                     text = "Device Frame",
                     style = MaterialTheme.typography.labelMedium
                 )
-                
+
                 Switch(
                     checked = showDeviceFrame,
                     onCheckedChange = onShowDeviceFrameChange

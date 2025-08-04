@@ -33,7 +33,7 @@ fun RatingBadge(
         rating >= 6.0f -> Color(0xFFFFA000) // Amber for medium ratings
         else -> Color(0xFFD32F2F) // Red for low ratings
     }
-    
+
     Box(
         modifier = modifier
             .size(36.dp)

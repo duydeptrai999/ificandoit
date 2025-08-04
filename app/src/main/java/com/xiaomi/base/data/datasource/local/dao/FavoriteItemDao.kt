@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface FavoriteItemDao : BaseDao<FavoriteItemEntity> {
-    
     /**
      * Get all favorite items as a Flow.
      *
@@ -18,7 +17,7 @@ interface FavoriteItemDao : BaseDao<FavoriteItemEntity> {
      */
     @Query("SELECT * FROM favorite_items ORDER BY addedDate DESC")
     fun getAllFavoriteItems(): Flow<List<FavoriteItemEntity>>
-    
+
     /**
      * Check if an item is marked as favorite.
      *
@@ -27,7 +26,7 @@ interface FavoriteItemDao : BaseDao<FavoriteItemEntity> {
      */
     @Query("SELECT EXISTS(SELECT 1 FROM favorite_items WHERE itemId = :itemId LIMIT 1)")
     suspend fun isFavorite(itemId: Int): Boolean
-    
+
     /**
      * Check if an item is marked as favorite as a Flow.
      *
@@ -36,7 +35,7 @@ interface FavoriteItemDao : BaseDao<FavoriteItemEntity> {
      */
     @Query("SELECT EXISTS(SELECT 1 FROM favorite_items WHERE itemId = :itemId LIMIT 1)")
     fun isFavoriteFlow(itemId: Int): Flow<Boolean>
-    
+
     /**
      * Get a favorite item by its ID.
      *
@@ -45,7 +44,7 @@ interface FavoriteItemDao : BaseDao<FavoriteItemEntity> {
      */
     @Query("SELECT * FROM favorite_items WHERE itemId = :itemId LIMIT 1")
     suspend fun getFavoriteItemById(itemId: Int): FavoriteItemEntity?
-    
+
     /**
      * Get a favorite item by its ID as a Flow.
      *
@@ -54,7 +53,7 @@ interface FavoriteItemDao : BaseDao<FavoriteItemEntity> {
      */
     @Query("SELECT * FROM favorite_items WHERE itemId = :itemId LIMIT 1")
     fun getFavoriteById(itemId: Int): Flow<FavoriteItemEntity?>
-    
+
     /**
      * Delete a favorite item by its ID.
      *
@@ -63,7 +62,7 @@ interface FavoriteItemDao : BaseDao<FavoriteItemEntity> {
      */
     @Query("DELETE FROM favorite_items WHERE itemId = :itemId")
     suspend fun deleteFavoriteById(itemId: Int): Int
-    
+
     /**
      * Delete all favorite items.
      *

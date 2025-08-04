@@ -26,7 +26,7 @@ import kotlin.random.Random
 
 // Security Color Constants
 private val SecurityCritical = Color(0xFFD32F2F)  // Red
-private val SecurityHigh = Color(0xFFFF6F00)       // Orange  
+private val SecurityHigh = Color(0xFFFF6F00)       // Orange
 private val SecurityMedium = Color(0xFFFBC02D)     // Yellow
 private val SecurityLow = Color(0xFF388E3C)        // Green
 
@@ -55,9 +55,9 @@ fun ThreatLevelDistributionCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             threats.forEach { (level, count) ->
                 ThreatLevelItem(
                     level = level,
@@ -83,7 +83,7 @@ fun ThreatLevelItem(
         "low" -> SecurityLow
         else -> Color.Gray
     }
-    
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -96,15 +96,15 @@ fun ThreatLevelItem(
                 .size(12.dp)
                 .background(color, CircleShape)
         )
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Text(
             text = level,
             modifier = Modifier.weight(1f),
             style = MaterialTheme.typography.bodyMedium
         )
-        
+
         Surface(
             color = color.copy(alpha = 0.1f),
             shape = RoundedCornerShape(12.dp)
@@ -144,9 +144,9 @@ fun ComplianceStatusCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -169,14 +169,14 @@ fun ComplianceStandardItem(
     val status = standard["status"] as? String ?: "unknown"
     val score = standard["score"] as? Int ?: 0
     val name = standard["name"] as? String ?: "Unknown"
-    
+
     val (statusColor, statusText) = when (status.lowercase()) {
         "compliant" -> Green to "Compliant"
         "partial" -> Orange to "Partial"
         "non-compliant" -> Red to "Non-Compliant"
         else -> Color.Gray to "Unknown"
     }
-    
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -201,9 +201,9 @@ fun ComplianceStandardItem(
                 contentDescription = null,
                 tint = statusColor
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = name,
@@ -215,7 +215,7 @@ fun ComplianceStandardItem(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Surface(
                 color = statusColor.copy(alpha = 0.1f),
                 shape = RoundedCornerShape(12.dp)
@@ -250,9 +250,9 @@ fun ThreatFilterCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             val filters = listOf(
                 "Malware",
                 "Phishing",
@@ -261,7 +261,7 @@ fun ThreatFilterCard(
                 "Network Intrusion",
                 "Social Engineering"
             )
-            
+
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -276,9 +276,9 @@ fun ThreatFilterCard(
                                 onFilterChange(filter, checked)
                             }
                         )
-                        
+
                         Spacer(modifier = Modifier.width(8.dp))
-                        
+
                         Text(
                             text = filter,
                             style = MaterialTheme.typography.bodyMedium
@@ -316,9 +316,9 @@ fun PrivacyOverviewCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             privacyMetrics.forEach { (key, value) ->
                 PrivacyMetricItem(
                     label = capitalizeWords(key.replace("([A-Z])".toRegex(), " $1").trim()),
@@ -349,7 +349,7 @@ fun PrivacyMetricItem(
             text = label,
             style = MaterialTheme.typography.bodyMedium
         )
-        
+
         Surface(
             color = Blue.copy(alpha = 0.1f),
             shape = RoundedCornerShape(8.dp)
@@ -389,9 +389,9 @@ fun PermissionsOverviewCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -414,14 +414,14 @@ fun PermissionItem(
     val name = permission["name"] as? String ?: "Unknown"
     val status = permission["status"] as? String ?: "unknown"
     val usage = permission["usage"] as? String ?: "No description"
-    
+
     val (statusColor, statusIcon) = when (status.lowercase()) {
         "granted" -> Green to Icons.Default.CheckCircle
         "denied" -> Red to Icons.Default.Cancel
         "pending" -> Orange to Icons.Default.Schedule
         else -> Color.Gray to Icons.Default.Help
     }
-    
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -441,9 +441,9 @@ fun PermissionItem(
                 contentDescription = null,
                 tint = statusColor
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = name,
@@ -455,7 +455,7 @@ fun PermissionItem(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Surface(
                 color = statusColor.copy(alpha = 0.1f),
                 shape = RoundedCornerShape(12.dp)
@@ -494,9 +494,9 @@ fun PermissionGroupCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             groups.forEach { (groupName, permissions) ->
                 PermissionGroupItem(
                     groupName = groupName,
@@ -521,7 +521,7 @@ fun PermissionGroupItem(
         "dangerous" -> Red
         else -> Color.Gray
     }
-    
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -549,17 +549,17 @@ fun PermissionGroupItem(
                     contentDescription = null,
                     tint = groupColor
                 )
-                
+
                 Spacer(modifier = Modifier.width(8.dp))
-                
+
                 Text(
                     text = groupName,
                     fontWeight = FontWeight.Medium,
                     color = groupColor
                 )
-                
+
                 Spacer(modifier = Modifier.weight(1f))
-                
+
                 Surface(
                     color = groupColor.copy(alpha = 0.1f),
                     shape = CircleShape
@@ -572,9 +572,9 @@ fun PermissionGroupItem(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = permissions.joinToString(", "),
                 style = MaterialTheme.typography.bodySmall,
@@ -610,9 +610,9 @@ fun EncryptionOverviewCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             encryptionStatus.forEach { (category, status) ->
                 EncryptionStatusItem(
                     category = category,
@@ -648,15 +648,15 @@ fun EncryptionStatusItem(
                 tint = Green,
                 modifier = Modifier.size(16.dp)
             )
-            
+
             Spacer(modifier = Modifier.width(8.dp))
-            
+
             Text(
                 text = category,
                 style = MaterialTheme.typography.bodyMedium
             )
         }
-        
+
         Surface(
             color = Green.copy(alpha = 0.1f),
             shape = RoundedCornerShape(8.dp)
@@ -695,9 +695,9 @@ fun EncryptionConfigCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -720,7 +720,7 @@ fun EncryptionConfigItem(
     val name = config["name"] as? String ?: "Unknown"
     val algorithm = config["algorithm"] as? String ?: "Unknown"
     val enabled = config["enabled"] as? Boolean ?: false
-    
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -740,9 +740,9 @@ fun EncryptionConfigItem(
                 contentDescription = null,
                 tint = if (enabled) Green else Red
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = name,
@@ -754,7 +754,7 @@ fun EncryptionConfigItem(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Switch(
                 checked = enabled,
                 onCheckedChange = { /* Handle toggle */ }
@@ -784,9 +784,9 @@ fun ComplianceOverviewCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -803,24 +803,24 @@ fun ComplianceOverviewCard(
                         color = getComplianceScoreColor(overallScore)
                     )
                 }
-                
+
                 CircularProgressIndicator(
                     progress = overallScore / 100f,
                     color = getComplianceScoreColor(overallScore),
                     modifier = Modifier.size(60.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Text(
                 text = "Standards: ${standards.joinToString(", ")}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Button(
                 onClick = onViewDetails,
                 modifier = Modifier.fillMaxWidth()
@@ -847,7 +847,7 @@ fun ComplianceStandardCard(
     val requirements = standard["requirements"] as? Int ?: 0
     val compliant = standard["compliant"] as? Int ?: 0
     val lastAudit = standard["lastAudit"] as? Long ?: 0L
-    
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -867,7 +867,7 @@ fun ComplianceStandardCard(
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Surface(
                     color = getComplianceScoreColor(score).copy(alpha = 0.1f),
                     shape = RoundedCornerShape(12.dp)
@@ -880,9 +880,9 @@ fun ComplianceStandardCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -898,7 +898,7 @@ fun ComplianceStandardCard(
                         fontWeight = FontWeight.Medium
                     )
                 }
-                
+
                 Column {
                     Text(
                         text = "Last Audit",
@@ -911,17 +911,17 @@ fun ComplianceStandardCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LinearProgressIndicator(
                 progress = compliant.toFloat() / requirements.toFloat(),
                 modifier = Modifier.fillMaxWidth(),
                 color = getComplianceScoreColor(score)
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             OutlinedButton(
                 onClick = onViewRequirements,
                 modifier = Modifier.fillMaxWidth()
@@ -952,16 +952,16 @@ fun AuditControlsCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             val auditTypes = listOf(
                 "Security Audit",
                 "Compliance Audit",
                 "Privacy Audit",
                 "Performance Audit"
             )
-            
+
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -978,9 +978,9 @@ fun AuditControlsCard(
                         Text("Start $auditType")
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Button(
                     onClick = onViewHistory,
                     modifier = Modifier.fillMaxWidth()
@@ -1033,9 +1033,9 @@ fun AuditEntryCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -1060,7 +1060,7 @@ fun AuditEntryItem(
     val timestamp = entry["timestamp"] as? Long ?: 0L
     val findings = entry["findings"] as? Int ?: 0
     val severity = entry["severity"] as? String ?: "unknown"
-    
+
     val statusColor = when (status.lowercase()) {
         "completed" -> Green
         "running" -> Blue
@@ -1068,7 +1068,7 @@ fun AuditEntryItem(
         "pending" -> Orange
         else -> Color.Gray
     }
-    
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -1088,9 +1088,9 @@ fun AuditEntryItem(
                 contentDescription = null,
                 tint = statusColor
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = type,
@@ -1109,7 +1109,7 @@ fun AuditEntryItem(
                     )
                 }
             }
-            
+
             StatusChip(status = status)
         }
     }

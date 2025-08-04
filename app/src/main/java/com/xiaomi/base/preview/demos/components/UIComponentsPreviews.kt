@@ -55,7 +55,7 @@ fun registerUIComponentsPreviews() {
             content = { AccessibilityI18nPreview() }
         )
     )
-    
+
     // Performance Monitoring Component
     PreviewRegistry.registerPreview(
         PreviewItem(
@@ -70,7 +70,7 @@ fun registerUIComponentsPreviews() {
             content = { PerformanceMonitoringPreview() }
         )
     )
-    
+
     // Data Visualization Component
     PreviewRegistry.registerPreview(
         PreviewItem(
@@ -85,7 +85,7 @@ fun registerUIComponentsPreviews() {
             content = { DataVisualizationPreview() }
         )
     )
-    
+
     // Security & Privacy Component
     PreviewRegistry.registerPreview(
         PreviewItem(
@@ -100,7 +100,7 @@ fun registerUIComponentsPreviews() {
             content = { SecurityPrivacyPreview() }
         )
     )
-    
+
     // Advanced Animation Component
     PreviewRegistry.registerPreview(
         PreviewItem(
@@ -115,7 +115,7 @@ fun registerUIComponentsPreviews() {
             content = { AdvancedAnimationPreview() }
         )
     )
-    
+
     // Gesture Components
     PreviewRegistry.registerPreview(
         PreviewItem(
@@ -130,7 +130,7 @@ fun registerUIComponentsPreviews() {
             content = { GestureInteractionsPreview() }
         )
     )
-    
+
     // Predictive Text Component
     PreviewRegistry.registerPreview(
         PreviewItem(
@@ -145,7 +145,7 @@ fun registerUIComponentsPreviews() {
             content = { PredictiveTextPreview() }
         )
     )
-    
+
     // Responsive Layout Component
     PreviewRegistry.registerPreview(
         PreviewItem(
@@ -243,7 +243,7 @@ fun AdvancedAnimationPreview() {
                                 style = MaterialTheme.typography.headlineSmall
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            
+
                             AdvancedAnimationComponent {
                                 Box(
                                     modifier = Modifier
@@ -257,7 +257,7 @@ fun AdvancedAnimationPreview() {
                         }
                     }
                 }
-                
+
                 item {
                     Card(modifier = Modifier.fillMaxWidth()) {
                         Column(modifier = Modifier.padding(16.dp)) {
@@ -266,7 +266,7 @@ fun AdvancedAnimationPreview() {
                                 style = MaterialTheme.typography.headlineSmall
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            
+
                             WaveAnimationComponent(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -275,7 +275,7 @@ fun AdvancedAnimationPreview() {
                         }
                     }
                 }
-                
+
                 item {
                     Card(modifier = Modifier.fillMaxWidth()) {
                         Column(modifier = Modifier.padding(16.dp)) {
@@ -284,7 +284,7 @@ fun AdvancedAnimationPreview() {
                                 style = MaterialTheme.typography.headlineSmall
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            
+
                             RippleAnimationComponent(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -318,7 +318,7 @@ fun GestureInteractionsPreview() {
                                 style = MaterialTheme.typography.headlineSmall
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            
+
                             PinchZoomGestureComponent(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -355,7 +355,7 @@ fun GestureInteractionsPreview() {
                         }
                     }
                 }
-                
+
                 item {
                     Card(modifier = Modifier.fillMaxWidth()) {
                         Column(modifier = Modifier.padding(16.dp)) {
@@ -364,7 +364,7 @@ fun GestureInteractionsPreview() {
                                 style = MaterialTheme.typography.headlineSmall
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            
+
                             SwipeToDismissComponent(
                                 directions = setOf(SwipeDirection.LEFT, SwipeDirection.RIGHT),
                                 onDismiss = { direction ->
@@ -413,7 +413,7 @@ fun PredictiveTextPreview() {
             subtitle = "Smart text input with predictions"
         ) {
             var textValue by remember { mutableStateOf(TextFieldValue("")) }
-            
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -428,7 +428,7 @@ fun PredictiveTextPreview() {
                     config = PredictionConfig(),
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 Card {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
@@ -466,7 +466,7 @@ fun ResponsiveLayoutPreview() {
                             style = MaterialTheme.typography.titleMedium
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                         ResponsiveGridComponent(
                             modifier = Modifier.height(200.dp)
                         ) {
@@ -489,7 +489,7 @@ fun ResponsiveLayoutPreview() {
                         }
                     }
                 }
-                
+
                 Card {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
@@ -497,7 +497,7 @@ fun ResponsiveLayoutPreview() {
                             style = MaterialTheme.typography.titleMedium
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                         AdaptiveNavigationComponent(
                             modifier = Modifier.height(300.dp),
                             navigationItems = listOf(
@@ -520,4 +520,4 @@ fun ResponsiveLayoutPreview() {
             }
         }
     }
-} 
+}

@@ -7,7 +7,6 @@ import androidx.compose.ui.graphics.Color
  * These tokens define the core color palette used throughout the application.
  */
 object ColorTokens {
-    
     // Primary Colors - Xiaomi Orange Theme
     val Primary0 = Color(0xFF000000)
     val Primary10 = Color(0xFF2D1600)
@@ -22,7 +21,7 @@ object ColorTokens {
     val Primary95 = Color(0xFFFFEEDC)
     val Primary99 = Color(0xFFFFFBF8)
     val Primary100 = Color(0xFFFFFFFF)
-    
+
     // Secondary Colors - Complementary Blue-Gray
     val Secondary0 = Color(0xFF000000)
     val Secondary10 = Color(0xFF0F1419)
@@ -37,7 +36,7 @@ object ColorTokens {
     val Secondary95 = Color(0xFFE2E6EC)
     val Secondary99 = Color(0xFFF8F9FA)
     val Secondary100 = Color(0xFFFFFFFF)
-    
+
     // Tertiary Colors - Accent Green
     val Tertiary0 = Color(0xFF000000)
     val Tertiary10 = Color(0xFF002114)
@@ -52,7 +51,7 @@ object ColorTokens {
     val Tertiary95 = Color(0xFFB7FFDA)
     val Tertiary99 = Color(0xFFF0FFF6)
     val Tertiary100 = Color(0xFFFFFFFF)
-    
+
     // Neutral Colors
     val Neutral0 = Color(0xFF000000)
     val Neutral10 = Color(0xFF1A1C1E)
@@ -67,7 +66,7 @@ object ColorTokens {
     val Neutral95 = Color(0xFFF1F0F4)
     val Neutral99 = Color(0xFFFFFBFE)
     val Neutral100 = Color(0xFFFFFFFF)
-    
+
     // Neutral Variant Colors
     val NeutralVariant0 = Color(0xFF000000)
     val NeutralVariant10 = Color(0xFF191C20)
@@ -82,7 +81,7 @@ object ColorTokens {
     val NeutralVariant95 = Color(0xFFEFF1F5)
     val NeutralVariant99 = Color(0xFFFCFCFF)
     val NeutralVariant100 = Color(0xFFFFFFFF)
-    
+
     // Error Colors
     val Error0 = Color(0xFF000000)
     val Error10 = Color(0xFF410E0B)
@@ -97,7 +96,7 @@ object ColorTokens {
     val Error95 = Color(0xFFFCEEEE)
     val Error99 = Color(0xFFFFFBF9)
     val Error100 = Color(0xFFFFFFFF)
-    
+
     // Success Colors (Custom for Xiaomi)
     val Success0 = Color(0xFF000000)
     val Success10 = Color(0xFF002114)
@@ -112,7 +111,7 @@ object ColorTokens {
     val Success95 = Color(0xFFB7FFDA)
     val Success99 = Color(0xFFF0FFF6)
     val Success100 = Color(0xFFFFFFFF)
-    
+
     // Warning Colors (Custom for Xiaomi)
     val Warning0 = Color(0xFF000000)
     val Warning10 = Color(0xFF2D1600)
@@ -127,7 +126,7 @@ object ColorTokens {
     val Warning95 = Color(0xFFFFEEDC)
     val Warning99 = Color(0xFFFFFBF8)
     val Warning100 = Color(0xFFFFFFFF)
-    
+
     // Info Colors (Custom for Xiaomi)
     val Info0 = Color(0xFF000000)
     val Info10 = Color(0xFF001D36)

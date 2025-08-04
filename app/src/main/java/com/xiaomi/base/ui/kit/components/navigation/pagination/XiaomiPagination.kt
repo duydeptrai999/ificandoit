@@ -48,9 +48,9 @@ import kotlin.math.min
 
 /**
  * Xiaomi Pagination
- * 
+ *
  * A Material Design 3 pagination component with Xiaomi design tokens.
- * 
+ *
  * @param currentPage The current page number (1-based)
  * @param totalPages Total number of pages
  * @param onPageChange Callback when page changes
@@ -72,13 +72,13 @@ fun XiaomiPagination(
     enabled: Boolean = true
 ) {
     if (totalPages <= 1) return
-    
+
     val pageNumbers = calculateVisiblePages(
         currentPage = currentPage,
         totalPages = totalPages,
         maxVisible = maxVisiblePages
     )
-    
+
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -96,7 +96,7 @@ fun XiaomiPagination(
                 )
             }
         }
-        
+
         // Previous page button
         if (showPrevNext) {
             IconButton(
@@ -109,7 +109,7 @@ fun XiaomiPagination(
                 )
             }
         }
-        
+
         // Page numbers
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -142,7 +142,7 @@ fun XiaomiPagination(
                 }
             }
         }
-        
+
         // Next page button
         if (showPrevNext) {
             IconButton(
@@ -155,7 +155,7 @@ fun XiaomiPagination(
                 )
             }
         }
-        
+
         // Last page button
         if (showFirstLast && currentPage < totalPages) {
             IconButton(
@@ -186,13 +186,13 @@ private fun XiaomiPageButton(
     } else {
         Color.Transparent
     }
-    
+
     val contentColor = if (isSelected) {
         MaterialTheme.colorScheme.onPrimary
     } else {
         MaterialTheme.colorScheme.onSurface
     }
-    
+
     Box(
         modifier = Modifier
             .size(40.dp)
@@ -212,9 +212,9 @@ private fun XiaomiPageButton(
 
 /**
  * Xiaomi Simple Pagination
- * 
+ *
  * A simplified pagination with just previous/next buttons and page info.
- * 
+ *
  * @param currentPage The current page number (1-based)
  * @param totalPages Total number of pages
  * @param onPageChange Callback when page changes
@@ -246,7 +246,7 @@ fun XiaomiSimplePagination(
             )
             Text("Previous")
         }
-        
+
         // Page info
         if (showPageInfo) {
             Text(
@@ -255,7 +255,7 @@ fun XiaomiSimplePagination(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         // Next button
         OutlinedButton(
             onClick = { onPageChange(min(totalPages, currentPage + 1)) },
@@ -273,9 +273,9 @@ fun XiaomiSimplePagination(
 
 /**
  * Xiaomi Compact Pagination
- * 
+ *
  * A compact pagination for mobile or limited space.
- * 
+ *
  * @param currentPage The current page number (1-based)
  * @param totalPages Total number of pages
  * @param onPageChange Callback when page changes
@@ -303,7 +303,7 @@ fun XiaomiCompactPagination(
                 contentDescription = "Previous page"
             )
         }
-        
+
         // Current page indicator
         Surface(
             modifier = Modifier.padding(horizontal = 8.dp),
@@ -320,7 +320,7 @@ fun XiaomiCompactPagination(
                 )
             )
         }
-        
+
         // Next button
         IconButton(
             onClick = { onPageChange(min(totalPages, currentPage + 1)) },
@@ -336,9 +336,9 @@ fun XiaomiCompactPagination(
 
 /**
  * Xiaomi Text Pagination
- * 
+ *
  * A text-based pagination with clickable page numbers.
- * 
+ *
  * @param currentPage The current page number (1-based)
  * @param totalPages Total number of pages
  * @param onPageChange Callback when page changes
@@ -358,7 +358,7 @@ fun XiaomiTextPagination(
         totalPages = totalPages,
         maxVisible = maxVisiblePages
     )
-    
+
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -372,7 +372,7 @@ fun XiaomiTextPagination(
                 Text("Previous")
             }
         }
-        
+
         // Page numbers
         pageNumbers.forEach { pageNumber ->
             when (pageNumber) {
@@ -403,7 +403,7 @@ fun XiaomiTextPagination(
                 }
             }
         }
-        
+
         // Next
         if (currentPage < totalPages) {
             TextButton(
@@ -426,10 +426,10 @@ private fun calculateVisiblePages(
     if (totalPages <= maxVisible) {
         return (1..totalPages).toList()
     }
-    
+
     val result = mutableListOf<Int>()
     val halfVisible = maxVisible / 2
-    
+
     when {
         currentPage <= halfVisible + 1 -> {
             // Show first pages
@@ -452,7 +452,7 @@ private fun calculateVisiblePages(
             result.add(totalPages)
         }
     }
-    
+
     return result
 }
 
@@ -472,12 +472,12 @@ fun XiaomiPaginationPreview() {
                     "Pagination Variants",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var currentPage1 by remember { mutableIntStateOf(5) }
                 var currentPage2 by remember { mutableIntStateOf(1) }
                 var currentPage3 by remember { mutableIntStateOf(3) }
                 var currentPage4 by remember { mutableIntStateOf(2) }
-                
+
                 // Full pagination
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -491,7 +491,7 @@ fun XiaomiPaginationPreview() {
                         onPageChange = { currentPage1 = it }
                     )
                 }
-                
+
                 // Simple pagination
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -505,7 +505,7 @@ fun XiaomiPaginationPreview() {
                         onPageChange = { currentPage2 = it }
                     )
                 }
-                
+
                 // Compact pagination
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -519,7 +519,7 @@ fun XiaomiPaginationPreview() {
                         onPageChange = { currentPage3 = it }
                     )
                 }
-                
+
                 // Text pagination
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -553,15 +553,15 @@ fun XiaomiPaginationDarkPreview() {
                     "Dark Theme Pagination",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var currentPage by remember { mutableIntStateOf(3) }
-                
+
                 XiaomiPagination(
                     currentPage = currentPage,
                     totalPages = 8,
                     onPageChange = { currentPage = it }
                 )
-                
+
                 XiaomiSimplePagination(
                     currentPage = currentPage,
                     totalPages = 8,
@@ -587,7 +587,7 @@ fun XiaomiPaginationStatesPreview() {
                     "Pagination States",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 // First page
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -601,7 +601,7 @@ fun XiaomiPaginationStatesPreview() {
                         onPageChange = {}
                     )
                 }
-                
+
                 // Last page
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -615,7 +615,7 @@ fun XiaomiPaginationStatesPreview() {
                         onPageChange = {}
                     )
                 }
-                
+
                 // Disabled
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(

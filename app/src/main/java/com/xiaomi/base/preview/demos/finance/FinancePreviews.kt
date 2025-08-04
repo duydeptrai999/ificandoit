@@ -151,7 +151,7 @@ fun BankingDashboard() {
             color = Color(0xFFFF5722)
         )
     )
-    
+
     val recentTransactions = listOf(
         Transaction(
             id = "1",
@@ -188,29 +188,29 @@ fun BankingDashboard() {
             isPending = true
         )
     )
-    
+
     val quickActions = listOf(
         "Transfer" to Icons.Default.SwapHoriz,
         "Pay Bills" to Icons.Default.Receipt,
         "Deposit" to Icons.Default.Add,
         "ATM" to Icons.Default.LocalAtm
     )
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             BankingHeader()
         }
-        
+
         item {
             AccountsOverview(accounts)
         }
-        
+
         item {
             QuickActionsSection(quickActions)
         }
-        
+
         item {
             RecentTransactionsSection(recentTransactions)
         }
@@ -231,7 +231,7 @@ fun InvestmentPortfolio() {
     val totalValue = 45750.25
     val totalGain = 3250.75
     val totalGainPercent = 7.65
-    
+
     val investments = listOf(
         Investment(
             id = "1",
@@ -278,22 +278,22 @@ fun InvestmentPortfolio() {
             color = Color(0xFFFF9800)
         )
     )
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             InvestmentHeader()
         }
-        
+
         item {
             PortfolioSummary(totalValue, totalGain, totalGainPercent)
         }
-        
+
         item {
             PortfolioChart()
         }
-        
+
         item {
             InvestmentsList(investments)
         }
@@ -314,7 +314,7 @@ fun ExpenseTracking() {
     val monthlySpending = 2850.75
     val monthlyBudget = 3200.00
     val remainingBudget = monthlyBudget - monthlySpending
-    
+
     val budgets = listOf(
         Budget(
             id = "1",
@@ -353,7 +353,7 @@ fun ExpenseTracking() {
             color = Color(0xFF9C27B0)
         )
     )
-    
+
     val categorySpending = mapOf(
         "Food" to 650.25,
         "Transport" to 320.50,
@@ -362,22 +362,22 @@ fun ExpenseTracking() {
         "Bills" to 450.00,
         "Other" to 499.25
     )
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             ExpenseHeader()
         }
-        
+
         item {
             MonthlyOverview(monthlySpending, monthlyBudget, remainingBudget)
         }
-        
+
         item {
             SpendingChart(categorySpending)
         }
-        
+
         item {
             BudgetsList(budgets)
         }
@@ -424,7 +424,7 @@ fun BudgetManagement() {
             color = Color(0xFFFF9800)
         )
     )
-    
+
     val creditCards = listOf(
         CreditCard(
             id = "1",
@@ -447,22 +447,22 @@ fun BudgetManagement() {
             color = Color(0xFFE91E63)
         )
     )
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             BudgetHeader()
         }
-        
+
         item {
             SavingsGoalsSection(goals)
         }
-        
+
         item {
             CreditCardsSection(creditCards)
         }
-        
+
         item {
             BudgetInsights()
         }
@@ -483,7 +483,7 @@ fun CryptocurrencyWallet() {
     val totalValue = 12750.50
     val totalChange = 850.25
     val totalChangePercent = 7.15
-    
+
     val cryptos = listOf(
         Investment(
             id = "1",
@@ -530,26 +530,26 @@ fun CryptocurrencyWallet() {
             color = Color(0xFFE91E63)
         )
     )
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             CryptoHeader()
         }
-        
+
         item {
             CryptoPortfolioSummary(totalValue, totalChange, totalChangePercent)
         }
-        
+
         item {
             CryptoChart()
         }
-        
+
         item {
             CryptoList(cryptos)
         }
-        
+
         item {
             CryptoActions()
         }
@@ -576,9 +576,9 @@ fun CryptoActions() {
             Spacer(modifier = Modifier.width(8.dp))
             Text("Buy")
         }
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         OutlinedButton(
             onClick = { },
             modifier = Modifier.weight(1f)
@@ -591,9 +591,9 @@ fun CryptoActions() {
             Spacer(modifier = Modifier.width(8.dp))
             Text("Sell")
         }
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         OutlinedButton(
             onClick = { },
             modifier = Modifier.weight(1f)
@@ -634,9 +634,9 @@ fun CryptoItem(crypto: Investment) {
                 )
             }
         }
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -645,20 +645,20 @@ fun CryptoItem(crypto: Investment) {
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Text(
                 text = crypto.name,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Text(
                 text = "${String.format("%.6f", crypto.shares)} ${crypto.symbol}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         Column(
             horizontalAlignment = Alignment.End
         ) {
@@ -667,13 +667,13 @@ fun CryptoItem(crypto: Investment) {
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Text(
                 text = "$${String.format("%.2f", crypto.currentPrice)}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -683,9 +683,9 @@ fun CryptoItem(crypto: Investment) {
                     tint = if (crypto.change >= 0) Color(0xFF4CAF50) else Color(0xFFF44336),
                     modifier = Modifier.size(16.dp)
                 )
-                
+
                 Spacer(modifier = Modifier.width(2.dp))
-                
+
                 Text(
                     text = "${String.format("%.2f", crypto.changePercent)}%",
                     style = MaterialTheme.typography.bodySmall,
@@ -708,7 +708,7 @@ fun CryptoList(cryptos: List<Investment>) {
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(bottom = 12.dp)
         )
-        
+
         cryptos.forEach { crypto ->
             CryptoItem(crypto)
             Spacer(modifier = Modifier.height(8.dp))
@@ -730,7 +730,7 @@ fun CryptoHeader() {
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
-        
+
         Row {
             IconButton(onClick = { }) {
                 Icon(
@@ -738,7 +738,7 @@ fun CryptoHeader() {
                     contentDescription = "QR Code"
                 )
             }
-            
+
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
@@ -765,17 +765,17 @@ fun CryptoPortfolioSummary(totalValue: Double, totalChange: Double, totalChangeP
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "$${String.format("%.2f", totalValue)}",
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -785,9 +785,9 @@ fun CryptoPortfolioSummary(totalValue: Double, totalChange: Double, totalChangeP
                     tint = if (totalChange >= 0) Color(0xFF4CAF50) else Color(0xFFF44336),
                     modifier = Modifier.size(20.dp)
                 )
-                
+
                 Spacer(modifier = Modifier.width(4.dp))
-                
+
                 Text(
                     text = "${if (totalChange >= 0) "+" else ""}$${String.format("%.2f", totalChange)} (${String.format("%.2f", totalChangePercent)}%)",
                     style = MaterialTheme.typography.bodyLarge,
@@ -814,9 +814,9 @@ fun CryptoChart() {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Placeholder for crypto chart
             Surface(
                 color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
@@ -860,7 +860,7 @@ fun BankingHeader() {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         Row {
             IconButton(onClick = { }) {
                 Icon(
@@ -868,7 +868,7 @@ fun BankingHeader() {
                     contentDescription = "Notifications"
                 )
             }
-            
+
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
@@ -890,7 +890,7 @@ fun AccountsOverview(accounts: List<Account>) {
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(bottom = 12.dp)
         )
-        
+
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -929,7 +929,7 @@ fun AccountCard(account: Account) {
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Icon(
                     imageVector = when (account.type) {
                         AccountType.CHECKING -> Icons.Default.AccountBalance
@@ -942,16 +942,16 @@ fun AccountCard(account: Account) {
                     tint = Color.White.copy(alpha = 0.8f)
                 )
             }
-            
+
             Column {
                 Text(
                     text = account.accountNumber,
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.White.copy(alpha = 0.8f)
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Text(
                     text = if (account.balance >= 0) {
                         "$${String.format("%.2f", account.balance)}"
@@ -978,7 +978,7 @@ fun QuickActionsSection(actions: List<Pair<String, ImageVector>>) {
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(bottom = 12.dp)
         )
-        
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
@@ -1012,9 +1012,9 @@ fun QuickActionItem(title: String, icon: ImageVector) {
                 )
             }
         }
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         Text(
             text = title,
             style = MaterialTheme.typography.bodySmall,
@@ -1038,14 +1038,14 @@ fun RecentTransactionsSection(transactions: List<Transaction>) {
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             TextButton(onClick = { }) {
                 Text("See All")
             }
         }
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         transactions.forEach { transaction ->
             TransactionItem(transaction)
             Spacer(modifier = Modifier.height(8.dp))
@@ -1078,9 +1078,9 @@ fun TransactionItem(transaction: Transaction) {
                 )
             }
         }
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -1094,7 +1094,7 @@ fun TransactionItem(transaction: Transaction) {
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.weight(1f)
                 )
-                
+
                 Text(
                     text = if (transaction.amount >= 0) {
                         "+$${String.format("%.2f", transaction.amount)}"
@@ -1110,7 +1110,7 @@ fun TransactionItem(transaction: Transaction) {
                     }
                 )
             }
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -1121,7 +1121,7 @@ fun TransactionItem(transaction: Transaction) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f)
                 )
-                
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -1133,7 +1133,7 @@ fun TransactionItem(transaction: Transaction) {
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                     }
-                    
+
                     Text(
                         text = transaction.date,
                         style = MaterialTheme.typography.bodySmall,
@@ -1189,7 +1189,7 @@ fun InvestmentHeader() {
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
-        
+
         Row {
             IconButton(onClick = { }) {
                 Icon(
@@ -1197,7 +1197,7 @@ fun InvestmentHeader() {
                     contentDescription = "Search"
                 )
             }
-            
+
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
@@ -1224,17 +1224,17 @@ fun PortfolioSummary(totalValue: Double, totalGain: Double, totalGainPercent: Do
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "$${String.format("%.2f", totalValue)}",
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -1244,9 +1244,9 @@ fun PortfolioSummary(totalValue: Double, totalGain: Double, totalGainPercent: Do
                     tint = if (totalGain >= 0) Color(0xFF4CAF50) else Color(0xFFF44336),
                     modifier = Modifier.size(20.dp)
                 )
-                
+
                 Spacer(modifier = Modifier.width(4.dp))
-                
+
                 Text(
                     text = "${if (totalGain >= 0) "+" else ""}$${String.format("%.2f", totalGain)} (${String.format("%.2f", totalGainPercent)}%)",
                     style = MaterialTheme.typography.bodyLarge,
@@ -1273,9 +1273,9 @@ fun PortfolioChart() {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Placeholder for chart
             Surface(
                 color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
@@ -1308,7 +1308,7 @@ fun InvestmentsList(investments: List<Investment>) {
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(bottom = 12.dp)
         )
-        
+
         investments.forEach { investment ->
             InvestmentItem(investment)
             Spacer(modifier = Modifier.height(8.dp))
@@ -1341,9 +1341,9 @@ fun InvestmentItem(investment: Investment) {
                 )
             }
         }
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -1352,20 +1352,20 @@ fun InvestmentItem(investment: Investment) {
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Text(
                 text = investment.name,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Text(
                 text = "${investment.shares} shares",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         Column(
             horizontalAlignment = Alignment.End
         ) {
@@ -1374,7 +1374,7 @@ fun InvestmentItem(investment: Investment) {
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -1384,9 +1384,9 @@ fun InvestmentItem(investment: Investment) {
                     tint = if (investment.change >= 0) Color(0xFF4CAF50) else Color(0xFFF44336),
                     modifier = Modifier.size(16.dp)
                 )
-                
+
                 Spacer(modifier = Modifier.width(2.dp))
-                
+
                 Text(
                     text = "${String.format("%.2f", investment.changePercent)}%",
                     style = MaterialTheme.typography.bodySmall,
@@ -1412,7 +1412,7 @@ fun ExpenseHeader() {
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
-        
+
         Row {
             IconButton(onClick = { }) {
                 Icon(
@@ -1420,7 +1420,7 @@ fun ExpenseHeader() {
                     contentDescription = "Filter"
                 )
             }
-            
+
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Default.DateRange,
@@ -1446,9 +1446,9 @@ fun MonthlyOverview(monthlySpending: Double, monthlyBudget: Double, remainingBud
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -1459,35 +1459,35 @@ fun MonthlyOverview(monthlySpending: Double, monthlyBudget: Double, remainingBud
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     Text(
                         text = "$${String.format("%.2f", monthlySpending)}",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold
                     )
                 }
-                
+
                 Column {
                     Text(
                         text = "Budget",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     Text(
                         text = "$${String.format("%.2f", monthlyBudget)}",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold
                     )
                 }
-                
+
                 Column {
                     Text(
                         text = "Remaining",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     Text(
                         text = "$${String.format("%.2f", remainingBudget)}",
                         style = MaterialTheme.typography.headlineSmall,
@@ -1496,9 +1496,9 @@ fun MonthlyOverview(monthlySpending: Double, monthlyBudget: Double, remainingBud
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LinearProgressIndicator(
                 progress = (monthlySpending / monthlyBudget).toFloat().coerceIn(0f, 1f),
                 modifier = Modifier.fillMaxWidth(),
@@ -1527,9 +1527,9 @@ fun SpendingChart(categorySpending: Map<String, Double>) {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Placeholder for pie chart
             Surface(
                 color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
@@ -1547,9 +1547,9 @@ fun SpendingChart(categorySpending: Map<String, Double>) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             categorySpending.entries.take(3).forEach { (category, amount) ->
                 Row(
                     modifier = Modifier
@@ -1561,7 +1561,7 @@ fun SpendingChart(categorySpending: Map<String, Double>) {
                         text = category,
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    
+
                     Text(
                         text = "$${String.format("%.2f", amount)}",
                         style = MaterialTheme.typography.bodyMedium,
@@ -1584,7 +1584,7 @@ fun BudgetsList(budgets: List<Budget>) {
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(bottom = 12.dp)
         )
-        
+
         budgets.forEach { budget ->
             BudgetItem(budget)
             Spacer(modifier = Modifier.height(12.dp))
@@ -1626,16 +1626,16 @@ fun BudgetItem(budget: Budget) {
                             )
                         }
                     }
-                    
+
                     Spacer(modifier = Modifier.width(12.dp))
-                    
+
                     Column {
                         Text(
                             text = budget.name,
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.SemiBold
                         )
-                        
+
                         Text(
                             text = budget.period,
                             style = MaterialTheme.typography.bodySmall,
@@ -1643,7 +1643,7 @@ fun BudgetItem(budget: Budget) {
                         )
                     }
                 }
-                
+
                 Column(
                     horizontalAlignment = Alignment.End
                 ) {
@@ -1652,7 +1652,7 @@ fun BudgetItem(budget: Budget) {
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Text(
                         text = if (budget.remainingAmount >= 0) {
                             "$${String.format("%.2f", budget.remainingAmount)} left"
@@ -1668,9 +1668,9 @@ fun BudgetItem(budget: Budget) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             LinearProgressIndicator(
                 progress = budget.progressPercent,
                 modifier = Modifier.fillMaxWidth(),
@@ -1698,7 +1698,7 @@ fun BudgetHeader() {
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
-        
+
         IconButton(onClick = { }) {
             Icon(
                 imageVector = Icons.Default.Add,
@@ -1719,7 +1719,7 @@ fun SavingsGoalsSection(goals: List<Goal>) {
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(bottom = 12.dp)
         )
-        
+
         goals.forEach { goal ->
             GoalItem(goal)
             Spacer(modifier = Modifier.height(12.dp))
@@ -1750,14 +1750,14 @@ fun GoalItem(goal: Goal) {
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Text(
                         text = "Target: ${goal.targetDate}",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Column(
                     horizontalAlignment = Alignment.End
                 ) {
@@ -1766,7 +1766,7 @@ fun GoalItem(goal: Goal) {
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Text(
                         text = "${String.format("%.1f", goal.progressPercent * 100)}% complete",
                         style = MaterialTheme.typography.bodySmall,
@@ -1774,9 +1774,9 @@ fun GoalItem(goal: Goal) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             LinearProgressIndicator(
                 progress = goal.progressPercent,
                 modifier = Modifier.fillMaxWidth(),
@@ -1797,7 +1797,7 @@ fun CreditCardsSection(creditCards: List<CreditCard>) {
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(bottom = 12.dp)
         )
-        
+
         creditCards.forEach { card ->
             CreditCardItem(card)
             Spacer(modifier = Modifier.height(12.dp))
@@ -1826,14 +1826,14 @@ fun CreditCardItem(card: CreditCard) {
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Text(
                         text = "****${card.lastFourDigits}",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Column(
                     horizontalAlignment = Alignment.End
                 ) {
@@ -1842,7 +1842,7 @@ fun CreditCardItem(card: CreditCard) {
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Text(
                         text = "Due ${card.dueDate}",
                         style = MaterialTheme.typography.bodySmall,
@@ -1850,9 +1850,9 @@ fun CreditCardItem(card: CreditCard) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -1862,7 +1862,7 @@ fun CreditCardItem(card: CreditCard) {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = "${String.format("%.1f", card.utilizationPercent * 100)}% used",
                     style = MaterialTheme.typography.bodySmall,
@@ -1875,9 +1875,9 @@ fun CreditCardItem(card: CreditCard) {
                     }
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             LinearProgressIndicator(
                 progress = card.utilizationPercent,
                 modifier = Modifier.fillMaxWidth(),
@@ -1908,21 +1908,21 @@ fun BudgetInsights() {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Text(
                 text = "• You're spending 25% more on shopping this month",
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(vertical = 2.dp)
             )
-            
+
             Text(
                 text = "• Great job staying under budget for food!",
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(vertical = 2.dp)
             )
-            
+
             Text(
                 text = "• Consider setting up automatic savings",
                 style = MaterialTheme.typography.bodyMedium,
@@ -1955,7 +1955,7 @@ fun registerFinancePreviews() {
             content = { BankingDashboardPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "finance_investment_portfolio",
@@ -1969,7 +1969,7 @@ fun registerFinancePreviews() {
             content = { InvestmentPortfolioPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "finance_expense_tracking",
@@ -1983,7 +1983,7 @@ fun registerFinancePreviews() {
             content = { ExpenseTrackingPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "finance_budget_management",
@@ -1997,7 +1997,7 @@ fun registerFinancePreviews() {
             content = { BudgetManagementPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "finance_cryptocurrency_wallet",

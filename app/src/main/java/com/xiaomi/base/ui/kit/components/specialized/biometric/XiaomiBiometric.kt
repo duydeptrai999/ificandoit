@@ -24,7 +24,7 @@ import com.xiaomi.base.ui.kit.foundation.XiaomiTheme
 
 /**
  * Xiaomi Biometric Components - Biometric Authentication UI
- * 
+ *
  * This file contains biometric authentication components following Material Design 3 principles
  * with Xiaomi's design language. These components provide secure and user-friendly
  * biometric authentication interfaces.
@@ -100,7 +100,7 @@ fun XiaomiBiometricPrompt(
                 color = MaterialTheme.colorScheme.onSurface,
                 textAlign = TextAlign.Center
             )
-            
+
             if (subtitle != null) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -110,18 +110,18 @@ fun XiaomiBiometricPrompt(
                     textAlign = TextAlign.Center
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(24.dp))
-            
+
             // Biometric Icon
             XiaomiBiometricIcon(
                 biometricType = biometricType,
                 state = state,
                 modifier = Modifier.size(80.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(24.dp))
-            
+
             // Description
             if (description != null) {
                 Text(
@@ -132,15 +132,15 @@ fun XiaomiBiometricPrompt(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
             }
-            
+
             // State Message
             XiaomiBiometricStateMessage(
                 state = state,
                 biometricType = biometricType
             )
-            
+
             Spacer(modifier = Modifier.height(24.dp))
-            
+
             // Action Buttons
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -153,7 +153,7 @@ fun XiaomiBiometricPrompt(
                 ) {
                     Text("Cancel")
                 }
-                
+
                 // Use Password Button (if available)
                 if (onUsePassword != null) {
                     OutlinedButton(
@@ -163,7 +163,7 @@ fun XiaomiBiometricPrompt(
                         Text("Use Password")
                     }
                 }
-                
+
                 // Try Again Button (for error state)
                 if (state == BiometricState.ERROR) {
                     Button(
@@ -194,7 +194,7 @@ fun XiaomiBiometricIcon(
         BiometricType.VOICE -> Icons.Default.Mic
         BiometricType.IRIS -> Icons.Default.RemoveRedEye
     }
-    
+
     val (iconColor, backgroundColor) = when (state) {
         BiometricState.IDLE -> MaterialTheme.colorScheme.primary to MaterialTheme.colorScheme.primaryContainer
         BiometricState.SCANNING -> MaterialTheme.colorScheme.primary to MaterialTheme.colorScheme.primaryContainer
@@ -202,7 +202,7 @@ fun XiaomiBiometricIcon(
         BiometricState.ERROR -> MaterialTheme.colorScheme.error to MaterialTheme.colorScheme.errorContainer
         BiometricState.UNAVAILABLE -> MaterialTheme.colorScheme.onSurfaceVariant to MaterialTheme.colorScheme.surfaceVariant
     }
-    
+
     Box(
         modifier = modifier
             .clip(CircleShape)
@@ -245,13 +245,13 @@ fun XiaomiBiometricStateMessage(
         BiometricState.ERROR -> "Authentication failed. Please try again."
         BiometricState.UNAVAILABLE -> "Biometric authentication is not available"
     }
-    
+
     val textColor = when (state) {
         BiometricState.SUCCESS -> Color(0xFF4CAF50)
         BiometricState.ERROR -> MaterialTheme.colorScheme.error
         else -> MaterialTheme.colorScheme.onSurfaceVariant
     }
-    
+
     Text(
         text = message,
         style = MaterialTheme.typography.bodyMedium,
@@ -301,7 +301,7 @@ fun XiaomiBiometricSettingsCard(
                         state = if (isAvailable) BiometricState.IDLE else BiometricState.UNAVAILABLE,
                         modifier = Modifier.size(40.dp)
                     )
-                    
+
                     Column {
                         Text(
                             text = title,
@@ -316,14 +316,14 @@ fun XiaomiBiometricSettingsCard(
                         )
                     }
                 }
-                
+
                 Switch(
                     checked = isEnabled && isAvailable,
                     onCheckedChange = onToggle,
                     enabled = isAvailable
                 )
             }
-            
+
             if (onConfigure != null && isEnabled && isAvailable) {
                 Spacer(modifier = Modifier.height(12.dp))
                 TextButton(
@@ -355,7 +355,7 @@ fun XiaomiQuickBiometricButton(
         BiometricType.VOICE -> Icons.Default.Mic
         BiometricType.IRIS -> Icons.Default.RemoveRedEye
     }
-    
+
     IconButton(
         onClick = onClick,
         enabled = enabled && state != BiometricState.UNAVAILABLE,
@@ -389,13 +389,13 @@ fun XiaomiBiometricStatusIndicator(
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(16.dp)
         )
-        
+
         Text(
             text = "${biometricTypes.size} biometric method${if (biometricTypes.size > 1) "s" else ""} available",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
@@ -406,7 +406,7 @@ fun XiaomiBiometricStatusIndicator(
                     BiometricType.VOICE -> Icons.Default.Mic
                     BiometricType.IRIS -> Icons.Default.RemoveRedEye
                 }
-                
+
                 Icon(
                     imageVector = icon,
                     contentDescription = type.name,
@@ -454,7 +454,7 @@ fun XiaomiBiometricStatesPreview() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("Biometric States")
-                
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
@@ -468,7 +468,7 @@ fun XiaomiBiometricStatesPreview() {
                         )
                         Text("Idle", style = MaterialTheme.typography.bodySmall)
                     }
-                    
+
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -479,7 +479,7 @@ fun XiaomiBiometricStatesPreview() {
                         )
                         Text("Scanning", style = MaterialTheme.typography.bodySmall)
                     }
-                    
+
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -490,7 +490,7 @@ fun XiaomiBiometricStatesPreview() {
                         )
                         Text("Success", style = MaterialTheme.typography.bodySmall)
                     }
-                    
+
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -518,7 +518,7 @@ fun XiaomiBiometricTypesPreview() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("Biometric Types")
-                
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
@@ -532,7 +532,7 @@ fun XiaomiBiometricTypesPreview() {
                         )
                         Text("Fingerprint", style = MaterialTheme.typography.bodySmall)
                     }
-                    
+
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -543,7 +543,7 @@ fun XiaomiBiometricTypesPreview() {
                         )
                         Text("Face ID", style = MaterialTheme.typography.bodySmall)
                     }
-                    
+
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -554,7 +554,7 @@ fun XiaomiBiometricTypesPreview() {
                         )
                         Text("Voice", style = MaterialTheme.typography.bodySmall)
                     }
-                    
+
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -581,7 +581,7 @@ fun XiaomiBiometricSettingsPreview() {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text("Biometric Settings")
-                
+
                 XiaomiBiometricSettingsCard(
                     title = "Fingerprint",
                     description = "Use your fingerprint to unlock and authenticate",
@@ -591,7 +591,7 @@ fun XiaomiBiometricSettingsPreview() {
                     onToggle = {},
                     onConfigure = {}
                 )
-                
+
                 XiaomiBiometricSettingsCard(
                     title = "Face Recognition",
                     description = "Use your face to unlock and authenticate",
@@ -601,7 +601,7 @@ fun XiaomiBiometricSettingsPreview() {
                     onToggle = {},
                     onConfigure = {}
                 )
-                
+
                 XiaomiBiometricSettingsCard(
                     title = "Voice Recognition",
                     description = "Use your voice to authenticate",
@@ -625,14 +625,14 @@ fun XiaomiBiometricDarkPreview() {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text("Dark Theme Biometric")
-                
+
                 XiaomiBiometricStatusIndicator(
                     biometricTypes = listOf(
                         BiometricType.FINGERPRINT,
                         BiometricType.FACE_ID
                     )
                 )
-                
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
@@ -640,7 +640,7 @@ fun XiaomiBiometricDarkPreview() {
                         biometricType = BiometricType.FINGERPRINT,
                         onClick = {}
                     )
-                    
+
                     XiaomiQuickBiometricButton(
                         biometricType = BiometricType.FACE_ID,
                         onClick = {}

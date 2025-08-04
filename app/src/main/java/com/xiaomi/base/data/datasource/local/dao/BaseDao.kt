@@ -12,7 +12,6 @@ import androidx.room.Update
  * @param T the entity type this DAO operates on (must be non-null)
  */
 interface BaseDao<T : Any> {
-    
     /**
      * Insert an item in the database.
      * If the item already exists, it will be replaced.
@@ -22,7 +21,7 @@ interface BaseDao<T : Any> {
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(item: T): Long
-    
+
     /**
      * Insert multiple items in the database.
      * If any of the items already exist, they will be replaced.
@@ -32,7 +31,7 @@ interface BaseDao<T : Any> {
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(items: List<T>): List<Long>
-    
+
     /**
      * Update an item in the database.
      *
@@ -41,7 +40,7 @@ interface BaseDao<T : Any> {
      */
     @Update
     suspend fun update(item: T): Int
-    
+
     /**
      * Delete an item from the database.
      *

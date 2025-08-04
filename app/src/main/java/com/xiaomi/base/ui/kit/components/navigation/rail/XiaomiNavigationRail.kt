@@ -66,10 +66,10 @@ data class XiaomiNavigationRailItem(
 
 /**
  * Xiaomi Navigation Rail
- * 
+ *
  * A Material Design 3 navigation rail component with Xiaomi design tokens.
  * Provides navigation between top-level destinations in an app for larger screens.
- * 
+ *
  * @param modifier Modifier to be applied to the navigation rail
  * @param containerColor The color used for the background of this navigation rail
  * @param contentColor The preferred color for content inside this navigation rail
@@ -98,9 +98,9 @@ fun XiaomiNavigationRail(
 
 /**
  * Xiaomi Navigation Rail Item
- * 
+ *
  * A single item in the navigation rail.
- * 
+ *
  * @param selected Whether this item is currently selected
  * @param onClick Callback when this item is clicked
  * @param icon The icon for this item
@@ -138,9 +138,9 @@ fun XiaomiNavigationRailItem(
 
 /**
  * Xiaomi Simple Navigation Rail
- * 
+ *
  * A simplified navigation rail with predefined items.
- * 
+ *
  * @param items List of navigation items
  * @param selectedItemId Currently selected item ID
  * @param onItemSelected Callback when an item is selected
@@ -163,7 +163,7 @@ fun XiaomiSimpleNavigationRail(
     ) {
         items.forEach { item ->
             val isSelected = item.id == selectedItemId
-            
+
             XiaomiNavigationRailItem(
                 selected = isSelected,
                 onClick = {
@@ -213,9 +213,9 @@ fun XiaomiSimpleNavigationRail(
 
 /**
  * Xiaomi Navigation Rail with FAB
- * 
+ *
  * A navigation rail with a floating action button in the header.
- * 
+ *
  * @param items List of navigation items
  * @param selectedItemId Currently selected item ID
  * @param onItemSelected Callback when an item is selected
@@ -258,9 +258,9 @@ fun XiaomiNavigationRailWithFAB(
 
 /**
  * Xiaomi Navigation Rail with Menu
- * 
+ *
  * A navigation rail with a menu button in the header.
- * 
+ *
  * @param items List of navigation items
  * @param selectedItemId Currently selected item ID
  * @param onItemSelected Callback when an item is selected
@@ -304,9 +304,9 @@ fun XiaomiNavigationRailWithMenu(
 
 /**
  * Xiaomi Compact Navigation Rail
- * 
+ *
  * A compact navigation rail without labels.
- * 
+ *
  * @param items List of navigation items
  * @param selectedItemId Currently selected item ID
  * @param onItemSelected Callback when an item is selected
@@ -333,9 +333,9 @@ fun XiaomiCompactNavigationRail(
 
 /**
  * Xiaomi Extended Navigation Rail
- * 
+ *
  * A navigation rail with extended content and custom header.
- * 
+ *
  * @param items List of navigation items
  * @param selectedItemId Currently selected item ID
  * @param onItemSelected Callback when an item is selected
@@ -374,11 +374,11 @@ fun XiaomiExtendedNavigationRail(
                             modifier = Modifier.padding(horizontal = 8.dp)
                         )
                     }
-                    
+
                     if (headerActions != null) {
                         headerActions()
                     }
-                    
+
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
@@ -392,7 +392,7 @@ fun XiaomiExtendedNavigationRail(
 fun XiaomiNavigationRailPreview() {
     XiaomiPreviewTheme {
         var selectedItem by remember { mutableIntStateOf(0) }
-        
+
         val items = listOf(
             XiaomiNavigationRailItem(
                 id = "home",
@@ -420,7 +420,7 @@ fun XiaomiNavigationRailPreview() {
                 unselectedIcon = Icons.Outlined.Person
             )
         )
-        
+
         Row {
             XiaomiSimpleNavigationRail(
                 items = items,
@@ -430,7 +430,7 @@ fun XiaomiNavigationRailPreview() {
                 },
                 modifier = Modifier.width(80.dp)
             )
-            
+
             Surface(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -457,7 +457,7 @@ fun XiaomiNavigationRailPreview() {
 fun XiaomiNavigationRailWithFABPreview() {
     XiaomiPreviewTheme {
         var selectedItem by remember { mutableIntStateOf(0) }
-        
+
         val items = listOf(
             XiaomiNavigationRailItem(
                 id = "home",
@@ -479,7 +479,7 @@ fun XiaomiNavigationRailWithFABPreview() {
                 unselectedIcon = Icons.Outlined.Settings
             )
         )
-        
+
         Row {
             XiaomiNavigationRailWithFAB(
                 items = items,
@@ -490,7 +490,7 @@ fun XiaomiNavigationRailWithFABPreview() {
                 onFabClick = { },
                 modifier = Modifier.width(80.dp)
             )
-            
+
             Surface(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -517,7 +517,7 @@ fun XiaomiNavigationRailWithFABPreview() {
 fun XiaomiCompactNavigationRailPreview() {
     XiaomiPreviewTheme {
         var selectedItem by remember { mutableIntStateOf(0) }
-        
+
         val items = listOf(
             XiaomiNavigationRailItem(
                 id = "home",
@@ -551,7 +551,7 @@ fun XiaomiCompactNavigationRailPreview() {
                 unselectedIcon = Icons.Outlined.Settings
             )
         )
-        
+
         Row {
             XiaomiCompactNavigationRail(
                 items = items,
@@ -561,7 +561,7 @@ fun XiaomiCompactNavigationRailPreview() {
                 },
                 modifier = Modifier.width(56.dp)
             )
-            
+
             Surface(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -588,7 +588,7 @@ fun XiaomiCompactNavigationRailPreview() {
 fun XiaomiNavigationRailDarkPreview() {
     XiaomiPreviewTheme(darkTheme = true) {
         var selectedItem by remember { mutableIntStateOf(0) }
-        
+
         val items = listOf(
             XiaomiNavigationRailItem(
                 id = "home",
@@ -610,7 +610,7 @@ fun XiaomiNavigationRailDarkPreview() {
                 badge = "2"
             )
         )
-        
+
         Row {
             XiaomiSimpleNavigationRail(
                 items = items,
@@ -620,7 +620,7 @@ fun XiaomiNavigationRailDarkPreview() {
                 },
                 modifier = Modifier.width(80.dp)
             )
-            
+
             Surface(
                 modifier = Modifier
                     .fillMaxHeight()

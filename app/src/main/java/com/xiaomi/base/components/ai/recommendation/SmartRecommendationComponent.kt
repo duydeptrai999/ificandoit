@@ -104,7 +104,7 @@ enum class RecommendationDisplayStyle {
 /**
  * Smart Recommendation Component
  * AI-powered recommendation system
- * 
+ *
  * @param userId User ID for personalization
  * @param context Current context/category
  * @param config Recommendation configuration
@@ -133,7 +133,7 @@ fun SmartRecommendationComponent(
     var recommendations by remember { mutableStateOf<List<RecommendationItem>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
-    
+
     // Simulate recommendation loading
     LaunchedEffect(userId, context) {
         isLoading = true
@@ -147,7 +147,7 @@ fun SmartRecommendationComponent(
             isLoading = false
         }
     }
-    
+
     // Auto refresh
     LaunchedEffect(config.refreshInterval) {
         while (true) {
@@ -161,7 +161,7 @@ fun SmartRecommendationComponent(
             }
         }
     }
-    
+
     if (error != null) {
         ErrorContent(
             error = error!!,
@@ -178,7 +178,7 @@ fun SmartRecommendationComponent(
 /**
  * Personalized Recommendation Component
  * Recommendations based on user behavior and preferences
- * 
+ *
  * @param userPreferences User preferences
  * @param behaviorHistory User behavior history
  * @param config Configuration
@@ -204,7 +204,7 @@ fun PersonalizedRecommendationComponent(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(16.dp)
             )
-            
+
             DefaultRecommendationContent(
                 items = items,
                 isLoading = isLoading,
@@ -218,7 +218,7 @@ fun PersonalizedRecommendationComponent(
 /**
  * Trending Recommendation Component
  * Shows trending/popular items
- * 
+ *
  * @param category Category to filter trending items
  * @param timeframe Timeframe for trending (e.g., "24h", "7d", "30d")
  * @param config Configuration
@@ -249,14 +249,14 @@ fun TrendingRecommendationComponent(
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Icon(
                     imageVector = Icons.Default.TrendingUp,
                     contentDescription = "Trending",
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
-            
+
             DefaultRecommendationContent(
                 items = items,
                 isLoading = isLoading,
@@ -270,7 +270,7 @@ fun TrendingRecommendationComponent(
 /**
  * Similar Items Recommendation Component
  * Shows items similar to a given item
- * 
+ *
  * @param baseItemId ID of the base item
  * @param baseItemType Type of the base item
  * @param config Configuration
@@ -295,7 +295,7 @@ fun SimilarItemsRecommendationComponent(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(16.dp)
             )
-            
+
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -316,7 +316,7 @@ fun SimilarItemsRecommendationComponent(
 /**
  * Category-based Recommendation Component
  * Shows recommendations for a specific category
- * 
+ *
  * @param category Category to get recommendations for
  * @param config Configuration
  * @param onItemClick Callback when item is clicked
@@ -339,7 +339,7 @@ fun CategoryRecommendationComponent(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(16.dp)
             )
-            
+
             DefaultRecommendationContent(
                 items = items,
                 isLoading = isLoading,
@@ -465,7 +465,7 @@ private fun RecommendationCard(
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
-                    
+
                     item.description?.let { description ->
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
@@ -477,7 +477,7 @@ private fun RecommendationCard(
                         )
                     }
                 }
-                
+
                 // Priority indicator
                 if (item.priority == RecommendationPriority.HIGH || item.priority == RecommendationPriority.URGENT) {
                     Icon(
@@ -492,7 +492,7 @@ private fun RecommendationCard(
                     )
                 }
             }
-            
+
             // Tags
             if (item.tags.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(8.dp))
@@ -513,7 +513,7 @@ private fun RecommendationCard(
                     }
                 }
             }
-            
+
             // Confidence and source info
             if (config.showConfidence || config.showSource) {
                 Spacer(modifier = Modifier.height(8.dp))
@@ -529,7 +529,7 @@ private fun RecommendationCard(
                             color = MaterialTheme.colorScheme.primary
                         )
                     }
-                    
+
                     if (config.showSource) {
                         Text(
                             text = item.source.name.lowercase().replace('_', ' '),
@@ -539,7 +539,7 @@ private fun RecommendationCard(
                     }
                 }
             }
-            
+
             // Action button
             item.actionText?.let { actionText ->
                 Spacer(modifier = Modifier.height(12.dp))
@@ -621,7 +621,7 @@ private fun RecommendationCompactItem(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                
+
                 item.description?.let { description ->
                     Text(
                         text = description,
@@ -632,7 +632,7 @@ private fun RecommendationCompactItem(
                     )
                 }
             }
-            
+
             if (config.showConfidence) {
                 Text(
                     text = "${(item.confidence * 100).toInt()}%",
@@ -812,7 +812,7 @@ private fun generateMockRecommendations(config: RecommendationConfig): List<Reco
             actionText = "Update Now"
         )
     )
-    
+
     return mockItems
         .filter { it.confidence >= config.minConfidence }
         .take(config.maxItems)
@@ -835,7 +835,7 @@ class RecommendationEngine {
             // This would integrate with actual ML models and APIs
             return generateMockRecommendations(config)
         }
-        
+
         /**
          * Track user interaction with recommendation
          */
@@ -846,7 +846,7 @@ class RecommendationEngine {
         ) {
             // This would send analytics data
         }
-        
+
         /**
          * Update user preferences based on interactions
          */

@@ -18,7 +18,7 @@ import kotlin.math.min
 fun DrawScope.drawGrid(color: Color, stepSize: Float = 50f, strokeWidth: Float = 1f) {
     val width = size.width
     val height = size.height
-    
+
     // Draw vertical lines
     for (x in 0..width.toInt() step stepSize.toInt()) {
         drawLine(
@@ -28,7 +28,7 @@ fun DrawScope.drawGrid(color: Color, stepSize: Float = 50f, strokeWidth: Float =
             strokeWidth = strokeWidth
         )
     }
-    
+
     // Draw horizontal lines
     for (y in 0..height.toInt() step stepSize.toInt()) {
         drawLine(
@@ -43,7 +43,7 @@ fun DrawScope.drawGrid(color: Color, stepSize: Float = 50f, strokeWidth: Float =
 fun DrawScope.drawAxes(color: Color, strokeWidth: Float = 2f) {
     val width = size.width
     val height = size.height
-    
+
     // X-axis
     drawLine(
         color = color,
@@ -51,7 +51,7 @@ fun DrawScope.drawAxes(color: Color, strokeWidth: Float = 2f) {
         end = Offset(width, height - 40f),
         strokeWidth = strokeWidth
     )
-    
+
     // Y-axis
     drawLine(
         color = color,
@@ -71,26 +71,26 @@ fun DrawScope.drawLineSeries(
     fillArea: Boolean = false
 ) {
     if (data.isEmpty()) return
-    
+
     val width = size.width
     val height = size.height
     val padding = 40f
-    
+
     val xMin = xRange.first
     val xMax = xRange.second
     val yMin = yRange.first
     val yMax = yRange.second
-    
+
     val xScale = (width - 2 * padding) / (xMax - xMin)
     val yScale = (height - 2 * padding) / (yMax - yMin)
-    
+
     val path = Path()
     var firstPoint = true
-    
+
     data.forEach { (x, y) ->
         val scaledX = padding + (x - xMin) * xScale
         val scaledY = height - padding - (y - yMin) * yScale
-        
+
         if (firstPoint) {
             path.moveTo(scaledX, scaledY)
             firstPoint = false
@@ -98,30 +98,30 @@ fun DrawScope.drawLineSeries(
             path.lineTo(scaledX, scaledY)
         }
     }
-    
+
     // Draw the line
     drawPath(
         path = path,
         color = color,
         style = Stroke(width = strokeWidth)
     )
-    
+
     // Fill the area under the line if requested
     if (fillArea) {
         val fillPath = Path()
         fillPath.addPath(path)
-        
+
         // Add points to close the path at the bottom
         val lastPoint = data.last()
         val lastX = padding + (lastPoint.first - xMin) * xScale
         fillPath.lineTo(lastX, height - padding)
-        
+
         val firstPoint = data.first()
         val firstX = padding + (firstPoint.first - xMin) * xScale
         fillPath.lineTo(firstX, height - padding)
-        
+
         fillPath.close()
-        
+
         drawPath(
             path = fillPath,
             color = color.copy(alpha = 0.2f),
@@ -138,23 +138,23 @@ fun DrawScope.drawBarSeries(
     yRange: Pair<Float, Float> = Pair(0f, 1f)
 ) {
     if (data.isEmpty()) return
-    
+
     val width = size.width
     val height = size.height
     val padding = 40f
-    
+
     val xMin = xRange.first
     val xMax = xRange.second
     val yMin = yRange.first
     val yMax = yRange.second
-    
+
     val xScale = (width - 2 * padding) / (xMax - xMin)
     val yScale = (height - 2 * padding) / (yMax - yMin)
-    
+
     data.forEach { (x, y) ->
         val scaledX = padding + (x - xMin) * xScale
         val scaledY = height - padding - (y - yMin) * yScale
-        
+
         drawRect(
             color = color,
             topLeft = Offset(scaledX - barWidth / 2, scaledY),
@@ -170,59 +170,59 @@ fun DrawScope.drawAreaSeries(
     yRange: Pair<Float, Float> = Pair(0f, 1f)
 ) {
     if (data.isEmpty()) return
-    
+
     val width = size.width
     val height = size.height
     val padding = 40f
-    
+
     val xMin = xRange.first
     val xMax = xRange.second
     val yMin = yRange.first
     val yMax = yRange.second
-    
+
     val xScale = (width - 2 * padding) / (xMax - xMin)
     val yScale = (height - 2 * padding) / (yMax - yMin)
-    
+
     val path = Path()
-    
+
     // Start at the bottom left
     val firstPoint = data.first()
     val firstX = padding + (firstPoint.first - xMin) * xScale
     path.moveTo(firstX, height - padding)
-    
+
     // Draw up to the first point
     path.lineTo(firstX, height - padding - (firstPoint.second - yMin) * yScale)
-    
+
     // Draw through all points
     data.forEach { (x, y) ->
         val scaledX = padding + (x - xMin) * xScale
         val scaledY = height - padding - (y - yMin) * yScale
         path.lineTo(scaledX, scaledY)
     }
-    
+
     // Draw down to the bottom right
     val lastPoint = data.last()
     val lastX = padding + (lastPoint.first - xMin) * xScale
     path.lineTo(lastX, height - padding)
-    
+
     // Close the path
     path.close()
-    
+
     // Fill the area
     drawPath(
         path = path,
         color = color.copy(alpha = 0.3f),
         style = Fill
     )
-    
+
     // Draw the top line
     val linePath = Path()
     var firstLinePath = true
-    
+
     data.forEach { (x, y) ->
         val scaledX = padding + (x - xMin) * xScale
         val scaledY = height - padding - (y - yMin) * yScale
-        
+
         if (firstLinePath) {
             linePath.moveTo(scaledX, scaledY)
             firstLinePath = false
@@ -230,7 +230,7 @@ fun DrawScope.drawAreaSeries(
             linePath.lineTo(scaledX, scaledY)
         }
     }
-    
+
     drawPath(
         path = linePath,
         color = color,
@@ -246,23 +246,23 @@ fun DrawScope.drawScatterSeries(
     yRange: Pair<Float, Float> = Pair(0f, 1f)
 ) {
     if (data.isEmpty()) return
-    
+
     val width = size.width
     val height = size.height
     val padding = 40f
-    
+
     val xMin = xRange.first
     val xMax = xRange.second
     val yMin = yRange.first
     val yMax = yRange.second
-    
+
     val xScale = (width - 2 * padding) / (xMax - xMin)
     val yScale = (height - 2 * padding) / (yMax - yMin)
-    
+
     data.forEach { (x, y) ->
         val scaledX = padding + (x - xMin) * xScale
         val scaledY = height - padding - (y - yMin) * yScale
-        
+
         drawCircle(
             color = color,
             radius = pointSize,
@@ -278,9 +278,9 @@ fun DrawScope.drawLegend(
 ) {
     val itemHeight = textSize * 2
     val totalHeight = items.size * itemHeight + (items.size - 1) * padding
-    
+
     var yOffset = (size.height - totalHeight) / 2
-    
+
     items.forEach { (label, color) ->
         // Draw color box
         drawRect(
@@ -288,7 +288,7 @@ fun DrawScope.drawLegend(
             topLeft = Offset(size.width - 100f, yOffset),
             size = Size(textSize, textSize)
         )
-        
+
         // Draw label (simplified - in real implementation you'd use drawText)
         // This is a placeholder since drawText requires a Paint object
         drawRect(
@@ -296,7 +296,7 @@ fun DrawScope.drawLegend(
             topLeft = Offset(size.width - 80f, yOffset),
             size = Size(70f, textSize)
         )
-        
+
         yOffset += itemHeight + padding
     }
 }
@@ -310,14 +310,14 @@ fun DrawScope.drawMetricLine(
 ) {
     val width = size.width
     val filledWidth = (value / maxValue) * width
-    
+
     // Background
     drawRect(
         color = color.copy(alpha = 0.2f),
         topLeft = Offset(0f, 0f),
         size = Size(width, height)
     )
-    
+
     // Filled portion
     drawRect(
         color = color,
@@ -332,28 +332,28 @@ fun DrawScope.drawMetricMiniChart(
     strokeWidth: Float = 2f
 ) {
     if (data.isEmpty()) return
-    
+
     val width = size.width
     val height = size.height
-    
+
     val maxValue = data.maxOrNull() ?: 1f
     val minValue = data.minOrNull() ?: 0f
     val range = maxOf(maxValue - minValue, 0.01f) // Avoid division by zero
-    
+
     val path = Path()
     val stepX = width / (data.size - 1).coerceAtLeast(1)
-    
+
     data.forEachIndexed { index, value ->
         val x = index * stepX
         val y = height - ((value - minValue) / range) * height
-        
+
         if (index == 0) {
             path.moveTo(x, y)
         } else {
             path.lineTo(x, y)
         }
     }
-    
+
     drawPath(
         path = path,
         color = color,
@@ -416,31 +416,31 @@ fun DrawScope.drawCandlestickSeries(
     yRange: Pair<Float, Float>? = null
 ) {
     if (data.isEmpty()) return
-    
+
     val width = size.width
     val height = size.height
     val padding = 40f
-    
+
     // Calculate y-range if not provided
     val yMin = yRange?.first ?: data.minOf { it.low }
     val yMax = yRange?.second ?: data.maxOf { it.high }
-    
+
     val xMin = xRange.first
     val xMax = xRange.second
-    
+
     val xScale = (width - 2 * padding) / (xMax - xMin)
     val yScale = (height - 2 * padding) / (yMax - yMin)
-    
+
     data.forEachIndexed { index, candle ->
         val x = padding + index * xScale
-        
+
         val highY = height - padding - (candle.high - yMin) * yScale
         val lowY = height - padding - (candle.low - yMin) * yScale
         val openY = height - padding - (candle.open - yMin) * yScale
         val closeY = height - padding - (candle.close - yMin) * yScale
-        
+
         val color = if (candle.close >= candle.open) upColor else downColor
-        
+
         // Draw the wick
         drawLine(
             color = color,
@@ -448,12 +448,12 @@ fun DrawScope.drawCandlestickSeries(
             end = Offset(x, lowY),
             strokeWidth = wickWidth
         )
-        
+
         // Draw the body
         val topY = minOf(openY, closeY)
         val bottomY = maxOf(openY, closeY)
         val bodyHeight = maxOf(bottomY - topY, 1f) // Ensure at least 1px height
-        
+
         drawRect(
             color = color,
             topLeft = Offset(x - bodyWidth / 2, topY),

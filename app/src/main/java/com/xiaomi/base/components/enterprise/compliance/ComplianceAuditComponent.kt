@@ -151,7 +151,7 @@ enum class AuditFrequency {
 /**
  * Compliance Audit Component
  * Comprehensive compliance auditing and monitoring
- * 
+ *
  * @param config Compliance configuration
  * @param onAuditComplete Callback when audit completes
  * @param onFindingAction Callback when action is taken on finding
@@ -166,7 +166,7 @@ fun ComplianceAuditComponent(
     var isAuditing by remember { mutableStateOf(false) }
     var selectedStandard by remember { mutableStateOf<ComplianceStandard?>(null) }
     val context = LocalContext.current
-    
+
     LaunchedEffect(config) {
         // Perform initial audit
         isAuditing = true
@@ -175,7 +175,7 @@ fun ComplianceAuditComponent(
         onAuditComplete(auditResults)
         isAuditing = false
     }
-    
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -189,9 +189,9 @@ fun ComplianceAuditComponent(
             },
             onStandardSelected = { selectedStandard = it }
         )
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         // Audit results
         if (isAuditing) {
             AuditProgressIndicator()
@@ -208,7 +208,7 @@ fun ComplianceAuditComponent(
 /**
  * Compliance Dashboard Component
  * Overview of compliance status across all standards
- * 
+ *
  * @param auditResults List of audit results
  * @param onDrillDown Callback when drilling down into specific standard
  */
@@ -226,7 +226,7 @@ fun ComplianceDashboardComponent(
                 results = auditResults
             )
         }
-        
+
         item {
             // Standards compliance
             ComplianceStandardsGrid(
@@ -234,7 +234,7 @@ fun ComplianceDashboardComponent(
                 onStandardClick = onDrillDown
             )
         }
-        
+
         item {
             // Critical findings
             CriticalFindingsCard(
@@ -242,7 +242,7 @@ fun ComplianceDashboardComponent(
                     .filter { it.severity == FindingSeverity.CRITICAL }
             )
         }
-        
+
         item {
             // Audit timeline
             AuditTimelineCard(
@@ -255,7 +255,7 @@ fun ComplianceDashboardComponent(
 /**
  * Compliance Report Component
  * Generate and display compliance reports
- * 
+ *
  * @param auditResults List of audit results
  * @param standard Specific standard to report on
  * @param onExport Callback when exporting report
@@ -271,7 +271,7 @@ fun ComplianceReportComponent(
     } else {
         auditResults
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -284,16 +284,16 @@ fun ComplianceReportComponent(
                 results = filteredResults,
                 onExport = onExport
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Executive summary
             ComplianceExecutiveSummary(
                 results = filteredResults
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Detailed findings
             ComplianceDetailedFindings(
                 findings = filteredResults.flatMap { it.findings }
@@ -328,7 +328,7 @@ private fun ComplianceAuditControls(
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Button(
                     onClick = onStartAudit,
                     enabled = !isAuditing
@@ -349,18 +349,18 @@ private fun ComplianceAuditControls(
                     Text(if (isAuditing) "Auditing..." else "Start Audit")
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Standards filter
             Text(
                 text = "Filter by Standard:",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -369,7 +369,7 @@ private fun ComplianceAuditControls(
                     onClick = { onStandardSelected(null) },
                     label = { Text("All") }
                 )
-                
+
                 config.enabledStandards.take(3).forEach { standard ->
                     FilterChip(
                         selected = false,
@@ -399,17 +399,17 @@ private fun AuditProgressIndicator() {
             CircularProgressIndicator(
                 modifier = Modifier.size(48.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Text(
                 text = "Performing Compliance Audit...",
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Checking policies, controls, and data protection measures",
                 style = MaterialTheme.typography.bodyMedium,
@@ -434,7 +434,7 @@ private fun ComplianceAuditResults(
     } else {
         results
     }
-    
+
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
@@ -456,7 +456,7 @@ private fun AuditResultCard(
     onFindingAction: (ComplianceFinding, String) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
-    
+
     val statusColor = when (result.status) {
         ComplianceStatus.COMPLIANT -> Color(0xFF4CAF50)
         ComplianceStatus.NON_COMPLIANT -> MaterialTheme.colorScheme.error
@@ -465,7 +465,7 @@ private fun AuditResultCard(
         ComplianceStatus.NOT_APPLICABLE -> MaterialTheme.colorScheme.onSurfaceVariant
         ComplianceStatus.PENDING_AUDIT -> Color(0xFF9C27B0)
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -486,14 +486,14 @@ private fun AuditResultCard(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Text(
                         text = "Score: ${result.score}/100",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Column(
                     horizontalAlignment = Alignment.End
                 ) {
@@ -506,9 +506,9 @@ private fun AuditResultCard(
                             style = MaterialTheme.typography.labelSmall
                         )
                     }
-                    
+
                     Spacer(modifier = Modifier.height(4.dp))
-                    
+
                     IconButton(
                         onClick = { expanded = !expanded },
                         modifier = Modifier.size(24.dp)
@@ -520,10 +520,10 @@ private fun AuditResultCard(
                     }
                 }
             }
-            
+
             // Progress indicator
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             LinearProgressIndicator(
                 progress = result.score / 100f,
                 modifier = Modifier
@@ -532,36 +532,36 @@ private fun AuditResultCard(
                     .clip(RoundedCornerShape(2.dp)),
                 color = statusColor
             )
-            
+
             // Expanded content
             if (expanded) {
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Summary
                 Text(
                     text = result.summary,
                     style = MaterialTheme.typography.bodyMedium
                 )
-                
+
                 // Findings
                 if (result.findings.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(16.dp))
-                    
+
                     Text(
                         text = "Findings (${result.findings.size})",
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     result.findings.take(3).forEach { finding ->
                         FindingItem(
                             finding = finding,
                             onAction = { action -> onFindingAction(finding, action) }
                         )
                     }
-                    
+
                     if (result.findings.size > 3) {
                         TextButton(
                             onClick = { /* Show all findings */ }
@@ -590,7 +590,7 @@ private fun FindingItem(
         FindingSeverity.LOW -> Color(0xFF4CAF50)
         FindingSeverity.INFORMATIONAL -> MaterialTheme.colorScheme.onSurfaceVariant
     }
-    
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -615,14 +615,14 @@ private fun FindingItem(
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     Text(
                         text = finding.description,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Badge(
                     containerColor = severityColor
                 ) {
@@ -633,9 +633,9 @@ private fun FindingItem(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -648,7 +648,7 @@ private fun FindingItem(
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
-                
+
                 if (finding.status == FindingStatus.OPEN) {
                     Button(
                         onClick = { onAction("remediate") },
@@ -677,12 +677,12 @@ private fun ComplianceOverviewCard(
     } else {
         0
     }
-    
+
     val compliantCount = results.count { it.status == ComplianceStatus.COMPLIANT }
     val totalFindings = results.sumOf { it.findings.size }
     val criticalFindings = results.flatMap { it.findings }
         .count { it.severity == FindingSeverity.CRITICAL }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -697,9 +697,9 @@ private fun ComplianceOverviewCard(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -709,19 +709,19 @@ private fun ComplianceOverviewCard(
                     value = "$overallScore/100",
                     icon = Icons.Default.Assessment
                 )
-                
+
                 ComplianceMetric(
                     title = "Compliant",
                     value = "$compliantCount/${results.size}",
                     icon = Icons.Default.CheckCircle
                 )
-                
+
                 ComplianceMetric(
                     title = "Total Findings",
                     value = totalFindings.toString(),
                     icon = Icons.Default.Warning
                 )
-                
+
                 ComplianceMetric(
                     title = "Critical",
                     value = criticalFindings.toString(),
@@ -750,16 +750,16 @@ private fun ComplianceMetric(
             modifier = Modifier.size(24.dp),
             tint = MaterialTheme.colorScheme.onPrimaryContainer
         )
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         Text(
             text = value,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onPrimaryContainer
         )
-        
+
         Text(
             text = title,
             style = MaterialTheme.typography.labelSmall,
@@ -787,9 +787,9 @@ private fun ComplianceStandardsGrid(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             results.forEach { result ->
                 StandardComplianceItem(
                     result = result,
@@ -814,7 +814,7 @@ private fun StandardComplianceItem(
         ComplianceStatus.PARTIALLY_COMPLIANT -> Color(0xFFFF9800)
         else -> MaterialTheme.colorScheme.onSurfaceVariant
     }
-    
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -836,14 +836,14 @@ private fun StandardComplianceItem(
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Medium
                 )
-                
+
                 Text(
                     text = "Score: ${result.score}/100",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Badge(
                 containerColor = statusColor
             ) {
@@ -865,7 +865,7 @@ private fun CriticalFindingsCard(
     findings: List<ComplianceFinding>
 ) {
     if (findings.isEmpty()) return
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -884,9 +884,9 @@ private fun CriticalFindingsCard(
                     modifier = Modifier.size(24.dp),
                     tint = MaterialTheme.colorScheme.onErrorContainer
                 )
-                
+
                 Spacer(modifier = Modifier.width(8.dp))
-                
+
                 Text(
                     text = "Critical Findings (${findings.size})",
                     style = MaterialTheme.typography.titleMedium,
@@ -894,9 +894,9 @@ private fun CriticalFindingsCard(
                     color = MaterialTheme.colorScheme.onErrorContainer
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             findings.take(3).forEach { finding ->
                 Text(
                     text = "• ${finding.title}",
@@ -905,7 +905,7 @@ private fun CriticalFindingsCard(
                     modifier = Modifier.padding(vertical = 2.dp)
                 )
             }
-            
+
             if (findings.size > 3) {
                 Text(
                     text = "... and ${findings.size - 3} more",
@@ -936,11 +936,11 @@ private fun AuditTimelineCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-            
+
             results.sortedByDescending { it.auditDate }.take(5).forEach { result ->
                 Row(
                     modifier = Modifier
@@ -952,7 +952,7 @@ private fun AuditTimelineCard(
                         text = result.standard.name,
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    
+
                     Text(
                         text = dateFormat.format(result.auditDate),
                         style = MaterialTheme.typography.bodySmall,
@@ -984,14 +984,14 @@ private fun ComplianceReportHeader(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Text(
                 text = "Generated on ${SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(Date())}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         OutlinedButton(
             onClick = { onExport("pdf") }
         ) {
@@ -1018,7 +1018,7 @@ private fun ComplianceExecutiveSummary(
     } else {
         0
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -1033,9 +1033,9 @@ private fun ComplianceExecutiveSummary(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Overall compliance score: $overallScore/100\n" +
                         "Total standards audited: ${results.size}\n" +
@@ -1060,9 +1060,9 @@ private fun ComplianceDetailedFindings(
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Bold
     )
-    
+
     Spacer(modifier = Modifier.height(8.dp))
-    
+
     findings.groupBy { it.severity }.forEach { (severity, severityFindings) ->
         Text(
             text = "${severity.name} (${severityFindings.size})",
@@ -1070,7 +1070,7 @@ private fun ComplianceDetailedFindings(
             fontWeight = FontWeight.Medium,
             modifier = Modifier.padding(vertical = 4.dp)
         )
-        
+
         severityFindings.forEach { finding ->
             Text(
                 text = "• ${finding.title}: ${finding.description}",
@@ -1104,7 +1104,7 @@ private fun generateAuditResult(standard: ComplianceStandard): AuditResult {
     val findings = generateMockFindings(standard)
     val score = calculateComplianceScore(findings)
     val status = determineComplianceStatus(score, findings)
-    
+
     return AuditResult(
         id = UUID.randomUUID().toString(),
         standard = standard,
@@ -1194,18 +1194,18 @@ private fun determineComplianceStatus(score: Int, findings: List<ComplianceFindi
  */
 private fun generateRecommendations(standard: ComplianceStandard, findings: List<ComplianceFinding>): List<String> {
     val recommendations = mutableListOf<String>()
-    
+
     if (findings.any { it.type == FindingType.DATA_PROTECTION }) {
         recommendations.add("Implement comprehensive data protection measures")
     }
-    
+
     if (findings.any { it.type == FindingType.ACCESS_CONTROL }) {
         recommendations.add("Strengthen access control mechanisms")
     }
-    
+
     recommendations.add("Conduct regular compliance training")
     recommendations.add("Establish continuous monitoring processes")
-    
+
     return recommendations
 }
 

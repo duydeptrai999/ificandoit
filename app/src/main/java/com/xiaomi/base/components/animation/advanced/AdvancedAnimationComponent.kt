@@ -147,7 +147,7 @@ data class WaveData(
 /**
  * Advanced Animation Component
  * Comprehensive animation system with advanced effects
- * 
+ *
  * @param config Animation configuration
  * @param content Content to animate
  * @param onAnimationStart Callback when animation starts
@@ -162,7 +162,7 @@ fun AdvancedAnimationComponent(
 ) {
     var animationState by remember { mutableStateOf(AnimationState.IDLE) }
     var isVisible by remember { mutableStateOf(!config.autoStart) }
-    
+
     LaunchedEffect(config.autoStart) {
         if (config.autoStart) {
             delay(config.delay.toLong())
@@ -171,7 +171,7 @@ fun AdvancedAnimationComponent(
             onAnimationStart()
         }
     }
-    
+
     when (config.type) {
         AnimationType.FADE -> FadeAnimationContent(
             config = config,
@@ -182,7 +182,7 @@ fun AdvancedAnimationComponent(
             },
             content = content
         )
-        
+
         AnimationType.SLIDE -> SlideAnimationContent(
             config = config,
             isVisible = isVisible,
@@ -192,7 +192,7 @@ fun AdvancedAnimationComponent(
             },
             content = content
         )
-        
+
         AnimationType.SCALE -> ScaleAnimationContent(
             config = config,
             isVisible = isVisible,
@@ -202,7 +202,7 @@ fun AdvancedAnimationComponent(
             },
             content = content
         )
-        
+
         AnimationType.ROTATE -> RotateAnimationContent(
             config = config,
             isVisible = isVisible,
@@ -212,7 +212,7 @@ fun AdvancedAnimationComponent(
             },
             content = content
         )
-        
+
         AnimationType.BOUNCE -> BounceAnimationContent(
             config = config,
             isVisible = isVisible,
@@ -222,7 +222,7 @@ fun AdvancedAnimationComponent(
             },
             content = content
         )
-        
+
         AnimationType.ELASTIC -> ElasticAnimationContent(
             config = config,
             isVisible = isVisible,
@@ -232,7 +232,7 @@ fun AdvancedAnimationComponent(
             },
             content = content
         )
-        
+
         AnimationType.SPRING -> SpringAnimationContent(
             config = config,
             isVisible = isVisible,
@@ -242,7 +242,7 @@ fun AdvancedAnimationComponent(
             },
             content = content
         )
-        
+
         else -> {
             // Default to fade animation
             FadeAnimationContent(
@@ -261,7 +261,7 @@ fun AdvancedAnimationComponent(
 /**
  * Particle System Component
  * Advanced particle effects
- * 
+ *
  * @param particleCount Number of particles
  * @param emissionRate Particles per second
  * @param particleLifetime Particle lifetime in seconds
@@ -280,12 +280,12 @@ fun ParticleSystemComponent(
 ) {
     var particles by remember { mutableStateOf<List<Particle>>(emptyList()) }
     var lastEmissionTime by remember { mutableStateOf(0L) }
-    
+
     LaunchedEffect(Unit) {
         while (true) {
             val currentTime = System.currentTimeMillis()
             val deltaTime = (currentTime - lastEmissionTime) / 1000f
-            
+
             // Update existing particles
             particles = particles.mapNotNull { particle ->
                 val newLife = particle.life - deltaTime / particleLifetime
@@ -301,18 +301,18 @@ fun ParticleSystemComponent(
                     )
                 }
             }
-            
+
             // Emit new particles
             if (particles.size < particleCount && deltaTime >= 1f / emissionRate) {
                 val newParticle = createRandomParticle(colors)
                 particles = particles + newParticle
                 lastEmissionTime = currentTime
             }
-            
+
             delay(16) // ~60 FPS
         }
     }
-    
+
     Canvas(
         modifier = modifier.fillMaxSize()
     ) {
@@ -325,7 +325,7 @@ fun ParticleSystemComponent(
 /**
  * Wave Animation Component
  * Animated wave effects
- * 
+ *
  * @param waves List of wave configurations
  * @param speed Animation speed
  */
@@ -356,7 +356,7 @@ fun WaveAnimationComponent(
         ),
         label = "wave_time"
     )
-    
+
     Canvas(
         modifier = modifier.fillMaxSize()
     ) {
@@ -369,7 +369,7 @@ fun WaveAnimationComponent(
 /**
  * Ripple Animation Component
  * Animated ripple effects
- * 
+ *
  * @param center Center point of ripples
  * @param rippleCount Number of ripples
  * @param maxRadius Maximum ripple radius
@@ -385,30 +385,30 @@ fun RippleAnimationComponent(
 ) {
     var ripples by remember { mutableStateOf<List<Float>>(emptyList()) }
     val density = LocalDensity.current
-    
+
     LaunchedEffect(Unit) {
         while (true) {
             // Add new ripple
             ripples = (ripples + 0f).takeLast(rippleCount)
-            
+
             // Update ripples
             repeat(10) {
                 ripples = ripples.map { it + maxRadius / 10f }
                 delay(50)
             }
-            
+
             // Remove completed ripples
             ripples = ripples.filter { it < maxRadius }
-            
+
             delay(500)
         }
     }
-    
+
     Canvas(
         modifier = modifier.fillMaxSize()
     ) {
         val rippleCenter = center ?: Offset(size.width / 2, size.height / 2)
-        
+
         ripples.forEach { radius ->
             val alpha = 1f - (radius / maxRadius)
             drawCircle(
@@ -424,7 +424,7 @@ fun RippleAnimationComponent(
 /**
  * Shimmer Animation Component
  * Shimmer loading effect
- * 
+ *
  * @param isLoading Whether to show shimmer
  * @param shimmerColor Shimmer color
  * @param content Content to shimmer
@@ -447,10 +447,10 @@ fun ShimmerAnimationComponent(
         ),
         label = "shimmer_translate"
     )
-    
+
     Box {
         content()
-        
+
         if (isLoading) {
             Canvas(
                 modifier = Modifier.matchParentSize()
@@ -464,7 +464,7 @@ fun ShimmerAnimationComponent(
                     start = Offset(shimmerTranslate - 150f, 0f),
                     end = Offset(shimmerTranslate + 150f, size.height)
                 )
-                
+
                 drawRect(
                     brush = brush,
                     size = size
@@ -477,7 +477,7 @@ fun ShimmerAnimationComponent(
 /**
  * Parallax Animation Component
  * Parallax scrolling effect
- * 
+ *
  * @param layers List of parallax layers with different speeds
  * @param scrollOffset Current scroll offset
  */
@@ -505,7 +505,7 @@ fun ParallaxAnimationComponent(
 /**
  * Physics Animation Component
  * Physics-based animations
- * 
+ *
  * @param initialPosition Initial position
  * @param targetPosition Target position
  * @param mass Object mass
@@ -527,7 +527,7 @@ fun PhysicsAnimationComponent(
             typeConverter = Offset.VectorConverter
         )
     }
-    
+
     LaunchedEffect(targetPosition) {
         animatedPosition.animateTo(
             targetValue = targetPosition,
@@ -537,14 +537,14 @@ fun PhysicsAnimationComponent(
             )
         )
     }
-    
+
     content(animatedPosition.value)
 }
 
 /**
  * Morphing Animation Component
  * Shape morphing animations
- * 
+ *
  * @param shapes List of shapes to morph between
  * @param duration Animation duration
  * @param autoPlay Whether to auto-play the animation
@@ -571,21 +571,21 @@ fun MorphingAnimationComponent(
         },
         label = "morph_progress"
     )
-    
+
     LaunchedEffect(currentShapeIndex) {
         // Reset progress when shape changes
     }
-    
+
     Canvas(
         modifier = modifier.fillMaxSize()
     ) {
         if (shapes.isNotEmpty()) {
             val currentShape = shapes[currentShapeIndex]
             val nextShape = shapes[(currentShapeIndex + 1) % shapes.size]
-            
+
             // Interpolate between current and next shape
             val morphedPath = interpolatePaths(currentShape, nextShape, morphProgress)
-            
+
             drawPath(
                 path = morphedPath,
                 color = color,
@@ -598,7 +598,7 @@ fun MorphingAnimationComponent(
 /**
  * Animation Sequence Component
  * Chain multiple animations in sequence
- * 
+ *
  * @param animations List of animation configurations
  * @param onSequenceComplete Callback when sequence completes
  */
@@ -610,12 +610,12 @@ fun AnimationSequenceComponent(
 ) {
     var currentAnimationIndex by remember { mutableStateOf(0) }
     var isPlaying by remember { mutableStateOf(true) }
-    
+
     LaunchedEffect(currentAnimationIndex, isPlaying) {
         if (isPlaying && currentAnimationIndex < animations.size) {
             val currentAnimation = animations[currentAnimationIndex]
             delay((currentAnimation.duration + currentAnimation.delay).toLong())
-            
+
             if (currentAnimationIndex < animations.size - 1) {
                 currentAnimationIndex++
             } else {
@@ -624,7 +624,7 @@ fun AnimationSequenceComponent(
             }
         }
     }
-    
+
     if (isPlaying && currentAnimationIndex < animations.size) {
         content(currentAnimationIndex)
     }
@@ -633,7 +633,7 @@ fun AnimationSequenceComponent(
 /**
  * Interactive Animation Component
  * Gesture-driven animations
- * 
+ *
  * @param onDrag Callback for drag gestures
  * @param onTap Callback for tap gestures
  * @param content Content to make interactive
@@ -645,7 +645,7 @@ fun InteractiveAnimationComponent(
     content: @Composable () -> Unit
 ) {
     var dragOffset by remember { mutableStateOf(Offset.Zero) }
-    
+
     Box(
         modifier = Modifier
             .pointerInput(Unit) {
@@ -688,7 +688,7 @@ private fun FadeAnimationContent(
     ) {
         content()
     }
-    
+
     LaunchedEffect(isVisible) {
         if (isVisible) {
             delay(config.duration.toLong())
@@ -711,7 +711,7 @@ private fun SlideAnimationContent(
         AnimationDirection.BOTTOM_TO_TOP -> AnimatedContentTransitionScope.SlideDirection.Up
         else -> AnimatedContentTransitionScope.SlideDirection.Right
     }
-    
+
     AnimatedVisibility(
         visible = isVisible,
         enter = slideInHorizontally(
@@ -729,7 +729,7 @@ private fun SlideAnimationContent(
     ) {
         content()
     }
-    
+
     LaunchedEffect(isVisible) {
         if (isVisible) {
             delay(config.duration.toLong())
@@ -764,7 +764,7 @@ private fun ScaleAnimationContent(
     ) {
         content()
     }
-    
+
     LaunchedEffect(isVisible) {
         if (isVisible) {
             delay(config.duration.toLong())
@@ -793,13 +793,13 @@ private fun RotateAnimationContent(
         ),
         label = "rotation"
     )
-    
+
     Box(
         modifier = Modifier.rotate(if (isVisible) rotation else 0f)
     ) {
         content()
     }
-    
+
     LaunchedEffect(isVisible) {
         if (isVisible) {
             delay(config.duration.toLong())
@@ -824,7 +824,7 @@ private fun BounceAnimationContent(
         finishedListener = { onAnimationEnd() },
         label = "bounce_scale"
     )
-    
+
     Box(
         modifier = Modifier.scale(bounceScale)
     ) {
@@ -848,7 +848,7 @@ private fun ElasticAnimationContent(
         finishedListener = { onAnimationEnd() },
         label = "elastic_scale"
     )
-    
+
     Box(
         modifier = Modifier.scale(elasticScale)
     ) {
@@ -872,7 +872,7 @@ private fun SpringAnimationContent(
         finishedListener = { onAnimationEnd() },
         label = "spring_scale"
     )
-    
+
     Box(
         modifier = Modifier.scale(springScale)
     ) {
@@ -940,20 +940,20 @@ private fun DrawScope.drawParticle(particle: Particle) {
 private fun DrawScope.drawWave(wave: WaveData, time: Float) {
     val path = Path()
     val points = mutableListOf<Offset>()
-    
+
     for (x in 0..size.width.toInt() step 5) {
         val y = size.height / 2 + wave.amplitude * sin(
             wave.frequency * x + wave.phase + time * wave.speed
         )
         points.add(Offset(x.toFloat(), y))
     }
-    
+
     if (points.isNotEmpty()) {
         path.moveTo(points.first().x, points.first().y)
         points.drop(1).forEach { point ->
             path.lineTo(point.x, point.y)
         }
-        
+
         drawPath(
             path = path,
             color = wave.color,

@@ -91,7 +91,7 @@ data class PredictionConfig(
 /**
  * Predictive Text Component
  * AI-powered text prediction and completion
- * 
+ *
  * @param value Current text field value
  * @param onValueChange Callback when text changes
  * @param config Prediction configuration
@@ -123,7 +123,7 @@ fun PredictiveTextComponent(
     var isLoading by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
-    
+
     // Debounced prediction generation
     LaunchedEffect(value.text) {
         if (value.text.isNotEmpty()) {
@@ -135,7 +135,7 @@ fun PredictiveTextComponent(
             predictions = emptyList()
         }
     }
-    
+
     Column(modifier = modifier) {
         // Main text field
         OutlinedTextField(
@@ -160,7 +160,7 @@ fun PredictiveTextComponent(
                 }
             }
         )
-        
+
         // Prediction suggestions
         if (predictions.isNotEmpty()) {
             Spacer(modifier = Modifier.height(8.dp))
@@ -181,7 +181,7 @@ fun PredictiveTextComponent(
 /**
  * Smart Text Field Component
  * Enhanced text field with multiple AI features
- * 
+ *
  * @param value Current text field value
  * @param onValueChange Callback when text changes
  * @param config Prediction configuration
@@ -202,7 +202,7 @@ fun SmartTextFieldComponent(
 ) {
     var correctedText by remember { mutableStateOf<String?>(null) }
     var showCorrectionSuggestion by remember { mutableStateOf(false) }
-    
+
     // Auto-correction detection
     LaunchedEffect(value.text) {
         if (enableAutoCorrection && value.text.isNotEmpty()) {
@@ -214,7 +214,7 @@ fun SmartTextFieldComponent(
             }
         }
     }
-    
+
     Column(modifier = modifier) {
         PredictiveTextComponent(
             value = value,
@@ -229,7 +229,7 @@ fun SmartTextFieldComponent(
             },
             config = config
         )
-        
+
         // Auto-correction suggestion
         if (showCorrectionSuggestion && correctedText != null) {
             Spacer(modifier = Modifier.height(8.dp))
@@ -251,7 +251,7 @@ fun SmartTextFieldComponent(
 /**
  * Smart Reply Component
  * Generates smart reply suggestions for messages
- * 
+ *
  * @param conversationContext Previous messages for context
  * @param config Prediction configuration
  * @param onReplySelected Callback when reply is selected
@@ -264,7 +264,7 @@ fun SmartReplyComponent(
 ) {
     var smartReplies by remember { mutableStateOf<List<TextPrediction>>(emptyList()) }
     var isLoading by remember { mutableStateOf(false) }
-    
+
     LaunchedEffect(conversationContext) {
         if (conversationContext.isNotEmpty() && config.enableSmartReply) {
             isLoading = true
@@ -273,7 +273,7 @@ fun SmartReplyComponent(
             isLoading = false
         }
     }
-    
+
     if (smartReplies.isNotEmpty() || isLoading) {
         Card(
             modifier = Modifier.fillMaxWidth(),
@@ -299,7 +299,7 @@ fun SmartReplyComponent(
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     if (isLoading) {
                         Spacer(modifier = Modifier.width(8.dp))
                         CircularProgressIndicator(
@@ -308,7 +308,7 @@ fun SmartReplyComponent(
                         )
                     }
                 }
-                
+
                 if (smartReplies.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(8.dp))
                     LazyRow(
@@ -330,7 +330,7 @@ fun SmartReplyComponent(
 /**
  * Auto-Complete Text Field Component
  * Text field with auto-completion dropdown
- * 
+ *
  * @param value Current text field value
  * @param onValueChange Callback when text changes
  * @param suggestions List of auto-complete suggestions
@@ -348,18 +348,18 @@ fun AutoCompleteTextFieldComponent(
 ) {
     var expanded by remember { mutableStateOf(false) }
     var filteredSuggestions by remember { mutableStateOf<List<String>>(emptyList()) }
-    
+
     LaunchedEffect(value.text, suggestions) {
         filteredSuggestions = if (value.text.isNotEmpty()) {
-            suggestions.filter { 
-                it.contains(value.text, ignoreCase = true) 
+            suggestions.filter {
+                it.contains(value.text, ignoreCase = true)
             }.take(config.maxSuggestions)
         } else {
             emptyList()
         }
         expanded = filteredSuggestions.isNotEmpty()
     }
-    
+
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = it },
@@ -380,7 +380,7 @@ fun AutoCompleteTextFieldComponent(
                 }
             }
         )
-        
+
         if (filteredSuggestions.isNotEmpty()) {
             ExposedDropdownMenu(
                 expanded = expanded,
@@ -438,13 +438,13 @@ private fun PredictionChip(
         PredictionType.SMART_REPLY -> MaterialTheme.colorScheme.primaryContainer
         else -> MaterialTheme.colorScheme.surfaceVariant
     }
-    
+
     val contentColor = when (prediction.type) {
         PredictionType.AUTO_CORRECTION -> MaterialTheme.colorScheme.onErrorContainer
         PredictionType.SMART_REPLY -> MaterialTheme.colorScheme.onPrimaryContainer
         else -> MaterialTheme.colorScheme.onSurfaceVariant
     }
-    
+
     Surface(
         modifier = Modifier.clickable { onClick() },
         shape = RoundedCornerShape(16.dp),
@@ -461,7 +461,7 @@ private fun PredictionChip(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            
+
             if (config.showConfidence) {
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
@@ -530,9 +530,9 @@ private fun AutoCorrectionSuggestion(
                 modifier = Modifier.size(16.dp),
                 tint = MaterialTheme.colorScheme.onErrorContainer
             )
-            
+
             Spacer(modifier = Modifier.width(8.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -542,7 +542,7 @@ private fun AutoCorrectionSuggestion(
                     color = MaterialTheme.colorScheme.onErrorContainer
                 )
             }
-            
+
             TextButton(
                 onClick = onAccept,
                 colors = ButtonDefaults.textButtonColors(
@@ -551,7 +551,7 @@ private fun AutoCorrectionSuggestion(
             ) {
                 Text("Accept")
             }
-            
+
             IconButton(
                 onClick = onDismiss
             ) {
@@ -580,7 +580,7 @@ private suspend fun generatePredictionsInternal(
 ): List<TextPrediction> {
     // This would integrate with actual ML models and APIs
     val predictions = mutableListOf<TextPrediction>()
-    
+
     // Word completion
     if (config.enableWordCompletion) {
         val currentWord = getCurrentWord(text, cursorPosition)
@@ -588,17 +588,17 @@ private suspend fun generatePredictionsInternal(
             predictions.addAll(generateWordCompletions(currentWord))
         }
     }
-    
+
     // Next word prediction
     if (config.enableNextWordPrediction) {
         predictions.addAll(generateNextWordPredictions(text))
     }
-    
+
     // Sentence completion
     if (config.enableSentenceCompletion) {
         predictions.addAll(generateSentenceCompletions(text))
     }
-    
+
     return predictions
         .filter { it.confidence >= config.minConfidence }
         .sortedByDescending { it.confidence }
@@ -620,7 +620,7 @@ private suspend fun generateSmartReplies(
         "Let me know",
         "Sure thing"
     )
-    
+
     return mockReplies.mapIndexed { index, reply ->
         TextPrediction(
             id = "reply_$index",
@@ -673,10 +673,10 @@ private fun applyPrediction(
  */
 private fun getCurrentWord(text: String, cursorPosition: Int): String {
     if (cursorPosition <= 0 || cursorPosition > text.length) return ""
-    
+
     val start = text.lastIndexOf(' ', cursorPosition - 1) + 1
     val end = text.indexOf(' ', cursorPosition).let { if (it == -1) text.length else it }
-    
+
     return text.substring(start, minOf(end, cursorPosition))
 }
 
@@ -688,7 +688,7 @@ private fun generateWordCompletions(partialWord: String): List<TextPrediction> {
         "complete", "component", "compose", "computer", "company",
         "development", "developer", "design", "data", "database"
     ).filter { it.startsWith(partialWord, ignoreCase = true) }
-    
+
     return completions.mapIndexed { index, word ->
         TextPrediction(
             id = "word_$index",
@@ -705,7 +705,7 @@ private fun generateWordCompletions(partialWord: String): List<TextPrediction> {
  */
 private fun generateNextWordPredictions(text: String): List<TextPrediction> {
     val words = listOf("and", "the", "to", "of", "in", "for", "with", "on")
-    
+
     return words.mapIndexed { index, word ->
         TextPrediction(
             id = "next_$index",
@@ -726,7 +726,7 @@ private fun generateSentenceCompletions(text: String): List<TextPrediction> {
         " for better performance.",
         " with modern design patterns."
     )
-    
+
     return completions.mapIndexed { index, completion ->
         TextPrediction(
             id = "sentence_$index",
@@ -749,12 +749,12 @@ private suspend fun detectAutoCorrection(text: String): String? {
         "recieve" to "receive",
         "seperate" to "separate"
     )
-    
+
     val words = text.split(" ")
     val correctedWords = words.map { word ->
         corrections[word.lowercase()] ?: word
     }
-    
+
     val correctedText = correctedWords.joinToString(" ")
     return if (correctedText != text) correctedText else null
 }
@@ -764,16 +764,16 @@ private suspend fun detectAutoCorrection(text: String): String? {
  */
 private fun applySmartFormatting(value: TextFieldValue): TextFieldValue {
     var text = value.text
-    
+
     // Auto-capitalize first letter of sentences
     text = text.replace(Regex("(?:^|[.!?]\\s+)([a-z])")) { matchResult ->
         matchResult.value.uppercase()
     }
-    
+
     // Auto-correct common patterns
     text = text.replace(" i ", " I ")
     text = text.replace("^i ".toRegex(), "I ")
-    
+
     return value.copy(text = text)
 }
 
@@ -784,7 +784,7 @@ private fun applySmartFormatting(value: TextFieldValue): TextFieldValue {
 class PredictionEngine {
     private val _predictions = MutableStateFlow<List<TextPrediction>>(emptyList())
     val predictions: StateFlow<List<TextPrediction>> = _predictions.asStateFlow()
-    
+
     suspend fun generatePredictions(
         text: String,
         cursorPosition: Int,
@@ -793,11 +793,11 @@ class PredictionEngine {
         val newPredictions = generatePredictionsInternal(text, cursorPosition, config)
         _predictions.value = newPredictions
     }
-    
+
     fun clearPredictions() {
         _predictions.value = emptyList()
     }
-    
+
     companion object {
         /**
          * Track prediction usage for learning

@@ -76,7 +76,7 @@ fun XiaomiSecondaryButton(
 }
 
 /**
- * Tertiary button variant  
+ * Tertiary button variant
  */
 @Composable
 fun XiaomiTertiaryButton(
@@ -120,11 +120,11 @@ private fun XiaomiButtonPreview() {
             XiaomiPrimaryButton(onClick = {}) {
                 Text("Primary Button")
             }
-            
+
             XiaomiSecondaryButton(onClick = {}) {
                 Text("Secondary Button")
             }
-            
+
             XiaomiTertiaryButton(onClick = {}) {
                 Text("Tertiary Button")
             }

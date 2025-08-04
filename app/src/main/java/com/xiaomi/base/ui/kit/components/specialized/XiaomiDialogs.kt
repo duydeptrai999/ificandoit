@@ -48,9 +48,9 @@ import com.xiaomi.base.ui.kit.foundation.spacing.XiaomiSpacing
 
 /**
  * Xiaomi Alert Dialog
- * 
+ *
  * A Material Design 3 alert dialog with Xiaomi design tokens.
- * 
+ *
  * @param onDismissRequest Callback when the dialog is dismissed
  * @param confirmButton Confirm button composable
  * @param modifier Modifier to be applied to the dialog
@@ -103,9 +103,9 @@ fun XiaomiAlertDialog(
 
 /**
  * Xiaomi Confirmation Dialog
- * 
+ *
  * A dialog for confirming user actions.
- * 
+ *
  * @param onConfirm Callback when the user confirms
  * @param onDismiss Callback when the dialog is dismissed
  * @param title Title of the dialog
@@ -188,9 +188,9 @@ fun XiaomiConfirmationDialog(
 
 /**
  * Xiaomi Information Dialog
- * 
+ *
  * A dialog for displaying information to the user.
- * 
+ *
  * @param onDismiss Callback when the dialog is dismissed
  * @param title Title of the dialog
  * @param message Message content of the dialog
@@ -211,7 +211,7 @@ fun XiaomiInformationDialog(
         XiaomiDialogType.Warning -> Icons.Filled.Warning to Color(0xFFFF9800)
         XiaomiDialogType.Error -> Icons.Filled.Error to MaterialTheme.colorScheme.error
     }
-    
+
     XiaomiAlertDialog(
         onDismissRequest = onDismiss,
         icon = {
@@ -244,9 +244,9 @@ fun XiaomiInformationDialog(
 
 /**
  * Xiaomi Custom Dialog
- * 
+ *
  * A flexible dialog container for custom content.
- * 
+ *
  * @param onDismissRequest Callback when the dialog is dismissed
  * @param modifier Modifier to be applied to the dialog
  * @param properties Dialog properties
@@ -276,9 +276,9 @@ fun XiaomiCustomDialog(
 
 /**
  * Xiaomi Full Screen Dialog
- * 
+ *
  * A dialog that takes up the full screen.
- * 
+ *
  * @param onDismissRequest Callback when the dialog is dismissed
  * @param title Title of the dialog
  * @param modifier Modifier to be applied to the dialog
@@ -324,11 +324,11 @@ fun XiaomiFullScreenDialog(
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Medium
                         )
-                        
+
                         actions()
                     }
                 }
-                
+
                 // Content
                 Column(
                     modifier = Modifier
@@ -345,9 +345,9 @@ fun XiaomiFullScreenDialog(
 
 /**
  * Xiaomi Bottom Sheet Dialog
- * 
+ *
  * A dialog that appears from the bottom of the screen.
- * 
+ *
  * @param onDismissRequest Callback when the dialog is dismissed
  * @param title Optional title for the dialog
  * @param modifier Modifier to be applied to the dialog
@@ -376,7 +376,7 @@ fun XiaomiBottomSheetDialog(
                     .fillMaxWidth()
                     .weight(1f)
             )
-            
+
             Surface(
                 modifier = modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.extraLarge.copy(
@@ -398,7 +398,7 @@ fun XiaomiBottomSheetDialog(
                         shape = MaterialTheme.shapes.small,
                         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
                     ) {}
-                    
+
                     if (title != null) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
@@ -412,7 +412,7 @@ fun XiaomiBottomSheetDialog(
                     } else {
                         Spacer(modifier = Modifier.height(16.dp))
                     }
-                    
+
                     content()
                 }
             }
@@ -446,7 +446,7 @@ fun XiaomiDialogsPreview() {
                     "Dialog Examples",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var showConfirmDialog by remember { mutableStateOf(false) }
                 var showInfoDialog by remember { mutableStateOf(false) }
                 var showSuccessDialog by remember { mutableStateOf(false) }
@@ -454,7 +454,7 @@ fun XiaomiDialogsPreview() {
                 var showErrorDialog by remember { mutableStateOf(false) }
                 var showCustomDialog by remember { mutableStateOf(false) }
                 var showBottomSheet by remember { mutableStateOf(false) }
-                
+
                 // Dialog trigger buttons
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -465,42 +465,42 @@ fun XiaomiDialogsPreview() {
                     ) {
                         Text("Show Confirmation Dialog")
                     }
-                    
+
                     OutlinedButton(
                         onClick = { showInfoDialog = true },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text("Show Info Dialog")
                     }
-                    
+
                     OutlinedButton(
                         onClick = { showSuccessDialog = true },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text("Show Success Dialog")
                     }
-                    
+
                     OutlinedButton(
                         onClick = { showWarningDialog = true },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text("Show Warning Dialog")
                     }
-                    
+
                     OutlinedButton(
                         onClick = { showErrorDialog = true },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text("Show Error Dialog")
                     }
-                    
+
                     OutlinedButton(
                         onClick = { showCustomDialog = true },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text("Show Custom Dialog")
                     }
-                    
+
                     OutlinedButton(
                         onClick = { showBottomSheet = true },
                         modifier = Modifier.fillMaxWidth()
@@ -508,7 +508,7 @@ fun XiaomiDialogsPreview() {
                         Text("Show Bottom Sheet")
                     }
                 }
-                
+
                 // Dialogs
                 if (showConfirmDialog) {
                     XiaomiConfirmationDialog(
@@ -522,7 +522,7 @@ fun XiaomiDialogsPreview() {
                         isDestructive = true
                     )
                 }
-                
+
                 if (showInfoDialog) {
                     XiaomiInformationDialog(
                         onDismiss = { showInfoDialog = false },
@@ -531,7 +531,7 @@ fun XiaomiDialogsPreview() {
                         type = XiaomiDialogType.Info
                     )
                 }
-                
+
                 if (showSuccessDialog) {
                     XiaomiInformationDialog(
                         onDismiss = { showSuccessDialog = false },
@@ -540,7 +540,7 @@ fun XiaomiDialogsPreview() {
                         type = XiaomiDialogType.Success
                     )
                 }
-                
+
                 if (showWarningDialog) {
                     XiaomiInformationDialog(
                         onDismiss = { showWarningDialog = false },
@@ -549,7 +549,7 @@ fun XiaomiDialogsPreview() {
                         type = XiaomiDialogType.Warning
                     )
                 }
-                
+
                 if (showErrorDialog) {
                     XiaomiInformationDialog(
                         onDismiss = { showErrorDialog = false },
@@ -558,7 +558,7 @@ fun XiaomiDialogsPreview() {
                         type = XiaomiDialogType.Error
                     )
                 }
-                
+
                 if (showCustomDialog) {
                     XiaomiCustomDialog(
                         onDismissRequest = { showCustomDialog = false }
@@ -572,17 +572,17 @@ fun XiaomiDialogsPreview() {
                                 style = MaterialTheme.typography.titleLarge,
                                 fontWeight = FontWeight.Medium
                             )
-                            
+
                             Spacer(modifier = Modifier.height(16.dp))
-                            
+
                             Text(
                                 text = "This is a custom dialog with flexible content. You can add any composable content here.",
                                 style = MaterialTheme.typography.bodyMedium,
                                 textAlign = TextAlign.Center
                             )
-                            
+
                             Spacer(modifier = Modifier.height(24.dp))
-                            
+
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
@@ -591,7 +591,7 @@ fun XiaomiDialogsPreview() {
                                 ) {
                                     Text("Cancel")
                                 }
-                                
+
                                 Button(
                                     onClick = { showCustomDialog = false }
                                 ) {
@@ -601,7 +601,7 @@ fun XiaomiDialogsPreview() {
                         }
                     }
                 }
-                
+
                 if (showBottomSheet) {
                     XiaomiBottomSheetDialog(
                         onDismissRequest = { showBottomSheet = false },
@@ -614,7 +614,7 @@ fun XiaomiDialogsPreview() {
                                 text = "This is a bottom sheet dialog that slides up from the bottom of the screen.",
                                 style = MaterialTheme.typography.bodyMedium
                             )
-                            
+
                             Button(
                                 onClick = { showBottomSheet = false },
                                 modifier = Modifier.fillMaxWidth()
@@ -644,16 +644,16 @@ fun XiaomiDialogsDarkPreview() {
                     "Dark Theme Dialogs",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var showDialog by remember { mutableStateOf(false) }
-                
+
                 Button(
                     onClick = { showDialog = true },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("Show Dark Theme Dialog")
                 }
-                
+
                 if (showDialog) {
                     XiaomiInformationDialog(
                         onDismiss = { showDialog = false },

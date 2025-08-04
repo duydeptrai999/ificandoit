@@ -11,15 +11,17 @@ import javax.inject.Inject
  *
  * @property categoryRepository The repository for category operations.
  */
-class GetCategoriesUseCase @Inject constructor(
-    private val categoryRepository: CategoryRepository
-) {
-    /**
-     * Execute the use case to get a paginated list of categories.
-     *
-     * @return A Flow emitting PagingData of categories.
-     */
-    operator fun invoke(): Flow<PagingData<Category>> {
-        return categoryRepository.getAllCategories()
+class GetCategoriesUseCase
+    @Inject
+    constructor(
+        private val categoryRepository: CategoryRepository,
+    ) {
+        /**
+         * Execute the use case to get a paginated list of categories.
+         *
+         * @return A Flow emitting PagingData of categories.
+         */
+        operator fun invoke(): Flow<PagingData<Category>> {
+            return categoryRepository.getAllCategories()
+        }
     }
-}

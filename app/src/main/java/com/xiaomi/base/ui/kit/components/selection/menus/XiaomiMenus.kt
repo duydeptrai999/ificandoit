@@ -65,9 +65,9 @@ import com.xiaomi.base.ui.kit.foundation.spacing.XiaomiSpacing
 
 /**
  * Xiaomi Dropdown Menu
- * 
+ *
  * A Material Design 3 dropdown menu with Xiaomi design tokens.
- * 
+ *
  * @param expanded Whether the menu is expanded
  * @param onDismissRequest Callback when the menu is dismissed
  * @param modifier Modifier to be applied to the menu
@@ -114,9 +114,9 @@ fun XiaomiDropdownMenu(
 
 /**
  * Xiaomi Dropdown Menu Item
- * 
+ *
  * A menu item for dropdown menus.
- * 
+ *
  * @param text Text content of the menu item
  * @param onClick Callback when the item is clicked
  * @param modifier Modifier to be applied to the item
@@ -154,9 +154,9 @@ fun XiaomiDropdownMenuItem(
 
 /**
  * Xiaomi Context Menu
- * 
+ *
  * A context menu that appears on long press or right click.
- * 
+ *
  * @param items List of menu items
  * @param expanded Whether the menu is expanded
  * @param onDismissRequest Callback when the menu is dismissed
@@ -218,9 +218,9 @@ fun XiaomiContextMenu(
 
 /**
  * Xiaomi Exposed Dropdown Menu
- * 
+ *
  * An exposed dropdown menu for selection.
- * 
+ *
  * @param options List of options
  * @param selectedOption Currently selected option
  * @param onOptionSelected Callback when an option is selected
@@ -245,7 +245,7 @@ fun XiaomiExposedDropdownMenu(
     isError: Boolean = false
 ) {
     var expanded by remember { mutableStateOf(false) }
-    
+
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded && enabled },
@@ -268,7 +268,7 @@ fun XiaomiExposedDropdownMenu(
                 .menuAnchor()
                 .fillMaxWidth()
         )
-        
+
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
@@ -304,9 +304,9 @@ fun XiaomiExposedDropdownMenu(
 
 /**
  * Xiaomi Cascading Menu
- * 
+ *
  * A menu with submenu support.
- * 
+ *
  * @param items List of menu items with potential submenus
  * @param expanded Whether the menu is expanded
  * @param onDismissRequest Callback when the menu is dismissed
@@ -320,7 +320,7 @@ fun XiaomiCascadingMenu(
     modifier: Modifier = Modifier
 ) {
     var expandedSubmenu by remember { mutableStateOf<String?>(null) }
-    
+
     XiaomiDropdownMenu(
         expanded = expanded,
         onDismissRequest = {
@@ -372,7 +372,7 @@ fun XiaomiCascadingMenu(
                         } else null,
                         enabled = item.enabled
                     )
-                    
+
                     // Submenu
                     if (item.subItems.isNotEmpty()) {
                         XiaomiDropdownMenu(
@@ -415,9 +415,9 @@ fun XiaomiCascadingMenu(
 
 /**
  * Xiaomi Action Menu
- * 
+ *
  * A menu specifically for actions with icons.
- * 
+ *
  * @param actions List of actions
  * @param expanded Whether the menu is expanded
  * @param onDismissRequest Callback when the menu is dismissed
@@ -453,7 +453,7 @@ fun XiaomiActionMenu(
                 color = MaterialTheme.colorScheme.outlineVariant
             )
         }
-        
+
         actions.forEach { action ->
             XiaomiDropdownMenuItem(
                 text = {
@@ -553,12 +553,12 @@ fun XiaomiMenusPreview() {
                     "Menu Examples",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var showContextMenu by remember { mutableStateOf(false) }
                 var showActionMenu by remember { mutableStateOf(false) }
                 var showCascadingMenu by remember { mutableStateOf(false) }
                 var selectedDropdownOption by remember { mutableStateOf<String?>(null) }
-                
+
                 // Context Menu
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -574,7 +574,7 @@ fun XiaomiMenusPreview() {
                                 contentDescription = "More options"
                             )
                         }
-                        
+
                         XiaomiContextMenu(
                             items = listOf(
                                 XiaomiMenuItem(
@@ -600,7 +600,7 @@ fun XiaomiMenusPreview() {
                         )
                     }
                 }
-                
+
                 // Action Menu
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -613,7 +613,7 @@ fun XiaomiMenusPreview() {
                         ) {
                             Text("Actions")
                         }
-                        
+
                         XiaomiActionMenu(
                             title = "Available Actions",
                             actions = listOf(
@@ -648,7 +648,7 @@ fun XiaomiMenusPreview() {
                         )
                     }
                 }
-                
+
                 // Cascading Menu
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -661,7 +661,7 @@ fun XiaomiMenusPreview() {
                         ) {
                             Text("File Menu")
                         }
-                        
+
                         XiaomiCascadingMenu(
                             items = listOf(
                                 XiaomiCascadingMenuItem(
@@ -706,7 +706,7 @@ fun XiaomiMenusPreview() {
                         )
                     }
                 }
-                
+
                 // Exposed Dropdown Menu
                 XiaomiExposedDropdownMenu(
                     options = listOf("Option 1", "Option 2", "Option 3", "Option 4"),
@@ -717,15 +717,15 @@ fun XiaomiMenusPreview() {
                     supportingText = "This is a dropdown menu for selection",
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Menu showcase cards
                 Text(
                     "Menu Types",
                     style = MaterialTheme.typography.titleSmall
                 )
-                
+
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -780,9 +780,9 @@ fun XiaomiMenusDarkPreview() {
                     "Dark Theme Menus",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var selectedOption by remember { mutableStateOf<String?>(null) }
-                
+
                 XiaomiExposedDropdownMenu(
                     options = listOf("Dark Option 1", "Dark Option 2", "Dark Option 3"),
                     selectedOption = selectedOption,

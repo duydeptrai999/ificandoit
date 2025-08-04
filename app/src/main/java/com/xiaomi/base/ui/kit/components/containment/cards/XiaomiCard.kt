@@ -164,17 +164,17 @@ private fun XiaomiCardPreview() {
                     Text("Card content goes here")
                 }
             }
-            
+
             XiaomiElevatedCard {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("Elevated Card", style = MaterialTheme.typography.titleMedium)
                     Text("Elevated card content")
                 }
             }
-            
+
             XiaomiOutlinedCard {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text("Outlined Card", style = MaterialTheme.typography.titleMedium) 
+                    Text("Outlined Card", style = MaterialTheme.typography.titleMedium)
                     Text("Outlined card content")
                 }
             }

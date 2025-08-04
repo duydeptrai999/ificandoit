@@ -45,9 +45,9 @@ data class XiaomiCheckboxItem(
 
 /**
  * Xiaomi Checkbox
- * 
+ *
  * A Material Design 3 checkbox component with Xiaomi design tokens.
- * 
+ *
  * @param checked Whether the checkbox is checked
  * @param onCheckedChange Callback when the checkbox state changes
  * @param modifier Modifier to be applied to the checkbox
@@ -76,9 +76,9 @@ fun XiaomiCheckbox(
 
 /**
  * Xiaomi Tri-State Checkbox
- * 
+ *
  * A checkbox that can be in three states: checked, unchecked, or indeterminate.
- * 
+ *
  * @param state The current state of the checkbox
  * @param onClick Callback when the checkbox is clicked
  * @param modifier Modifier to be applied to the checkbox
@@ -107,9 +107,9 @@ fun XiaomiTriStateCheckbox(
 
 /**
  * Xiaomi Labeled Checkbox
- * 
+ *
  * A checkbox with an associated label that can be clicked to toggle the checkbox.
- * 
+ *
  * @param checked Whether the checkbox is checked
  * @param onCheckedChange Callback when the checkbox state changes
  * @param label The label text for the checkbox
@@ -129,7 +129,7 @@ fun XiaomiLabeledCheckbox(
     labelFirst: Boolean = false
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    
+
     Row(
         modifier = modifier
             .clickable(
@@ -167,7 +167,7 @@ fun XiaomiLabeledCheckbox(
                     )
                 }
             }
-            
+
             XiaomiCheckbox(
                 checked = checked,
                 onCheckedChange = null,
@@ -181,7 +181,7 @@ fun XiaomiLabeledCheckbox(
                 enabled = enabled,
                 interactionSource = interactionSource
             )
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = label,
@@ -211,9 +211,9 @@ fun XiaomiLabeledCheckbox(
 
 /**
  * Xiaomi Checkbox Group
- * 
+ *
  * A group of checkboxes with a common label.
- * 
+ *
  * @param items List of checkbox items
  * @param onItemCheckedChange Callback when an item's checked state changes
  * @param modifier Modifier to be applied to the group
@@ -243,7 +243,7 @@ fun XiaomiCheckboxGroup(
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
-        
+
         if (showSelectAll) {
             val allChecked = items.all { it.checked }
             val someChecked = items.any { it.checked }
@@ -252,7 +252,7 @@ fun XiaomiCheckboxGroup(
                 someChecked -> ToggleableState.Indeterminate
                 else -> ToggleableState.Off
             }
-            
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -276,7 +276,7 @@ fun XiaomiCheckboxGroup(
                     onClick = null,
                     enabled = enabled
                 )
-                
+
                 Text(
                     text = "Select All",
                     style = MaterialTheme.typography.bodyMedium,
@@ -289,7 +289,7 @@ fun XiaomiCheckboxGroup(
                 )
             }
         }
-        
+
         items.forEach { item ->
             XiaomiLabeledCheckbox(
                 checked = item.checked,
@@ -305,9 +305,9 @@ fun XiaomiCheckboxGroup(
 
 /**
  * Xiaomi Compact Checkbox
- * 
+ *
  * A smaller checkbox for use in dense layouts.
- * 
+ *
  * @param checked Whether the checkbox is checked
  * @param onCheckedChange Callback when the checkbox state changes
  * @param modifier Modifier to be applied to the checkbox
@@ -330,9 +330,9 @@ fun XiaomiCompactCheckbox(
 
 /**
  * Xiaomi Custom Color Checkbox
- * 
+ *
  * A checkbox with custom colors.
- * 
+ *
  * @param checked Whether the checkbox is checked
  * @param onCheckedChange Callback when the checkbox state changes
  * @param modifier Modifier to be applied to the checkbox
@@ -380,12 +380,12 @@ fun XiaomiCheckboxesPreview() {
                     "Checkbox Variants",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var checked1 by remember { mutableStateOf(false) }
                 var checked2 by remember { mutableStateOf(true) }
                 var checked3 by remember { mutableStateOf(false) }
                 var triState by remember { mutableStateOf(ToggleableState.Indeterminate) }
-                
+
                 // Basic checkboxes
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -416,7 +416,7 @@ fun XiaomiCheckboxesPreview() {
                         )
                     }
                 }
-                
+
                 // Labeled checkboxes
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -424,21 +424,21 @@ fun XiaomiCheckboxesPreview() {
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     XiaomiLabeledCheckbox(
                         checked = checked1,
                         onCheckedChange = { checked1 = it },
                         label = "Enable notifications",
                         description = "Receive push notifications for important updates"
                     )
-                    
+
                     XiaomiLabeledCheckbox(
                         checked = checked2,
                         onCheckedChange = { checked2 = it },
                         label = "Auto-sync data",
                         labelFirst = true
                     )
-                    
+
                     XiaomiLabeledCheckbox(
                         checked = checked3,
                         onCheckedChange = { checked3 = it },
@@ -446,7 +446,7 @@ fun XiaomiCheckboxesPreview() {
                         enabled = false
                     )
                 }
-                
+
                 // Compact checkboxes
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -517,7 +517,7 @@ fun XiaomiCheckboxGroupPreview() {
                         )
                     )
                 }
-                
+
                 XiaomiCheckboxGroup(
                     items = items,
                     onItemCheckedChange = { id, checked ->
@@ -552,16 +552,16 @@ fun XiaomiCheckboxesDarkPreview() {
                     "Dark Theme Checkboxes",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var checked by remember { mutableStateOf(true) }
-                
+
                 XiaomiLabeledCheckbox(
                     checked = checked,
                     onCheckedChange = { checked = it },
                     label = "Dark mode setting",
                     description = "Enable dark theme for better night viewing"
                 )
-                
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {

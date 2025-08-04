@@ -15,34 +15,28 @@ data class UserProfileEntity(
      */
     @PrimaryKey
     val userId: String,
-    
     /**
      * The display name of the user.
      */
     val displayName: String,
-    
     /**
      * The email address of the user.
      */
     val email: String?,
-    
     /**
      * The path to the profile image of the user.
      */
     val profileImagePath: String?,
-    
     /**
      * User preferences stored as JSON string.
      */
     val preferences: String = "{}",
-    
     /**
      * The date when the profile was created.
      */
     val createdDate: Date = Date(),
-    
     /**
      * The date when the user was last active.
      */
-    val lastActiveDate: Date = Date()
-) 
+    val lastActiveDate: Date = Date(),
+)

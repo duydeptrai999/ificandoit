@@ -38,39 +38,39 @@ fun UniversalComponentShowcase() {
                     MetricCardShowcase()
                 }
             }
-            
+
             item {
                 ShowcaseSection("Progress Charts") {
                     ProgressChartShowcase()
                 }
             }
-            
+
             item {
                 ShowcaseSection("Stats Grid") {
                     StatsGridShowcase()
                 }
             }
-            
+
             // Content Display Components
             item {
                 ShowcaseSection("Universal Cards") {
                     UniversalCardShowcase()
                 }
             }
-            
+
             item {
                 ShowcaseSection("Media Viewer") {
                     MediaViewerShowcase()
                 }
             }
-            
+
             // Input Components
             item {
                 ShowcaseSection("Form Inputs") {
                     FormInputShowcase()
                 }
             }
-            
+
             item {
                 ShowcaseSection("Interactive Inputs") {
                     InteractiveInputShowcase()
@@ -97,9 +97,9 @@ private fun ShowcaseSection(
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             content()
         }
     }
@@ -117,7 +117,7 @@ private fun MetricCardShowcase() {
             trend = TrendDirection.UP,
             modifier = Modifier.weight(1f)
         )
-        
+
         MetricCard(
             title = "Active Users",
             value = "567",
@@ -126,9 +126,9 @@ private fun MetricCardShowcase() {
             modifier = Modifier.weight(1f)
         )
     }
-    
+
     Spacer(modifier = Modifier.height(8.dp))
-    
+
     MetricCard(
         title = "Weekly Progress",
         value = "89.5",
@@ -146,7 +146,7 @@ private fun ProgressChartShowcase() {
         ChartDataPoint("Thu", 60f),
         ChartDataPoint("Fri", 75f)
     )
-    
+
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -154,7 +154,7 @@ private fun ProgressChartShowcase() {
             data = sampleData,
             chartType = ChartType.LINE
         )
-        
+
         ProgressChart(
             data = sampleData,
             chartType = ChartType.BAR
@@ -170,7 +170,7 @@ private fun StatsGridShowcase() {
         StatItem("Conversion", "3.2", "%", TrendDirection.DOWN),
         StatItem("Satisfaction", "4.8", "★", TrendDirection.NEUTRAL)
     )
-    
+
     StatsGrid(
         stats = stats,
         columns = 2
@@ -190,7 +190,7 @@ private fun UniversalCardShowcase() {
         createdDate = Date(),
         metadata = mapOf("category" to "demo")
     )
-    
+
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -203,7 +203,7 @@ private fun UniversalCardShowcase() {
             item = sampleItem,
             displayMode = CardDisplayMode.COMPACT
         )
-        
+
         Text(
             text = "Standard Mode",
             style = MaterialTheme.typography.bodyMedium,
@@ -213,7 +213,7 @@ private fun UniversalCardShowcase() {
             item = sampleItem,
             displayMode = CardDisplayMode.STANDARD
         )
-        
+
         Text(
             text = "Detailed Mode",
             style = MaterialTheme.typography.bodyMedium,
@@ -238,7 +238,7 @@ private fun MediaViewerShowcase() {
             modifier = Modifier.weight(1f),
             onEdit = { /* Handle edit */ }
         )
-        
+
         MediaViewer(
             mediaUrl = "sample_video.mp4",
             mediaType = MediaType.VIDEO,
@@ -253,7 +253,7 @@ private fun FormInputShowcase() {
     var emailValue by remember { mutableStateOf("") }
     var numberValue by remember { mutableStateOf("") }
     var multilineValue by remember { mutableStateOf("") }
-    
+
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -266,7 +266,7 @@ private fun FormInputShowcase() {
             isRequired = true,
             leadingIcon = Icons.Default.Person
         )
-        
+
         UniversalFormInput(
             inputType = InputType.EMAIL,
             label = "Email Address",
@@ -276,7 +276,7 @@ private fun FormInputShowcase() {
             leadingIcon = Icons.Default.Email,
             validator = { it.contains("@") }
         )
-        
+
         UniversalFormInput(
             inputType = InputType.NUMBER,
             label = "Age",
@@ -285,7 +285,7 @@ private fun FormInputShowcase() {
             placeholder = "Enter your age",
             leadingIcon = Icons.Default.Numbers
         )
-        
+
         UniversalFormInput(
             inputType = InputType.MULTILINE,
             label = "Comments",
@@ -301,7 +301,7 @@ private fun FormInputShowcase() {
 private fun InteractiveInputShowcase() {
     var rating by remember { mutableStateOf(0f) }
     var counter by remember { mutableStateOf(5) }
-    
+
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -312,14 +312,14 @@ private fun InteractiveInputShowcase() {
             unit = "steps",
             progressColor = Color(0xFF4CAF50)
         )
-        
+
         UniversalRatingInput(
             rating = rating,
             onRatingChange = { rating = it },
             label = "Rate this experience",
             maxRating = 5
         )
-        
+
         UniversalCounterInput(
             value = counter,
             onValueChange = { counter = it },
@@ -363,4 +363,4 @@ fun FormInputShowcasePreview() {
             FormInputShowcase()
         }
     }
-} 
+}

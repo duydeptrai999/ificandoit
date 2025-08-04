@@ -47,9 +47,9 @@ data class XiaomiSwitchItem(
 
 /**
  * Xiaomi Switch
- * 
+ *
  * A Material Design 3 switch component with Xiaomi design tokens.
- * 
+ *
  * @param checked Whether the switch is checked
  * @param onCheckedChange Callback when the switch state changes
  * @param modifier Modifier to be applied to the switch
@@ -81,9 +81,9 @@ fun XiaomiSwitch(
 
 /**
  * Xiaomi Labeled Switch
- * 
+ *
  * A switch with an associated label that can be clicked to toggle the switch.
- * 
+ *
  * @param checked Whether the switch is checked
  * @param onCheckedChange Callback when the switch state changes
  * @param label The label text for the switch
@@ -103,7 +103,7 @@ fun XiaomiLabeledSwitch(
     labelFirst: Boolean = false
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    
+
     Row(
         modifier = modifier
             .clickable(
@@ -141,7 +141,7 @@ fun XiaomiLabeledSwitch(
                     )
                 }
             }
-            
+
             XiaomiSwitch(
                 checked = checked,
                 onCheckedChange = null,
@@ -155,7 +155,7 @@ fun XiaomiLabeledSwitch(
                 enabled = enabled,
                 interactionSource = interactionSource
             )
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = label,
@@ -185,9 +185,9 @@ fun XiaomiLabeledSwitch(
 
 /**
  * Xiaomi Icon Switch
- * 
+ *
  * A switch with icons displayed on the thumb.
- * 
+ *
  * @param checked Whether the switch is checked
  * @param onCheckedChange Callback when the switch state changes
  * @param modifier Modifier to be applied to the switch
@@ -221,9 +221,9 @@ fun XiaomiIconSwitch(
 
 /**
  * Xiaomi Switch Group
- * 
+ *
  * A group of switches with a common label.
- * 
+ *
  * @param items List of switch items
  * @param onItemCheckedChange Callback when an item's checked state changes
  * @param modifier Modifier to be applied to the group
@@ -251,7 +251,7 @@ fun XiaomiSwitchGroup(
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
-        
+
         items.forEach { item ->
             XiaomiLabeledSwitch(
                 checked = item.checked,
@@ -267,9 +267,9 @@ fun XiaomiSwitchGroup(
 
 /**
  * Xiaomi Compact Switch
- * 
+ *
  * A smaller switch for use in dense layouts.
- * 
+ *
  * @param checked Whether the switch is checked
  * @param onCheckedChange Callback when the switch state changes
  * @param modifier Modifier to be applied to the switch
@@ -292,9 +292,9 @@ fun XiaomiCompactSwitch(
 
 /**
  * Xiaomi Custom Color Switch
- * 
+ *
  * A switch with custom colors.
- * 
+ *
  * @param checked Whether the switch is checked
  * @param onCheckedChange Callback when the switch state changes
  * @param modifier Modifier to be applied to the switch
@@ -331,9 +331,9 @@ fun XiaomiCustomColorSwitch(
 
 /**
  * Xiaomi Card Switch
- * 
+ *
  * A switch displayed within a card layout.
- * 
+ *
  * @param checked Whether the switch is checked
  * @param onCheckedChange Callback when the switch state changes
  * @param label The label text for the switch
@@ -392,7 +392,7 @@ fun XiaomiCardSwitch(
                     )
                 }
             }
-            
+
             XiaomiSwitch(
                 checked = checked,
                 onCheckedChange = null,
@@ -418,11 +418,11 @@ fun XiaomiSwitchesPreview() {
                     "Switch Variants",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var checked1 by remember { mutableStateOf(false) }
                 var checked2 by remember { mutableStateOf(true) }
                 var checked3 by remember { mutableStateOf(false) }
-                
+
                 // Basic switches
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -449,7 +449,7 @@ fun XiaomiSwitchesPreview() {
                         )
                     }
                 }
-                
+
                 // Icon switches
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -471,7 +471,7 @@ fun XiaomiSwitchesPreview() {
                         )
                     }
                 }
-                
+
                 // Labeled switches
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -479,21 +479,21 @@ fun XiaomiSwitchesPreview() {
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     XiaomiLabeledSwitch(
                         checked = checked1,
                         onCheckedChange = { checked1 = it },
                         label = "Enable notifications",
                         description = "Receive push notifications for important updates"
                     )
-                    
+
                     XiaomiLabeledSwitch(
                         checked = checked2,
                         onCheckedChange = { checked2 = it },
                         label = "Auto-sync data",
                         labelFirst = true
                     )
-                    
+
                     XiaomiLabeledSwitch(
                         checked = checked3,
                         onCheckedChange = { checked3 = it },
@@ -501,7 +501,7 @@ fun XiaomiSwitchesPreview() {
                         enabled = false
                     )
                 }
-                
+
                 // Compact switches
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -572,7 +572,7 @@ fun XiaomiSwitchGroupPreview() {
                         )
                     )
                 }
-                
+
                 XiaomiSwitchGroup(
                     items = items,
                     onItemCheckedChange = { id, checked ->
@@ -606,11 +606,11 @@ fun XiaomiCardSwitchesPreview() {
                     "Card Switches",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var darkMode by remember { mutableStateOf(false) }
                 var autoBackup by remember { mutableStateOf(true) }
                 var locationServices by remember { mutableStateOf(false) }
-                
+
                 XiaomiCardSwitch(
                     checked = darkMode,
                     onCheckedChange = { darkMode = it },
@@ -618,7 +618,7 @@ fun XiaomiCardSwitchesPreview() {
                     description = "Use dark theme for better night viewing",
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 XiaomiCardSwitch(
                     checked = autoBackup,
                     onCheckedChange = { autoBackup = it },
@@ -626,7 +626,7 @@ fun XiaomiCardSwitchesPreview() {
                     description = "Automatically backup your data to the cloud",
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 XiaomiCardSwitch(
                     checked = locationServices,
                     onCheckedChange = { locationServices = it },
@@ -654,16 +654,16 @@ fun XiaomiSwitchesDarkPreview() {
                     "Dark Theme Switches",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var checked by remember { mutableStateOf(true) }
-                
+
                 XiaomiLabeledSwitch(
                     checked = checked,
                     onCheckedChange = { checked = it },
                     label = "Dark mode setting",
                     description = "Enable dark theme for better night viewing"
                 )
-                
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {

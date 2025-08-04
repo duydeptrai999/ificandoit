@@ -29,7 +29,7 @@ enum class HapticFeedbackType {
 /**
  * Haptic Feedback Component
  * Provides haptic feedback for user interactions
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param feedbackType Type of haptic feedback to provide
  * @param enabled Whether haptic feedback is enabled
@@ -46,7 +46,7 @@ fun HapticFeedbackComponent(
 ) {
     val view = LocalView.current
     val interactionSource = remember { MutableInteractionSource() }
-    
+
     val performHapticFeedback = {
         if (enabled) {
             val hapticConstant = when (feedbackType) {
@@ -63,7 +63,7 @@ fun HapticFeedbackComponent(
             view.performHapticFeedback(hapticConstant)
         }
     }
-    
+
     Box(
         modifier = modifier.then(
             if (onClick != null) {
@@ -87,7 +87,7 @@ fun HapticFeedbackComponent(
 /**
  * Haptic Click Component
  * Simplified component for click haptic feedback
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param enabled Whether haptic feedback is enabled
  * @param onClick Callback when the component is clicked
@@ -112,7 +112,7 @@ fun HapticClickComponent(
 /**
  * Haptic Long Press Component
  * Component for long press haptic feedback
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param enabled Whether haptic feedback is enabled
  * @param onLongPress Callback when the component is long pressed
@@ -126,13 +126,13 @@ fun HapticLongPressComponent(
     content: @Composable () -> Unit
 ) {
     val view = LocalView.current
-    
+
     val performHapticFeedback = {
         if (enabled) {
             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
         }
     }
-    
+
     Box(
         modifier = modifier.clickable(
             interactionSource = remember { MutableInteractionSource() },
@@ -171,28 +171,28 @@ class HapticFeedbackUtils {
             }
             view.performHapticFeedback(hapticConstant)
         }
-        
+
         /**
          * Perform click haptic feedback
          */
         fun performClickFeedback(view: android.view.View) {
             view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
         }
-        
+
         /**
          * Perform long press haptic feedback
          */
         fun performLongPressFeedback(view: android.view.View) {
             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
         }
-        
+
         /**
          * Perform success haptic feedback
          */
         fun performSuccessFeedback(view: android.view.View) {
             view.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
         }
-        
+
         /**
          * Perform error haptic feedback
          */
@@ -209,7 +209,7 @@ class HapticFeedbackUtils {
 @Composable
 fun rememberHapticFeedback(): HapticFeedbackController {
     val view = LocalView.current
-    
+
     return remember {
         HapticFeedbackController(view)
     }
@@ -220,31 +220,31 @@ fun rememberHapticFeedback(): HapticFeedbackController {
  * Controller class for managing haptic feedback
  */
 class HapticFeedbackController(private val view: android.view.View) {
-    
+
     fun performFeedback(type: HapticFeedbackType) {
         HapticFeedbackUtils.performHapticFeedback(view, type)
     }
-    
+
     fun click() {
         HapticFeedbackUtils.performClickFeedback(view)
     }
-    
+
     fun longPress() {
         HapticFeedbackUtils.performLongPressFeedback(view)
     }
-    
+
     fun success() {
         HapticFeedbackUtils.performSuccessFeedback(view)
     }
-    
+
     fun error() {
         HapticFeedbackUtils.performErrorFeedback(view)
     }
-    
+
     fun keyboardTap() {
         view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
     }
-    
+
     fun clockTick() {
         view.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
     }

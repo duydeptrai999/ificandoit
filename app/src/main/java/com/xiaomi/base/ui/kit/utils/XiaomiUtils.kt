@@ -2,11 +2,11 @@ package com.xiaomi.base.ui.kit.utils
 
 /**
  * Xiaomi Utils - Utility Functions and Extensions
- * 
+ *
  * This file provides organized access to utility functions, extensions,
  * and helper classes that support the Xiaomi Base UI Kit.
  * These utilities enhance developer productivity and code reusability.
- * 
+ *
  * Inspired by ComposeX organization patterns for better developer experience.
  */
 
@@ -42,12 +42,12 @@ import com.xiaomi.base.ui.kit.foundation.spacing.spacing
 
 /**
  * Modifier Extensions
- * 
+ *
  * Useful modifier extensions for common UI patterns
  * and consistent styling across the design system.
  */
 object XiaomiModifiers {
-    
+
     /**
      * Apply consistent card styling
      */
@@ -57,7 +57,7 @@ object XiaomiModifiers {
         val cardShape = shape ?: MaterialTheme.shapes.medium
         this.clip(cardShape)
     }
-    
+
     /**
      * Apply consistent button styling
      */
@@ -67,7 +67,7 @@ object XiaomiModifiers {
         val buttonShape = shape ?: MaterialTheme.shapes.small
         this.clip(buttonShape)
     }
-    
+
     /**
      * Apply consistent container padding
      */
@@ -79,7 +79,7 @@ object XiaomiModifiers {
             )
         )
     }
-    
+
     /**
      * Apply consistent content padding
      */
@@ -95,18 +95,18 @@ object XiaomiModifiers {
 
 /**
  * Color Utilities
- * 
+ *
  * Helper functions for working with colors in the design system.
  */
 object XiaomiColorUtils {
-    
+
     /**
      * Create a color with alpha transparency
      */
     fun Color.withAlpha(alpha: Float): Color {
         return this.copy(alpha = alpha)
     }
-    
+
     /**
      * Get a lighter version of the color
      */
@@ -118,7 +118,7 @@ object XiaomiColorUtils {
             alpha = alpha
         )
     }
-    
+
     /**
      * Get a darker version of the color
      */
@@ -130,7 +130,7 @@ object XiaomiColorUtils {
             alpha = alpha
         )
     }
-    
+
     /**
      * Check if color is light or dark
      */
@@ -138,7 +138,7 @@ object XiaomiColorUtils {
         val luminance = (0.299 * red + 0.587 * green + 0.114 * blue)
         return luminance > 0.5
     }
-    
+
     /**
      * Get contrasting color (black or white)
      */
@@ -149,11 +149,11 @@ object XiaomiColorUtils {
 
 /**
  * Spacing Utilities
- * 
+ *
  * Helper functions for working with spacing and padding.
  */
 object XiaomiSpacingUtils {
-    
+
     /**
      * Create symmetric padding
      */
@@ -166,14 +166,14 @@ object XiaomiSpacingUtils {
             vertical = vertical
         )
     }
-    
+
     /**
      * Create all-sides padding
      */
     fun allSidesPadding(value: Dp): PaddingValues {
         return PaddingValues(all = value)
     }
-    
+
     /**
      * Add padding values together
      */
@@ -181,15 +181,15 @@ object XiaomiSpacingUtils {
     fun PaddingValues.plus(other: PaddingValues): PaddingValues {
         val direction = LocalLayoutDirection.current
         return PaddingValues(
-            start = this.calculateLeftPadding(direction) + 
+            start = this.calculateLeftPadding(direction) +
                    other.calculateLeftPadding(direction),
             top = this.calculateTopPadding() + other.calculateTopPadding(),
-            end = this.calculateRightPadding(direction) + 
+            end = this.calculateRightPadding(direction) +
                  other.calculateRightPadding(direction),
             bottom = this.calculateBottomPadding() + other.calculateBottomPadding()
         )
     }
-    
+
     /**
      * Scale padding values
      */
@@ -207,21 +207,21 @@ object XiaomiSpacingUtils {
 
 /**
  * Animation Utilities
- * 
+ *
  * Helper functions and constants for consistent animations.
  */
 object XiaomiAnimationUtils {
-    
+
     // Animation durations
     const val DURATION_SHORT = 150
     const val DURATION_MEDIUM = 300
     const val DURATION_LONG = 500
-    
+
     // Animation delays
     const val DELAY_SHORT = 50
     const val DELAY_MEDIUM = 100
     const val DELAY_LONG = 200
-    
+
     /**
      * Get animation duration based on distance
      */
@@ -232,7 +232,7 @@ object XiaomiAnimationUtils {
             else -> DURATION_LONG
         }
     }
-    
+
     /**
      * Get staggered delay for list animations
      */
@@ -243,11 +243,11 @@ object XiaomiAnimationUtils {
 
 /**
  * Preview Utilities
- * 
+ *
  * Helper functions for creating consistent previews.
  */
 object XiaomiPreviewUtils {
-    
+
     /**
      * Common preview names
      */
@@ -259,7 +259,7 @@ object XiaomiPreviewUtils {
         const val TABLET = "Tablet"
         const val LANDSCAPE = "Landscape"
     }
-    
+
     /**
      * Common preview groups
      */
@@ -269,14 +269,14 @@ object XiaomiPreviewUtils {
         const val FOUNDATION = "Foundation"
         const val THEMES = "Themes"
     }
-    
+
     /**
      * Generate preview name with theme
      */
     fun previewName(component: String, theme: String = "Light"): String {
         return "$component - $theme"
     }
-    
+
     /**
      * Generate preview name with state
      */
@@ -287,11 +287,11 @@ object XiaomiPreviewUtils {
 
 /**
  * Validation Utilities
- * 
+ *
  * Helper functions for validating design system usage.
  */
 object XiaomiValidationUtils {
-    
+
     /**
      * Validate color contrast ratio
      */
@@ -303,20 +303,20 @@ object XiaomiValidationUtils {
         val contrastRatio = calculateContrastRatio(foreground, background)
         return contrastRatio >= minRatio
     }
-    
+
     /**
      * Calculate color contrast ratio
      */
     private fun calculateContrastRatio(color1: Color, color2: Color): Float {
         val luminance1 = calculateLuminance(color1)
         val luminance2 = calculateLuminance(color2)
-        
+
         val lighter = maxOf(luminance1, luminance2)
         val darker = minOf(luminance1, luminance2)
-        
+
         return (lighter + 0.05f) / (darker + 0.05f)
     }
-    
+
     /**
      * Calculate color luminance
      */
@@ -327,27 +327,27 @@ object XiaomiValidationUtils {
             } else {
                 // Manual calculation instead of using pow
                 val base = ((value + 0.055f) / 1.055f).toDouble()
-                val result = base * base * base * base * base * base * base * base * base * base * 
-                            base * base * base * base * base * base * base * base * base * base * 
+                val result = base * base * base * base * base * base * base * base * base * base *
+                            base * base * base * base * base * base * base * base * base * base *
                             base * base * base * base
                 result.toFloat()
             }
         }
-        
+
         val r = adjustGamma(color.red)
         val g = adjustGamma(color.green)
         val b = adjustGamma(color.blue)
-        
+
         return 0.2126f * r + 0.7152f * g + 0.0722f * b
     }
-    
+
     /**
      * Validate spacing value
      */
     fun validateSpacing(value: Dp): Boolean {
         return value.value >= 0f && value.value % 4f == 0f // 4dp grid
     }
-    
+
     /**
      * Validate component size
      */
@@ -358,11 +358,11 @@ object XiaomiValidationUtils {
 
 /**
  * Debug Utilities
- * 
+ *
  * Helper functions for debugging and development.
  */
 object XiaomiDebugUtils {
-    
+
     /**
      * Log design system usage
      */
@@ -370,7 +370,7 @@ object XiaomiDebugUtils {
         // In a real implementation, this would log to analytics or debugging tools
         println("[Xiaomi UI Kit] Component: $componentName, Properties: $properties")
     }
-    
+
     /**
      * Validate design system compliance
      */
@@ -381,17 +381,17 @@ object XiaomiDebugUtils {
         hasPreview: Boolean
     ): Boolean {
         val isCompliant = usesDesignTokens && followsNamingConvention && hasPreview
-        
+
         if (!isCompliant) {
             println("[Xiaomi UI Kit] Warning: $componentName is not fully compliant with design system")
             println("  - Uses design tokens: $usesDesignTokens")
             println("  - Follows naming convention: $followsNamingConvention")
             println("  - Has preview: $hasPreview")
         }
-        
+
         return isCompliant
     }
-    
+
     /**
      * Get design system metrics
      */
@@ -407,11 +407,11 @@ object XiaomiDebugUtils {
 
 /**
  * Performance Utilities
- * 
+ *
  * Helper functions for optimizing performance.
  */
 object XiaomiPerformanceUtils {
-    
+
     /**
      * Check if expensive operations should be performed
      */
@@ -420,7 +420,7 @@ object XiaomiPerformanceUtils {
         // battery level, or user preferences
         return true
     }
-    
+
     /**
      * Get recommended animation duration based on device performance
      */
@@ -428,7 +428,7 @@ object XiaomiPerformanceUtils {
         // In a real implementation, this could adjust based on device capabilities
         return baseMs
     }
-    
+
     /**
      * Check if high-quality graphics should be used
      */
@@ -440,11 +440,11 @@ object XiaomiPerformanceUtils {
 
 /**
  * Accessibility Utilities
- * 
+ *
  * Helper functions for improving accessibility.
  */
 object XiaomiAccessibilityUtils {
-    
+
     /**
      * Generate content description for components
      */
@@ -454,27 +454,27 @@ object XiaomiAccessibilityUtils {
         state: String? = null
     ): String {
         val parts = mutableListOf<String>()
-        
+
         if (label != null) {
             parts.add(label)
         }
-        
+
         parts.add(componentType)
-        
+
         if (state != null) {
             parts.add(state)
         }
-        
+
         return parts.joinToString(", ")
     }
-    
+
     /**
      * Check if text size is accessible
      */
     fun isTextSizeAccessible(textSizeSp: Float): Boolean {
         return textSizeSp >= 12f // Minimum readable text size
     }
-    
+
     /**
      * Get semantic role for component
      */

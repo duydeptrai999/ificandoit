@@ -45,7 +45,7 @@ fun UniversalFormInput(
     onTrailingIconClick: (() -> Unit)? = null
 ) {
     val isValid = validator?.invoke(value) ?: true
-    
+
     Column(modifier = modifier) {
         // Label with required indicator
         Row(
@@ -56,7 +56,7 @@ fun UniversalFormInput(
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             if (isRequired) {
                 Text(
                     text = " *",
@@ -65,9 +65,9 @@ fun UniversalFormInput(
                 )
             }
         }
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         // Input field based on type
         when (inputType) {
             InputType.TEXT, InputType.EMAIL, InputType.PASSWORD, InputType.NUMBER, InputType.PHONE -> {
@@ -78,7 +78,7 @@ fun UniversalFormInput(
                     placeholder = placeholder?.let { { Text(it) } },
                     enabled = enabled,
                     isError = !isValid && value.isNotEmpty(),
-                    visualTransformation = if (inputType == InputType.PASSWORD) 
+                    visualTransformation = if (inputType == InputType.PASSWORD)
                         PasswordVisualTransformation() else VisualTransformation.None,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = when (inputType) {
@@ -104,7 +104,7 @@ fun UniversalFormInput(
                     }
                 )
             }
-            
+
             InputType.MULTILINE -> {
                 OutlinedTextField(
                     value = value,
@@ -121,7 +121,7 @@ fun UniversalFormInput(
                     }
                 )
             }
-            
+
             InputType.DROPDOWN -> {
                 // Dropdown will be handled separately
                 Box(
@@ -139,11 +139,11 @@ fun UniversalFormInput(
                     Text(
                         text = value.ifEmpty { placeholder ?: "Select option" },
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        color = if (value.isEmpty()) 
-                            MaterialTheme.colorScheme.onSurfaceVariant 
+                        color = if (value.isEmpty())
+                            MaterialTheme.colorScheme.onSurfaceVariant
                         else MaterialTheme.colorScheme.onSurface
                     )
-                    
+
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
                         contentDescription = null,
@@ -154,7 +154,7 @@ fun UniversalFormInput(
                 }
             }
         }
-        
+
         // Validation error message
         if (!isValid && value.isNotEmpty()) {
             Spacer(modifier = Modifier.height(4.dp))
@@ -183,7 +183,7 @@ fun GenericProgressCard(
 ) {
     val progress = if (targetValue > 0) (currentValue / targetValue).coerceIn(0f, 1f) else 0f
     val percentage = (progress * 100).toInt()
-    
+
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -202,7 +202,7 @@ fun GenericProgressCard(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 onUpdate?.let { updateAction ->
                     IconButton(onClick = { /* Show update dialog */ }) {
                         Icon(
@@ -212,9 +212,9 @@ fun GenericProgressCard(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             // Progress bar
             LinearProgressIndicator(
                 progress = progress,
@@ -224,9 +224,9 @@ fun GenericProgressCard(
                 color = progressColor,
                 trackColor = progressColor.copy(alpha = 0.2f)
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             // Progress text
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -243,7 +243,7 @@ fun GenericProgressCard(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 if (showPercentage) {
                     Text(
                         text = "$percentage%",
@@ -279,7 +279,7 @@ fun UniversalRatingInput(
             )
             Spacer(modifier = Modifier.height(8.dp))
         }
-        
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -296,7 +296,7 @@ fun UniversalRatingInput(
                     tint = if (starRating <= rating) Color(0xFFFFD700) else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             if (showRatingText && rating > 0) {
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
@@ -332,14 +332,14 @@ fun UniversalCounterInput(
             )
             Spacer(modifier = Modifier.height(8.dp))
         }
-        
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             // Decrease button
             IconButton(
-                onClick = { 
+                onClick = {
                     val newValue = (value - step).coerceAtLeast(minValue)
                     if (newValue != value) onValueChange(newValue)
                 },
@@ -350,7 +350,7 @@ fun UniversalCounterInput(
                     contentDescription = "Decrease"
                 )
             }
-            
+
             // Value display
             Card(
                 modifier = Modifier.padding(horizontal = 8.dp),
@@ -367,10 +367,10 @@ fun UniversalCounterInput(
                     textAlign = TextAlign.Center
                 )
             }
-            
+
             // Increase button
             IconButton(
-                onClick = { 
+                onClick = {
                     val newValue = (value + step).coerceAtMost(maxValue)
                     if (newValue != value) onValueChange(newValue)
                 },
@@ -395,4 +395,4 @@ enum class InputType {
     PHONE,
     MULTILINE,
     DROPDOWN
-} 
+}

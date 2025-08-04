@@ -31,7 +31,7 @@ fun BasePreviewScreen(
 ) {
     var isDarkTheme by remember { mutableStateOf(false) }
     var showDevicePreview by remember { mutableStateOf(showDeviceFrame) }
-    
+
     PreviewContainer(
         isDarkTheme = isDarkTheme,
         showDeviceFrame = showDevicePreview
@@ -52,7 +52,7 @@ fun BasePreviewScreen(
                 onDeviceFrameToggle = { showDevicePreview = !showDevicePreview },
                 actions = actions
             )
-            
+
             // Content Area
             Box(
                 modifier = Modifier
@@ -170,14 +170,14 @@ fun ComponentShowcase(
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
-                
+
                 Column {
                     Text(
                         text = title,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     description?.let {
                         Text(
                             text = it,
@@ -187,9 +187,9 @@ fun ComponentShowcase(
                     }
                 }
             }
-            
+
             Divider()
-            
+
             // Content
             content()
         }
@@ -237,7 +237,7 @@ fun InteractiveDemo(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             description?.let {
                 Text(
                     text = it,
@@ -246,20 +246,20 @@ fun InteractiveDemo(
                     modifier = Modifier.padding(top = 4.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Controls
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 controls()
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
             Divider()
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Demo Content
             Box(
                 modifier = Modifier.fillMaxWidth(),

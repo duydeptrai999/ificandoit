@@ -50,7 +50,7 @@ val XiaomiTypography = Typography(
         lineHeight = 44.sp,
         letterSpacing = 0.sp
     ),
-    
+
     // Headline styles - high-emphasis text
     headlineLarge = TextStyle(
         fontFamily = XiaomiFontFamily,
@@ -73,7 +73,7 @@ val XiaomiTypography = Typography(
         lineHeight = 32.sp,
         letterSpacing = 0.sp
     ),
-    
+
     // Title styles - medium-emphasis text
     titleLarge = TextStyle(
         fontFamily = XiaomiFontFamily,
@@ -96,7 +96,7 @@ val XiaomiTypography = Typography(
         lineHeight = 20.sp,
         letterSpacing = 0.1.sp
     ),
-    
+
     // Body styles - main content text
     bodyLarge = TextStyle(
         fontFamily = XiaomiFontFamily,
@@ -119,7 +119,7 @@ val XiaomiTypography = Typography(
         lineHeight = 16.sp,
         letterSpacing = 0.4.sp
     ),
-    
+
     // Label styles - text for components
     labelLarge = TextStyle(
         fontFamily = XiaomiFontFamily,
@@ -148,7 +148,7 @@ val XiaomiTypography = Typography(
  * Extended typography styles for Xiaomi-specific use cases
  */
 object XiaomiExtendedTypography {
-    
+
     // Code and monospace text
     val codeSmall = TextStyle(
         fontFamily = FontFamily.Monospace,
@@ -157,7 +157,7 @@ object XiaomiExtendedTypography {
         lineHeight = 16.sp,
         letterSpacing = 0.sp
     )
-    
+
     val codeMedium = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Normal,
@@ -165,7 +165,7 @@ object XiaomiExtendedTypography {
         lineHeight = 20.sp,
         letterSpacing = 0.sp
     )
-    
+
     // Numeric display styles
     val numericLarge = TextStyle(
         fontFamily = FontFamily.Monospace,
@@ -174,7 +174,7 @@ object XiaomiExtendedTypography {
         lineHeight = 40.sp,
         letterSpacing = 0.sp
     )
-    
+
     val numericMedium = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Medium,
@@ -182,7 +182,7 @@ object XiaomiExtendedTypography {
         lineHeight = 32.sp,
         letterSpacing = 0.sp
     )
-    
+
     // Caption styles for additional hierarchy
     val captionLarge = TextStyle(
         fontFamily = XiaomiFontFamily,
@@ -191,7 +191,7 @@ object XiaomiExtendedTypography {
         lineHeight = 18.sp,
         letterSpacing = 0.4.sp
     )
-    
+
     val captionMedium = TextStyle(
         fontFamily = XiaomiFontFamily,
         fontWeight = FontWeight.Normal,
@@ -199,7 +199,7 @@ object XiaomiExtendedTypography {
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp
     )
-    
+
     val captionSmall = TextStyle(
         fontFamily = XiaomiFontFamily,
         fontWeight = FontWeight.Normal,

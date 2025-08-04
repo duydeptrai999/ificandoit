@@ -67,7 +67,7 @@ fun PreviewToolbar(
                     )
                 }
             }
-            
+
             // Device frame toggle
             IconButton(onClick = onDeviceFrameToggle) {
                 Icon(
@@ -76,7 +76,7 @@ fun PreviewToolbar(
                     tint = if (showDeviceFrame) MaterialTheme.colorScheme.primary else LocalContentColor.current
                 )
             }
-            
+
             // Settings
             if (showSettings) {
                 IconButton(onClick = onSettingsClick) {
@@ -86,7 +86,7 @@ fun PreviewToolbar(
                     )
                 }
             }
-            
+
             // Custom actions
             actions()
         },
@@ -156,7 +156,7 @@ fun CompactPreviewToolbar(
                     )
                 }
             }
-            
+
             IconButton(onClick = onMoreClick) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
@@ -211,7 +211,7 @@ fun FloatingPreviewToolbar(
                     modifier = Modifier.size(20.dp)
                 )
             }
-            
+
             IconButton(
                 onClick = onDeviceFrameToggle,
                 modifier = Modifier.size(40.dp)
@@ -223,7 +223,7 @@ fun FloatingPreviewToolbar(
                     tint = if (showDeviceFrame) MaterialTheme.colorScheme.primary else LocalContentColor.current
                 )
             }
-            
+
             IconButton(
                 onClick = onSettingsClick,
                 modifier = Modifier.size(40.dp)
@@ -278,7 +278,7 @@ fun BreadcrumbPreviewToolbar(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-                    
+
                     TextButton(
                         onClick = { onBreadcrumbClick(index) },
                         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
@@ -309,7 +309,7 @@ fun BreadcrumbPreviewToolbar(
                     )
                 }
             }
-            
+
             actions()
         }
     )

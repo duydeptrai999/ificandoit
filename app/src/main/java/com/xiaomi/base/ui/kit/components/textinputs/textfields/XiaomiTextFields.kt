@@ -162,9 +162,9 @@ fun XiaomiTextField(
 
 /**
  * Xiaomi Search Field
- * 
+ *
  * A specialized text field for search functionality.
- * 
+ *
  * @param value Current search query
  * @param onValueChange Callback when search query changes
  * @param modifier Modifier to be applied to the search field
@@ -229,9 +229,9 @@ fun XiaomiSearchField(
 
 /**
  * Xiaomi Password Field
- * 
+ *
  * A specialized text field for password input.
- * 
+ *
  * @param value Current password value
  * @param onValueChange Callback when password changes
  * @param modifier Modifier to be applied to the password field
@@ -255,7 +255,7 @@ fun XiaomiPasswordField(
     showPasswordToggle: Boolean = true
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
-    
+
     XiaomiOutlinedTextField(
         value = value,
         onValueChange = onValueChange,
@@ -308,9 +308,9 @@ fun XiaomiPasswordField(
 
 /**
  * Xiaomi Email Field
- * 
+ *
  * A specialized text field for email input.
- * 
+ *
  * @param value Current email value
  * @param onValueChange Callback when email changes
  * @param modifier Modifier to be applied to the email field
@@ -357,9 +357,9 @@ fun XiaomiEmailField(
 
 /**
  * Xiaomi Multiline Text Field
- * 
+ *
  * A text field that supports multiple lines of text.
- * 
+ *
  * @param value Current text value
  * @param onValueChange Callback when text changes
  * @param modifier Modifier to be applied to the text field
@@ -407,7 +407,7 @@ fun XiaomiMultilineTextField(
             isError = isError,
             supportingText = supportingText?.let { { Text(it) } }
         )
-        
+
         if (maxCharacters != null) {
             Row(
                 modifier = Modifier
@@ -431,9 +431,9 @@ fun XiaomiMultilineTextField(
 
 /**
  * Xiaomi Icon Text Field
- * 
+ *
  * A text field with customizable leading and trailing icons.
- * 
+ *
  * @param value Current text value
  * @param onValueChange Callback when text changes
  * @param modifier Modifier to be applied to the text field
@@ -513,13 +513,13 @@ fun XiaomiTextFieldsPreview() {
                     "Text Field Variants",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var textValue by remember { mutableStateOf("") }
                 var outlinedValue by remember { mutableStateOf("Sample text") }
                 var searchValue by remember { mutableStateOf("") }
                 var passwordValue by remember { mutableStateOf("") }
                 var emailValue by remember { mutableStateOf("") }
-                
+
                 // Filled text field
                 XiaomiTextField(
                     value = textValue,
@@ -528,7 +528,7 @@ fun XiaomiTextFieldsPreview() {
                     placeholder = { Text("Enter text") },
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 // Outlined text field
                 XiaomiOutlinedTextField(
                     value = outlinedValue,
@@ -537,7 +537,7 @@ fun XiaomiTextFieldsPreview() {
                     supportingText = { Text("This is supporting text") },
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 // Search field
                 XiaomiSearchField(
                     value = searchValue,
@@ -545,21 +545,21 @@ fun XiaomiTextFieldsPreview() {
                     placeholder = "Search products...",
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 // Password field
                 XiaomiPasswordField(
                     value = passwordValue,
                     onValueChange = { passwordValue = it },
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 // Email field
                 XiaomiEmailField(
                     value = emailValue,
                     onValueChange = { emailValue = it },
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 // Icon text field
                 XiaomiIconTextField(
                     value = "",
@@ -589,7 +589,7 @@ fun XiaomiTextFieldsErrorPreview() {
                     "Error States",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 // Error text field
                 XiaomiOutlinedTextField(
                     value = "invalid@",
@@ -599,7 +599,7 @@ fun XiaomiTextFieldsErrorPreview() {
                     supportingText = { Text("Please enter a valid email address") },
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 // Error password field
                 XiaomiPasswordField(
                     value = "123",
@@ -608,7 +608,7 @@ fun XiaomiTextFieldsErrorPreview() {
                     supportingText = "Password must be at least 8 characters",
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 // Disabled text field
                 XiaomiOutlinedTextField(
                     value = "Disabled field",
@@ -637,9 +637,9 @@ fun XiaomiMultilineTextFieldPreview() {
                     "Multiline Text Field",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var messageValue by remember { mutableStateOf("This is a sample message that spans multiple lines to demonstrate the multiline text field functionality.") }
-                
+
                 XiaomiMultilineTextField(
                     value = messageValue,
                     onValueChange = { messageValue = it },
@@ -669,22 +669,22 @@ fun XiaomiTextFieldsDarkPreview() {
                     "Dark Theme Text Fields",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var searchValue by remember { mutableStateOf("Dark theme search") }
-                
+
                 XiaomiSearchField(
                     value = searchValue,
                     onValueChange = { searchValue = it },
                     placeholder = "Search in dark mode...",
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 XiaomiEmailField(
                     value = "user@xiaomi.com",
                     onValueChange = {},
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 XiaomiPasswordField(
                     value = "password123",
                     onValueChange = {},

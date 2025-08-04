@@ -9,7 +9,6 @@ import java.util.Date
  * them to and from types that Room can persist.
  */
 class DateConverter {
-    
     /**
      * Converts a timestamp value (Long) to a Date object.
      *
@@ -20,7 +19,7 @@ class DateConverter {
     fun fromTimestamp(value: Long?): Date? {
         return value?.let { Date(it) }
     }
-    
+
     /**
      * Converts a Date object to a timestamp (Long).
      *

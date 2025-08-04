@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.TransformOrigin
 /**
  * Scale Animation Component
  * Provides smooth scale in and scale out animations for any composable content
- * 
+ *
  * @param visible Controls the visibility state of the content
  * @param modifier Modifier to be applied to the component
  * @param durationMillis Duration of the animation in milliseconds
@@ -70,7 +70,7 @@ fun ScaleAnimationComponent(
 /**
  * Spring Scale Animation Component
  * Uses spring animation for more natural scale effects
- * 
+ *
  * @param visible Controls the visibility state of the content
  * @param modifier Modifier to be applied to the component
  * @param dampingRatio Damping ratio for the spring animation
@@ -118,7 +118,7 @@ fun SpringScaleAnimationComponent(
 /**
  * Auto Scale Animation Component with state management
  * Automatically manages visibility state with toggle functionality
- * 
+ *
  * @param initialVisible Initial visibility state
  * @param modifier Modifier to be applied to the component
  * @param durationMillis Duration of the animation in milliseconds
@@ -142,13 +142,13 @@ fun AutoScaleAnimationComponent(
     content: @Composable (toggleVisibility: () -> Unit) -> Unit
 ) {
     var visible by remember { mutableStateOf(initialVisible) }
-    
+
     val toggleVisibility: () -> Unit = {
         visible = !visible
         onVisibilityChanged?.invoke(visible)
         Unit
     }
-    
+
     Box(modifier = modifier) {
         ScaleAnimationComponent(
             visible = visible,
@@ -166,7 +166,7 @@ fun AutoScaleAnimationComponent(
 /**
  * Custom Scale Animation Component with easing control
  * Provides more control over animation easing and timing
- * 
+ *
  * @param visible Controls the visibility state of the content
  * @param modifier Modifier to be applied to the component
  * @param durationMillis Duration of the animation in milliseconds
@@ -218,7 +218,7 @@ fun CustomScaleAnimationComponent(
 /**
  * Bounce Scale Animation Component
  * Creates a bouncy scale effect using predefined spring settings
- * 
+ *
  * @param visible Controls the visibility state of the content
  * @param modifier Modifier to be applied to the component
  * @param bounceIntensity Intensity of the bounce effect (Low, Medium, High)
@@ -242,7 +242,7 @@ fun BounceScaleAnimationComponent(
         BounceIntensity.Medium -> Spring.DampingRatioMediumBouncy to Spring.StiffnessMedium
         BounceIntensity.High -> Spring.DampingRatioHighBouncy to Spring.StiffnessHigh
     }
-    
+
     SpringScaleAnimationComponent(
         visible = visible,
         modifier = modifier,

@@ -35,7 +35,7 @@ fun TopRatedScreen(
     viewModel: TopRatedViewModel = hiltViewModel()
 ) {
     val topRatedItems = viewModel.topRatedItems.collectAsLazyPagingItems()
-    
+
     Box(modifier = Modifier.fillMaxSize()) {
         when (topRatedItems.loadState.refresh) {
             is LoadState.Loading -> {
@@ -60,7 +60,7 @@ fun TopRatedScreen(
                             modifier = Modifier.padding(16.dp)
                         )
                     }
-                    
+
                     items(
                         count = topRatedItems.itemCount,
                         key = { index -> topRatedItems[index]?.id ?: index }
@@ -72,7 +72,7 @@ fun TopRatedScreen(
                             )
                         }
                     }
-                    
+
                     when (topRatedItems.loadState.append) {
                         is LoadState.Loading -> {
                             item {

@@ -16,7 +16,7 @@ import androidx.compose.animation.core.LinearEasing
 /**
  * Fade In/Out Animation Component
  * Provides smooth fade in and fade out animations for any composable content
- * 
+ *
  * @param visible Controls the visibility state of the content
  * @param modifier Modifier to be applied to the component
  * @param durationMillis Duration of the animation in milliseconds
@@ -56,7 +56,7 @@ fun FadeInOutComponent(
 /**
  * Fade In/Out Component with automatic state management
  * Automatically manages visibility state with toggle functionality
- * 
+ *
  * @param initialVisible Initial visibility state
  * @param modifier Modifier to be applied to the component
  * @param durationMillis Duration of the animation in milliseconds
@@ -74,13 +74,13 @@ fun AutoFadeInOutComponent(
     content: @Composable (toggleVisibility: () -> Unit) -> Unit
 ) {
     var visible by remember { mutableStateOf(initialVisible) }
-    
+
     val toggleVisibility: () -> Unit = {
         visible = !visible
         onVisibilityChanged?.invoke(visible)
         Unit
     }
-    
+
     Box(modifier = modifier) {
         FadeInOutComponent(
             visible = visible,
@@ -95,7 +95,7 @@ fun AutoFadeInOutComponent(
 /**
  * Fade In/Out Component with custom easing
  * Provides more control over animation easing
- * 
+ *
  * @param visible Controls the visibility state of the content
  * @param modifier Modifier to be applied to the component
  * @param durationMillis Duration of the animation in milliseconds

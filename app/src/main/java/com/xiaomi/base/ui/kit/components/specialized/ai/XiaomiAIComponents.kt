@@ -38,7 +38,7 @@ import kotlinx.coroutines.delay
 
 /**
  * Xiaomi AI Components - AI-powered UI Components
- * 
+ *
  * This file contains AI-related components following Material Design 3 principles
  * with Xiaomi's design language. These components are designed for modern AI
  * interactions and chat interfaces.
@@ -94,14 +94,14 @@ fun XiaomiAIChatInterface(
     var inputText by remember { mutableStateOf("") }
     val listState = rememberLazyListState()
     val keyboardController = LocalSoftwareKeyboardController.current
-    
+
     // Auto scroll to bottom when new messages arrive
     LaunchedEffect(messages.size) {
         if (messages.isNotEmpty()) {
             listState.animateScrollToItem(messages.size - 1)
         }
     }
-    
+
     Column(
         modifier = modifier.fillMaxSize()
     ) {
@@ -119,7 +119,7 @@ fun XiaomiAIChatInterface(
                     aiAvatar = aiAvatar
                 )
             }
-            
+
             // Typing indicator
             if (isTyping) {
                 item {
@@ -130,7 +130,7 @@ fun XiaomiAIChatInterface(
                 }
             }
         }
-        
+
         // Suggestions
         if (suggestions.isNotEmpty() && inputText.isEmpty()) {
             XiaomiAISuggestions(
@@ -139,7 +139,7 @@ fun XiaomiAIChatInterface(
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
-        
+
         // Input Area
         XiaomiChatInput(
             value = inputText,
@@ -192,10 +192,10 @@ fun XiaomiChatMessageBubble(
                     modifier = Modifier.size(20.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.width(8.dp))
         }
-        
+
         Column(
             modifier = Modifier.widthIn(max = 280.dp)
         ) {
@@ -227,7 +227,7 @@ fun XiaomiChatMessageBubble(
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
-            
+
             // Message Status
             if (message.isFromUser) {
                 Row(
@@ -240,10 +240,10 @@ fun XiaomiChatMessageBubble(
                 }
             }
         }
-        
+
         if (message.isFromUser) {
             Spacer(modifier = Modifier.width(8.dp))
-            
+
             // User Avatar
             Box(
                 modifier = Modifier
@@ -292,9 +292,9 @@ fun XiaomiTypingIndicator(
                 modifier = Modifier.size(20.dp)
             )
         }
-        
+
         Spacer(modifier = Modifier.width(8.dp))
-        
+
         // Typing Animation
         Card(
             shape = RoundedCornerShape(
@@ -314,7 +314,7 @@ fun XiaomiTypingIndicator(
             ) {
                 repeat(3) { index ->
                     var isVisible by remember { mutableStateOf(false) }
-                    
+
                     LaunchedEffect(Unit) {
                         delay(index * 200L)
                         while (true) {
@@ -324,7 +324,7 @@ fun XiaomiTypingIndicator(
                             delay(600)
                         }
                     }
-                    
+
                     Box(
                         modifier = Modifier
                             .size(6.dp)
@@ -379,7 +379,7 @@ fun XiaomiChatInput(
             ),
             maxLines = 4
         )
-        
+
         FloatingActionButton(
             onClick = onSend,
             modifier = Modifier.size(48.dp),
@@ -421,7 +421,7 @@ fun XiaomiAISuggestions(
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        
+
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.heightIn(max = 120.dp)
@@ -474,14 +474,14 @@ fun XiaomiSuggestionChip(
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
-            
+
             Text(
                 text = suggestion.text,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.weight(1f)
             )
-            
+
             Icon(
                 imageVector = Icons.Default.ArrowForward,
                 contentDescription = "Send",
@@ -508,7 +508,7 @@ fun XiaomiMessageStatus(
         MessageStatus.READ -> Icons.Default.DoneAll to MaterialTheme.colorScheme.primary
         MessageStatus.ERROR -> Icons.Default.Error to MaterialTheme.colorScheme.error
     }
-    
+
     Icon(
         imageVector = icon,
         contentDescription = status.name,
@@ -560,7 +560,7 @@ fun XiaomiAIAssistantCard(
                         modifier = Modifier.size(24.dp)
                     )
                 }
-                
+
                 Column {
                     Text(
                         text = title,
@@ -575,7 +575,7 @@ fun XiaomiAIAssistantCard(
                     )
                 }
             }
-            
+
             if (suggestions.isNotEmpty()) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -600,7 +600,7 @@ fun XiaomiAIAssistantCard(
                     }
                 }
             }
-            
+
             Button(
                 onClick = onStartChat,
                 modifier = Modifier.fillMaxWidth(),
@@ -641,13 +641,13 @@ fun XiaomiAIChatInterfacePreview() {
                 isFromUser = false
             )
         )
-        
+
         val suggestions = listOf(
             XiaomiAISuggestion("1", "How to enable dark mode?", Icons.Default.DarkMode),
             XiaomiAISuggestion("2", "Battery optimization tips", Icons.Default.Battery6Bar),
             XiaomiAISuggestion("3", "Camera settings guide", Icons.Default.CameraAlt)
         )
-        
+
         XiaomiAIChatInterface(
             messages = sampleMessages,
             onSendMessage = {},
@@ -674,7 +674,7 @@ fun XiaomiAIChatInterfaceDarkPreview() {
                 status = MessageStatus.DELIVERED
             )
         )
-        
+
         XiaomiAIChatInterface(
             messages = sampleMessages,
             onSendMessage = {},

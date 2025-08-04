@@ -53,10 +53,10 @@ fun ItemDetailScreen(
     viewModel: ItemDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    
+
     // Load item details when the screen is first composed
     viewModel.loadItemDetails(itemId)
-    
+
     Box(modifier = Modifier.fillMaxSize()) {
         when {
             uiState.isLoading -> {
@@ -115,9 +115,9 @@ private fun ItemDetailContent(
                     modifier = Modifier.fillMaxSize()
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Title and Rating
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -129,15 +129,15 @@ private fun ItemDetailContent(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.weight(1f)
                 )
-                
+
                 if (item.score > 0) {
                     Spacer(modifier = Modifier.width(8.dp))
                     RatingBadge(rating = item.score)
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Description
             item.description?.let { description ->
                 Text(
@@ -145,17 +145,17 @@ private fun ItemDetailContent(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Text(
                     text = description,
                     style = MaterialTheme.typography.bodyLarge
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
             }
-            
+
             // Created Date
             item.createdDate?.let { createdDate ->
                 Text(
@@ -163,9 +163,9 @@ private fun ItemDetailContent(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 Text(
                     text = dateFormat.format(createdDate),
@@ -173,7 +173,7 @@ private fun ItemDetailContent(
                 )
             }
         }
-        
+
         // Floating Action Button for Favorite
         FloatingActionButton(
             onClick = onFavoriteToggle,

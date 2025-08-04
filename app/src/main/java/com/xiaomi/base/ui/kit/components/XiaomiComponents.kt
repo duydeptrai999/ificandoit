@@ -2,10 +2,10 @@ package com.xiaomi.base.ui.kit.components
 
 /**
  * Xiaomi Components - Organized Component Access
- * 
+ *
  * This file provides organized access to all UI components in the Xiaomi Base UI Kit.
  * Components are grouped by category for easy discovery and usage.
- * 
+ *
  * Inspired by ComposeX organization patterns for better developer experience.
  */
 
@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
-// Actions - Interactive Components  
+// Actions - Interactive Components
 import com.xiaomi.base.ui.kit.components.actions.buttons.XiaomiPrimaryButton
 import com.xiaomi.base.ui.kit.components.actions.buttons.XiaomiSecondaryButton
 import com.xiaomi.base.ui.kit.components.actions.buttons.XiaomiTertiaryButton
@@ -27,20 +27,20 @@ import com.xiaomi.base.ui.kit.components.containment.cards.XiaomiClickableCard
 
 /**
  * Actions Module - Interactive Components
- * 
+ *
  * Contains all components that trigger actions or user interactions.
  * These components are typically used for primary user actions.
  */
 object XiaomiActions {
-    
+
     /**
      * Button Components
-     * 
+     *
      * Various button styles following Material Design 3 guidelines
      * with Xiaomi design tokens applied.
      */
     object Buttons {
-        
+
         /**
          * Primary filled button - Use for main actions
          */
@@ -56,7 +56,7 @@ object XiaomiActions {
             enabled = enabled,
             content = content
         )
-        
+
         /**
          * Outlined button - Use for secondary actions
          */
@@ -72,7 +72,7 @@ object XiaomiActions {
             enabled = enabled,
             content = content
         )
-        
+
         /**
          * Text button - Use for tertiary actions
          */
@@ -88,7 +88,7 @@ object XiaomiActions {
             enabled = enabled,
             content = content
         )
-        
+
         /**
          * Tonal button - Use for alternative primary actions
          */
@@ -104,18 +104,18 @@ object XiaomiActions {
             enabled = enabled,
             content = content
         )
-        
+
         /**
          * Get all available button variants
          */
         fun getAllVariants() = listOf(
             "Primary",
-            "Outlined", 
+            "Outlined",
             "Text",
             "Tonal"
         )
     }
-    
+
     // Future: FABs, Chips, etc.
     // object FABs { ... }
     // object Chips { ... }
@@ -123,23 +123,23 @@ object XiaomiActions {
 
 /**
  * Communication Module - Information Display Components
- * 
+ *
  * Contains components that communicate information to users
  * without requiring direct interaction.
  */
 object XiaomiCommunication {
-    
+
     // Future implementations
     // object Badges { ... }
     // object Progress { ... }
     // object Snackbars { ... }
-    
+
     /**
      * Get all available communication component categories
      */
     fun getAvailableCategories() = listOf(
         "Badges",
-        "Progress Indicators", 
+        "Progress Indicators",
         "Snackbars",
         "Tooltips"
     )
@@ -147,20 +147,20 @@ object XiaomiCommunication {
 
 /**
  * Containment Module - Layout and Grouping Components
- * 
+ *
  * Contains components that group, organize, and contain other content.
  * These components provide structure and hierarchy to the UI.
  */
 object XiaomiContainment {
-    
+
     /**
      * Card Components
-     * 
+     *
      * Various card styles for grouping related content
      * with different elevation and styling options.
      */
     object Cards {
-        
+
         /**
          * Basic card - Standard container with subtle elevation
          */
@@ -172,7 +172,7 @@ object XiaomiContainment {
             modifier = modifier,
             content = content
         )
-        
+
         /**
          * Elevated card - Higher elevation for emphasis
          */
@@ -184,7 +184,7 @@ object XiaomiContainment {
             modifier = modifier,
             content = content
         )
-        
+
         /**
          * Outlined card - Bordered card without elevation
          */
@@ -196,7 +196,7 @@ object XiaomiContainment {
             modifier = modifier,
             content = content
         )
-        
+
         /**
          * Clickable card - Interactive card for navigation
          */
@@ -210,7 +210,7 @@ object XiaomiContainment {
             modifier = modifier,
             content = content
         )
-        
+
         /**
          * Product card - Specialized for product display
          */
@@ -222,7 +222,7 @@ object XiaomiContainment {
             modifier = modifier,
             content = content
         )
-        
+
         /**
          * Feature card - Specialized for feature highlights
          */
@@ -234,7 +234,7 @@ object XiaomiContainment {
             modifier = modifier,
             content = content
         )
-        
+
         /**
          * Get all available card variants
          */
@@ -247,7 +247,7 @@ object XiaomiContainment {
             "Feature"
         )
     }
-    
+
     // Future: Lists, Dividers, etc.
     // object Lists { ... }
     // object Dividers { ... }
@@ -255,18 +255,18 @@ object XiaomiContainment {
 
 /**
  * Navigation Module - Navigation Components
- * 
+ *
  * Contains components that help users navigate through the application.
  */
 object XiaomiNavigation {
-    
+
     // Future implementations
     // object AppBars { ... }
     // object BottomNavigation { ... }
     // object Tabs { ... }
     // object Drawer { ... }
     // object Rail { ... }
-    
+
     /**
      * Get all available navigation component categories
      */
@@ -281,17 +281,17 @@ object XiaomiNavigation {
 
 /**
  * Selection Module - Input and Selection Components
- * 
+ *
  * Contains components for user input, selection, and form interactions.
  */
 object XiaomiSelection {
-    
+
     // Future implementations
     // object CheckBoxes { ... }
     // object RadioButtons { ... }
     // object Switches { ... }
     // object Sliders { ... }
-    
+
     /**
      * Get all available selection component categories
      */
@@ -306,22 +306,22 @@ object XiaomiSelection {
 
 /**
  * Text Inputs Module - Text Input Components
- * 
+ *
  * Contains components for text input and forms.
  */
 object XiaomiTextInputs {
-    
+
     // Future implementations
     // object TextFields { ... }
     // object TextAreas { ... }
     // object SearchBars { ... }
-    
+
     /**
      * Get all available text input component categories
      */
     fun getAvailableCategories() = listOf(
         "Text Fields",
-        "Text Areas", 
+        "Text Areas",
         "Search Bars",
         "Date Pickers",
         "Time Pickers"
@@ -330,16 +330,16 @@ object XiaomiTextInputs {
 
 /**
  * Specialized Module - Specialized Components
- * 
+ *
  * Contains highly specialized components for specific use cases.
  */
 object XiaomiSpecialized {
-    
+
     // Future implementations
     // object Charts { ... }
     // object Maps { ... }
     // object Media { ... }
-    
+
     /**
      * Get all available specialized component categories
      */
@@ -354,12 +354,12 @@ object XiaomiSpecialized {
 
 /**
  * Component Registry - Master Registry
- * 
+ *
  * Provides a centralized registry of all available components
  * with metadata and discovery capabilities.
  */
 object XiaomiComponentRegistry {
-    
+
     /**
      * Get all available component modules
      */
@@ -372,7 +372,7 @@ object XiaomiComponentRegistry {
         "TextInputs" to XiaomiTextInputs,
         "Specialized" to XiaomiSpecialized
     )
-    
+
     /**
      * Get component count by module
      */
@@ -385,7 +385,7 @@ object XiaomiComponentRegistry {
         "TextInputs" to 0, // Future
         "Specialized" to 0 // Future
     )
-    
+
     /**
      * Check if a component exists in the registry
      */
@@ -406,18 +406,18 @@ object XiaomiComponentRegistry {
 
 /**
  * Quick Access - Commonly Used Components
- * 
+ *
  * Provides quick access to the most commonly used components
  * for faster development workflow.
  */
 object XiaomiQuickAccess {
-    
+
     // Most common button
     val Button = XiaomiActions.Buttons::Primary
-    
+
     // Most common card
     val Card = XiaomiContainment.Cards::Basic
-    
+
     /**
      * Get quick access components
      */

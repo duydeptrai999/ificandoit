@@ -22,7 +22,7 @@ data class ComponentMetadata(
     val minSdk: Int = 21,
     val requiredPermissions: List<String> = emptyList(),
     val estimatedLines: Int = 50,
-    val hasPreview: Boolean = true
+    val hasPreview: Boolean = true,
 ) {
     /**
      * Kiểm tra xem component có compatible với project context không
@@ -30,47 +30,47 @@ data class ComponentMetadata(
     fun isCompatibleWith(context: ProjectContext): Boolean {
         return context.minSdk >= minSdk
     }
-    
+
     /**
      * Lấy customization option theo key
      */
     fun getCustomizationOption(key: String): CustomizationOption? {
         return customizationOptions.find { it.key == key }
     }
-    
+
     /**
      * Kiểm tra xem có tag cụ thể không
      */
     fun hasTag(tag: String): Boolean {
         return tags.contains(tag)
     }
-    
+
     /**
      * Tính relevance score với search query
      */
     fun calculateRelevanceScore(query: String): Float {
         val queryLower = query.lowercase()
         var score = 0f
-        
+
         // Exact name match
         if (name.lowercase() == queryLower) score += 100f
-        
+
         // Name contains query
         if (name.lowercase().contains(queryLower)) score += 50f
-        
+
         // Description contains query
         if (description.lowercase().contains(queryLower)) score += 30f
-        
+
         // Tags contain query
         tags.forEach { tag ->
             if (tag.lowercase().contains(queryLower)) score += 20f
         }
-        
+
         // Use cases contain query
         useCases.forEach { useCase ->
             if (useCase.lowercase().contains(queryLower)) score += 15f
         }
-        
+
         return score
     }
 }
@@ -90,14 +90,14 @@ enum class ComponentCategory(val displayName: String, val icon: String, val desc
     CHART("Charts", "📊", "Data visualization và charts"),
     MEDIA("Media", "🎬", "Image, video và media components"),
     FORM("Forms", "📄", "Form layouts và validation"),
-    
+
     // Integration Components
     AUTHENTICATION("Auth", "🔐", "Login, signup và authentication"),
     PAYMENT("Payment", "💳", "Payment processing components"),
     SOCIAL("Social", "👥", "Social media integration"),
     CAMERA("Camera", "📷", "Camera và image capture"),
     UTILITY("Utility", "🔧", "Helper components và utilities"),
-    
+
     // Enhanced Components (New)
     ANIMATION("Animation", "✨", "Animations và transitions"),
     ACCESSIBILITY("A11y", "♿", "Accessibility components"),
@@ -107,42 +107,42 @@ enum class ComponentCategory(val displayName: String, val icon: String, val desc
     ADAPTIVE("Adaptive", "📱", "Adaptive và responsive components"),
     ENTERPRISE("Enterprise", "🏢", "Enterprise-grade components"),
     SECURITY("Security", "🔒", "Security và privacy components"),
-    TESTING("Testing", "🧪", "Testing utilities và mocks")
+    TESTING("Testing", "🧪", "Testing utilities và mocks"),
 }
 
 /**
  * Mức độ phức tạp của component
  */
 enum class ComplexityLevel(
-    val displayName: String, 
+    val displayName: String,
     val estimatedTime: String,
     val description: String,
-    val skillLevel: String
+    val skillLevel: String,
 ) {
     SIMPLE(
-        "Simple", 
+        "Simple",
         "5-10 min",
         "Chỉ UI component, không có logic phức tạp",
-        "Beginner"
+        "Beginner",
     ),
     MEDIUM(
-        "Medium", 
+        "Medium",
         "15-30 min",
         "UI + basic logic, có state management",
-        "Intermediate"
+        "Intermediate",
     ),
     COMPLEX(
-        "Complex", 
+        "Complex",
         "45-60 min",
         "UI + logic + integration, có external dependencies",
-        "Advanced"
+        "Advanced",
     ),
     EXPERT(
         "Expert",
         "2+ hours",
         "Phức tạp cao, cần customization sâu",
-        "Expert"
-    )
+        "Expert",
+    ),
 }
 
 /**
@@ -158,7 +158,7 @@ data class CustomizationOption(
     val required: Boolean = false,
     val group: String? = null,
     val dependsOn: String? = null,
-    val validation: ValidationRule? = null
+    val validation: ValidationRule? = null,
 ) {
     /**
      * Validate giá trị input
@@ -169,7 +169,7 @@ data class CustomizationOption(
         }
         return ValidationResult.Success
     }
-    
+
     /**
      * Kiểm tra xem option có enabled không dựa trên dependencies
      */
@@ -185,16 +185,16 @@ data class CustomizationOption(
  * Các loại option type
  */
 enum class OptionType {
-    COLOR,      // Color picker
-    SIZE,       // Size selection (small, medium, large)
-    TEXT,       // Text input
-    BOOLEAN,    // Toggle switch
-    ENUM,       // Dropdown selection
-    NUMBER,     // Number input
-    ICON,       // Icon picker
-    DIMENSION,  // Dimension input (dp, sp)
-    FILE,       // File picker
-    RANGE       // Range slider
+    COLOR, // Color picker
+    SIZE, // Size selection (small, medium, large)
+    TEXT, // Text input
+    BOOLEAN, // Toggle switch
+    ENUM, // Dropdown selection
+    NUMBER, // Number input
+    ICON, // Icon picker
+    DIMENSION, // Dimension input (dp, sp)
+    FILE, // File picker
+    RANGE, // Range slider
 }
 
 /**
@@ -202,7 +202,7 @@ enum class OptionType {
  */
 sealed class ValidationRule {
     abstract fun validate(value: Any): ValidationResult
-    
+
     object Required : ValidationRule() {
         override fun validate(value: Any): ValidationResult {
             return if (value.toString().isNotBlank()) {
@@ -212,7 +212,7 @@ sealed class ValidationRule {
             }
         }
     }
-    
+
     data class MinLength(val min: Int) : ValidationRule() {
         override fun validate(value: Any): ValidationResult {
             return if (value.toString().length >= min) {
@@ -222,7 +222,7 @@ sealed class ValidationRule {
             }
         }
     }
-    
+
     data class Range(val min: Number, val max: Number) : ValidationRule() {
         override fun validate(value: Any): ValidationResult {
             val numValue = value.toString().toDoubleOrNull()
@@ -240,6 +240,7 @@ sealed class ValidationRule {
  */
 sealed class ValidationResult {
     object Success : ValidationResult()
+
     data class Error(val message: String) : ValidationResult()
 }
 
@@ -259,7 +260,7 @@ data class ProjectContext(
     val supportedLanguages: List<String> = listOf("en"),
     val hasDataBinding: Boolean = false,
     val hasViewBinding: Boolean = false,
-    val architecturePattern: String = "MVVM"
+    val architecturePattern: String = "MVVM",
 ) {
     /**
      * Generate package name cho component
@@ -267,7 +268,7 @@ data class ProjectContext(
     fun generateComponentPackage(category: ComponentCategory): String {
         return "$basePackage.components.${category.name.lowercase()}"
     }
-    
+
     /**
      * Kiểm tra compatibility với component
      */

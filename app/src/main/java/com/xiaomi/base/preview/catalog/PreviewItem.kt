@@ -123,11 +123,11 @@ data class PreviewFilter(
     fun matches(item: PreviewItem): Boolean {
         val categoryMatch = categories.isEmpty() || item.category in categories
         val difficultyMatch = difficulties.isEmpty() || item.difficulty in difficulties
-        val searchMatch = searchQuery.isBlank() || 
+        val searchMatch = searchQuery.isBlank() ||
             item.title.contains(searchQuery, ignoreCase = true) ||
             item.description.contains(searchQuery, ignoreCase = true)
         val tagMatch = tags.isEmpty() || item.tags.any { it in tags }
-        
+
         return categoryMatch && difficultyMatch && searchMatch && tagMatch
     }
 }

@@ -80,7 +80,7 @@ data class ThemeState(
 /**
  * Dynamic Theme Component
  * Provides adaptive theming based on system settings and user preferences
- * 
+ *
  * @param config Theme configuration
  * @param content Content to be themed
  */
@@ -92,7 +92,7 @@ fun DynamicThemeComponent(
     val context = LocalContext.current
     val systemInDarkTheme = isSystemInDarkTheme()
     val density = LocalDensity.current
-    
+
     // Determine if dark theme should be used
     val isDarkTheme = when (config.themeMode) {
         ThemeMode.LIGHT -> false
@@ -100,32 +100,32 @@ fun DynamicThemeComponent(
         ThemeMode.SYSTEM -> systemInDarkTheme
         ThemeMode.AUTO -> isNightTime()
     }
-    
+
     // Get color scheme
     val colorScheme = getColorScheme(
         context = context,
         isDarkTheme = isDarkTheme,
         config = config
     )
-    
+
     // Get typography with font scaling
     val typography = getScaledTypography(
         context = context,
         fontScaleLevel = config.fontScaleLevel,
         followSystem = config.followSystemSettings
     )
-    
+
     // Get font scale
     val fontScale = getFontScale(
         context = context,
         fontScaleLevel = config.fontScaleLevel,
         followSystem = config.followSystemSettings
     )
-    
+
     // Check accessibility settings
     val isHighContrast = config.enableHighContrast || isHighContrastEnabled(context)
     val isLargeText = isLargeTextEnabled(context)
-    
+
     val themeState = ThemeState(
         isDarkTheme = isDarkTheme,
         colorScheme = colorScheme,
@@ -134,7 +134,7 @@ fun DynamicThemeComponent(
         isHighContrast = isHighContrast,
         isLargeText = isLargeText
     )
-    
+
     MaterialTheme(
         colorScheme = colorScheme,
         typography = typography
@@ -146,7 +146,7 @@ fun DynamicThemeComponent(
 /**
  * Adaptive Color Scheme Component
  * Provides color scheme that adapts to system settings
- * 
+ *
  * @param seedColor Seed color for Material You
  * @param isDarkTheme Whether to use dark theme
  * @param enableDynamicColors Whether to enable dynamic colors
@@ -160,7 +160,7 @@ fun AdaptiveColorSchemeComponent(
     content: @Composable (ColorScheme) -> Unit
 ) {
     val context = LocalContext.current
-    
+
     val colorScheme = if (enableDynamicColors && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         if (isDarkTheme) {
             dynamicDarkColorScheme(context)
@@ -186,14 +186,14 @@ fun AdaptiveColorSchemeComponent(
             lightColorScheme()
         }
     }
-    
+
     content(colorScheme)
 }
 
 /**
  * Font Scale Aware Component
  * Adapts to system font scale settings
- * 
+ *
  * @param baseTextSize Base text size
  * @param maxScale Maximum scale factor
  * @param content Content with scaled text
@@ -208,14 +208,14 @@ fun FontScaleAwareComponent(
     val systemFontScale = context.resources.configuration.fontScale
     val clampedScale = systemFontScale.coerceAtMost(maxScale)
     val scaledTextSize = baseTextSize * clampedScale
-    
+
     content(scaledTextSize, clampedScale)
 }
 
 /**
  * High Contrast Aware Component
  * Adapts colors for high contrast accessibility
- * 
+ *
  * @param normalColors Normal color scheme
  * @param highContrastColors High contrast color scheme
  * @param content Content with appropriate colors
@@ -228,7 +228,7 @@ fun HighContrastAwareComponent(
 ) {
     val context = LocalContext.current
     val isHighContrast = isHighContrastEnabled(context)
-    
+
     val colorScheme = if (isHighContrast && highContrastColors != null) {
         highContrastColors
     } else if (isHighContrast) {
@@ -237,14 +237,14 @@ fun HighContrastAwareComponent(
     } else {
         normalColors
     }
-    
+
     content(colorScheme, isHighContrast)
 }
 
 /**
  * Theme Preference Component
  * Manages theme preferences with persistence
- * 
+ *
  * @param defaultConfig Default theme configuration
  * @param onConfigChanged Callback when configuration changes
  * @param content Content with theme controls
@@ -256,12 +256,12 @@ fun ThemePreferenceComponent(
     content: @Composable (DynamicThemeConfig, (DynamicThemeConfig) -> Unit) -> Unit
 ) {
     var config by remember { mutableStateOf(defaultConfig) }
-    
+
     val updateConfig = { newConfig: DynamicThemeConfig ->
         config = newConfig
         onConfigChanged(newConfig)
     }
-    
+
     content(config, updateConfig)
 }
 
@@ -317,7 +317,7 @@ private fun getScaledTypography(
     followSystem: Boolean
 ): Typography {
     val baseTypography = Typography()
-    
+
     val scale = if (followSystem) {
         context.resources.configuration.fontScale
     } else {
@@ -329,7 +329,7 @@ private fun getScaledTypography(
             FontScaleLevel.HUGE -> 1.5f
         }
     }
-    
+
     return Typography(
         displayLarge = baseTypography.displayLarge.copy(fontSize = baseTypography.displayLarge.fontSize * scale),
         displayMedium = baseTypography.displayMedium.copy(fontSize = baseTypography.displayMedium.fontSize * scale),
@@ -468,14 +468,14 @@ class DynamicThemeUtils {
                 lightColorScheme(primary = seedColor)
             }
         }
-        
+
         /**
          * Check if dynamic colors are supported
          */
         fun isDynamicColorSupported(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
         }
-        
+
         /**
          * Get system accent color
          */

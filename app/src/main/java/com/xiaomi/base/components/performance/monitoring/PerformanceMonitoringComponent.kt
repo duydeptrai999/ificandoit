@@ -165,14 +165,14 @@ fun PerformanceMonitoringComponent(
 ) {
     var selectedTab by remember { mutableStateOf(0) }
     val tabs = listOf("Overview", "Metrics", "Alerts", "Profiler", "Optimization", "Reports")
-    
+
     // Sample data
     val metrics by remember { mutableStateOf<List<PerformanceMetric>>(generateSampleMetrics()) }
     val alerts by remember { mutableStateOf<List<PerformanceAlert>>(generateSampleAlerts()) }
     val profilerSessions by remember { mutableStateOf<List<ProfilerSession>>(generateSampleProfilerSessions()) }
     val optimizations by remember { mutableStateOf<List<OptimizationSuggestion>>(generateSampleOptimizations()) }
     val reports by remember { mutableStateOf<List<PerformanceReport>>(generateSampleReports()) }
-    
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -180,7 +180,7 @@ fun PerformanceMonitoringComponent(
     ) {
         // Header
         PerformanceMonitoringHeader(config = config)
-        
+
         // Tab Row
         TabRow(
             selectedTabIndex = selectedTab,
@@ -194,7 +194,7 @@ fun PerformanceMonitoringComponent(
                 )
             }
         }
-        
+
         // Content
         when (selectedTab) {
             0 -> PerformanceOverviewTab(metrics = metrics, alerts = alerts)
@@ -225,15 +225,15 @@ fun PerformanceMonitoringHeader(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Text(
                 text = "Real-time application performance tracking",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Quick stats
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -299,7 +299,7 @@ fun PerformanceOverviewTab(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -309,7 +309,7 @@ fun PerformanceOverviewTab(
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     alerts.filter { !it.resolved }.take(3).forEach { alert ->
                         AlertRow(alert = alert)
                         Spacer(modifier = Modifier.height(4.dp))
@@ -317,7 +317,7 @@ fun PerformanceOverviewTab(
                 }
             }
         }
-        
+
         item {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -327,7 +327,7 @@ fun PerformanceOverviewTab(
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     metrics.take(5).forEach { metric ->
                         MetricRow(metric = metric)
                         Spacer(modifier = Modifier.height(4.dp))
@@ -437,9 +437,9 @@ fun MetricCard(metric: PerformanceMetric) {
                     color = getPerformanceLevelColor(metric.level)
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             LinearProgressIndicator(
                 progress = (metric.value / metric.threshold).coerceIn(0.0, 1.0).toFloat(),
                 modifier = Modifier.fillMaxWidth(),
@@ -480,23 +480,23 @@ fun AlertCard(
                         fontWeight = FontWeight.Bold
                     )
                 }
-                
+
                 Text(
                     text = formatTimestamp(alert.timestamp),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = alert.message,
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row {
                 Button(
                     onClick = { onAction("acknowledge") },
@@ -504,7 +504,7 @@ fun AlertCard(
                 ) {
                     Text("Acknowledge")
                 }
-                
+
                 OutlinedButton(
                     onClick = { onAction("resolve") }
                 ) {
@@ -524,9 +524,9 @@ fun ProfilerSessionCard(session: ProfilerSession) {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -541,9 +541,9 @@ fun ProfilerSessionCard(session: ProfilerSession) {
                     color = if (session.status == "Running") Color.Green else Color.Gray
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Text(
                 text = "Data Points: ${session.dataPoints}",
                 style = MaterialTheme.typography.bodySmall,
@@ -568,24 +568,24 @@ fun OptimizationCard(optimization: OptimizationSuggestion) {
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Spacer(modifier = Modifier.height(4.dp))
-                    
+
                     Text(
                         text = optimization.description,
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
-                
+
                 Text(
                     text = "Priority: ${optimization.priority}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row {
                 AssistChip(
                     onClick = { },
@@ -610,24 +610,24 @@ fun ReportCard(report: PerformanceReport) {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Text(
                 text = "Period: ${report.period}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = report.summary,
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Generated: ${formatTimestamp(report.generatedAt)}",
                 style = MaterialTheme.typography.bodySmall,
@@ -717,7 +717,7 @@ fun getAlertIcon(severity: AlertSeverity): androidx.compose.ui.graphics.vector.I
 
 fun calculateHealthScore(metrics: List<PerformanceMetric>): Double {
     if (metrics.isEmpty()) return 0.0
-    
+
     val scores = metrics.map { metric ->
         when (metric.level) {
             PerformanceLevel.EXCELLENT -> 100.0
@@ -727,14 +727,14 @@ fun calculateHealthScore(metrics: List<PerformanceMetric>): Double {
             PerformanceLevel.CRITICAL -> 20.0
         }
     }
-    
+
     return scores.average()
 }
 
 fun formatTimestamp(timestamp: Long): String {
     val now = System.currentTimeMillis()
     val diff = now - timestamp
-    
+
     return when {
         diff < 60000 -> "Just now"
         diff < 3600000 -> "${diff / 60000}m ago"

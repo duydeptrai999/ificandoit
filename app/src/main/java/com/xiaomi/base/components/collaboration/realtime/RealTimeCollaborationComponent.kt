@@ -153,7 +153,7 @@ fun RealTimeCollaborationComponent(
 ) {
     var selectedTab by remember { mutableStateOf(0) }
     val tabs = listOf("Session", "Users", "Activity", "Comments", "Conflicts")
-    
+
     // Sample data
     val currentSession by remember {
         mutableStateOf(
@@ -163,7 +163,7 @@ fun RealTimeCollaborationComponent(
     val events by remember { mutableStateOf(generateSampleEvents()) }
     val comments by remember { mutableStateOf(generateSampleComments()) }
     val conflicts by remember { mutableStateOf(generateSampleConflicts()) }
-    
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -174,7 +174,7 @@ fun RealTimeCollaborationComponent(
             session = currentSession,
             onSessionAction = { /* Handle session actions */ }
         )
-        
+
         // Tab Row
         TabRow(
             selectedTabIndex = selectedTab,
@@ -188,7 +188,7 @@ fun RealTimeCollaborationComponent(
                 )
             }
         }
-        
+
         // Content
         when (selectedTab) {
             0 -> CollaborationSessionComponent(
@@ -246,7 +246,7 @@ fun CollaborationHeader(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Row {
                     IconButton(
                         onClick = { onSessionAction("share") }
@@ -260,9 +260,9 @@ fun CollaborationHeader(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             // Participants preview
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -310,21 +310,21 @@ fun CollaborationSessionComponent(
         item {
             SessionInfoCard(session = session)
         }
-        
+
         item {
             RealTimeCursorTrackingComponent(
                 users = session.participants,
                 enabled = config.enableCursorTracking
             )
         }
-        
+
         item {
             VoiceChatComponent(
                 users = session.participants,
                 enabled = config.enableVoiceChat
             )
         }
-        
+
         item {
             ScreenShareComponent(
                 users = session.participants,
@@ -439,7 +439,7 @@ fun UserAvatarWithStatus(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         // Status indicator
         Box(
             modifier = Modifier
@@ -474,9 +474,9 @@ fun SessionInfoCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             InfoRow("Session ID", session.id)
             InfoRow("Owner", session.owner)
             InfoRow("Participants", "${session.participants.size}")
@@ -513,10 +513,10 @@ fun RealTimeCursorTrackingComponent(
                     onCheckedChange = { /* Handle toggle */ }
                 )
             }
-            
+
             if (enabled) {
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Cursor visualization area
                 Box(
                     modifier = Modifier
@@ -573,10 +573,10 @@ fun VoiceChatComponent(
                     onCheckedChange = { /* Handle toggle */ }
                 )
             }
-            
+
             if (enabled) {
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -616,10 +616,10 @@ fun ScreenShareComponent(
                     onCheckedChange = { /* Handle toggle */ }
                 )
             }
-            
+
             if (enabled) {
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -632,7 +632,7 @@ fun ScreenShareComponent(
                         Spacer(modifier = Modifier.width(8.dp))
                         Text("Share Screen")
                     }
-                    
+
                     Button(
                         onClick = { /* View shared screen */ },
                         modifier = Modifier.weight(1f)
@@ -663,9 +663,9 @@ fun UserCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             UserAvatarWithStatus(user = user)
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -687,7 +687,7 @@ fun UserCard(
                     )
                 }
             }
-            
+
             IconButton(
                 onClick = { onUserAction("menu") }
             ) {
@@ -717,9 +717,9 @@ fun ActivityEventCard(
                 contentDescription = null,
                 tint = getEventColor(event.type)
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -768,21 +768,21 @@ fun CommentCard(
                         )
                     }
                 }
-                
+
                 Text(
                     text = formatTimestamp(comment.timestamp),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = comment.content,
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             if (comment.replies.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -792,7 +792,7 @@ fun CommentCard(
                     modifier = Modifier.clickable { onCommentAction("view_replies") }
                 )
             }
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
@@ -824,9 +824,9 @@ fun ConflictCard(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (conflict.resolved) 
-                MaterialTheme.colorScheme.surfaceVariant 
-            else 
+            containerColor = if (conflict.resolved)
+                MaterialTheme.colorScheme.surfaceVariant
+            else
                 MaterialTheme.colorScheme.errorContainer
         )
     ) {
@@ -843,7 +843,7 @@ fun ConflictCard(
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 if (conflict.resolved) {
                     Icon(
                         Icons.Default.CheckCircle,
@@ -858,31 +858,31 @@ fun ConflictCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = conflict.description,
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Affected users: ${conflict.affectedUsers.joinToString(", ")}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Text(
                 text = "Strategy: ${conflict.resolutionStrategy.name}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             if (!conflict.resolved) {
                 Spacer(modifier = Modifier.height(12.dp))
-                
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -892,7 +892,7 @@ fun ConflictCard(
                     ) {
                         Text("Resolve")
                     }
-                    
+
                     OutlinedButton(
                         onClick = { onConflictAction("details") },
                         modifier = Modifier.weight(1f)
@@ -914,7 +914,7 @@ fun VoiceUserCard(
         targetValue = if (isSpeaking) 1.2f else 1f,
         animationSpec = tween(300)
     )
-    
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -939,9 +939,9 @@ fun VoiceUserCard(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         Text(
             text = user.name,
             style = MaterialTheme.typography.bodySmall,
@@ -989,12 +989,12 @@ fun DrawScope.drawCursor(
         lineTo(position.x, position.y + 12)
         close()
     }
-    
+
     drawPath(
         path = cursorPath,
         color = color
     )
-    
+
     // Draw user name label
     drawRect(
         color = color,

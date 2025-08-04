@@ -194,13 +194,13 @@ fun DataVisualizationComponent(
 ) {
     var selectedTab by remember { mutableStateOf(0) }
     val tabs = listOf("Charts", "Data", "Analytics", "Export", "Settings")
-    
+
     // Sample data
     val dataSeries by remember { mutableStateOf<List<DataSeries>>(generateSampleDataSeries()) }
     val chartConfigs by remember { mutableStateOf<List<ChartConfig>>(generateSampleChartConfigs()) }
     var tooltipData by remember { mutableStateOf<TooltipData?>(null) }
     var selectedChartType by remember { mutableStateOf(ChartType.LINE_CHART) }
-    
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -208,7 +208,7 @@ fun DataVisualizationComponent(
     ) {
         // Header
         DataVisualizationHeader(config = config)
-        
+
         // Tab Row
         TabRow(
             selectedTabIndex = selectedTab,
@@ -222,7 +222,7 @@ fun DataVisualizationComponent(
                 )
             }
         }
-        
+
         // Content
         when (selectedTab) {
             0 -> ChartsTab(
@@ -236,7 +236,7 @@ fun DataVisualizationComponent(
             3 -> ExportTab(dataSeries = dataSeries)
             4 -> SettingsTab(config = config)
         }
-        
+
         // Tooltip overlay
         tooltipData?.let { tooltip ->
             if (tooltip.visible) {
@@ -264,15 +264,15 @@ fun DataVisualizationHeader(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Text(
                 text = "Interactive charts and data analysis",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Quick stats
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -338,7 +338,7 @@ fun ChartsTab(
             selectedType = chartType,
             onTypeChange = onChartTypeChange
         )
-        
+
         // Main chart
         Card(
             modifier = Modifier
@@ -382,7 +382,7 @@ fun ChartsTab(
                 }
             }
         }
-        
+
         // Chart legend
         if (dataSeries.isNotEmpty()) {
             ChartLegendComponent(dataSeries = dataSeries)
@@ -419,7 +419,7 @@ fun AnalyticsTab(dataSeries: List<DataSeries>) {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         items(dataSeries) { series ->
             AnalyticsCard(series = series)
         }
@@ -439,7 +439,7 @@ fun ExportTab(dataSeries: List<DataSeries>) {
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
-        
+
         Card(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -453,14 +453,14 @@ fun ExportTab(dataSeries: List<DataSeries>) {
                 ) {
                     Text("Export as CSV")
                 }
-                
+
                 Button(
                     onClick = { /* Export as JSON */ },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("Export as JSON")
                 }
-                
+
                 Button(
                     onClick = { /* Export as PNG */ },
                     modifier = Modifier.fillMaxWidth()
@@ -487,7 +487,7 @@ fun SettingsTab(config: DataVisualizationConfig) {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             SettingsCard(
                 title = "Real-time Updates",
@@ -496,7 +496,7 @@ fun SettingsTab(config: DataVisualizationConfig) {
                 onToggle = { /* Handle toggle */ }
             )
         }
-        
+
         item {
             SettingsCard(
                 title = "Export",
@@ -505,7 +505,7 @@ fun SettingsTab(config: DataVisualizationConfig) {
                 onToggle = { /* Handle toggle */ }
             )
         }
-        
+
         item {
             SettingsCard(
                 title = "Filtering",
@@ -549,15 +549,15 @@ fun LineChart(
 ) {
     Canvas(modifier = modifier) {
         if (dataSeries.isEmpty()) return@Canvas
-        
+
         val chartArea = androidx.compose.ui.geometry.Rect(
             offset = Offset(40f, 20f),
             size = Size(size.width - 80f, size.height - 60f)
         )
-        
+
         // Draw grid
         drawGrid(chartArea)
-        
+
         // Draw data series
         dataSeries.forEach { series ->
             if (series.visible && series.data.isNotEmpty()) {
@@ -575,15 +575,15 @@ fun BarChart(
 ) {
     Canvas(modifier = modifier) {
         if (dataSeries.isEmpty()) return@Canvas
-        
+
         val chartArea = androidx.compose.ui.geometry.Rect(
             offset = Offset(40f, 20f),
             size = Size(size.width - 80f, size.height - 60f)
         )
-        
+
         // Draw grid
         drawGrid(chartArea)
-        
+
         // Draw bars
         dataSeries.forEach { series ->
             if (series.visible && series.data.isNotEmpty()) {
@@ -601,18 +601,18 @@ fun PieChart(
 ) {
     Canvas(modifier = modifier) {
         if (dataSeries.isEmpty()) return@Canvas
-        
+
         val center = Offset(size.width / 2, size.height / 2)
         val radius = minOf(size.width, size.height) / 3
-        
+
         // Calculate total for percentages
         val total = dataSeries.flatMap { it.data }.sumOf { it.value }
-        
+
         var startAngle = 0f
         dataSeries.forEach { series ->
             val seriesTotal = series.data.sumOf { it.value }
             val sweepAngle = (seriesTotal / total * 360).toFloat()
-            
+
             drawArc(
                 color = series.color,
                 startAngle = startAngle,
@@ -621,7 +621,7 @@ fun PieChart(
                 topLeft = Offset(center.x - radius, center.y - radius),
                 size = Size(radius * 2, radius * 2)
             )
-            
+
             startAngle += sweepAngle
         }
     }
@@ -635,15 +635,15 @@ fun AreaChart(
 ) {
     Canvas(modifier = modifier) {
         if (dataSeries.isEmpty()) return@Canvas
-        
+
         val chartArea = androidx.compose.ui.geometry.Rect(
             offset = Offset(40f, 20f),
             size = Size(size.width - 80f, size.height - 60f)
         )
-        
+
         // Draw grid
         drawGrid(chartArea)
-        
+
         // Draw area series
         dataSeries.forEach { series ->
             if (series.visible && series.data.isNotEmpty()) {
@@ -666,9 +666,9 @@ fun ChartLegendComponent(dataSeries: List<DataSeries>) {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
@@ -745,21 +745,21 @@ fun DataSeriesCard(series: DataSeries) {
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Box(
                     modifier = Modifier
                         .size(16.dp)
                         .background(color = series.color, shape = CircleShape)
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Data Points: ${series.data.size}",
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Text(
                 text = "Visible: ${if (series.visible) "Yes" else "No"}",
                 style = MaterialTheme.typography.bodySmall,
@@ -782,15 +782,15 @@ fun AnalyticsCard(series: DataSeries) {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             if (series.data.isNotEmpty()) {
                 val values = series.data.map { it.value }
                 val min = values.minOrNull() ?: 0.0
                 val max = values.maxOrNull() ?: 0.0
                 val avg = values.average()
-                
+
                 Text(
                     text = "Min: ${String.format("%.2f", min)}",
                     style = MaterialTheme.typography.bodyMedium
@@ -839,7 +839,7 @@ fun SettingsCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Switch(
                 checked = enabled,
                 onCheckedChange = onToggle
@@ -852,7 +852,7 @@ fun SettingsCard(
 fun DrawScope.drawGrid(chartArea: androidx.compose.ui.geometry.Rect) {
     val gridColor = Color.Gray.copy(alpha = 0.3f)
     val gridLines = 5
-    
+
     // Vertical grid lines
     for (i in 0..gridLines) {
         val x = chartArea.left + (i * chartArea.width / gridLines)
@@ -863,7 +863,7 @@ fun DrawScope.drawGrid(chartArea: androidx.compose.ui.geometry.Rect) {
             strokeWidth = 1.dp.toPx()
         )
     }
-    
+
     // Horizontal grid lines
     for (i in 0..gridLines) {
         val y = chartArea.top + (i * chartArea.height / gridLines)
@@ -878,12 +878,12 @@ fun DrawScope.drawGrid(chartArea: androidx.compose.ui.geometry.Rect) {
 
 fun DrawScope.drawLineSeries(series: DataSeries, chartArea: androidx.compose.ui.geometry.Rect) {
     if (series.data.size < 2) return
-    
+
     val path = Path()
     val maxY = series.data.maxOf { it.y }
     val minY = series.data.minOf { it.y }
     val rangeY = maxY - minY
-    
+
     series.data.forEachIndexed { index, point ->
         val x = chartArea.left + (index.toFloat() / (series.data.size - 1)) * chartArea.width
         val y = if (rangeY > 0) {
@@ -891,14 +891,14 @@ fun DrawScope.drawLineSeries(series: DataSeries, chartArea: androidx.compose.ui.
         } else {
             chartArea.bottom - chartArea.height / 2
         }
-        
+
         if (index == 0) {
             path.moveTo(x, y)
         } else {
             path.lineTo(x, y)
         }
     }
-    
+
     drawPath(
         path = path,
         color = series.color,
@@ -908,15 +908,15 @@ fun DrawScope.drawLineSeries(series: DataSeries, chartArea: androidx.compose.ui.
 
 fun DrawScope.drawBarSeries(series: DataSeries, chartArea: androidx.compose.ui.geometry.Rect) {
     if (series.data.isEmpty()) return
-    
+
     val maxY = series.data.maxOf { it.y }
     val barWidth = chartArea.width / series.data.size * 0.8f
-    
+
     series.data.forEachIndexed { index, point ->
         val x = chartArea.left + (index + 0.1f) * (chartArea.width / series.data.size)
         val barHeight = (point.y / maxY) * chartArea.height
         val y = chartArea.bottom - barHeight
-        
+
         drawRect(
             color = series.color,
             topLeft = Offset(x, y),
@@ -927,15 +927,15 @@ fun DrawScope.drawBarSeries(series: DataSeries, chartArea: androidx.compose.ui.g
 
 fun DrawScope.drawAreaSeries(series: DataSeries, chartArea: androidx.compose.ui.geometry.Rect) {
     if (series.data.size < 2) return
-    
+
     val path = Path()
     val maxY = series.data.maxOf { it.y }
     val minY = series.data.minOf { it.y }
     val rangeY = maxY - minY
-    
+
     // Start from bottom left
     path.moveTo(chartArea.left, chartArea.bottom)
-    
+
     // Draw the top line
     series.data.forEachIndexed { index, point ->
         val x = chartArea.left + (index.toFloat() / (series.data.size - 1)) * chartArea.width
@@ -944,19 +944,19 @@ fun DrawScope.drawAreaSeries(series: DataSeries, chartArea: androidx.compose.ui.
         } else {
             chartArea.bottom - chartArea.height / 2
         }
-        
+
         path.lineTo(x, y)
     }
-    
+
     // Close the path at bottom right
     path.lineTo(chartArea.right, chartArea.bottom)
     path.close()
-    
+
     drawPath(
         path = path,
         color = series.color.copy(alpha = 0.3f)
     )
-    
+
     // Draw the line on top
     drawLineSeries(series, chartArea)
 }

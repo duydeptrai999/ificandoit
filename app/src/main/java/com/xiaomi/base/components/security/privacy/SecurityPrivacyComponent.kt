@@ -225,14 +225,14 @@ fun SecurityPrivacyComponent(
 ) {
     var selectedTab by remember { mutableStateOf(0) }
     val tabs = listOf("Overview", "Threats", "Privacy", "Permissions", "Encryption", "Compliance", "Audit")
-    
+
     // Sample data
     val threats by remember { mutableStateOf<List<SecurityThreat>>(generateSampleThreats()) }
     val permissions by remember { mutableStateOf<List<PermissionRequest>>(generateSamplePermissions()) }
     val encryptionConfigs by remember { mutableStateOf<List<EncryptionConfig>>(generateSampleEncryption()) }
     val complianceChecks by remember { mutableStateOf<List<ComplianceCheck>>(generateSampleCompliance()) }
     val auditEntries by remember { mutableStateOf<List<DataAuditEntry>>(generateSampleAudit()) }
-    
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -240,7 +240,7 @@ fun SecurityPrivacyComponent(
     ) {
         // Header
         SecurityPrivacyHeader(config = config)
-        
+
         // Tab Row
         TabRow(
             selectedTabIndex = selectedTab,
@@ -254,7 +254,7 @@ fun SecurityPrivacyComponent(
                 )
             }
         }
-        
+
         // Content
         when (selectedTab) {
             0 -> SecurityOverviewTab(threats = threats, permissions = permissions)
@@ -286,15 +286,15 @@ fun SecurityPrivacyHeader(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Text(
                 text = "Comprehensive security monitoring and privacy protection",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Quick stats
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -360,7 +360,7 @@ fun SecurityOverviewTab(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -370,7 +370,7 @@ fun SecurityOverviewTab(
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     threats.filter { !it.resolved }.take(3).forEach { threat ->
                         ThreatRow(threat = threat)
                         Spacer(modifier = Modifier.height(4.dp))
@@ -378,7 +378,7 @@ fun SecurityOverviewTab(
                 }
             }
         }
-        
+
         item {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -388,7 +388,7 @@ fun SecurityOverviewTab(
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     permissions.filter { !it.granted }.take(3).forEach { permission ->
                         PermissionRow(permission = permission)
                         Spacer(modifier = Modifier.height(4.dp))
@@ -428,7 +428,7 @@ fun PrivacyTab(permissions: List<PermissionRequest>) {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -438,7 +438,7 @@ fun PrivacyTab(permissions: List<PermissionRequest>) {
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     Text(
                         text = "We collect only essential data needed for app functionality.",
                         style = MaterialTheme.typography.bodyMedium
@@ -446,7 +446,7 @@ fun PrivacyTab(permissions: List<PermissionRequest>) {
                 }
             }
         }
-        
+
         item {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -456,7 +456,7 @@ fun PrivacyTab(permissions: List<PermissionRequest>) {
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     Text(
                         text = "Your data is never shared with third parties without consent.",
                         style = MaterialTheme.typography.bodyMedium
@@ -549,7 +549,7 @@ fun ThreatCard(threat: SecurityThreat) {
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 AssistChip(
                     onClick = { },
                     label = { Text(threat.level.name) },
@@ -558,16 +558,16 @@ fun ThreatCard(threat: SecurityThreat) {
                     )
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = threat.description,
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Category: ${threat.category}",
                 style = MaterialTheme.typography.bodySmall,
@@ -601,7 +601,7 @@ fun PermissionCard(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 if (!permission.granted) {
                     Row {
                         Button(
@@ -610,7 +610,7 @@ fun PermissionCard(
                         ) {
                             Text("Grant")
                         }
-                        
+
                         OutlinedButton(
                             onClick = { onAction("deny") }
                         ) {
@@ -619,9 +619,9 @@ fun PermissionCard(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Purpose: ${permission.purpose}",
                 style = MaterialTheme.typography.bodyMedium
@@ -644,20 +644,20 @@ fun EncryptionCard(config: EncryptionConfig) {
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Switch(
                     checked = config.enabled,
                     onCheckedChange = { }
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Type: ${config.type.name}",
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Text(
                 text = "Key Size: ${config.keySize} bits",
                 style = MaterialTheme.typography.bodySmall,
@@ -681,7 +681,7 @@ fun ComplianceCard(check: ComplianceCheck) {
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Text(
                     text = "${(check.score * 100).toInt()}%",
                     style = MaterialTheme.typography.titleMedium,
@@ -689,16 +689,16 @@ fun ComplianceCard(check: ComplianceCheck) {
                     color = getComplianceColor(check.score)
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = check.requirement,
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             LinearProgressIndicator(
                 progress = check.score.toFloat(),
                 modifier = Modifier.fillMaxWidth(),
@@ -722,21 +722,21 @@ fun AuditEntryCard(entry: DataAuditEntry) {
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Text(
                     text = formatTimestamp(entry.timestamp),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Data Type: ${entry.dataType.name.replace("_", " ")}",
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Text(
                 text = "User: ${entry.userId}",
                 style = MaterialTheme.typography.bodySmall,
@@ -848,7 +848,7 @@ fun getComplianceColor(score: Double): Color {
 fun calculateSecurityScore(threats: List<SecurityThreat>): Int {
     val unresolvedThreats = threats.count { !it.resolved }
     val totalThreats = threats.size
-    
+
     return if (totalThreats > 0) {
         ((totalThreats - unresolvedThreats).toDouble() / totalThreats * 100).toInt()
     } else {
@@ -859,7 +859,7 @@ fun calculateSecurityScore(threats: List<SecurityThreat>): Int {
 fun formatTimestamp(timestamp: Long): String {
     val now = System.currentTimeMillis()
     val diff = now - timestamp
-    
+
     return when {
         diff < 60000 -> "Just now"
         diff < 3600000 -> "${diff / 60000}m ago"

@@ -28,7 +28,7 @@ import java.util.Date
 @Composable
 fun ComponentPlayground() {
     var selectedComponent by remember { mutableStateOf(PlaygroundComponent.UNIVERSAL_CARD) }
-    
+
     BasePreviewScreen(
         title = "Component Playground",
         subtitle = "Interactive testing ground for universal components"
@@ -41,9 +41,9 @@ fun ComponentPlayground() {
                 selectedComponent = selectedComponent,
                 onComponentSelected = { selectedComponent = it }
             )
-            
+
             Divider(modifier = Modifier.padding(vertical = 8.dp))
-            
+
             // Component playground
             when (selectedComponent) {
                 PlaygroundComponent.UNIVERSAL_CARD -> UniversalCardPlayground()
@@ -90,7 +90,7 @@ private fun UniversalCardPlayground() {
     var isFavorite by remember { mutableStateOf(false) }
     var score by remember { mutableStateOf(4.5f) }
     var status by remember { mutableStateOf(ItemStatus.ACTIVE) }
-    
+
     val sampleItem = Item(
         id = 1,
         title = "Playground Test Item",
@@ -102,7 +102,7 @@ private fun UniversalCardPlayground() {
         createdDate = Date(),
         metadata = mapOf("source" to "playground")
     )
-    
+
     PlaygroundLayout(
         title = "Universal Card",
         component = {
@@ -127,9 +127,9 @@ private fun UniversalCardPlayground() {
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Score Control
                 Text("Score: ${score}", style = MaterialTheme.typography.titleSmall)
                 Slider(
@@ -138,9 +138,9 @@ private fun UniversalCardPlayground() {
                     valueRange = 0f..10f,
                     steps = 19
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Status Control
                 Text("Status", style = MaterialTheme.typography.titleSmall)
                 LazyRow(
@@ -154,9 +154,9 @@ private fun UniversalCardPlayground() {
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Favorite Toggle
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -179,7 +179,7 @@ private fun MetricCardPlayground() {
     var value by remember { mutableStateOf("1,234") }
     var unit by remember { mutableStateOf("units") }
     var trend by remember { mutableStateOf<TrendDirection?>(TrendDirection.UP) }
-    
+
     PlaygroundLayout(
         title = "Metric Card",
         component = {
@@ -198,27 +198,27 @@ private fun MetricCardPlayground() {
                     value = title,
                     onValueChange = { title = it }
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 UniversalFormInput(
                     inputType = InputType.TEXT,
                     label = "Value",
                     value = value,
                     onValueChange = { value = it }
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 UniversalFormInput(
                     inputType = InputType.TEXT,
                     label = "Unit (optional)",
                     value = unit,
                     onValueChange = { unit = it }
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Text("Trend", style = MaterialTheme.typography.titleSmall)
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -251,7 +251,7 @@ private fun FormInputPlayground() {
     var placeholder by remember { mutableStateOf("Enter text here...") }
     var isRequired by remember { mutableStateOf(false) }
     var enabled by remember { mutableStateOf(true) }
-    
+
     PlaygroundLayout(
         title = "Form Input",
         component = {
@@ -274,18 +274,18 @@ private fun FormInputPlayground() {
                     value = label,
                     onValueChange = { label = it }
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 UniversalFormInput(
                     inputType = InputType.TEXT,
                     label = "Placeholder",
                     value = placeholder,
                     onValueChange = { placeholder = it }
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Text("Input Type", style = MaterialTheme.typography.titleSmall)
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -298,9 +298,9 @@ private fun FormInputPlayground() {
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -311,9 +311,9 @@ private fun FormInputPlayground() {
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("Required")
                 }
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -336,7 +336,7 @@ private fun ProgressCardPlayground() {
     var targetValue by remember { mutableStateOf(100f) }
     var unit by remember { mutableStateOf("points") }
     var showPercentage by remember { mutableStateOf(true) }
-    
+
     PlaygroundLayout(
         title = "Progress Card",
         component = {
@@ -357,36 +357,36 @@ private fun ProgressCardPlayground() {
                     value = title,
                     onValueChange = { title = it }
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 UniversalFormInput(
                     inputType = InputType.TEXT,
                     label = "Unit",
                     value = unit,
                     onValueChange = { unit = it }
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Text("Current Value: ${currentValue.toInt()}", style = MaterialTheme.typography.titleSmall)
                 Slider(
                     value = currentValue,
                     onValueChange = { currentValue = it },
                     valueRange = 0f..200f
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Text("Target Value: ${targetValue.toInt()}", style = MaterialTheme.typography.titleSmall)
                 Slider(
                     value = targetValue,
                     onValueChange = { targetValue = it },
                     valueRange = 50f..200f
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -406,7 +406,7 @@ private fun ProgressCardPlayground() {
 private fun MediaViewerPlayground() {
     var mediaType by remember { mutableStateOf(MediaType.IMAGE) }
     var hasEditButton by remember { mutableStateOf(true) }
-    
+
     PlaygroundLayout(
         title = "Media Viewer",
         component = {
@@ -430,9 +430,9 @@ private fun MediaViewerPlayground() {
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -454,7 +454,7 @@ private fun RatingInputPlayground() {
     var maxRating by remember { mutableStateOf(5) }
     var showRatingText by remember { mutableStateOf(true) }
     var label by remember { mutableStateOf("Rate this item") }
-    
+
     PlaygroundLayout(
         title = "Rating Input",
         component = {
@@ -474,22 +474,22 @@ private fun RatingInputPlayground() {
                     value = label,
                     onValueChange = { label = it }
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Text("Max Rating: $maxRating", style = MaterialTheme.typography.titleSmall)
                 Slider(
                     value = maxRating.toFloat(),
-                    onValueChange = { 
+                    onValueChange = {
                         maxRating = it.toInt()
                         rating = rating.coerceAtMost(maxRating.toFloat())
                     },
                     valueRange = 3f..10f,
                     steps = 6
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -521,9 +521,9 @@ private fun PlaygroundLayout(
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.primary
         )
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         // Component Preview
         Card(
             modifier = Modifier.fillMaxWidth(),
@@ -537,15 +537,15 @@ private fun PlaygroundLayout(
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 component()
             }
         }
-        
+
         Spacer(modifier = Modifier.height(16.dp))
-        
+
         // Controls
         controls()
     }
@@ -569,9 +569,9 @@ private fun PlaygroundControls(
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             content()
         }
     }
@@ -599,4 +599,4 @@ fun ComponentPlaygroundPreview() {
     MaterialTheme {
         ComponentPlayground()
     }
-} 
+}

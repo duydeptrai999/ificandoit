@@ -51,7 +51,7 @@ fun registerLifestylePreviews() {
             content = { WeatherDashboardPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "fitness_tracker",
@@ -65,7 +65,7 @@ fun registerLifestylePreviews() {
             content = { FitnessTrackerPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "nutrition_planner",
@@ -79,7 +79,7 @@ fun registerLifestylePreviews() {
             content = { NutritionPlannerPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "travel_companion",
@@ -93,7 +93,7 @@ fun registerLifestylePreviews() {
             content = { TravelCompanionPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "home_automation",
@@ -119,7 +119,7 @@ fun WeatherDashboardPreview() {
         ) {
             var selectedLocation by remember { mutableStateOf("Ho Chi Minh City") }
             var temperatureUnit by remember { mutableStateOf(TemperatureUnit.CELSIUS) }
-            
+
             val currentWeather = remember {
                 WeatherData(
                     location = "Ho Chi Minh City",
@@ -131,7 +131,7 @@ fun WeatherDashboardPreview() {
                     visibility = 10
                 )
             }
-            
+
             val forecast = remember {
                 listOf(
                     DailyForecast("Today", WeatherCondition.SUNNY, 32, 26),
@@ -141,7 +141,7 @@ fun WeatherDashboardPreview() {
                     DailyForecast("Friday", WeatherCondition.CLOUDY, 29, 23)
                 )
             }
-            
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
@@ -174,7 +174,7 @@ fun WeatherDashboardPreview() {
                                         color = Color.White.copy(alpha = 0.9f)
                                     )
                                 }
-                                
+
                                 IconButton(
                                     onClick = {
                                         temperatureUnit = if (temperatureUnit == TemperatureUnit.CELSIUS) {
@@ -191,9 +191,9 @@ fun WeatherDashboardPreview() {
                                     )
                                 }
                             }
-                            
+
                             Spacer(modifier = Modifier.height(16.dp))
-                            
+
                             Row(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
@@ -203,9 +203,9 @@ fun WeatherDashboardPreview() {
                                     modifier = Modifier.size(64.dp),
                                     tint = Color.White
                                 )
-                                
+
                                 Spacer(modifier = Modifier.width(16.dp))
-                                
+
                                 Text(
                                     text = "${currentWeather.temperature}°${temperatureUnit.symbol}",
                                     style = MaterialTheme.typography.displayLarge,
@@ -213,9 +213,9 @@ fun WeatherDashboardPreview() {
                                     color = Color.White
                                 )
                             }
-                            
+
                             Spacer(modifier = Modifier.height(20.dp))
-                            
+
                             // Weather details
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
@@ -226,19 +226,19 @@ fun WeatherDashboardPreview() {
                                     label = "Humidity",
                                     value = "${currentWeather.humidity}%"
                                 )
-                                
+
                                 WeatherDetailItem(
                                     icon = Icons.Default.Air,
                                     label = "Wind",
                                     value = "${currentWeather.windSpeed} km/h"
                                 )
-                                
+
                                 WeatherDetailItem(
                                     icon = Icons.Default.WbSunny,
                                     label = "UV Index",
                                     value = currentWeather.uvIndex.toString()
                                 )
-                                
+
                                 WeatherDetailItem(
                                     icon = Icons.Default.Visibility,
                                     label = "Visibility",
@@ -248,7 +248,7 @@ fun WeatherDashboardPreview() {
                         }
                     }
                 }
-                
+
                 item {
                     // Hourly forecast
                     Card(
@@ -262,9 +262,9 @@ fun WeatherDashboardPreview() {
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold
                             )
-                            
+
                             Spacer(modifier = Modifier.height(12.dp))
-                            
+
                             LazyRow(
                                 horizontalArrangement = Arrangement.spacedBy(16.dp)
                             ) {
@@ -279,7 +279,7 @@ fun WeatherDashboardPreview() {
                         }
                     }
                 }
-                
+
                 item {
                     // 5-day forecast
                     Card(
@@ -293,9 +293,9 @@ fun WeatherDashboardPreview() {
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold
                             )
-                            
+
                             Spacer(modifier = Modifier.height(12.dp))
-                            
+
                             forecast.forEach { day ->
                                 DailyForecastItem(day)
                                 if (day != forecast.last()) {
@@ -308,7 +308,7 @@ fun WeatherDashboardPreview() {
                         }
                     }
                 }
-                
+
                 item {
                     // Weather map
                     Card(
@@ -327,7 +327,7 @@ fun WeatherDashboardPreview() {
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.SemiBold
                                 )
-                                
+
                                 Row(
                                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                                 ) {
@@ -336,7 +336,7 @@ fun WeatherDashboardPreview() {
                                         label = { Text("Rain") },
                                         selected = true
                                     )
-                                    
+
                                     FilterChip(
                                         onClick = { },
                                         label = { Text("Clouds") },
@@ -344,9 +344,9 @@ fun WeatherDashboardPreview() {
                                     )
                                 }
                             }
-                            
+
                             Spacer(modifier = Modifier.height(12.dp))
-                            
+
                             // Simulated weather map
                             Box(
                                 modifier = Modifier
@@ -364,34 +364,34 @@ fun WeatherDashboardPreview() {
                                     // Draw simulated weather patterns
                                     val centerX = size.width / 2
                                     val centerY = size.height / 2
-                                    
+
                                     // Rain clouds
                                     drawCircle(
                                         color = Color.White.copy(alpha = 0.3f),
                                         radius = 40.dp.toPx(),
                                         center = Offset(centerX - 60.dp.toPx(), centerY - 30.dp.toPx())
                                     )
-                                    
+
                                     drawCircle(
                                         color = Color.White.copy(alpha = 0.4f),
                                         radius = 50.dp.toPx(),
                                         center = Offset(centerX + 40.dp.toPx(), centerY + 20.dp.toPx())
                                     )
-                                    
+
                                     // Location marker
                                     drawCircle(
                                         color = Color.Red,
                                         radius = 8.dp.toPx(),
                                         center = Offset(centerX, centerY)
                                     )
-                                    
+
                                     drawCircle(
                                         color = Color.White,
                                         radius = 4.dp.toPx(),
                                         center = Offset(centerX, centerY)
                                     )
                                 }
-                                
+
                                 Text(
                                     text = "Interactive Weather Map",
                                     color = Color.White,
@@ -418,7 +418,7 @@ fun FitnessTrackerPreview() {
         ) {
             var selectedTab by remember { mutableStateOf(FitnessTab.OVERVIEW) }
             var selectedWorkout by remember { mutableStateOf(WorkoutType.RUNNING) }
-            
+
             val fitnessData = remember {
                 FitnessData(
                     dailySteps = 8547,
@@ -428,7 +428,7 @@ fun FitnessTrackerPreview() {
                     weeklyGoalProgress = 0.75f
                 )
             }
-            
+
             val workouts = remember {
                 listOf(
                     WorkoutSession("Morning Run", WorkoutType.RUNNING, 35, 280),
@@ -437,7 +437,7 @@ fun FitnessTrackerPreview() {
                     WorkoutSession("Cycling", WorkoutType.CYCLING, 40, 320)
                 )
             }
-            
+
             InteractiveDemo(
                 title = "Smart Home Control",
                 description = "Control your smart home devices and automation",
@@ -491,7 +491,7 @@ fun NutritionPlannerPreview() {
         ) {
             var selectedMealType by remember { mutableStateOf(MealType.BREAKFAST) }
             var calorieGoal by remember { mutableStateOf(2000) }
-            
+
             val nutritionData = remember {
                 NutritionData(
                     caloriesConsumed = 1450,
@@ -503,7 +503,7 @@ fun NutritionPlannerPreview() {
                     sugar = 45
                 )
             }
-            
+
             val mealPlan = remember {
                 mapOf(
                     MealType.BREAKFAST to listOf(
@@ -524,7 +524,7 @@ fun NutritionPlannerPreview() {
                     )
                 )
             }
-            
+
             InteractiveDemo(
                 title = "Nutrition Tracker",
                 description = "Track your daily nutrition and meal planning",
@@ -536,7 +536,7 @@ fun NutritionPlannerPreview() {
                             text = "Daily Calorie Goal: $calorieGoal",
                             style = MaterialTheme.typography.labelMedium
                         )
-                        
+
                         Slider(
                             value = calorieGoal.toFloat(),
                             onValueChange = { calorieGoal = it.toInt() },
@@ -553,7 +553,7 @@ fun NutritionPlannerPreview() {
                         // Nutrition overview
                         NutritionOverviewCard(nutritionData)
                     }
-                    
+
                     item {
                         // Meal type selector
                         LazyRow(
@@ -575,7 +575,7 @@ fun NutritionPlannerPreview() {
                             }
                         }
                     }
-                    
+
                     item {
                         // Meal plan for selected type
                         Card(
@@ -594,7 +594,7 @@ fun NutritionPlannerPreview() {
                                         style = MaterialTheme.typography.titleMedium,
                                         fontWeight = FontWeight.SemiBold
                                     )
-                                    
+
                                     IconButton(
                                         onClick = { }
                                     ) {
@@ -604,9 +604,9 @@ fun NutritionPlannerPreview() {
                                         )
                                     }
                                 }
-                                
+
                                 Spacer(modifier = Modifier.height(12.dp))
-                                
+
                                 mealPlan[selectedMealType]?.forEach { food ->
                                     FoodItemCard(food)
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -614,7 +614,7 @@ fun NutritionPlannerPreview() {
                             }
                         }
                     }
-                    
+
                     item {
                         // Nutrition goals
                         Card(
@@ -632,16 +632,16 @@ fun NutritionPlannerPreview() {
                                     fontWeight = FontWeight.SemiBold,
                                     color = MaterialTheme.colorScheme.onPrimaryContainer
                                 )
-                                
+
                                 Spacer(modifier = Modifier.height(12.dp))
-                                
+
                                 val goals = listOf(
                                     "Protein: ${nutritionData.protein}g / 120g",
                                     "Carbs: ${nutritionData.carbs}g / 250g",
                                     "Fat: ${nutritionData.fat}g / 80g",
                                     "Fiber: ${nutritionData.fiber}g / 30g"
                                 )
-                                
+
                                 goals.forEach { goal ->
                                     Text(
                                         text = "• $goal",
@@ -667,7 +667,7 @@ fun TravelCompanionPreview() {
             description = "Plan and manage your travels"
         ) {
             var selectedTrip by remember { mutableStateOf(0) }
-            
+
             val trips = remember {
                 listOf(
                     TravelTrip(
@@ -690,7 +690,7 @@ fun TravelCompanionPreview() {
                     )
                 )
             }
-            
+
             val itinerary = remember {
                 listOf(
                     ItineraryItem("Flight to Tokyo", "6:00 AM", ItineraryType.FLIGHT),
@@ -699,7 +699,7 @@ fun TravelCompanionPreview() {
                     ItineraryItem("Dinner at Shibuya", "7:00 PM", ItineraryType.DINING)
                 )
             }
-            
+
             InteractiveDemo(
                 title = "Travel Companion",
                 description = "Plan and manage your travel itinerary",
@@ -718,7 +718,7 @@ fun TravelCompanionPreview() {
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("New Trip")
                         }
-                        
+
                         OutlinedButton(
                             onClick = { }
                         ) {
@@ -750,11 +750,11 @@ fun TravelCompanionPreview() {
                             }
                         }
                     }
-                    
+
                     item {
                         // Trip details
                         val currentTrip = trips[selectedTrip]
-                        
+
                         Card(
                             modifier = Modifier.fillMaxWidth()
                         ) {
@@ -778,7 +778,7 @@ fun TravelCompanionPreview() {
                                             color = MaterialTheme.colorScheme.onSurfaceVariant
                                         )
                                     }
-                                    
+
                                     Surface(
                                         shape = RoundedCornerShape(16.dp),
                                         color = currentTrip.status.color.copy(alpha = 0.2f)
@@ -791,9 +791,9 @@ fun TravelCompanionPreview() {
                                         )
                                     }
                                 }
-                                
+
                                 Spacer(modifier = Modifier.height(16.dp))
-                                
+
                                 // Quick actions
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -804,19 +804,19 @@ fun TravelCompanionPreview() {
                                         label = "Flights",
                                         onClick = { }
                                     )
-                                    
+
                                     TravelActionButton(
                                         icon = Icons.Default.Hotel,
                                         label = "Hotels",
                                         onClick = { }
                                     )
-                                    
+
                                     TravelActionButton(
                                         icon = Icons.Default.Map,
                                         label = "Explore",
                                         onClick = { }
                                     )
-                                    
+
                                     TravelActionButton(
                                         icon = Icons.Default.Restaurant,
                                         label = "Dining",
@@ -826,7 +826,7 @@ fun TravelCompanionPreview() {
                             }
                         }
                     }
-                    
+
                     item {
                         // Itinerary
                         Card(
@@ -840,9 +840,9 @@ fun TravelCompanionPreview() {
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.SemiBold
                                 )
-                                
+
                                 Spacer(modifier = Modifier.height(12.dp))
-                                
+
                                 itinerary.forEach { item ->
                                     ItineraryItemCard(item)
                                     if (item != itinerary.last()) {
@@ -852,7 +852,7 @@ fun TravelCompanionPreview() {
                             }
                         }
                     }
-                    
+
                     item {
                         // Travel tips
                         Card(
@@ -880,16 +880,16 @@ fun TravelCompanionPreview() {
                                         color = MaterialTheme.colorScheme.onTertiaryContainer
                                     )
                                 }
-                                
+
                                 Spacer(modifier = Modifier.height(8.dp))
-                                
+
                                 val tips = listOf(
                                     "Download offline maps before traveling",
                                     "Keep digital copies of important documents",
                                     "Learn basic phrases in the local language",
                                     "Check visa requirements and validity"
                                 )
-                                
+
                                 tips.forEach { tip ->
                                     Text(
                                         text = "• $tip",
@@ -916,9 +916,9 @@ fun HomeAutomationPreview() {
             icon = Icons.Default.Home
         ) {
             var selectedRoom by remember { mutableStateOf("Living Room") }
-            
+
             val rooms = listOf("Living Room", "Bedroom", "Kitchen", "Bathroom")
-            
+
             val devices = remember {
                 mapOf(
                     "Living Room" to listOf(
@@ -943,7 +943,7 @@ fun HomeAutomationPreview() {
                     )
                 )
             }
-            
+
             val energyData = remember {
                 EnergyData(
                     currentUsage = 2.4f,
@@ -952,7 +952,7 @@ fun HomeAutomationPreview() {
                     monthlyUsed = 89.2f
                 )
             }
-            
+
             InteractiveDemo(
                 title = "Smart Home Control",
                 description = "Control your smart home devices and automation",
@@ -990,9 +990,9 @@ fun HomeAutomationPreview() {
                                     fontWeight = FontWeight.SemiBold,
                                     color = MaterialTheme.colorScheme.onPrimaryContainer
                                 )
-                                
+
                                 Spacer(modifier = Modifier.height(12.dp))
-                                
+
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceEvenly
@@ -1002,13 +1002,13 @@ fun HomeAutomationPreview() {
                                         value = "${energyData.currentUsage} kW",
                                         color = MaterialTheme.colorScheme.onPrimaryContainer
                                     )
-                                    
+
                                     EnergyMetric(
                                         label = "Today",
                                         value = "${energyData.dailyUsage} kWh",
                                         color = MaterialTheme.colorScheme.onPrimaryContainer
                                     )
-                                    
+
                                     EnergyMetric(
                                         label = "Monthly",
                                         value = "${energyData.monthlyUsed}/${energyData.monthlyBudget} kWh",
@@ -1018,7 +1018,7 @@ fun HomeAutomationPreview() {
                             }
                         }
                     }
-                    
+
                     item {
                         // Room devices
                         Card(
@@ -1032,9 +1032,9 @@ fun HomeAutomationPreview() {
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.SemiBold
                                 )
-                                
+
                                 Spacer(modifier = Modifier.height(12.dp))
-                                
+
                                 devices[selectedRoom]?.forEach { device ->
                                     SmartDeviceCard(device)
                                     if (device != devices[selectedRoom]?.last()) {
@@ -1044,7 +1044,7 @@ fun HomeAutomationPreview() {
                             }
                         }
                     }
-                    
+
                     item {
                         // Automation scenes
                         Card(
@@ -1058,16 +1058,16 @@ fun HomeAutomationPreview() {
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.SemiBold
                                 )
-                                
+
                                 Spacer(modifier = Modifier.height(12.dp))
-                                
+
                                 val scenes = listOf(
                                     AutomationScene("Good Morning", "Turn on lights, start coffee", Icons.Default.WbSunny),
                                     AutomationScene("Movie Time", "Dim lights, turn on TV", Icons.Default.Movie),
                                     AutomationScene("Sleep Mode", "Turn off all lights, lock doors", Icons.Default.Bedtime),
                                     AutomationScene("Away Mode", "Turn off devices, activate security", Icons.Default.Security)
                                 )
-                                
+
                                 scenes.forEach { scene ->
                                     AutomationSceneCard(scene)
                                     if (scene != scenes.last()) {
@@ -1077,7 +1077,7 @@ fun HomeAutomationPreview() {
                             }
                         }
                     }
-                    
+
                     item {
                         // Security status
                         Card(
@@ -1110,7 +1110,7 @@ fun HomeAutomationPreview() {
                                             color = MaterialTheme.colorScheme.onSecondaryContainer
                                         )
                                     }
-                                    
+
                                     Surface(
                                         shape = RoundedCornerShape(16.dp),
                                         color = Color.Green.copy(alpha = 0.2f)
@@ -1123,9 +1123,9 @@ fun HomeAutomationPreview() {
                                         )
                                     }
                                 }
-                                
+
                                 Spacer(modifier = Modifier.height(8.dp))
-                                
+
                                 Text(
                                     text = "All doors locked • Motion sensors active • Cameras recording",
                                     style = MaterialTheme.typography.bodyMedium,
@@ -1375,7 +1375,7 @@ fun DailyForecastItem(forecast: DailyForecast) {
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.weight(1f)
         )
-        
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.weight(1f),
@@ -1394,7 +1394,7 @@ fun DailyForecastItem(forecast: DailyForecast) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         Text(
             text = "${forecast.highTemp}°/${forecast.lowTemp}°",
             style = MaterialTheme.typography.bodyMedium,
@@ -1423,7 +1423,7 @@ fun FitnessOverview(data: FitnessData) {
                     color = Color(0xFF4CAF50),
                     modifier = Modifier.weight(1f)
                 )
-                
+
                 FitnessStatCard(
                     title = "Calories",
                     value = data.caloriesBurned.toString(),
@@ -1433,7 +1433,7 @@ fun FitnessOverview(data: FitnessData) {
                 )
             }
         }
-        
+
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -1446,7 +1446,7 @@ fun FitnessOverview(data: FitnessData) {
                     color = Color(0xFF2196F3),
                     modifier = Modifier.weight(1f)
                 )
-                
+
                 FitnessStatCard(
                     title = "Heart Rate",
                     value = "${data.heartRate} bpm",
@@ -1456,7 +1456,7 @@ fun FitnessOverview(data: FitnessData) {
                 )
             }
         }
-        
+
         item {
             // Weekly progress
             Card(
@@ -1470,17 +1470,17 @@ fun FitnessOverview(data: FitnessData) {
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Spacer(modifier = Modifier.height(12.dp))
-                    
+
                     LinearProgressIndicator(
                         progress = data.weeklyGoalProgress,
                         modifier = Modifier.fillMaxWidth(),
                         color = Color(0xFF4CAF50)
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     Text(
                         text = "${(data.weeklyGoalProgress * 100).toInt()}% of weekly goal completed",
                         style = MaterialTheme.typography.bodyMedium,
@@ -1521,7 +1521,7 @@ fun WorkoutsList(
                 }
             }
         }
-        
+
         items(workouts.filter { it.type == selectedWorkout }) { workout ->
             WorkoutCard(workout)
         }
@@ -1545,9 +1545,9 @@ fun ProgressTracking(data: FitnessData) {
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Spacer(modifier = Modifier.height(16.dp))
-                    
+
                     // Simulated progress chart
                     Canvas(
                         modifier = Modifier
@@ -1556,7 +1556,7 @@ fun ProgressTracking(data: FitnessData) {
                     ) {
                         val points = listOf(0.2f, 0.4f, 0.3f, 0.6f, 0.8f, 0.7f, 0.9f)
                         val stepX = size.width / (points.size - 1)
-                        
+
                         for (i in 0 until points.size - 1) {
                             drawLine(
                                 color = Color(0xFF4CAF50),
@@ -1571,7 +1571,7 @@ fun ProgressTracking(data: FitnessData) {
                                 strokeWidth = 4.dp.toPx()
                             )
                         }
-                        
+
                         // Draw points
                         points.forEachIndexed { index, point ->
                             drawCircle(
@@ -1587,7 +1587,7 @@ fun ProgressTracking(data: FitnessData) {
                 }
             }
         }
-        
+
         item {
             // Achievement badges
             Card(
@@ -1601,16 +1601,16 @@ fun ProgressTracking(data: FitnessData) {
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Spacer(modifier = Modifier.height(12.dp))
-                    
+
                     val achievements = listOf(
                         "🏃 10K Steps Streak - 7 days",
                         "🔥 Calorie Goal - 5 days",
                         "💪 Workout Warrior - 3 workouts",
                         "❤️ Heart Health - Resting HR improved"
                     )
-                    
+
                     achievements.forEach { achievement ->
                         Text(
                             text = achievement,
@@ -1636,14 +1636,14 @@ fun FitnessChallenges() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-        
+
         val challenges = listOf(
             "30-Day Step Challenge" to 0.6f,
             "Weekly Workout Goal" to 0.8f,
             "Hydration Challenge" to 0.4f,
             "Sleep Quality Challenge" to 0.7f
         )
-        
+
         items(challenges) { (challenge, progress) ->
             Card(
                 modifier = Modifier.fillMaxWidth()
@@ -1656,16 +1656,16 @@ fun FitnessChallenges() {
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     LinearProgressIndicator(
                         progress = progress,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    
+
                     Spacer(modifier = Modifier.height(4.dp))
-                    
+
                     Text(
                         text = "${(progress * 100).toInt()}% completed",
                         style = MaterialTheme.typography.bodySmall,
@@ -1701,16 +1701,16 @@ fun FitnessStatCard(
                 tint = color,
                 modifier = Modifier.size(32.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = value,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = color
             )
-            
+
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodySmall,
@@ -1743,9 +1743,9 @@ fun WorkoutCard(workout: WorkoutSession) {
                         .padding(12.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -1754,14 +1754,14 @@ fun WorkoutCard(workout: WorkoutSession) {
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Text(
                     text = "${workout.duration} min • ${workout.calories} cal",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             IconButton(
                 onClick = { }
             ) {
@@ -1791,9 +1791,9 @@ fun NutritionOverviewCard(data: NutritionData) {
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Calorie progress
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -1805,7 +1805,7 @@ fun NutritionOverviewCard(data: NutritionData) {
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
-                
+
                 Text(
                     text = "${data.caloriesConsumed} / ${data.caloriesGoal}",
                     style = MaterialTheme.typography.bodyLarge,
@@ -1813,17 +1813,17 @@ fun NutritionOverviewCard(data: NutritionData) {
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             LinearProgressIndicator(
                 progress = data.caloriesConsumed.toFloat() / data.caloriesGoal,
                 modifier = Modifier.fillMaxWidth(),
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Macronutrients
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -1834,13 +1834,13 @@ fun NutritionOverviewCard(data: NutritionData) {
                     value = "${data.protein}g",
                     color = Color(0xFF4CAF50)
                 )
-                
+
                 MacronutrientItem(
                     label = "Carbs",
                     value = "${data.carbs}g",
                     color = Color(0xFF2196F3)
                 )
-                
+
                 MacronutrientItem(
                     label = "Fat",
                     value = "${data.fat}g",
@@ -1866,7 +1866,7 @@ fun MacronutrientItem(
             fontWeight = FontWeight.Bold,
             color = color
         )
-        
+
         Text(
             text = label,
             style = MaterialTheme.typography.bodySmall,
@@ -1890,14 +1890,14 @@ fun FoodItemCard(food: FoodItem) {
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Text(
                 text = food.nutrition,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         Text(
             text = "${food.calories} cal",
             style = MaterialTheme.typography.bodyMedium,
@@ -1944,7 +1944,7 @@ fun TripCard(
                     modifier = Modifier.size(48.dp)
                 )
             }
-            
+
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
@@ -1953,17 +1953,17 @@ fun TripCard(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Spacer(modifier = Modifier.height(4.dp))
-                
+
                 Text(
                     text = trip.dates,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Surface(
                     shape = RoundedCornerShape(12.dp),
                     color = trip.status.color.copy(alpha = 0.2f)
@@ -2004,9 +2004,9 @@ fun TravelActionButton(
                 tint = MaterialTheme.colorScheme.onPrimaryContainer
             )
         }
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
@@ -2035,9 +2035,9 @@ fun ItineraryItemCard(item: ItineraryItem) {
                     .padding(10.dp)
             )
         }
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -2046,14 +2046,14 @@ fun ItineraryItemCard(item: ItineraryItem) {
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Text(
                 text = item.time,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         IconButton(
             onClick = { }
         ) {
@@ -2090,16 +2090,16 @@ fun SmartDeviceCard(device: SmartDevice) {
                         .padding(10.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column {
                 Text(
                     text = device.name,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Text(
                     text = device.status,
                     style = MaterialTheme.typography.bodySmall,
@@ -2107,7 +2107,7 @@ fun SmartDeviceCard(device: SmartDevice) {
                 )
             }
         }
-        
+
         Switch(
             checked = device.isOn,
             onCheckedChange = { }
@@ -2130,7 +2130,7 @@ fun EnergyMetric(
             fontWeight = FontWeight.Bold,
             color = color
         )
-        
+
         Text(
             text = label,
             style = MaterialTheme.typography.bodySmall,
@@ -2165,9 +2165,9 @@ fun AutomationSceneCard(scene: AutomationScene) {
                         .padding(12.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -2176,14 +2176,14 @@ fun AutomationSceneCard(scene: AutomationScene) {
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Text(
                     text = scene.description,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             IconButton(
                 onClick = { }
             ) {

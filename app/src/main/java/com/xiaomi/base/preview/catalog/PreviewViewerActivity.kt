@@ -22,29 +22,29 @@ import com.xiaomi.base.ui.theme.BaseTheme
 class PreviewViewerActivity : ComponentActivity() {
     companion object {
         private const val EXTRA_PREVIEW_ID = "preview_id"
-        
+
         fun createIntent(context: Context, previewId: String): Intent {
             return Intent(context, PreviewViewerActivity::class.java).apply {
                 putExtra(EXTRA_PREVIEW_ID, previewId)
             }
         }
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         val previewId = intent.getStringExtra(EXTRA_PREVIEW_ID)
         if (previewId == null) {
             finish()
             return
         }
-        
+
         val previewItem = PreviewRegistry.getPreview(previewId)
         if (previewItem == null) {
             finish()
             return
         }
-        
+
         setContent {
             BaseTheme {
                 PreviewViewerScreen(
@@ -66,14 +66,14 @@ fun PreviewViewerScreen(
     onBackClick: () -> Unit
 ) {
     var showFullScreen by remember { mutableStateOf(true) }
-    
+
     if (showFullScreen) {
         // Full-screen demo mode
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
             previewItem.content()
-            
+
             // Floating controls
             Row(
                 modifier = Modifier
@@ -91,7 +91,7 @@ fun PreviewViewerScreen(
                         contentDescription = "Back to Catalog"
                     )
                 }
-                
+
                 FloatingActionButton(
                     onClick = { showFullScreen = false },
                     modifier = Modifier.size(48.dp),
@@ -132,7 +132,7 @@ fun PreviewViewerScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { 
+                    IconButton(onClick = {
                         showFullScreen = true
                     }) {
                         Icon(
@@ -140,8 +140,8 @@ fun PreviewViewerScreen(
                             contentDescription = "Full Screen Demo"
                         )
                     }
-                    
-                    IconButton(onClick = { 
+
+                    IconButton(onClick = {
                         // TODO: Add bookmark/favorite functionality
                     }) {
                         Icon(
@@ -149,8 +149,8 @@ fun PreviewViewerScreen(
                             contentDescription = "Bookmark"
                         )
                     }
-                    
-                    IconButton(onClick = { 
+
+                    IconButton(onClick = {
                         // TODO: Add share functionality
                     }) {
                         Icon(
@@ -187,7 +187,7 @@ fun PreviewViewerScreen(
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary
                         )
-                        
+
                         AssistChip(
                             onClick = { },
                             label = { Text(previewItem.category.displayName) },
@@ -199,7 +199,7 @@ fun PreviewViewerScreen(
                                 )
                             }
                         )
-                        
+
                         AssistChip(
                             onClick = { },
                             label = { Text(previewItem.difficulty.displayName) },
@@ -208,13 +208,13 @@ fun PreviewViewerScreen(
                             )
                         )
                     }
-                    
+
                     Text(
                         text = previewItem.description,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     if (previewItem.tags.isNotEmpty()) {
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -223,7 +223,7 @@ fun PreviewViewerScreen(
                             previewItem.tags.take(4).forEach { tag ->
                                 SuggestionChip(
                                     onClick = { },
-                                    label = { 
+                                    label = {
                                         Text(
                                             text = tag,
                                             style = MaterialTheme.typography.labelSmall
@@ -231,11 +231,11 @@ fun PreviewViewerScreen(
                                     }
                                 )
                             }
-                            
+
                             if (previewItem.tags.size > 4) {
                                 SuggestionChip(
                                     onClick = { },
-                                    label = { 
+                                    label = {
                                         Text(
                                             text = "+${previewItem.tags.size - 4}",
                                             style = MaterialTheme.typography.labelSmall
@@ -247,7 +247,7 @@ fun PreviewViewerScreen(
                     }
                 }
             }
-            
+
             // Full-Screen Preview Content
             Box(
                 modifier = Modifier
@@ -259,4 +259,4 @@ fun PreviewViewerScreen(
             }
         }
     }
-} 
+}

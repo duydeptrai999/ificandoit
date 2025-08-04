@@ -195,7 +195,7 @@ enum class SnackbarType {
 
 /**
  * Helper function to show a snackbar with different types
- * 
+ *
  * @param hostState The snackbar host state
  * @param message The message to display
  * @param actionLabel Optional action button label
@@ -267,7 +267,7 @@ fun XiaomiSnackbarsDarkPreview() {
                 actionLabel = "Open",
                 onActionClick = { }
             )
-            
+
             XiaomiErrorSnackbar(
                 message = "Network connection failed",
                 actionLabel = "Retry",
@@ -282,7 +282,7 @@ fun XiaomiSnackbarsDarkPreview() {
 fun XiaomiSnackbarHostPreview() {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-    
+
     XiaomiPreviewTheme {
         androidx.compose.foundation.layout.Box(
             modifier = Modifier.fillMaxWidth()
@@ -292,7 +292,7 @@ fun XiaomiSnackbarHostPreview() {
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text("Snackbar Host Example", style = MaterialTheme.typography.titleMedium)
-                
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -310,7 +310,7 @@ fun XiaomiSnackbarHostPreview() {
                     ) {
                         Text("Show Snackbar")
                     }
-                    
+
                     Button(
                         onClick = {
                             scope.launch {
@@ -327,7 +327,7 @@ fun XiaomiSnackbarHostPreview() {
                     }
                 }
             }
-            
+
             XiaomiSnackbarHost(
                 hostState = snackbarHostState,
                 modifier = Modifier.align(Alignment.BottomCenter)

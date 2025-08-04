@@ -49,10 +49,10 @@ import com.xiaomi.base.ui.kit.foundation.spacing.Spacing
 
 /**
  * Xiaomi Base UI Kit List Item
- * 
+ *
  * A Material Design 3 list item component with Xiaomi design tokens.
  * Provides consistent styling for list content.
- * 
+ *
  * @param headlineContent The primary content of the list item
  * @param modifier Modifier to be applied to the list item
  * @param overlineContent Optional content above the headline
@@ -90,9 +90,9 @@ fun XiaomiListItem(
 
 /**
  * Xiaomi Clickable List Item
- * 
+ *
  * A clickable variant of the list item for interactive content.
- * 
+ *
  * @param onClick Callback for when the list item is clicked
  * @param headlineContent The primary content of the list item
  * @param modifier Modifier to be applied to the list item
@@ -128,9 +128,9 @@ fun XiaomiClickableListItem(
 
 /**
  * Xiaomi Navigation List Item
- * 
+ *
  * A specialized list item for navigation with trailing chevron icon.
- * 
+ *
  * @param onClick Callback for when the list item is clicked
  * @param title The title text of the navigation item
  * @param modifier Modifier to be applied to the list item
@@ -192,9 +192,9 @@ fun XiaomiNavigationListItem(
 
 /**
  * Xiaomi Switch List Item
- * 
+ *
  * A list item with an integrated switch control.
- * 
+ *
  * @param title The title text of the switch item
  * @param checked Whether the switch is checked
  * @param onCheckedChange Callback for when the switch state changes
@@ -257,9 +257,9 @@ fun XiaomiSwitchListItem(
 
 /**
  * Xiaomi Checkbox List Item
- * 
+ *
  * A list item with an integrated checkbox control.
- * 
+ *
  * @param title The title text of the checkbox item
  * @param checked Whether the checkbox is checked
  * @param onCheckedChange Callback for when the checkbox state changes
@@ -322,9 +322,9 @@ fun XiaomiCheckboxListItem(
 
 /**
  * Xiaomi Radio List Item
- * 
+ *
  * A list item with an integrated radio button control.
- * 
+ *
  * @param title The title text of the radio item
  * @param selected Whether the radio button is selected
  * @param onClick Callback for when the radio item is clicked
@@ -387,9 +387,9 @@ fun XiaomiRadioListItem(
 
 /**
  * Xiaomi List Section
- * 
+ *
  * A section container for grouping related list items with optional header.
- * 
+ *
  * @param modifier Modifier to be applied to the section
  * @param header Optional header content for the section
  * @param content The list items content
@@ -408,9 +408,9 @@ fun XiaomiListSection(
 
 /**
  * Xiaomi List Section Header
- * 
+ *
  * A standardized header for list sections.
- * 
+ *
  * @param title The title text of the section
  * @param modifier Modifier to be applied to the header
  */
@@ -433,9 +433,9 @@ fun XiaomiListSectionHeader(
 
 /**
  * Xiaomi List Divider
- * 
+ *
  * A divider component for separating list items.
- * 
+ *
  * @param modifier Modifier to be applied to the divider
  * @param thickness The thickness of the divider
  * @param color The color of the divider
@@ -473,14 +473,14 @@ fun XiaomiListsPreview() {
             ListItemData("3", "Privacy", "Privacy settings", Icons.Default.Settings, true),
             ListItemData("4", "About", "App information", null, true)
         )
-        
+
         LazyColumn(
             contentPadding = PaddingValues(vertical = 8.dp)
         ) {
             item {
                 XiaomiListSectionHeader("Settings")
             }
-            
+
             items(sampleItems) { item ->
                 XiaomiNavigationListItem(
                     onClick = { },
@@ -488,7 +488,7 @@ fun XiaomiListsPreview() {
                     subtitle = item.subtitle,
                     leadingIcon = item.icon
                 )
-                
+
                 if (item != sampleItems.last()) {
                     XiaomiListDivider(
                         modifier = Modifier.padding(start = if (item.icon != null) 56.dp else 16.dp)
@@ -506,14 +506,14 @@ fun XiaomiListsInteractivePreview() {
         var switchState by remember { mutableStateOf(true) }
         var checkboxState by remember { mutableStateOf(false) }
         var radioSelection by remember { mutableStateOf("option1") }
-        
+
         LazyColumn(
             contentPadding = PaddingValues(vertical = 8.dp)
         ) {
             item {
                 XiaomiListSectionHeader("Preferences")
             }
-            
+
             item {
                 XiaomiSwitchListItem(
                     title = "Enable Notifications",
@@ -523,11 +523,11 @@ fun XiaomiListsInteractivePreview() {
                     leadingIcon = Icons.Default.Email
                 )
             }
-            
+
             item {
                 XiaomiListDivider(modifier = Modifier.padding(start = 56.dp))
             }
-            
+
             item {
                 XiaomiCheckboxListItem(
                     title = "Save to Favorites",
@@ -537,11 +537,11 @@ fun XiaomiListsInteractivePreview() {
                     leadingIcon = Icons.Default.Favorite
                 )
             }
-            
+
             item {
                 XiaomiListSectionHeader("Theme")
             }
-            
+
             item {
                 XiaomiRadioListItem(
                     title = "Light Theme",
@@ -549,7 +549,7 @@ fun XiaomiListsInteractivePreview() {
                     onClick = { radioSelection = "light" }
                 )
             }
-            
+
             item {
                 XiaomiRadioListItem(
                     title = "Dark Theme",
@@ -557,7 +557,7 @@ fun XiaomiListsInteractivePreview() {
                     onClick = { radioSelection = "dark" }
                 )
             }
-            
+
             item {
                 XiaomiRadioListItem(
                     title = "System Default",
@@ -575,16 +575,16 @@ fun XiaomiListsDarkPreview() {
     XiaomiPreviewTheme(darkTheme = true) {
         Column {
             XiaomiListSectionHeader("Quick Actions")
-            
+
             XiaomiNavigationListItem(
                 onClick = { },
                 title = "Profile",
                 subtitle = "View and edit profile",
                 leadingIcon = Icons.Default.AccountCircle
             )
-            
+
             XiaomiListDivider(modifier = Modifier.padding(start = 56.dp))
-            
+
             XiaomiNavigationListItem(
                 onClick = { },
                 title = "Settings",

@@ -30,7 +30,7 @@ fun PreviewCatalogScreen(
     var selectedDifficulty by remember { mutableStateOf<PreviewDifficulty?>(null) }
     var isGridView by remember { mutableStateOf(true) }
     var showFilters by remember { mutableStateOf(false) }
-    
+
     val filteredItems = remember(searchQuery, selectedCategory, selectedDifficulty) {
         PreviewRegistry.findPreviews(
             category = selectedCategory,
@@ -38,10 +38,10 @@ fun PreviewCatalogScreen(
             searchQuery = searchQuery.takeIf { it.isNotBlank() }
         )
     }
-    
+
     val configuration = LocalConfiguration.current
     val isTablet = configuration.screenWidthDp >= 600
-    
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -60,7 +60,7 @@ fun PreviewCatalogScreen(
                             contentDescription = "Filters"
                         )
                     }
-                    
+
                     IconButton(
                         onClick = { isGridView = !isGridView }
                     ) {
@@ -107,7 +107,7 @@ fun PreviewCatalogScreen(
                     .padding(16.dp),
                 singleLine = true
             )
-            
+
             // Filters Section
             if (showFilters) {
                 Card(
@@ -123,16 +123,16 @@ fun PreviewCatalogScreen(
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
-                        
+
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                         // Category Filter
                         Text(
                             text = "Category",
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Medium
                         )
-                        
+
                         LazyRow(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             modifier = Modifier.padding(vertical = 8.dp)
@@ -144,25 +144,25 @@ fun PreviewCatalogScreen(
                                     selected = selectedCategory == null
                                 )
                             }
-                            
+
                             items(PreviewCategory.values().toList()) { category ->
                                 FilterChip(
-                                    onClick = { 
-                                        selectedCategory = if (selectedCategory == category) null else category 
+                                    onClick = {
+                                        selectedCategory = if (selectedCategory == category) null else category
                                     },
                                     label = { Text(category.displayName) },
                                     selected = selectedCategory == category
                                 )
                             }
                         }
-                        
+
                         // Difficulty Filter
                         Text(
                             text = "Difficulty",
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Medium
                         )
-                        
+
                         LazyRow(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             modifier = Modifier.padding(vertical = 8.dp)
@@ -174,11 +174,11 @@ fun PreviewCatalogScreen(
                                     selected = selectedDifficulty == null
                                 )
                             }
-                            
+
                             items(PreviewDifficulty.values().toList()) { difficulty ->
                                 FilterChip(
-                                    onClick = { 
-                                        selectedDifficulty = if (selectedDifficulty == difficulty) null else difficulty 
+                                    onClick = {
+                                        selectedDifficulty = if (selectedDifficulty == difficulty) null else difficulty
                                     },
                                     label = { Text(difficulty.displayName) },
                                     selected = selectedDifficulty == difficulty
@@ -187,19 +187,19 @@ fun PreviewCatalogScreen(
                         }
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
             }
-            
+
             // Results Count
             Text(
                 text = "${filteredItems.size} previews found",
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             // Preview List/Grid
             if (filteredItems.isEmpty()) {
                 Box(
@@ -235,7 +235,7 @@ fun PreviewCatalogScreen(
                         onItemClick = { previewItem ->
                             // Launch demo as standalone screen
                             val intent = com.xiaomi.base.preview.catalog.DemoActivity.createIntent(
-                                navController.context, 
+                                navController.context,
                                 previewItem.id
                             )
                             navController.context.startActivity(intent)
@@ -248,7 +248,7 @@ fun PreviewCatalogScreen(
                         onItemClick = { previewItem ->
                             // Launch demo as standalone screen
                             val intent = com.xiaomi.base.preview.catalog.DemoActivity.createIntent(
-                                navController.context, 
+                                navController.context,
                                 previewItem.id
                             )
                             navController.context.startActivity(intent)

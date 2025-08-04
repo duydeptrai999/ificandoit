@@ -60,7 +60,7 @@ fun PreviewCatalogScreen(
     var selectedDifficulty by remember { mutableStateOf<PreviewDifficulty?>(null) }
     var isGridView by remember { mutableStateOf(true) }
     var showFilters by remember { mutableStateOf(false) }
-    
+
     val filteredItems = remember(searchQuery, selectedCategory, selectedDifficulty) {
         PreviewRegistry.findPreviews(
             category = selectedCategory,
@@ -68,10 +68,10 @@ fun PreviewCatalogScreen(
             searchQuery = searchQuery.takeIf { it.isNotBlank() }
         )
     }
-    
+
     val configuration = LocalConfiguration.current
     val isTablet = configuration.screenWidthDp >= 600
-    
+
     PreviewContainer {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -111,7 +111,7 @@ fun PreviewCatalogScreen(
                             }
                         )
                     }
-                    
+
                     IconButton(onClick = { isGridView = !isGridView }) {
                         Icon(
                             imageVector = if (isGridView) Icons.Default.ViewList else Icons.Default.GridView,
@@ -120,7 +120,7 @@ fun PreviewCatalogScreen(
                     }
                 }
             )
-            
+
             // Search Bar
             OutlinedTextField(
                 value = searchQuery,
@@ -147,7 +147,7 @@ fun PreviewCatalogScreen(
                     .padding(16.dp),
                 singleLine = true
             )
-            
+
             // Filters
             if (showFilters) {
                 FilterSection(
@@ -161,7 +161,7 @@ fun PreviewCatalogScreen(
                     }
                 )
             }
-            
+
             // Content
             if (filteredItems.isEmpty()) {
                 EmptyState(
@@ -231,18 +231,18 @@ fun FilterSection(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 TextButton(onClick = onClearFilters) {
                     Text("Clear All")
                 }
             }
-            
+
             // Categories
             Text(
                 text = "Categories",
                 style = MaterialTheme.typography.labelMedium
             )
-            
+
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(horizontal = 4.dp)
@@ -264,13 +264,13 @@ fun FilterSection(
                     )
                 }
             }
-            
+
             // Difficulties
             Text(
                 text = "Difficulty",
                 style = MaterialTheme.typography.labelMedium
             )
-            
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -286,7 +286,7 @@ fun FilterSection(
             }
         }
     }
-    
+
     Spacer(modifier = Modifier.height(8.dp))
 }
 
@@ -426,13 +426,13 @@ fun EmptyState(
                 modifier = Modifier.size(64.dp),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Text(
                 text = if (hasFilters) "No templates match your filters" else "No templates available",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             if (hasFilters) {
                 Button(onClick = onClearFilters) {
                     Text("Clear Filters")

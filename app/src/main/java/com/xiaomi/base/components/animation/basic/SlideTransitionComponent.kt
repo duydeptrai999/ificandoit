@@ -30,7 +30,7 @@ enum class SlideDirection {
 /**
  * Slide Transition Component
  * Provides smooth slide in and slide out animations for any composable content
- * 
+ *
  * @param visible Controls the visibility state of the content
  * @param direction Direction of the slide animation
  * @param modifier Modifier to be applied to the component
@@ -54,7 +54,7 @@ fun SlideTransitionComponent(
         delayMillis = delayMillis,
         easing = LinearEasing
     )
-    
+
     AnimatedVisibility(
         visible = visible,
         modifier = modifier,
@@ -102,7 +102,7 @@ fun SlideTransitionComponent(
 /**
  * Auto Slide Transition Component with state management
  * Automatically manages visibility state with toggle functionality
- * 
+ *
  * @param initialVisible Initial visibility state
  * @param direction Direction of the slide animation
  * @param modifier Modifier to be applied to the component
@@ -124,13 +124,13 @@ fun AutoSlideTransitionComponent(
     content: @Composable (toggleVisibility: () -> Unit) -> Unit
 ) {
     var visible by remember { mutableStateOf(initialVisible) }
-    
+
     val toggleVisibility: () -> Unit = {
         visible = !visible
         onVisibilityChanged?.invoke(visible)
         Unit
     }
-    
+
     Box(modifier = modifier) {
         SlideTransitionComponent(
             visible = visible,
@@ -147,7 +147,7 @@ fun AutoSlideTransitionComponent(
 /**
  * Custom Slide Transition Component with easing control
  * Provides more control over animation easing and timing
- * 
+ *
  * @param visible Controls the visibility state of the content
  * @param direction Direction of the slide animation
  * @param modifier Modifier to be applied to the component
@@ -173,7 +173,7 @@ fun CustomSlideTransitionComponent(
         delayMillis = delayMillis,
         easing = easing
     )
-    
+
     AnimatedVisibility(
         visible = visible,
         modifier = modifier,

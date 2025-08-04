@@ -44,9 +44,9 @@ fun ProfilerControlsCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -65,7 +65,7 @@ fun ProfilerControlsCard(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(if (isRunning) "Stop" else "Start")
                 }
-                
+
                 OutlinedButton(
                     onClick = onExportData,
                     modifier = Modifier.weight(1f)
@@ -101,9 +101,9 @@ fun ActiveSessionsCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -137,9 +137,9 @@ fun SessionHistoryCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -178,9 +178,9 @@ fun SessionItem(
                 contentDescription = null,
                 tint = Blue
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = session["name"] as? String ?: "Unknown Session",
@@ -192,7 +192,7 @@ fun SessionItem(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             val status = session["status"] as? String ?: "unknown"
             StatusChip(status = status)
         }
@@ -219,9 +219,9 @@ fun OptimizationOverviewCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -255,9 +255,9 @@ fun OptimizationSuggestionCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -299,9 +299,9 @@ fun OptimizationItem(
                     contentDescription = null,
                     tint = Green
                 )
-                
+
                 Spacer(modifier = Modifier.width(12.dp))
-                
+
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = optimization["title"] as? String ?: "Unknown Optimization",
@@ -313,7 +313,7 @@ fun OptimizationItem(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 val impact = optimization["impact"] as? String ?: "unknown"
                 ImpactChip(impact = impact)
             }
@@ -346,9 +346,9 @@ fun SuggestionItem(
                     contentDescription = null,
                     tint = Orange
                 )
-                
+
                 Spacer(modifier = Modifier.width(12.dp))
-                
+
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = suggestion["title"] as? String ?: "Unknown Suggestion",
@@ -360,7 +360,7 @@ fun SuggestionItem(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Button(
                     onClick = onApply,
                     colors = ButtonDefaults.buttonColors(
@@ -393,9 +393,9 @@ fun ReportGenerationCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             val reportTypes = listOf(
                 "Performance Analysis",
                 "Memory Usage",
@@ -403,7 +403,7 @@ fun ReportGenerationCard(
                 "Network Analysis",
                 "Battery Usage"
             )
-            
+
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -444,9 +444,9 @@ fun ReportCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -485,9 +485,9 @@ fun ReportItem(
                 contentDescription = null,
                 tint = Purple
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = report["name"] as? String ?: "Unknown Report",
@@ -504,7 +504,7 @@ fun ReportItem(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             val status = report["status"] as? String ?: "unknown"
             StatusChip(status = status)
         }
@@ -522,7 +522,7 @@ fun StatusChip(status: String) {
         "generating" -> Purple to "Generating"
         else -> Color.Gray to "Unknown"
     }
-    
+
     Surface(
         color = color.copy(alpha = 0.1f),
         shape = RoundedCornerShape(12.dp),
@@ -549,7 +549,7 @@ fun ImpactChip(impact: String) {
         "low" -> Green to "Low"
         else -> Color.Gray to "Unknown"
     }
-    
+
     Surface(
         color = color.copy(alpha = 0.1f),
         shape = RoundedCornerShape(12.dp),
@@ -584,7 +584,7 @@ fun TrendRow(
             text = label,
             style = MaterialTheme.typography.bodyMedium
         )
-        
+
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -593,15 +593,15 @@ fun TrendRow(
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.width(8.dp))
-            
+
             val (icon, color) = when (trend.lowercase()) {
                 "increasing" -> Icons.Default.TrendingUp to Green
                 "decreasing" -> Icons.Default.TrendingDown to Red
                 else -> Icons.Default.TrendingFlat to Color.Gray
             }
-            
+
             Icon(
                 imageVector = icon,
                 contentDescription = trend,

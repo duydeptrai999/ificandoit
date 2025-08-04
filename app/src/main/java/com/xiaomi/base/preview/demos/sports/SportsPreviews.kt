@@ -162,14 +162,14 @@ fun FitnessTracker() {
         currentStreak = 7,
         longestStreak = 21
     )
-    
+
     val todayStats = mapOf(
         "Steps" to "8,542",
         "Calories" to "420",
         "Distance" to "6.2 km",
         "Active Time" to "45 min"
     )
-    
+
     val recentWorkouts = listOf(
         WorkoutSession(
             id = "1",
@@ -205,26 +205,26 @@ fun FitnessTracker() {
             isCompleted = true
         )
     )
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             FitnessHeader()
         }
-        
+
         item {
             TodayStatsSection(todayStats)
         }
-        
+
         item {
             WeeklyProgressSection(fitnessStats)
         }
-        
+
         item {
             QuickWorkoutsSection()
         }
-        
+
         item {
             RecentWorkoutsSection(recentWorkouts)
         }
@@ -281,7 +281,7 @@ fun WorkoutPlanner() {
             instructions = "Jump while spreading your legs and raising your arms overhead, then return to starting position."
         )
     )
-    
+
     val workout = WorkoutSession(
         id = "current",
         name = "Full Body HIIT",
@@ -292,22 +292,22 @@ fun WorkoutPlanner() {
         exercises = exercises,
         difficulty = WorkoutDifficulty.INTERMEDIATE
     )
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             WorkoutPlannerHeader()
         }
-        
+
         item {
             WorkoutOverview(workout)
         }
-        
+
         item {
             ExercisesList(exercises)
         }
-        
+
         item {
             WorkoutActions()
         }
@@ -363,7 +363,7 @@ fun SportsAnalytics() {
             venue = "Barclays Center"
         )
     )
-    
+
     val topPlayers = listOf(
         Athlete(
             id = "1",
@@ -405,26 +405,26 @@ fun SportsAnalytics() {
             ranking = 3
         )
     )
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             SportsAnalyticsHeader()
         }
-        
+
         item {
             LiveMatchesSection(matches.filter { it.status == MatchStatus.LIVE })
         }
-        
+
         item {
             UpcomingMatchesSection(matches.filter { it.status == MatchStatus.SCHEDULED })
         }
-        
+
         item {
             TopPlayersSection(topPlayers)
         }
-        
+
         item {
             RecentResultsSection(matches.filter { it.status == MatchStatus.FINISHED })
         }
@@ -450,7 +450,7 @@ fun BodyMetricsTracker() {
         bmi = 24.6,
         date = "Today"
     )
-    
+
     val weightHistory = listOf(
         76.8 to "Jan",
         76.2 to "Feb",
@@ -458,32 +458,32 @@ fun BodyMetricsTracker() {
         75.5 to "Apr",
         75.2 to "May"
     )
-    
+
     val goals = mapOf(
         "Target Weight" to "73.0 kg",
         "Body Fat" to "12.0%",
         "Muscle Mass" to "35.0 kg"
     )
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             BodyMetricsHeader()
         }
-        
+
         item {
             CurrentMetricsSection(currentMetrics)
         }
-        
+
         item {
             WeightProgressChart(weightHistory)
         }
-        
+
         item {
             BodyCompositionSection(currentMetrics)
         }
-        
+
         item {
             GoalsSection(goals)
         }
@@ -559,21 +559,21 @@ fun SportsEvents() {
             organizer = "NYC Cycling Club"
         )
     )
-    
+
     val categories = listOf("All", "Running", "Basketball", "Yoga", "Cycling", "Swimming")
     var selectedCategory by remember { mutableStateOf("All") }
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             SportsEventsHeader()
         }
-        
+
         item {
             EventCategoriesSection(categories, selectedCategory) { selectedCategory = it }
         }
-        
+
         item {
             EventsList(events.filter { selectedCategory == "All" || it.sport == selectedCategory })
         }
@@ -602,7 +602,7 @@ fun FitnessHeader() {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         Row {
             IconButton(onClick = { }) {
                 Icon(
@@ -610,7 +610,7 @@ fun FitnessHeader() {
                     contentDescription = "Notifications"
                 )
             }
-            
+
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Default.Settings,
@@ -632,7 +632,7 @@ fun TodayStatsSection(stats: Map<String, String>) {
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(bottom = 12.dp)
         )
-        
+
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -666,7 +666,7 @@ fun StatCard(title: String, value: String, icon: ImageVector, color: Color) {
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Icon(
                     imageVector = icon,
                     contentDescription = title,
@@ -674,7 +674,7 @@ fun StatCard(title: String, value: String, icon: ImageVector, color: Color) {
                     modifier = Modifier.size(20.dp)
                 )
             }
-            
+
             Text(
                 text = value,
                 style = MaterialTheme.typography.headlineSmall,
@@ -719,9 +719,9 @@ fun WeeklyProgressSection(stats: FitnessStats) {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -732,14 +732,14 @@ fun WeeklyProgressSection(stats: FitnessStats) {
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Text(
                         text = "Workouts",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Column {
                     Text(
                         text = "${stats.currentStreak}",
@@ -747,7 +747,7 @@ fun WeeklyProgressSection(stats: FitnessStats) {
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFFFF9800)
                     )
-                    
+
                     Text(
                         text = "Day Streak",
                         style = MaterialTheme.typography.bodyMedium,
@@ -755,17 +755,17 @@ fun WeeklyProgressSection(stats: FitnessStats) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             LinearProgressIndicator(
                 progress = stats.weeklyProgress.toFloat() / stats.weeklyGoal.toFloat(),
                 modifier = Modifier.fillMaxWidth(),
                 color = MaterialTheme.colorScheme.primary
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "${((stats.weeklyProgress.toFloat() / stats.weeklyGoal.toFloat()) * 100).roundToInt()}% of weekly goal completed",
                 style = MaterialTheme.typography.bodySmall,
@@ -783,7 +783,7 @@ fun QuickWorkoutsSection() {
         "Cardio" to Icons.Default.DirectionsRun,
         "Yoga" to Icons.Default.SelfImprovement
     )
-    
+
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
@@ -793,7 +793,7 @@ fun QuickWorkoutsSection() {
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(bottom = 12.dp)
         )
-        
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
@@ -827,9 +827,9 @@ fun QuickWorkoutItem(title: String, icon: ImageVector) {
                 )
             }
         }
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         Text(
             text = title,
             style = MaterialTheme.typography.bodySmall,
@@ -853,14 +853,14 @@ fun RecentWorkoutsSection(workouts: List<WorkoutSession>) {
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             TextButton(onClick = { }) {
                 Text("See All")
             }
         }
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         workouts.forEach { workout ->
             WorkoutItem(workout)
             Spacer(modifier = Modifier.height(8.dp))
@@ -897,9 +897,9 @@ fun WorkoutItem(workout: WorkoutSession) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -908,20 +908,20 @@ fun WorkoutItem(workout: WorkoutSession) {
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Text(
                     text = "${workout.duration} min • ${workout.caloriesBurned} cal",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = workout.date,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             if (workout.isCompleted) {
                 Icon(
                     imageVector = Icons.Default.CheckCircle,
@@ -979,13 +979,13 @@ fun WorkoutPlannerHeader() {
                 contentDescription = "Back"
             )
         }
-        
+
         Text(
             text = "Workout Planner",
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold
         )
-        
+
         IconButton(onClick = { }) {
             Icon(
                 imageVector = Icons.Default.MoreVert,
@@ -1016,14 +1016,14 @@ fun WorkoutOverview(workout: WorkoutSession) {
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Text(
                         text = workout.type.name.lowercase().replaceFirstChar { it.uppercase() },
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Surface(
                     shape = RoundedCornerShape(8.dp),
                     color = getDifficultyColor(workout.difficulty).copy(alpha = 0.1f)
@@ -1037,9 +1037,9 @@ fun WorkoutOverview(workout: WorkoutSession) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -1063,15 +1063,15 @@ fun WorkoutStatItem(label: String, value: String, icon: ImageVector) {
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(24.dp)
         )
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         Text(
             text = value,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.SemiBold
         )
-        
+
         Text(
             text = label,
             style = MaterialTheme.typography.bodySmall,
@@ -1100,7 +1100,7 @@ fun ExercisesList(exercises: List<Exercise>) {
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(bottom = 12.dp)
         )
-        
+
         exercises.forEachIndexed { index, exercise ->
             ExerciseItem(exercise, index + 1)
             if (index < exercises.size - 1) {
@@ -1139,9 +1139,9 @@ fun ExerciseItem(exercise: Exercise, number: Int) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -1150,25 +1150,25 @@ fun ExerciseItem(exercise: Exercise, number: Int) {
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 val details = buildString {
                     if (exercise.sets != null && exercise.reps != null) {
                         append("${exercise.sets} sets × ${exercise.reps} reps")
                     } else if (exercise.duration != null) {
                         append("${exercise.duration}s")
                     }
-                    
+
                     if (exercise.weight != null) {
                         if (isNotEmpty()) append(" • ")
                         append("${exercise.weight}kg")
                     }
-                    
+
                     if (exercise.restTime != null) {
                         if (isNotEmpty()) append(" • ")
                         append("${exercise.restTime}s rest")
                     }
                 }
-                
+
                 if (details.isNotEmpty()) {
                     Text(
                         text = details,
@@ -1176,14 +1176,14 @@ fun ExerciseItem(exercise: Exercise, number: Int) {
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Text(
                     text = exercise.targetMuscles.joinToString(", "),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             if (exercise.isCompleted) {
                 Icon(
                     imageVector = Icons.Default.CheckCircle,
@@ -1223,7 +1223,7 @@ fun WorkoutActions() {
             Spacer(modifier = Modifier.width(8.dp))
             Text("Start Workout")
         }
-        
+
         OutlinedButton(
             onClick = { },
             modifier = Modifier.weight(1f)
@@ -1253,7 +1253,7 @@ fun SportsAnalyticsHeader() {
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
-        
+
         IconButton(onClick = { }) {
             Icon(
                 imageVector = Icons.Default.Search,
@@ -1275,7 +1275,7 @@ fun LiveMatchesSection(matches: List<Match>) {
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
-            
+
             matches.forEach { match ->
                 LiveMatchCard(match)
                 Spacer(modifier = Modifier.height(8.dp))
@@ -1314,16 +1314,16 @@ fun LiveMatchCard(match: Match) {
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                     )
                 }
-                
+
                 Text(
                     text = match.venue,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -1337,7 +1337,7 @@ fun LiveMatchCard(match: Match) {
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Text(
                         text = match.homeScore.toString(),
                         style = MaterialTheme.typography.headlineLarge,
@@ -1345,14 +1345,14 @@ fun LiveMatchCard(match: Match) {
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
-                
+
                 Text(
                     text = "VS",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -1361,7 +1361,7 @@ fun LiveMatchCard(match: Match) {
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Text(
                         text = match.awayScore.toString(),
                         style = MaterialTheme.typography.headlineLarge,
@@ -1386,7 +1386,7 @@ fun UpcomingMatchesSection(matches: List<Match>) {
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
-            
+
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
@@ -1413,15 +1413,15 @@ fun UpcomingMatchCard(match: Match) {
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Text(
                 text = match.time,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "${match.homeTeam} vs ${match.awayTeam}",
                 style = MaterialTheme.typography.bodyLarge,
@@ -1429,9 +1429,9 @@ fun UpcomingMatchCard(match: Match) {
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Text(
                 text = match.venue,
                 style = MaterialTheme.typography.bodySmall,
@@ -1458,14 +1458,14 @@ fun TopPlayersSection(players: List<Athlete>) {
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             TextButton(onClick = { }) {
                 Text("View All")
             }
         }
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         players.forEach { player ->
             PlayerItem(player)
             Spacer(modifier = Modifier.height(8.dp))
@@ -1502,9 +1502,9 @@ fun PlayerItem(player: Athlete) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -1513,13 +1513,13 @@ fun PlayerItem(player: Athlete) {
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Text(
                     text = "${player.position} • ${player.team}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
@@ -1548,7 +1548,7 @@ fun RecentResultsSection(matches: List<Match>) {
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
-            
+
             matches.forEach { match ->
                 ResultItem(match)
                 Spacer(modifier = Modifier.height(8.dp))
@@ -1577,14 +1577,14 @@ fun ResultItem(match: Match) {
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Text(
                     text = "${match.date} • ${match.venue}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Surface(
                 shape = RoundedCornerShape(4.dp),
                 color = MaterialTheme.colorScheme.surfaceVariant
@@ -1615,14 +1615,14 @@ fun BodyMetricsHeader() {
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Text(
                 text = "Track your progress",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         IconButton(onClick = { }) {
             Icon(
                 imageVector = Icons.Default.Add,
@@ -1648,7 +1648,7 @@ fun CurrentMetricsSection(metrics: BodyMetrics) {
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -1657,9 +1657,9 @@ fun CurrentMetricsSection(metrics: BodyMetrics) {
                 MetricItem("BMI", metrics.bmi.toString(), Icons.Default.Analytics)
                 MetricItem("Body Fat", "${metrics.bodyFat}%", Icons.Default.Percent)
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Surface(
                 shape = RoundedCornerShape(8.dp),
                 color = getBMIColor(metrics.bmi).copy(alpha = 0.1f),
@@ -1689,15 +1689,15 @@ fun MetricItem(label: String, value: String, icon: ImageVector) {
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(24.dp)
         )
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         Text(
             text = value,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold
         )
-        
+
         Text(
             text = label,
             style = MaterialTheme.typography.bodySmall,
@@ -1731,7 +1731,7 @@ fun WeightProgressChart(weightHistory: List<Pair<Double, String>>) {
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            
+
             // Simple chart representation
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -1747,9 +1747,9 @@ fun WeightProgressChart(weightHistory: List<Pair<Double, String>>) {
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        
+
                         Spacer(modifier = Modifier.height(4.dp))
-                        
+
                         Box(
                             modifier = Modifier
                                 .width(24.dp)
@@ -1759,9 +1759,9 @@ fun WeightProgressChart(weightHistory: List<Pair<Double, String>>) {
                                     RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp)
                                 )
                         )
-                        
+
                         Spacer(modifier = Modifier.height(4.dp))
-                        
+
                         Text(
                             text = month,
                             style = MaterialTheme.typography.bodySmall,
@@ -1790,7 +1790,7 @@ fun BodyCompositionSection(metrics: BodyMetrics) {
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -1821,9 +1821,9 @@ fun CompositionItem(label: String, value: String, color: Color) {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         Text(
             text = label,
             style = MaterialTheme.typography.bodySmall,
@@ -1849,7 +1849,7 @@ fun GoalsSection(goals: Map<String, String>) {
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            
+
             goals.entries.forEach { (goal, target) ->
                 Row(
                     modifier = Modifier
@@ -1862,7 +1862,7 @@ fun GoalsSection(goals: Map<String, String>) {
                         text = goal,
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    
+
                     Text(
                         text = target,
                         style = MaterialTheme.typography.bodyMedium,
@@ -1885,7 +1885,7 @@ fun SportsEventsHeader() {
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
-        
+
         Text(
             text = "Discover and join local sports activities",
             style = MaterialTheme.typography.bodyMedium,
@@ -1949,14 +1949,14 @@ fun EventCard(event: SportEvent) {
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Text(
                         text = event.sport,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
-                
+
                 Surface(
                     shape = RoundedCornerShape(8.dp),
                     color = getDifficultyColorForEvent(event.difficulty).copy(alpha = 0.1f)
@@ -1970,9 +1970,9 @@ fun EventCard(event: SportEvent) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = event.description,
                 style = MaterialTheme.typography.bodyMedium,
@@ -1980,9 +1980,9 @@ fun EventCard(event: SportEvent) {
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -1990,9 +1990,9 @@ fun EventCard(event: SportEvent) {
                 EventDetailItem(Icons.Default.CalendarToday, "${event.date} • ${event.time}")
                 EventDetailItem(Icons.Default.LocationOn, event.location)
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -2004,9 +2004,9 @@ fun EventCard(event: SportEvent) {
                     EventDetailItem(Icons.Default.MoneyOff, "Free")
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -2017,7 +2017,7 @@ fun EventCard(event: SportEvent) {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 if (event.isRegistered) {
                     OutlinedButton(
                         onClick = { },
@@ -2063,9 +2063,9 @@ fun EventDetailItem(icon: ImageVector, text: String) {
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.size(16.dp)
         )
-        
+
         Spacer(modifier = Modifier.width(4.dp))
-        
+
         Text(
             text = text,
             style = MaterialTheme.typography.bodySmall,
@@ -2098,7 +2098,7 @@ fun registerSportsPreviews() {
             content = { FitnessTrackerPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "sports_workout_planner",
@@ -2111,7 +2111,7 @@ fun registerSportsPreviews() {
             content = { WorkoutPlannerPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "sports_analytics",
@@ -2124,7 +2124,7 @@ fun registerSportsPreviews() {
             content = { SportsAnalyticsPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "sports_body_metrics",
@@ -2137,7 +2137,7 @@ fun registerSportsPreviews() {
             content = { BodyMetricsTrackerPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "sports_events",

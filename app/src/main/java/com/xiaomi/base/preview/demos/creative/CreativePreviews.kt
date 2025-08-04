@@ -52,7 +52,7 @@ fun registerCreativePreviews() {
             content = { PhotoEditorPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "drawing_canvas",
@@ -66,7 +66,7 @@ fun registerCreativePreviews() {
             content = { DrawingCanvasPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "color_palette",
@@ -80,7 +80,7 @@ fun registerCreativePreviews() {
             content = { ColorPalettePreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "design_templates",
@@ -94,7 +94,7 @@ fun registerCreativePreviews() {
             content = { DesignTemplatesPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "typography_studio",
@@ -123,9 +123,9 @@ fun PhotoEditorPreview() {
             var contrast by remember { mutableStateOf(0f) }
             var saturation by remember { mutableStateOf(0f) }
             var selectedFilter by remember { mutableStateOf("Original") }
-            
+
             val filters = listOf("Original", "Vintage", "B&W", "Sepia", "Vivid", "Cool", "Warm")
-            
+
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
@@ -157,24 +157,24 @@ fun PhotoEditorPreview() {
                                 "Warm" -> Color(0xFFFF9800)
                                 else -> Color(0xFF6200EE)
                             }
-                            
+
                             // Apply brightness, contrast, saturation effects
                             val adjustedColor = imageColor.copy(
                                 alpha = (1f + brightness * 0.3f).coerceIn(0.3f, 1f)
                             )
-                            
+
                             drawRect(
                                 color = adjustedColor,
                                 size = size
                             )
-                            
+
                             // Draw some sample shapes to simulate image content
                             drawCircle(
                                 color = Color.White.copy(alpha = 0.3f),
                                 radius = size.minDimension * 0.2f,
                                 center = Offset(size.width * 0.3f, size.height * 0.3f)
                             )
-                            
+
                             drawRect(
                                 color = Color.White.copy(alpha = 0.2f),
                                 topLeft = Offset(size.width * 0.6f, size.height * 0.5f),
@@ -184,7 +184,7 @@ fun PhotoEditorPreview() {
                                 )
                             )
                         }
-                        
+
                         // Overlay controls
                         Row(
                             modifier = Modifier
@@ -206,7 +206,7 @@ fun PhotoEditorPreview() {
                                     tint = Color.White
                                 )
                             }
-                            
+
                             IconButton(
                                 onClick = { },
                                 modifier = Modifier
@@ -224,9 +224,9 @@ fun PhotoEditorPreview() {
                         }
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Tool selection
                 LazyRow(
                     contentPadding = PaddingValues(horizontal = 16.dp),
@@ -247,9 +247,9 @@ fun PhotoEditorPreview() {
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Tool-specific controls
                 Card(
                     modifier = Modifier
@@ -282,7 +282,7 @@ fun PhotoEditorPreview() {
                         }
                     }
                 }
-                
+
                 // Bottom action bar
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -299,13 +299,13 @@ fun PhotoEditorPreview() {
                         ) {
                             Text("Cancel")
                         }
-                        
+
                         Button(
                             onClick = { }
                         ) {
                             Text("Save")
                         }
-                        
+
                         Button(
                             onClick = { }
                         ) {
@@ -331,12 +331,12 @@ fun DrawingCanvasPreview() {
             var selectedColor by remember { mutableStateOf(Color.Black) }
             val paths = remember { mutableStateListOf<DrawPath>() }
             var currentPath by remember { mutableStateOf<DrawPath?>(null) }
-            
+
             val colors = listOf(
                 Color.Black, Color.Red, Color.Blue, Color.Green,
                 Color.Yellow, Color.Magenta, Color.Cyan, Color.Gray
             )
-            
+
             InteractiveDemo(
                 title = "Typography Controls",
                 description = "Adjust font settings and preview text styling",
@@ -352,19 +352,19 @@ fun DrawingCanvasPreview() {
                             ) {
                                 Text("Clear")
                             }
-                            
+
                             Button(
                                 onClick = { if (paths.isNotEmpty()) paths.removeLastOrNull() }
                             ) {
                                 Text("Undo")
                             }
                         }
-                        
+
                         Text(
                             text = "Brush Size: ${brushSize.toInt()}px",
                             style = MaterialTheme.typography.labelMedium
                         )
-                        
+
                         Slider(
                             value = brushSize,
                             onValueChange = { brushSize = it },
@@ -396,7 +396,7 @@ fun DrawingCanvasPreview() {
                             )
                         }
                     }
-                    
+
                     // Color palette
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -423,7 +423,7 @@ fun DrawingCanvasPreview() {
                             )
                         }
                     }
-                    
+
                     // Drawing canvas
                     Card(
                         modifier = Modifier
@@ -464,19 +464,19 @@ fun DrawingCanvasPreview() {
                                 color = Color.White,
                                 size = size
                             )
-                            
+
                             // Draw all completed paths
                             paths.forEach { drawPath ->
                                 drawPath(drawPath)
                             }
-                            
+
                             // Draw current path
                             currentPath?.let { drawPath ->
                                 drawPath(drawPath)
                             }
                         }
                     }
-                    
+
                     // Layer controls
                     Card(
                         colors = CardDefaults.cardColors(
@@ -495,7 +495,7 @@ fun DrawingCanvasPreview() {
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold
                             )
-                            
+
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
@@ -507,7 +507,7 @@ fun DrawingCanvasPreview() {
                                         contentDescription = "Add Layer"
                                     )
                                 }
-                                
+
                                 IconButton(
                                     onClick = { }
                                 ) {
@@ -535,7 +535,7 @@ fun ColorPalettePreview() {
         ) {
             var selectedPalette by remember { mutableStateOf(0) }
             var generationType by remember { mutableStateOf(PaletteType.COMPLEMENTARY) }
-            
+
             val palettes = remember {
                 listOf(
                     ColorPalette(
@@ -561,7 +561,7 @@ fun ColorPalettePreview() {
                     )
                 )
             }
-            
+
             InteractiveDemo(
                 title = "Color Palette Generator",
                 description = "Generate and customize color palettes",
@@ -573,7 +573,7 @@ fun ColorPalettePreview() {
                             text = "Generation Type:",
                             style = MaterialTheme.typography.labelMedium
                         )
-                        
+
                         LazyRow(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
@@ -585,7 +585,7 @@ fun ColorPalettePreview() {
                                 )
                             }
                         }
-                        
+
                         Button(
                             onClick = { /* Generate new palette */ }
                         ) {
@@ -605,7 +605,7 @@ fun ColorPalettePreview() {
                 ) {
                     items(palettes.size) { index ->
                         val palette = palettes[index]
-                        
+
                         Card(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(
@@ -630,7 +630,7 @@ fun ColorPalettePreview() {
                                         style = MaterialTheme.typography.titleMedium,
                                         fontWeight = FontWeight.SemiBold
                                     )
-                                    
+
                                     Row(
                                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                                     ) {
@@ -644,7 +644,7 @@ fun ColorPalettePreview() {
                                                 modifier = Modifier.size(16.dp)
                                             )
                                         }
-                                        
+
                                         IconButton(
                                             onClick = { },
                                             modifier = Modifier.size(32.dp)
@@ -657,9 +657,9 @@ fun ColorPalettePreview() {
                                         }
                                     }
                                 }
-                                
+
                                 Spacer(modifier = Modifier.height(12.dp))
-                                
+
                                 // Color swatches
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -681,9 +681,9 @@ fun ColorPalettePreview() {
                                                         RoundedCornerShape(8.dp)
                                                     )
                                             )
-                                            
+
                                             Spacer(modifier = Modifier.height(4.dp))
-                                            
+
                                             Text(
                                                 text = "#${color.toArgb().toUInt().toString(16).uppercase().takeLast(6)}",
                                                 style = MaterialTheme.typography.labelSmall,
@@ -692,9 +692,9 @@ fun ColorPalettePreview() {
                                         }
                                     }
                                 }
-                                
+
                                 Spacer(modifier = Modifier.height(12.dp))
-                                
+
                                 // Color harmony info
                                 Surface(
                                     shape = RoundedCornerShape(6.dp),
@@ -729,7 +729,7 @@ fun DesignTemplatesPreview() {
             description = "Ready-to-use design templates"
         ) {
             var selectedCategory by remember { mutableStateOf(TemplateCategory.SOCIAL_MEDIA) }
-            
+
             val templates = remember {
                 mapOf(
                     TemplateCategory.SOCIAL_MEDIA to listOf(
@@ -749,7 +749,7 @@ fun DesignTemplatesPreview() {
                     )
                 )
             }
-            
+
             InteractiveDemo(
                 title = "Design Templates",
                 description = "Browse and customize design templates",
@@ -794,9 +794,9 @@ fun TypographyStudioPreview() {
             var lineHeight by remember { mutableStateOf(1.5f) }
             var letterSpacing by remember { mutableStateOf(0f) }
             var sampleText by remember { mutableStateOf("The quick brown fox jumps over the lazy dog") }
-            
+
             val fonts = listOf("Roboto", "Open Sans", "Lato", "Montserrat", "Source Sans Pro")
-            
+
             InteractiveDemo(
                 title = "Typography Studio",
                 description = "Font pairing and text styling tools",
@@ -808,7 +808,7 @@ fun TypographyStudioPreview() {
                             text = "Font Family:",
                             style = MaterialTheme.typography.labelMedium
                         )
-                        
+
                         LazyRow(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
@@ -820,12 +820,12 @@ fun TypographyStudioPreview() {
                                 )
                             }
                         }
-                        
+
                         Text(
                             text = "Font Size: ${fontSize.toInt()}sp",
                             style = MaterialTheme.typography.labelMedium
                         )
-                        
+
                         Slider(
                             value = fontSize,
                             onValueChange = { fontSize = it },
@@ -850,18 +850,18 @@ fun TypographyStudioPreview() {
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold
                             )
-                            
+
                             Spacer(modifier = Modifier.height(16.dp))
-                            
+
                             OutlinedTextField(
                                 value = sampleText,
                                 onValueChange = { sampleText = it },
                                 label = { Text("Sample Text") },
                                 modifier = Modifier.fillMaxWidth()
                             )
-                            
+
                             Spacer(modifier = Modifier.height(16.dp))
-                            
+
                             // Preview text with applied styling
                             Text(
                                 text = sampleText,
@@ -878,7 +878,7 @@ fun TypographyStudioPreview() {
                             )
                         }
                     }
-                    
+
                     // Typography controls
                     Card(
                         modifier = Modifier.fillMaxWidth()
@@ -892,7 +892,7 @@ fun TypographyStudioPreview() {
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold
                             )
-                            
+
                             // Line height control
                             Column {
                                 Text(
@@ -905,7 +905,7 @@ fun TypographyStudioPreview() {
                                     valueRange = 1.0f..2.0f
                                 )
                             }
-                            
+
                             // Letter spacing control
                             Column {
                                 Text(
@@ -920,7 +920,7 @@ fun TypographyStudioPreview() {
                             }
                         }
                     }
-                    
+
                     // Font pairing suggestions
                     Card(
                         modifier = Modifier.fillMaxWidth(),
@@ -937,16 +937,16 @@ fun TypographyStudioPreview() {
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
-                            
+
                             Spacer(modifier = Modifier.height(8.dp))
-                            
+
                             val pairings = when (selectedFont) {
                                 "Roboto" -> listOf("Roboto Slab", "Open Sans")
                                 "Open Sans" -> listOf("Merriweather", "Lato")
                                 "Montserrat" -> listOf("Source Serif Pro", "Roboto")
                                 else -> listOf("Georgia", "Arial")
                             }
-                            
+
                             pairings.forEach { pairing ->
                                 Text(
                                     text = "• $selectedFont + $pairing",
@@ -1023,9 +1023,9 @@ fun FilterControls(
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold
         )
-        
+
         Spacer(modifier = Modifier.height(12.dp))
-        
+
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -1058,7 +1058,7 @@ fun AdjustmentControls(
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold
         )
-        
+
         // Brightness
         Column {
             Text(
@@ -1071,7 +1071,7 @@ fun AdjustmentControls(
                 valueRange = -1f..1f
             )
         }
-        
+
         // Contrast
         Column {
             Text(
@@ -1084,7 +1084,7 @@ fun AdjustmentControls(
                 valueRange = -1f..1f
             )
         }
-        
+
         // Saturation
         Column {
             Text(
@@ -1110,11 +1110,11 @@ fun CropControls() {
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold
         )
-        
+
         Spacer(modifier = Modifier.height(12.dp))
-        
+
         val aspectRatios = listOf("Free", "1:1", "4:3", "16:9", "3:2")
-        
+
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -1139,11 +1139,11 @@ fun LayerControls() {
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold
         )
-        
+
         Spacer(modifier = Modifier.height(12.dp))
-        
+
         val layers = listOf("Background", "Main Image", "Text Overlay", "Effects")
-        
+
         layers.forEach { layer ->
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -1162,7 +1162,7 @@ fun LayerControls() {
                         text = layer,
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    
+
                     Row {
                         IconButton(
                             onClick = { },
@@ -1174,7 +1174,7 @@ fun LayerControls() {
                                 modifier = Modifier.size(16.dp)
                             )
                         }
-                        
+
                         IconButton(
                             onClick = { },
                             modifier = Modifier.size(32.dp)
@@ -1188,7 +1188,7 @@ fun LayerControls() {
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
@@ -1225,9 +1225,9 @@ fun TemplateCard(template: DesignTemplate) {
                     modifier = Modifier.size(24.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -1242,7 +1242,7 @@ fun TemplateCard(template: DesignTemplate) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Button(
                 onClick = { }
             ) {
@@ -1261,7 +1261,7 @@ fun DrawScope.drawPath(drawPath: DrawPath) {
         strokeCap = StrokeCap.Round
         strokeJoin = StrokeJoin.Round
     }
-    
+
     drawPath(
         path = drawPath.path,
         color = drawPath.color,

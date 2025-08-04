@@ -49,9 +49,9 @@ import java.util.Locale
 
 /**
  * Xiaomi Date Picker
- * 
+ *
  * A Material Design 3 date picker component with Xiaomi design tokens.
- * 
+ *
  * @param state DatePickerState for managing the picker state
  * @param modifier Modifier to be applied to the date picker
  * @param title Optional title for the date picker
@@ -78,9 +78,9 @@ fun XiaomiDatePicker(
 
 /**
  * Xiaomi Date Picker Dialog
- * 
+ *
  * A date picker presented in a dialog.
- * 
+ *
  * @param onDateSelected Callback when a date is selected
  * @param onDismiss Callback when the dialog is dismissed
  * @param modifier Modifier to be applied to the dialog
@@ -101,11 +101,11 @@ fun XiaomiDatePickerDialog(
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = initialDate ?: System.currentTimeMillis()
     )
-    
+
     val confirmEnabled by remember {
         derivedStateOf { datePickerState.selectedDateMillis != null }
     }
-    
+
     DatePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
@@ -135,9 +135,9 @@ fun XiaomiDatePickerDialog(
 
 /**
  * Xiaomi Time Picker
- * 
+ *
  * A Material Design 3 time picker component.
- * 
+ *
  * @param state TimePickerState for managing the picker state
  * @param modifier Modifier to be applied to the time picker
  */
@@ -155,9 +155,9 @@ fun XiaomiTimePicker(
 
 /**
  * Xiaomi Time Picker Dialog
- * 
+ *
  * A time picker presented in a dialog.
- * 
+ *
  * @param onTimeSelected Callback when a time is selected
  * @param onDismiss Callback when the dialog is dismissed
  * @param modifier Modifier to be applied to the dialog
@@ -182,7 +182,7 @@ fun XiaomiTimePickerDialog(
         initialMinute = initialMinute,
         is24Hour = is24Hour
     )
-    
+
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false)
@@ -201,11 +201,11 @@ fun XiaomiTimePickerDialog(
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier.padding(bottom = 20.dp)
                 )
-                
+
                 XiaomiTimePicker(
                     state = timePickerState
                 )
-                
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -215,7 +215,7 @@ fun XiaomiTimePickerDialog(
                     TextButton(onClick = onDismiss) {
                         Text("Cancel")
                     }
-                    
+
                     TextButton(
                         onClick = {
                             onTimeSelected(timePickerState.hour, timePickerState.minute)
@@ -232,9 +232,9 @@ fun XiaomiTimePickerDialog(
 
 /**
  * Xiaomi Date Input Field
- * 
+ *
  * A text field that opens a date picker when clicked.
- * 
+ *
  * @param selectedDate Currently selected date
  * @param onDateSelected Callback when a date is selected
  * @param modifier Modifier to be applied to the field
@@ -258,10 +258,10 @@ fun XiaomiDateInputField(
     dateFormat: String = "MMM dd, yyyy"
 ) {
     var showDatePicker by remember { mutableStateOf(false) }
-    
+
     val dateFormatter = remember { SimpleDateFormat(dateFormat, Locale.getDefault()) }
     val displayText = selectedDate?.let { dateFormatter.format(Date(it)) } ?: ""
-    
+
     XiaomiOutlinedTextField(
         value = displayText,
         onValueChange = { },
@@ -284,7 +284,7 @@ fun XiaomiDateInputField(
         isError = isError,
         supportingText = supportingText?.let { { Text(it) } }
     )
-    
+
     if (showDatePicker) {
         XiaomiDatePickerDialog(
             onDateSelected = onDateSelected,
@@ -296,9 +296,9 @@ fun XiaomiDateInputField(
 
 /**
  * Xiaomi Time Input Field
- * 
+ *
  * A text field that opens a time picker when clicked.
- * 
+ *
  * @param selectedHour Currently selected hour
  * @param selectedMinute Currently selected minute
  * @param onTimeSelected Callback when a time is selected
@@ -324,7 +324,7 @@ fun XiaomiTimeInputField(
     is24Hour: Boolean = true
 ) {
     var showTimePicker by remember { mutableStateOf(false) }
-    
+
     val displayText = if (selectedHour != null && selectedMinute != null) {
         if (is24Hour) {
             "%02d:%02d".format(selectedHour, selectedMinute)
@@ -334,7 +334,7 @@ fun XiaomiTimeInputField(
             "%d:%02d %s".format(hour12, selectedMinute, amPm)
         }
     } else ""
-    
+
     XiaomiOutlinedTextField(
         value = displayText,
         onValueChange = { },
@@ -357,7 +357,7 @@ fun XiaomiTimeInputField(
         isError = isError,
         supportingText = supportingText?.let { { Text(it) } }
     )
-    
+
     if (showTimePicker) {
         XiaomiTimePickerDialog(
             onTimeSelected = onTimeSelected,
@@ -371,9 +371,9 @@ fun XiaomiTimeInputField(
 
 /**
  * Xiaomi Date Range Picker
- * 
+ *
  * A component for selecting a date range.
- * 
+ *
  * @param startDate Start date of the range
  * @param endDate End date of the range
  * @param onDateRangeSelected Callback when a date range is selected
@@ -405,7 +405,7 @@ fun XiaomiDateRangePicker(
             enabled = enabled,
             modifier = Modifier.fillMaxWidth()
         )
-        
+
         XiaomiDateInputField(
             selectedDate = endDate,
             onDateSelected = { newEndDate ->
@@ -438,13 +438,13 @@ fun XiaomiDatePickersPreview() {
                     "Date & Time Pickers",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var selectedDate by remember { mutableStateOf<Long?>(null) }
                 var selectedHour by remember { mutableStateOf<Int?>(null) }
                 var selectedMinute by remember { mutableStateOf<Int?>(null) }
                 var startDate by remember { mutableStateOf<Long?>(null) }
                 var endDate by remember { mutableStateOf<Long?>(null) }
-                
+
                 // Date input field
                 XiaomiDateInputField(
                     selectedDate = selectedDate,
@@ -453,7 +453,7 @@ fun XiaomiDatePickersPreview() {
                     placeholder = "Choose event date",
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 // Time input field
                 XiaomiTimeInputField(
                     selectedHour = selectedHour,
@@ -466,14 +466,14 @@ fun XiaomiDatePickersPreview() {
                     placeholder = "Choose event time",
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 // Date range picker
                 Text(
                     "Date Range",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 XiaomiDateRangePicker(
                     startDate = startDate,
                     endDate = endDate,
@@ -483,7 +483,7 @@ fun XiaomiDatePickersPreview() {
                     },
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 // Show selected values
                 if (selectedDate != null || selectedHour != null || startDate != null) {
                     Column(
@@ -495,21 +495,21 @@ fun XiaomiDatePickersPreview() {
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        
+
                         selectedDate?.let {
                             Text(
                                 "Date: ${SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(Date(it))}",
                                 style = MaterialTheme.typography.bodySmall
                             )
                         }
-                        
+
                         if (selectedHour != null && selectedMinute != null) {
                             Text(
                                 "Time: %02d:%02d".format(selectedHour, selectedMinute),
                                 style = MaterialTheme.typography.bodySmall
                             )
                         }
-                        
+
                         if (startDate != null && endDate != null) {
                             val formatter = SimpleDateFormat("MMM dd", Locale.getDefault())
                             Text(
@@ -540,11 +540,11 @@ fun XiaomiDatePickerComponentPreview() {
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
-                
+
                 val datePickerState = rememberDatePickerState(
                     initialSelectedDateMillis = System.currentTimeMillis()
                 )
-                
+
                 XiaomiDatePicker(
                     state = datePickerState,
                     title = { Text("Select Date") },
@@ -570,18 +570,18 @@ fun XiaomiDatePickersDarkPreview() {
                     "Dark Theme Date Pickers",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var appointmentDate by remember { mutableStateOf<Long?>(System.currentTimeMillis()) }
                 var appointmentHour by remember { mutableStateOf<Int?>(14) }
                 var appointmentMinute by remember { mutableStateOf<Int?>(30) }
-                
+
                 XiaomiDateInputField(
                     selectedDate = appointmentDate,
                     onDateSelected = { appointmentDate = it },
                     label = "Appointment Date",
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 XiaomiTimeInputField(
                     selectedHour = appointmentHour,
                     selectedMinute = appointmentMinute,

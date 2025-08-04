@@ -67,9 +67,9 @@ import kotlinx.coroutines.launch
 
 /**
  * Xiaomi Plain Tooltip
- * 
+ *
  * A simple tooltip with plain text content.
- * 
+ *
  * @param tooltip The tooltip content
  * @param modifier Modifier to be applied to the tooltip box
  * @param focusable Whether the tooltip is focusable
@@ -107,9 +107,9 @@ fun XiaomiPlainTooltip(
 
 /**
  * Xiaomi Rich Tooltip
- * 
+ *
  * A rich tooltip with title, text, and optional action.
- * 
+ *
  * @param title The title of the tooltip
  * @param text The body text of the tooltip
  * @param action Optional action composable
@@ -156,9 +156,9 @@ fun XiaomiRichTooltip(
 
 /**
  * Xiaomi Custom Tooltip
- * 
+ *
  * A custom tooltip with flexible positioning and styling.
- * 
+ *
  * @param tooltipContent The content of the tooltip
  * @param visible Whether the tooltip is visible
  * @param onDismiss Callback when the tooltip is dismissed
@@ -183,7 +183,7 @@ fun XiaomiCustomTooltip(
 ) {
     Box(modifier = modifier) {
         content()
-        
+
         if (visible) {
             Popup(
                 onDismissRequest = onDismiss,
@@ -230,9 +230,9 @@ fun XiaomiCustomTooltip(
 
 /**
  * Xiaomi Info Tooltip
- * 
+ *
  * A tooltip specifically for providing information with an info icon.
- * 
+ *
  * @param text The information text
  * @param title Optional title for the tooltip
  * @param modifier Modifier to be applied to the tooltip
@@ -296,9 +296,9 @@ fun XiaomiInfoTooltip(
 
 /**
  * Xiaomi Help Tooltip
- * 
+ *
  * A tooltip specifically for providing help information.
- * 
+ *
  * @param helpText The help text
  * @param title Optional title for the help tooltip
  * @param actionText Optional action button text
@@ -352,9 +352,9 @@ fun XiaomiHelpTooltip(
 
 /**
  * Xiaomi Tooltip with Arrow
- * 
+ *
  * A custom tooltip with an arrow pointing to the target.
- * 
+ *
  * @param text The tooltip text
  * @param visible Whether the tooltip is visible
  * @param onDismiss Callback when the tooltip is dismissed
@@ -374,17 +374,17 @@ fun XiaomiTooltipWithArrow(
     val density = LocalDensity.current
     val arrowSize = 8.dp
     val arrowOffset = with(density) { arrowSize.toPx().toInt() }
-    
+
     val offset = when (arrowPosition) {
         XiaomiTooltipArrowPosition.Top -> IntOffset(0, arrowOffset)
         XiaomiTooltipArrowPosition.Bottom -> IntOffset(0, -arrowOffset)
         XiaomiTooltipArrowPosition.Start -> IntOffset(arrowOffset, 0)
         XiaomiTooltipArrowPosition.End -> IntOffset(-arrowOffset, 0)
     }
-    
+
     Box(modifier = modifier) {
         content()
-        
+
         if (visible) {
             Popup(
                 onDismissRequest = onDismiss,
@@ -425,7 +425,7 @@ fun XiaomiTooltipWithArrow(
                                     .offset(y = 4.dp)
                             )
                         }
-                        
+
                         Row {
                             // Arrow at start
                             if (arrowPosition == XiaomiTooltipArrowPosition.Start) {
@@ -440,7 +440,7 @@ fun XiaomiTooltipWithArrow(
                                         .align(Alignment.CenterVertically)
                                 )
                             }
-                            
+
                             // Tooltip content
                             Surface(
                                 color = MaterialTheme.colorScheme.inverseSurface,
@@ -454,7 +454,7 @@ fun XiaomiTooltipWithArrow(
                                     style = MaterialTheme.typography.bodySmall
                                 )
                             }
-                            
+
                             // Arrow at end
                             if (arrowPosition == XiaomiTooltipArrowPosition.End) {
                                 Box(
@@ -469,7 +469,7 @@ fun XiaomiTooltipWithArrow(
                                 )
                             }
                         }
-                        
+
                         // Arrow at bottom
                         if (arrowPosition == XiaomiTooltipArrowPosition.Bottom) {
                             Box(
@@ -515,7 +515,7 @@ fun XiaomiTooltipsPreview() {
                     "Tooltip Examples",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 // Plain Tooltip
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -536,7 +536,7 @@ fun XiaomiTooltipsPreview() {
                         }
                     }
                 }
-                
+
                 // Rich Tooltip
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -572,7 +572,7 @@ fun XiaomiTooltipsPreview() {
                         }
                     }
                 }
-                
+
                 // Info Tooltip
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -584,7 +584,7 @@ fun XiaomiTooltipsPreview() {
                         title = "Feature Information"
                     )
                 }
-                
+
                 // Help Tooltip
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -598,10 +598,10 @@ fun XiaomiTooltipsPreview() {
                         onActionClick = { /* Open documentation */ }
                     )
                 }
-                
+
                 // Custom Tooltip with Arrow
                 var showCustomTooltip by remember { mutableStateOf(false) }
-                
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.Small)
@@ -629,20 +629,20 @@ fun XiaomiTooltipsPreview() {
                         }
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(32.dp))
-                
+
                 // Tooltip positioning examples
                 Text(
                     "Tooltip Positioning",
                     style = MaterialTheme.typography.titleSmall
                 )
-                
+
                 var showTopTooltip by remember { mutableStateOf(false) }
                 var showBottomTooltip by remember { mutableStateOf(false) }
                 var showStartTooltip by remember { mutableStateOf(false) }
                 var showEndTooltip by remember { mutableStateOf(false) }
-                
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
@@ -677,7 +677,7 @@ fun XiaomiTooltipsPreview() {
                             }
                         }
                     }
-                    
+
                     // Bottom arrow
                     XiaomiTooltipWithArrow(
                         text = "Bottom Arrow",
@@ -708,7 +708,7 @@ fun XiaomiTooltipsPreview() {
                             }
                         }
                     }
-                    
+
                     // Start arrow
                     XiaomiTooltipWithArrow(
                         text = "Start Arrow",
@@ -739,7 +739,7 @@ fun XiaomiTooltipsPreview() {
                             }
                         }
                     }
-                    
+
                     // End arrow
                     XiaomiTooltipWithArrow(
                         text = "End Arrow",
@@ -791,7 +791,7 @@ fun XiaomiTooltipsDarkPreview() {
                     "Dark Theme Tooltips",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.Small)

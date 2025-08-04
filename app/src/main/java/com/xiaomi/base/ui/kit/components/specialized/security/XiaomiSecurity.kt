@@ -30,7 +30,7 @@ import java.util.*
 
 /**
  * Xiaomi Security Components - Security and Privacy UI
- * 
+ *
  * This file contains security and privacy components following Material Design 3 principles
  * with Xiaomi's design language. These components provide comprehensive security monitoring,
  * privacy controls, and protection features.
@@ -143,19 +143,19 @@ fun XiaomiSecurityDashboard(
                 onFullScan = onFullScan
             )
         }
-        
+
         // Scan Results
         item {
             XiaomiScanResultCard(scanResult = scanResult)
         }
-        
+
         // Recent Threats
         if (recentThreats.isNotEmpty()) {
             item {
                 XiaomiThreatAlertsCard(threats = recentThreats)
             }
         }
-        
+
         // Security Features
         item {
             XiaomiSecurityFeaturesCard(
@@ -211,7 +211,7 @@ fun XiaomiSecurityScoreCard(
                         color = getSecurityStatusColor(status)
                     )
                 }
-                
+
                 Box(
                     contentAlignment = Alignment.Center
                 ) {
@@ -236,9 +236,9 @@ fun XiaomiSecurityScoreCard(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(20.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -255,7 +255,7 @@ fun XiaomiSecurityScoreCard(
                     Spacer(modifier = Modifier.width(4.dp))
                     Text("Quick Scan")
                 }
-                
+
                 Button(
                     onClick = onFullScan,
                     modifier = Modifier.weight(1f),
@@ -311,9 +311,9 @@ fun XiaomiScanResultCard(
                     fontWeight = FontWeight.Bold
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -323,14 +323,14 @@ fun XiaomiScanResultCard(
                     value = scanResult.totalScanned.toString(),
                     icon = Icons.Default.Folder
                 )
-                
+
                 XiaomiScanStatItem(
                     label = "Threats",
                     value = scanResult.threatsFound.toString(),
                     icon = Icons.Default.Warning,
                     valueColor = if (scanResult.threatsFound > 0) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
                 )
-                
+
                 XiaomiScanStatItem(
                     label = "Vulnerabilities",
                     value = scanResult.vulnerabilities.toString(),
@@ -338,9 +338,9 @@ fun XiaomiScanResultCard(
                     valueColor = if (scanResult.vulnerabilities > 0) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Last scan: ${SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault()).format(scanResult.lastScanTime)}",
                 style = MaterialTheme.typography.bodySmall,
@@ -387,9 +387,9 @@ fun XiaomiThreatAlertsCard(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.error
                 )
-                
+
                 Spacer(modifier = Modifier.weight(1f))
-                
+
                 Surface(
                     shape = CircleShape,
                     color = MaterialTheme.colorScheme.error
@@ -402,9 +402,9 @@ fun XiaomiThreatAlertsCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             threats.take(3).forEach { threat ->
                 XiaomiThreatItem(
                     threat = threat,
@@ -414,7 +414,7 @@ fun XiaomiThreatAlertsCard(
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }
-            
+
             if (threats.size > 3) {
                 Spacer(modifier = Modifier.height(8.dp))
                 TextButton(
@@ -464,9 +464,9 @@ fun XiaomiSecurityFeaturesCard(
                     fontWeight = FontWeight.Bold
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             features.forEach { feature ->
                 XiaomiSecurityFeatureItem(
                     feature = feature,
@@ -503,7 +503,7 @@ fun XiaomiPrivacyDashboard(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         items(permissions) { permission ->
             XiaomiPrivacyPermissionCard(
                 permission = permission,
@@ -563,7 +563,7 @@ fun XiaomiThreatItem(
             tint = getSecurityStatusColor(threat.severity),
             modifier = Modifier.size(20.dp)
         )
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -582,7 +582,7 @@ fun XiaomiThreatItem(
                 overflow = TextOverflow.Ellipsis
             )
         }
-        
+
         if (!threat.isResolved) {
             TextButton(
                 onClick = { /* Handle threat resolution */ }
@@ -605,14 +605,14 @@ fun XiaomiSecurityFeatureItem(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         val icon = getSecurityFeatureIcon(feature.type)
-        
+
         Icon(
             imageVector = icon,
             contentDescription = feature.name,
             tint = if (feature.isEnabled) getSecurityStatusColor(feature.status) else MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.size(24.dp)
         )
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -627,7 +627,7 @@ fun XiaomiSecurityFeatureItem(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         Switch(
             checked = feature.isEnabled,
             onCheckedChange = onToggle
@@ -661,7 +661,7 @@ fun XiaomiPrivacyPermissionCard(
                     contentDescription = permission.appName,
                     modifier = Modifier.size(32.dp)
                 )
-                
+
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -676,7 +676,7 @@ fun XiaomiPrivacyPermissionCard(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 permission.lastAccessed?.let { lastAccessed ->
                     Text(
                         text = SimpleDateFormat("MMM dd", Locale.getDefault()).format(lastAccessed),
@@ -685,9 +685,9 @@ fun XiaomiPrivacyPermissionCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             // Permission chips
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -706,7 +706,7 @@ fun XiaomiPrivacyPermissionCard(
                         }
                     )
                 }
-                
+
                 if (permission.permissions.size > 3) {
                     AssistChip(
                         onClick = { /* Show all permissions */ },
@@ -799,7 +799,7 @@ fun XiaomiSecurityDashboardPreview() {
                     SecurityStatus.WARNING
                 )
             )
-            
+
             val sampleThreats = listOf(
                 SecurityThreat(
                     "1",
@@ -809,7 +809,7 @@ fun XiaomiSecurityDashboardPreview() {
                     Date()
                 )
             )
-            
+
             val sampleScanResult = SecurityScanResult(
                 totalScanned = 1247,
                 threatsFound = 1,
@@ -817,7 +817,7 @@ fun XiaomiSecurityDashboardPreview() {
                 lastScanTime = Date(),
                 overallStatus = SecurityStatus.WARNING
             )
-            
+
             XiaomiSecurityDashboard(
                 securityScore = 85,
                 features = sampleFeatures,
@@ -858,7 +858,7 @@ fun XiaomiPrivacyDashboardPreview() {
                     Date()
                 )
             )
-            
+
             XiaomiPrivacyDashboard(
                 permissions = samplePermissions
             )
@@ -876,7 +876,7 @@ fun XiaomiSecurityDarkPreview() {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text("Dark Theme Security")
-                
+
                 val sampleScanResult = SecurityScanResult(
                     totalScanned = 1247,
                     threatsFound = 0,
@@ -884,12 +884,12 @@ fun XiaomiSecurityDarkPreview() {
                     lastScanTime = Date(),
                     overallStatus = SecurityStatus.SECURE
                 )
-                
+
                 XiaomiSecurityScoreCard(
                     score = 95,
                     status = SecurityStatus.SECURE
                 )
-                
+
                 XiaomiScanResultCard(scanResult = sampleScanResult)
             }
         }

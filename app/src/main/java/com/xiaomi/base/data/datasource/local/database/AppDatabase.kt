@@ -30,29 +30,29 @@ import com.xiaomi.base.data.datasource.local.typeconverter.DateConverter
 )
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
-    
+
     /**
      * Returns the DAO for favorite items operations.
      */
     abstract fun favoriteItemDao(): FavoriteItemDao
-    
+
     /**
      * Returns the DAO for favorite categories operations.
      */
     abstract fun favoriteCategoryDao(): FavoriteCategoryDao
-    
+
     /**
      * Returns the DAO for user profiles operations.
      */
     abstract fun userProfileDao(): UserProfileDao
-    
+
     /**
      * Returns the DAO for user data operations.
      */
     abstract fun userDataDao(): UserDataDao
-    
+
     // Removed favoriteCreatorDao() - no longer needed
-    
+
     companion object {
         const val DATABASE_NAME = "app_database"
     }

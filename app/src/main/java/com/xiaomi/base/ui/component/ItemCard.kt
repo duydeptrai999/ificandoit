@@ -47,7 +47,7 @@ fun ItemCard(
 ) {
     val width = if (isLarge) 180.dp else 120.dp
     val height = if (isLarge) 270.dp else 180.dp
-    
+
     Card(
         modifier = Modifier
             .padding(end = 12.dp, bottom = 4.dp)
@@ -82,7 +82,7 @@ fun ItemCard(
                         )
                     }
                 )
-                
+
                 // Rating badge
                 if (item.score > 0) {
                     RatingBadge(
@@ -93,7 +93,7 @@ fun ItemCard(
                     )
                 }
             }
-            
+
             // Item title
             Text(
                 text = item.title,

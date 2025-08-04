@@ -66,7 +66,7 @@ val MaterialTheme.extendedColors: XiaomiExtendedColors
 
 /**
  * Main theme provider for Xiaomi UI Kit
- * 
+ *
  * This composable provides the base Material3 theme with Xiaomi customizations.
  * It wraps the content with proper color schemes, typography, and spacing.
  */

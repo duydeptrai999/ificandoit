@@ -43,7 +43,7 @@ enum class VisualFeedbackType {
 /**
  * Visual Feedback Component
  * Provides visual feedback for user interactions
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param feedbackType Type of visual feedback to provide
  * @param enabled Whether visual feedback is enabled
@@ -65,7 +65,7 @@ fun VisualFeedbackComponent(
     var isTriggered by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val interactionSource = remember { MutableInteractionSource() }
-    
+
     val triggerFeedback = {
         if (enabled) {
             scope.launch {
@@ -75,7 +75,7 @@ fun VisualFeedbackComponent(
             }
         }
     }
-    
+
     Box(
         modifier = modifier.then(
             if (onClick != null) {
@@ -189,16 +189,16 @@ private fun RippleFeedback(
         animationSpec = tween(duration, easing = EaseOutQuart),
         label = "ripple_radius"
     )
-    
+
     val animatedAlpha by animateFloatAsState(
         targetValue = if (isTriggered) 0f else 0.3f,
         animationSpec = tween(duration, easing = EaseOutQuart),
         label = "ripple_alpha"
     )
-    
+
     Box {
         content()
-        
+
         if (isTriggered) {
             Box(
                 modifier = Modifier
@@ -229,7 +229,7 @@ private fun ScaleFeedback(
         animationSpec = tween(duration / 2, easing = EaseInOutQuart),
         label = "scale_feedback"
     )
-    
+
     Box(
         modifier = Modifier.scale(animatedScale)
     ) {
@@ -253,10 +253,10 @@ private fun GlowFeedback(
         animationSpec = tween(duration, easing = EaseInOutQuart),
         label = "glow_feedback"
     )
-    
+
     Box {
         content()
-        
+
         if (animatedGlow > 0f) {
             Box(
                 modifier = Modifier
@@ -287,13 +287,13 @@ private fun BorderFlashFeedback(
         animationSpec = tween(duration, easing = EaseInOutQuart),
         label = "border_flash"
     )
-    
+
     val animatedAlpha by animateFloatAsState(
         targetValue = if (isTriggered) 1f else 0f,
         animationSpec = tween(duration, easing = EaseInOutQuart),
         label = "border_alpha"
     )
-    
+
     Box(
         modifier = Modifier
             .border(
@@ -322,10 +322,10 @@ private fun ColorChangeFeedback(
         animationSpec = tween(duration, easing = EaseInOutQuart),
         label = "color_change"
     )
-    
+
     Box {
         content()
-        
+
         if (animatedAlpha > 0f) {
             Box(
                 modifier = Modifier
@@ -351,7 +351,7 @@ private fun ShakeFeedback(
     content: @Composable () -> Unit
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "shake_transition")
-    
+
     val shakeOffset by infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = if (isTriggered) 10f else 0f,
@@ -361,7 +361,7 @@ private fun ShakeFeedback(
         ),
         label = "shake_offset"
     )
-    
+
     Box(
         modifier = Modifier.offset(x = if (isTriggered) shakeOffset.dp else 0.dp)
     ) {
@@ -387,7 +387,7 @@ private fun BounceFeedback(
         ),
         label = "bounce_feedback"
     )
-    
+
     Box(
         modifier = Modifier.scale(animatedScale)
     ) {
@@ -407,7 +407,7 @@ private fun PulseFeedback(
     content: @Composable () -> Unit
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "pulse_transition")
-    
+
     val pulseAlpha by infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = if (isTriggered) 0.5f else 0f,
@@ -417,10 +417,10 @@ private fun PulseFeedback(
         ),
         label = "pulse_alpha"
     )
-    
+
     Box {
         content()
-        
+
         if (isTriggered && pulseAlpha > 0f) {
             Box(
                 modifier = Modifier
@@ -451,7 +451,7 @@ private fun HighlightFeedback(
         animationSpec = tween(duration, easing = EaseInOutQuart),
         label = "highlight_feedback"
     )
-    
+
     Box(
         modifier = Modifier
             .background(
@@ -480,7 +480,7 @@ private fun ShadowElevationFeedback(
         animationSpec = tween(duration, easing = EaseInOutQuart),
         label = "elevation_feedback"
     )
-    
+
     Box(
         modifier = Modifier.scale(animatedScale)
     ) {

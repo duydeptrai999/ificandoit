@@ -20,7 +20,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
-    
     /**
      * Provides a GetPopularItemsUseCase instance.
      *
@@ -32,7 +31,7 @@ object UseCaseModule {
     fun provideGetPopularItemsUseCase(itemRepository: ItemRepository): GetPopularItemsUseCase {
         return GetPopularItemsUseCase(itemRepository)
     }
-    
+
     /**
      * Provides a GetTopRatedItemsUseCase instance.
      *
@@ -44,7 +43,7 @@ object UseCaseModule {
     fun provideGetTopRatedItemsUseCase(itemRepository: ItemRepository): GetTopRatedItemsUseCase {
         return GetTopRatedItemsUseCase(itemRepository)
     }
-    
+
     /**
      * Provides a GetItemDetailsUseCase instance.
      *
@@ -56,7 +55,7 @@ object UseCaseModule {
     fun provideGetItemDetailsUseCase(itemRepository: ItemRepository): GetItemDetailsUseCase {
         return GetItemDetailsUseCase(itemRepository)
     }
-    
+
     /**
      * Provides a ToggleFavoriteItemUseCase instance.
      *
@@ -68,7 +67,7 @@ object UseCaseModule {
     fun provideToggleFavoriteItemUseCase(itemRepository: ItemRepository): ToggleFavoriteItemUseCase {
         return ToggleFavoriteItemUseCase(itemRepository)
     }
-    
+
     /**
      * Provides a GetCategoriesUseCase instance.
      *
@@ -80,7 +79,7 @@ object UseCaseModule {
     fun provideGetCategoriesUseCase(categoryRepository: CategoryRepository): GetCategoriesUseCase {
         return GetCategoriesUseCase(categoryRepository)
     }
-    
+
     /**
      * Provides a GetCategoryDetailsUseCase instance.
      *
@@ -92,6 +91,4 @@ object UseCaseModule {
     fun provideGetCategoryDetailsUseCase(categoryRepository: CategoryRepository): GetCategoryDetailsUseCase {
         return GetCategoryDetailsUseCase(categoryRepository)
     }
-    
-
 }

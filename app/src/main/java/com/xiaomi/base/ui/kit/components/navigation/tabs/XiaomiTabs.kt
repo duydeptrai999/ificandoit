@@ -61,7 +61,7 @@ data class XiaomiTabItem(
 
 /**
  * Xiaomi Tab Row - Primary style
- * 
+ *
  * A simplified version that doesn't use the complex indicator API
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -80,7 +80,7 @@ fun XiaomiTabRow(
 
 /**
  * Xiaomi Secondary Tab Row
- * 
+ *
  * A simplified version that doesn't use the complex indicator API
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -99,7 +99,7 @@ fun XiaomiSecondaryTabRow(
 
 /**
  * Xiaomi Scrollable Tab Row
- * 
+ *
  * A simplified version that doesn't use the complex indicator API
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -120,9 +120,9 @@ fun XiaomiScrollableTabRow(
 
 /**
  * Xiaomi Tab
- * 
+ *
  * A tab component with optional text and icon.
- * 
+ *
  * @param selected Whether this tab is currently selected
  * @param onClick Callback when this tab is clicked
  * @param modifier Modifier to be applied to this tab
@@ -160,9 +160,9 @@ fun XiaomiTab(
 
 /**
  * Xiaomi Tab with Icon and Text
- * 
+ *
  * A tab with both icon and text content.
- * 
+ *
  * @param selected Whether the tab is selected
  * @param onClick Callback when the tab is clicked
  * @param text Text content for the tab
@@ -200,9 +200,9 @@ fun XiaomiLeadingIconTab(
 
 /**
  * Xiaomi Simple Tabs
- * 
+ *
  * A simplified tab implementation with predefined items.
- * 
+ *
  * @param items List of tab items
  * @param selectedTabIndex Currently selected tab index
  * @param onTabSelected Callback when a tab is selected
@@ -257,9 +257,9 @@ fun XiaomiSimpleTabs(
 
 /**
  * Xiaomi Tabs with Pager
- * 
+ *
  * A tab implementation with horizontal pager for content.
- * 
+ *
  * @param items List of tab items with content
  * @param modifier Modifier to be applied to the component
  * @param scrollable Whether the tabs should be scrollable
@@ -274,7 +274,7 @@ fun XiaomiTabsWithPager(
     val pagerState = rememberPagerState { items.size }
     val scope = rememberCoroutineScope()
     val selectedTabIndex = pagerState.currentPage
-    
+
     Column(modifier = modifier) {
         XiaomiTabRow(
             selectedTabIndex = selectedTabIndex,
@@ -296,7 +296,7 @@ fun XiaomiTabsWithPager(
                 )
             }
         }
-        
+
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.weight(1f)
@@ -308,9 +308,9 @@ fun XiaomiTabsWithPager(
 
 /**
  * Xiaomi Icon Tabs
- * 
+ *
  * Tabs with only icons, no text.
- * 
+ *
  * @param items List of tab items with icons
  * @param selectedTabIndex Currently selected tab index
  * @param onTabSelected Callback when a tab is selected
@@ -368,7 +368,7 @@ fun XiaomiIconTabs(
 fun XiaomiTabsPreview() {
     XiaomiPreviewTheme {
         var selectedTab by remember { mutableIntStateOf(0) }
-        
+
         val tabItems = listOf(
             XiaomiTabItem(
                 id = "home",
@@ -387,20 +387,20 @@ fun XiaomiTabsPreview() {
                 icon = Icons.Default.Person
             )
         )
-        
+
         Column {
             Text(
                 "Tab Variants",
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(16.dp)
             )
-            
+
             XiaomiSimpleTabs(
                 items = tabItems,
                 selectedTabIndex = selectedTab,
                 onTabSelected = { selectedTab = it }
             )
-            
+
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -426,7 +426,7 @@ fun XiaomiTabsPreview() {
 fun XiaomiScrollableTabsPreview() {
     XiaomiPreviewTheme {
         var selectedTab by remember { mutableIntStateOf(0) }
-        
+
         val tabItems = listOf(
             XiaomiTabItem(id = "tab1", title = "Home", icon = Icons.Default.Home),
             XiaomiTabItem(id = "tab2", title = "Favorites", icon = Icons.Default.Favorite, badge = "5"),
@@ -437,7 +437,7 @@ fun XiaomiScrollableTabsPreview() {
             XiaomiTabItem(id = "tab7", title = "Additional"),
             XiaomiTabItem(id = "tab8", title = "Extra Tab")
         )
-        
+
         Column {
             XiaomiScrollableTabRow(
                 selectedTabIndex = selectedTab
@@ -483,7 +483,7 @@ fun XiaomiScrollableTabsPreview() {
                     )
                 }
             }
-            
+
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -597,7 +597,7 @@ fun XiaomiTabsWithPagerPreview() {
                 }
             )
         )
-        
+
         XiaomiTabsWithPager(
             items = tabItems
         )
@@ -609,7 +609,7 @@ fun XiaomiTabsWithPagerPreview() {
 fun XiaomiTabsDarkPreview() {
     XiaomiPreviewTheme(darkTheme = true) {
         var selectedTab by remember { mutableIntStateOf(0) }
-        
+
         val tabItems = listOf(
             XiaomiTabItem(
                 id = "home",
@@ -628,14 +628,14 @@ fun XiaomiTabsDarkPreview() {
                 icon = Icons.Default.Settings
             )
         )
-        
+
         Column {
             XiaomiSimpleTabs(
                 items = tabItems,
                 selectedTabIndex = selectedTab,
                 onTabSelected = { selectedTab = it }
             )
-            
+
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()

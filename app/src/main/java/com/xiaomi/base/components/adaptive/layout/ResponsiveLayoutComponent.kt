@@ -67,17 +67,17 @@ data class NavigationItem(
 fun rememberLayoutConfiguration(): LayoutConfiguration {
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current.density
-    
+
     val widthDp = configuration.screenWidthDp.dp
     val heightDp = configuration.screenHeightDp.dp
     val isLandscape = configuration.screenWidthDp > configuration.screenHeightDp
-    
+
     val screenSize = when (configuration.screenWidthDp) {
         in 0..599 -> ScreenSize.COMPACT
         in 600..839 -> ScreenSize.MEDIUM
         else -> ScreenSize.EXPANDED
     }
-    
+
     return LayoutConfiguration(
         screenSize = screenSize,
         widthDp = widthDp,
@@ -98,13 +98,13 @@ fun ResponsiveGridComponent(
     content: LazyGridScope.() -> Unit
 ) {
     val configuration = rememberLayoutConfiguration()
-    
+
     val columns = when (configuration.screenSize) {
         ScreenSize.COMPACT -> 1
         ScreenSize.MEDIUM -> 2
         ScreenSize.EXPANDED -> 3
     }
-    
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(columns),
         modifier = modifier,
@@ -129,12 +129,12 @@ fun AdaptiveNavigationComponent(
     content: @Composable () -> Unit
 ) {
     val configuration = rememberLayoutConfiguration()
-    
+
     val shouldUseRail = useNavigationRail ?: (
-        configuration.screenSize != ScreenSize.COMPACT || 
+        configuration.screenSize != ScreenSize.COMPACT ||
         configuration.isLandscape
     )
-    
+
     if (shouldUseRail) {
         Row(modifier = modifier) {
             // Navigation Rail
@@ -143,7 +143,7 @@ fun AdaptiveNavigationComponent(
                 selectedItem = selectedItem,
                 onItemSelected = onItemSelected
             )
-            
+
             // Content
             Box(modifier = Modifier.weight(1f)) {
                 content()
@@ -155,7 +155,7 @@ fun AdaptiveNavigationComponent(
             Box(modifier = Modifier.weight(1f)) {
                 content()
             }
-            
+
             // Bottom Navigation
             BottomNavigationComponent(
                 items = navigationItems,
@@ -179,19 +179,19 @@ fun AdaptivePaneComponent(
     paneRatio: Float = 0.4f
 ) {
     val configuration = rememberLayoutConfiguration()
-    
+
     val useDualPane = configuration.screenSize != ScreenSize.COMPACT && showSecondaryPane
-    
+
     if (useDualPane) {
         Row(modifier = modifier) {
             // Primary pane
             Box(modifier = Modifier.weight(1f - paneRatio)) {
                 primaryContent()
             }
-            
+
             // Divider
             Spacer(modifier = Modifier.width(1.dp))
-            
+
             // Secondary pane
             Box(modifier = Modifier.weight(paneRatio)) {
                 secondaryContent()
@@ -214,12 +214,12 @@ fun BreakpointAwareComponent(
     breakpoints: Map<Dp, @Composable (LayoutConfiguration) -> Unit>
 ) {
     val configuration = rememberLayoutConfiguration()
-    
+
     val sortedBreakpoints = breakpoints.toList().sortedBy { it.first }
-    val activeBreakpoint = sortedBreakpoints.findLast { 
-        configuration.widthDp >= it.first 
+    val activeBreakpoint = sortedBreakpoints.findLast {
+        configuration.widthDp >= it.first
     }?.second ?: sortedBreakpoints.firstOrNull()?.second
-    
+
     Box(modifier = modifier) {
         activeBreakpoint?.invoke(configuration)
     }
@@ -236,7 +236,7 @@ fun OrientationAwareComponent(
     landscapeContent: (@Composable (LayoutConfiguration) -> Unit)? = null
 ) {
     val configuration = rememberLayoutConfiguration()
-    
+
     Box(modifier = modifier) {
         if (configuration.isLandscape && landscapeContent != null) {
             landscapeContent(configuration)
@@ -295,7 +295,7 @@ private fun BottomNavigationComponent(
 @Composable
 fun rememberResponsiveMetrics(): ResponsiveMetrics {
     val configuration = rememberLayoutConfiguration()
-    
+
     return ResponsiveMetrics(
         isCompact = configuration.screenSize == ScreenSize.COMPACT,
         isMedium = configuration.screenSize == ScreenSize.MEDIUM,

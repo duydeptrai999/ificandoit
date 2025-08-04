@@ -2,7 +2,7 @@ package com.xiaomi.base.data.model
 
 /**
  * Base response wrapper for API calls
- * 
+ *
  * @param T The type of data returned in the response
  */
 data class BaseResponse<T>(
@@ -12,5 +12,5 @@ data class BaseResponse<T>(
     val totalResults: Int? = null,
     val success: Boolean = true,
     val message: String? = null,
-    val errorCode: String? = null
-) 
+    val errorCode: String? = null,
+)

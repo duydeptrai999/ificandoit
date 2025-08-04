@@ -80,7 +80,7 @@ fun EnhancedPreviewContainer(
     var fontScale by remember { mutableStateOf(1.0f) }
     var showBounds by remember { mutableStateOf(false) }
     var selectedDevice by remember { mutableStateOf(PreviewDevice.PHONE) }
-    
+
     BaseAppTheme(darkTheme = isDarkTheme) {
         Column(
             modifier = Modifier
@@ -92,7 +92,7 @@ fun EnhancedPreviewContainer(
                 title = title,
                 description = description
             )
-            
+
             // Controls
             if (showControls) {
                 PreviewControls(
@@ -106,7 +106,7 @@ fun EnhancedPreviewContainer(
                     onDeviceChange = { selectedDevice = it }
                 )
             }
-            
+
             // Content Area
             Box(
                 modifier = Modifier
@@ -151,7 +151,7 @@ private fun PreviewHeader(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             if (description != null) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
@@ -199,9 +199,9 @@ private fun PreviewControls(
                     onCheckedChange = { onThemeToggle() }
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             // Font Scale
             Text("Font Scale: ${String.format("%.1f", fontScale)}")
             Slider(
@@ -210,9 +210,9 @@ private fun PreviewControls(
                 valueRange = 0.8f..2.0f,
                 steps = 11
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             // Show Bounds Toggle
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -225,9 +225,9 @@ private fun PreviewControls(
                     onCheckedChange = { onBoundsToggle() }
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             // Device Selection
             Text("Device Type")
             LazyRow(
@@ -276,7 +276,7 @@ fun ComponentShowcase(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         items(components) { item ->
             ShowcaseCard(
                 title = item.title,
@@ -308,7 +308,7 @@ private fun ShowcaseCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             if (description != null) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
@@ -317,9 +317,9 @@ private fun ShowcaseCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -367,7 +367,7 @@ fun ResponsivePreview(
     content: @Composable () -> Unit
 ) {
     val configuration = LocalConfiguration.current
-    
+
     Column {
         // Size class info
         Card(
@@ -389,7 +389,7 @@ fun ResponsivePreview(
                 )
             }
         }
-        
+
         // Content
         Box(
             modifier = Modifier

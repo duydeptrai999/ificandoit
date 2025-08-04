@@ -1,9 +1,9 @@
 package com.xiaomi.base.preview
 
-import com.xiaomi.base.preview.catalog.PreviewRegistry
 import com.xiaomi.base.preview.catalog.PreviewCategory
-import com.xiaomi.base.preview.catalog.PreviewItem
 import com.xiaomi.base.preview.catalog.PreviewDifficulty
+import com.xiaomi.base.preview.catalog.PreviewItem
+import com.xiaomi.base.preview.catalog.PreviewRegistry
 import com.xiaomi.base.preview.demos.ai.registerAIPreviews
 import com.xiaomi.base.preview.demos.business.registerBusinessPreviews
 import com.xiaomi.base.preview.demos.components.registerUIComponentsPreviews
@@ -24,32 +24,32 @@ import com.xiaomi.base.preview.demos.sports.registerSportsPreviews
 fun registerAllPreviews() {
     // UI Components
     registerUIComponentsPreviews()
-    
+
     // Health & Fitness
     registerHealthTrackingPreviews()
     registerSportsPreviews()
-    
+
     // AI & Technology
     registerAIPreviews()
-    
+
     // Creative & Design
     registerCreativePreviews()
-    
+
     // Lifestyle & Personal
     registerLifestylePreviews()
-    
+
     // Business & Professional
     registerBusinessPreviews()
-    
+
     // Entertainment & Media
     registerEntertainmentPreviews()
-    
+
     // Education & Learning
     registerEducationPreviews()
-    
+
     // Social & Communication
     registerSocialPreviews()
-    
+
     // Finance & Banking
     registerFinancePreviews()
 }
@@ -102,17 +102,18 @@ fun searchPreviewsByTag(tag: String): List<PreviewItem> {
  */
 fun getFeaturedPreviews(): List<PreviewItem> {
     // Return a curated list of featured previews
-    val featuredIds = listOf(
-        "health_dashboard",
-        "ai_chatbot",
-        "creative_photo_editor",
-        "social_feed",
-        "finance_banking_dashboard",
-        "sports_fitness_tracker",
-        "business_dashboard",
-        "entertainment_music_player"
-    )
-    
+    val featuredIds =
+        listOf(
+            "health_dashboard",
+            "ai_chatbot",
+            "creative_photo_editor",
+            "social_feed",
+            "finance_banking_dashboard",
+            "sports_fitness_tracker",
+            "business_dashboard",
+            "entertainment_music_player",
+        )
+
     return PreviewRegistry.items
         .filter { it.id in featuredIds }
 }

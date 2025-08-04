@@ -44,7 +44,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    
+
     Box(modifier = Modifier.fillMaxSize()) {
         when {
             uiState.isLoading -> {
@@ -81,7 +81,7 @@ private fun HomeContent(
     onItemClick: (Int) -> Unit
 ) {
     val context = LocalContext.current
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(bottom = 16.dp)
@@ -93,9 +93,9 @@ private fun HomeContent(
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Lego Component System Demo Card
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -111,16 +111,16 @@ private fun HomeContent(
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
-                        
+
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                         Text(
                             text = "AI-powered component generation system. Describe what you want and let AI create it for you!",
                             style = MaterialTheme.typography.bodyMedium
                         )
-                        
+
                         Spacer(modifier = Modifier.height(12.dp))
-                        
+
                         Button(
                             onClick = {
                                 val intent = Intent(context, DemoActivity::class.java)
@@ -132,70 +132,70 @@ private fun HomeContent(
                         }
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(24.dp))
-                
+
                 if (uiState.trendingItems.isNotEmpty()) {
                     Text(
                         text = stringResource(R.string.trending),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     ItemCarousel(
                         items = uiState.trendingItems,
                         onItemClick = onItemClick,
                         isLarge = true
                     )
-                    
+
                     Spacer(modifier = Modifier.height(24.dp))
                 }
-                
+
                 if (uiState.popularItems.isNotEmpty()) {
                     Text(
                         text = stringResource(R.string.popular),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     ItemCarousel(
                         items = uiState.popularItems,
                         onItemClick = onItemClick
                     )
-                    
+
                     Spacer(modifier = Modifier.height(24.dp))
                 }
-                
+
                 if (uiState.topRatedItems.isNotEmpty()) {
                     Text(
                         text = stringResource(R.string.top_rated),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     ItemCarousel(
                         items = uiState.topRatedItems,
                         onItemClick = onItemClick
                     )
-                    
+
                     Spacer(modifier = Modifier.height(24.dp))
                 }
-                
+
                 if (uiState.upcomingItems.isNotEmpty()) {
                     Text(
                         text = stringResource(R.string.upcoming),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+
                     ItemCarousel(
                         items = uiState.upcomingItems,
                         onItemClick = onItemClick

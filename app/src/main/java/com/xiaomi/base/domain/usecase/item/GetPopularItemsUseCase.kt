@@ -9,15 +9,17 @@ import javax.inject.Inject
 /**
  * Use case for retrieving popular items.
  */
-class GetPopularItemsUseCase @Inject constructor(
-    private val itemRepository: ItemRepository
-) {
-    /**
-     * Execute the use case to get popular items.
-     *
-     * @return A Flow of PagingData containing popular items.
-     */
-    operator fun invoke(): Flow<PagingData<Item>> {
-        return itemRepository.getPopularItems()
+class GetPopularItemsUseCase
+    @Inject
+    constructor(
+        private val itemRepository: ItemRepository,
+    ) {
+        /**
+         * Execute the use case to get popular items.
+         *
+         * @return A Flow of PagingData containing popular items.
+         */
+        operator fun invoke(): Flow<PagingData<Item>> {
+            return itemRepository.getPopularItems()
+        }
     }
-}

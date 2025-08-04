@@ -66,9 +66,9 @@ data class XiaomiStepItem(
 
 /**
  * Xiaomi Horizontal Stepper
- * 
+ *
  * A horizontal stepper component following Material Design 3 principles.
- * 
+ *
  * @param steps List of step items
  * @param currentStep Current active step index (0-based)
  * @param modifier Modifier to be applied to the stepper
@@ -98,7 +98,7 @@ fun XiaomiHorizontalStepper(
                     index == currentStep -> XiaomiStepState.ACTIVE
                     else -> step.state
                 }
-                
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)
@@ -107,7 +107,7 @@ fun XiaomiHorizontalStepper(
                         step = step.copy(state = stepState),
                         stepNumber = index + 1
                     )
-                    
+
                     if (index < steps.lastIndex) {
                         Box(modifier = Modifier.weight(1f)) {
                             connector()
@@ -116,7 +116,7 @@ fun XiaomiHorizontalStepper(
                 }
             }
         }
-        
+
         // Step labels and descriptions
         if (showLabels) {
             Row(
@@ -143,7 +143,7 @@ fun XiaomiHorizontalStepper(
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis
                         )
-                        
+
                         if (showDescription && step.description != null) {
                             Text(
                                 text = step.description,
@@ -155,7 +155,7 @@ fun XiaomiHorizontalStepper(
                                 modifier = Modifier.padding(top = 2.dp)
                             )
                         }
-                        
+
                         if (step.optional) {
                             Text(
                                 text = "Optional",
@@ -173,9 +173,9 @@ fun XiaomiHorizontalStepper(
 
 /**
  * Xiaomi Vertical Stepper
- * 
+ *
  * A vertical stepper component.
- * 
+ *
  * @param steps List of step items
  * @param currentStep Current active step index (0-based)
  * @param modifier Modifier to be applied to the stepper
@@ -197,7 +197,7 @@ fun XiaomiVerticalStepper(
                 index == currentStep -> XiaomiStepState.ACTIVE
                 else -> step.state
             }
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -209,7 +209,7 @@ fun XiaomiVerticalStepper(
                         step = step.copy(state = stepState),
                         stepNumber = index + 1
                     )
-                    
+
                     if (showConnector && index < steps.lastIndex) {
                         Box(
                             modifier = Modifier
@@ -226,7 +226,7 @@ fun XiaomiVerticalStepper(
                         )
                     }
                 }
-                
+
                 // Step content
                 Column(
                     modifier = Modifier
@@ -243,7 +243,7 @@ fun XiaomiVerticalStepper(
                             MaterialTheme.colorScheme.onSurfaceVariant
                         }
                     )
-                    
+
                     if (step.description != null) {
                         Text(
                             text = step.description,
@@ -252,7 +252,7 @@ fun XiaomiVerticalStepper(
                             modifier = Modifier.padding(top = 2.dp)
                         )
                     }
-                    
+
                     if (step.optional) {
                         Text(
                             text = "Optional",
@@ -261,10 +261,10 @@ fun XiaomiVerticalStepper(
                             modifier = Modifier.padding(top = 2.dp)
                         )
                     }
-                    
+
                     // Custom content for this step
                     content?.invoke(index, step)
-                    
+
                     if (index < steps.lastIndex) {
                         Box(modifier = Modifier.height(16.dp))
                     }
@@ -305,7 +305,7 @@ private fun XiaomiStepIndicator(
             MaterialTheme.colorScheme.outline
         )
     }
-    
+
     Box(
         modifier = modifier
             .size(32.dp)
@@ -376,9 +376,9 @@ private fun XiaomiStepConnector(
 
 /**
  * Xiaomi Simple Stepper
- * 
+ *
  * A simplified stepper with just step numbers and titles.
- * 
+ *
  * @param stepTitles List of step titles
  * @param currentStep Current active step index (0-based)
  * @param modifier Modifier to be applied to the stepper
@@ -397,7 +397,7 @@ fun XiaomiSimpleStepper(
             title = title
         )
     }
-    
+
     when (orientation) {
         XiaomiStepperOrientation.HORIZONTAL -> {
             XiaomiHorizontalStepper(
@@ -426,9 +426,9 @@ enum class XiaomiStepperOrientation {
 
 /**
  * Xiaomi Progress Stepper
- * 
+ *
  * A stepper with progress indication.
- * 
+ *
  * @param steps List of step items
  * @param currentStep Current active step index (0-based)
  * @param modifier Modifier to be applied to the stepper
@@ -446,7 +446,7 @@ fun XiaomiProgressStepper(
             val progress = if (steps.isNotEmpty()) {
                 (currentStep + 1).toFloat() / steps.size.toFloat()
             } else 0f
-            
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -466,7 +466,7 @@ fun XiaomiProgressStepper(
                     fontWeight = FontWeight.Medium
                 )
             }
-            
+
             // Progress bar
             Box(
                 modifier = Modifier
@@ -488,7 +488,7 @@ fun XiaomiProgressStepper(
                 )
             }
         }
-        
+
         XiaomiHorizontalStepper(
             steps = steps,
             currentStep = currentStep,
@@ -513,9 +513,9 @@ fun XiaomiSteppersPreview() {
                     "Stepper Variants",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 var currentStep by remember { mutableIntStateOf(1) }
-                
+
                 val steps = listOf(
                     XiaomiStepItem(
                         id = "1",
@@ -539,7 +539,7 @@ fun XiaomiSteppersPreview() {
                         description = "Finish setup"
                     )
                 )
-                
+
                 // Horizontal stepper
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -564,7 +564,7 @@ fun XiaomiSteppersPreview() {
                         )
                     }
                 }
-                
+
                 // Progress stepper
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -607,7 +607,7 @@ fun XiaomiVerticalStepperPreview() {
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
-                
+
                 val steps = listOf(
                     XiaomiStepItem(
                         id = "1",
@@ -626,7 +626,7 @@ fun XiaomiVerticalStepperPreview() {
                         description = "Design your advertisement"
                     )
                 )
-                
+
                 XiaomiVerticalStepper(
                     steps = steps,
                     currentStep = 1,
@@ -670,19 +670,19 @@ fun XiaomiSteppersDarkPreview() {
                     "Dark Theme Steppers",
                     style = MaterialTheme.typography.titleMedium
                 )
-                
+
                 val steps = listOf(
                     XiaomiStepItem("1", "Step 1", "First step"),
                     XiaomiStepItem("2", "Step 2", "Second step"),
                     XiaomiStepItem("3", "Step 3", "Third step", state = XiaomiStepState.ERROR)
                 )
-                
+
                 XiaomiHorizontalStepper(
                     steps = steps,
                     currentStep = 2,
                     showLabels = true
                 )
-                
+
                 XiaomiSimpleStepper(
                     stepTitles = listOf("Start", "Process", "Complete"),
                     currentStep = 1

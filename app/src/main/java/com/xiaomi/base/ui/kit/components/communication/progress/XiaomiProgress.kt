@@ -36,10 +36,10 @@ import kotlin.math.sin
 
 /**
  * Xiaomi Base UI Kit Linear Progress Indicator
- * 
+ *
  * A Material Design 3 linear progress indicator with Xiaomi design tokens.
  * Shows progress along a horizontal line.
- * 
+ *
  * @param progress The progress of this progress indicator, where 0.0 represents no progress and 1.0 represents full progress
  * @param modifier Modifier to be applied to the progress indicator
  * @param color The color of the progress indicator
@@ -65,7 +65,7 @@ fun XiaomiLinearProgress(
 
 /**
  * Xiaomi Base UI Kit Indeterminate Linear Progress Indicator
- * 
+ *
  * An indeterminate linear progress indicator that shows continuous animation.
  */
 @Composable
@@ -85,10 +85,10 @@ fun XiaomiLinearProgressIndeterminate(
 
 /**
  * Xiaomi Base UI Kit Circular Progress Indicator
- * 
+ *
  * A Material Design 3 circular progress indicator with Xiaomi design tokens.
  * Shows progress in a circular form.
- * 
+ *
  * @param progress The progress of this progress indicator, where 0.0 represents no progress and 1.0 represents full progress
  * @param modifier Modifier to be applied to the progress indicator
  * @param color The color of the progress indicator
@@ -117,7 +117,7 @@ fun XiaomiCircularProgress(
 
 /**
  * Xiaomi Base UI Kit Indeterminate Circular Progress Indicator
- * 
+ *
  * An indeterminate circular progress indicator that shows continuous animation.
  */
 @Composable
@@ -137,9 +137,9 @@ fun XiaomiCircularProgressIndeterminate(
 
 /**
  * Xiaomi Custom Circular Progress with Text
- * 
+ *
  * A custom circular progress indicator that displays percentage text in the center.
- * 
+ *
  * @param progress The progress value between 0.0 and 1.0
  * @param modifier Modifier to be applied to the progress indicator
  * @param size The size of the circular progress indicator
@@ -165,7 +165,7 @@ fun XiaomiCircularProgressWithText(
         animationSpec = tween(durationMillis = animationDuration),
         label = "progress"
     )
-    
+
     Box(
         modifier = modifier.size(size),
         contentAlignment = Alignment.Center
@@ -182,7 +182,7 @@ fun XiaomiCircularProgressWithText(
                 trackColor = trackColor
             )
         }
-        
+
         if (showPercentage) {
             Text(
                 text = "${(animatedProgress * 100).toInt()}%",
@@ -207,7 +207,7 @@ private fun DrawScope.drawCircularProgress(
     val diameter = size.minDimension
     val radius = (diameter - strokeWidthPx) / 2
     val center = Offset(size.width / 2, size.height / 2)
-    
+
     // Draw track
     drawCircle(
         color = trackColor,
@@ -215,7 +215,7 @@ private fun DrawScope.drawCircularProgress(
         center = center,
         style = Stroke(width = strokeWidthPx, cap = StrokeCap.Round)
     )
-    
+
     // Draw progress
     val sweepAngle = progress * 360f
     if (sweepAngle > 0) {
@@ -236,9 +236,9 @@ private fun DrawScope.drawCircularProgress(
 
 /**
  * Xiaomi Step Progress Indicator
- * 
+ *
  * A custom step-based progress indicator showing discrete steps.
- * 
+ *
  * @param currentStep The current active step (0-based)
  * @param totalSteps The total number of steps
  * @param modifier Modifier to be applied to the progress indicator
@@ -263,7 +263,7 @@ fun XiaomiStepProgress(
         repeat(totalSteps) { index ->
             val isActive = index <= currentStep
             val stepColor = if (isActive) activeColor else inactiveColor
-            
+
             Canvas(
                 modifier = Modifier.size(stepSize)
             ) {
@@ -272,7 +272,7 @@ fun XiaomiStepProgress(
                     radius = size.minDimension / 2
                 )
             }
-            
+
             // Draw connecting line (except for last step)
             if (index < totalSteps - 1) {
                 Canvas(
@@ -308,11 +308,11 @@ fun XiaomiProgressPreview() {
                 progress = { 0.7f },
                 modifier = Modifier.fillMaxWidth()
             )
-            
+
             XiaomiLinearProgressIndeterminate(
                 modifier = Modifier.fillMaxWidth()
             )
-            
+
             // Circular Progress
             Text("Circular Progress", style = MaterialTheme.typography.titleMedium)
             androidx.compose.foundation.layout.Row(
@@ -322,17 +322,17 @@ fun XiaomiProgressPreview() {
                     progress = { 0.7f },
                     modifier = Modifier.size(48.dp)
                 )
-                
+
                 XiaomiCircularProgressIndeterminate(
                     modifier = Modifier.size(48.dp)
                 )
-                
+
                 XiaomiCircularProgressWithText(
                     progress = 0.75f,
                     size = 80.dp
                 )
             }
-            
+
             // Step Progress
             Text("Step Progress", style = MaterialTheme.typography.titleMedium)
             XiaomiStepProgress(
@@ -356,12 +356,12 @@ fun XiaomiProgressDarkPreview() {
                 progress = { 0.5f },
                 modifier = Modifier.fillMaxWidth()
             )
-            
+
             XiaomiCircularProgressWithText(
                 progress = 0.6f,
                 size = 100.dp
             )
-            
+
             XiaomiStepProgress(
                 currentStep = 1,
                 totalSteps = 4,

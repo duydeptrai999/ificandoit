@@ -32,7 +32,7 @@ import kotlin.math.sin
 
 /**
  * Xiaomi Animation Components - Animated UI Components
- * 
+ *
  * This file contains animation-related components following Material Design 3 principles
  * with Xiaomi's design language. These components provide smooth and engaging animations
  * for better user experience.
@@ -60,7 +60,7 @@ fun XiaomiLoadingSpinner(
         ),
         label = "rotation"
     )
-    
+
     Box(
         modifier = modifier
             .size(size)
@@ -97,7 +97,7 @@ fun XiaomiPulseAnimation(
         ),
         label = "scale"
     )
-    
+
     val alpha by infiniteTransition.animateFloat(
         initialValue = 0.7f,
         targetValue = 1f,
@@ -107,7 +107,7 @@ fun XiaomiPulseAnimation(
         ),
         label = "alpha"
     )
-    
+
     Box(
         modifier = modifier
             .scale(scale)
@@ -137,19 +137,19 @@ fun XiaomiShimmerEffect(
         ),
         label = "translate"
     )
-    
+
     val shimmerColors = listOf(
         MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
         MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
         MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
     )
-    
+
     val brush = Brush.linearGradient(
         colors = shimmerColors,
         start = androidx.compose.ui.geometry.Offset(translateAnim - 200f, translateAnim - 200f),
         end = androidx.compose.ui.geometry.Offset(translateAnim, translateAnim)
     )
-    
+
     Box(
         modifier = modifier
             .clip(shape)
@@ -169,7 +169,7 @@ fun XiaomiBounceAnimation(
     content: @Composable () -> Unit
 ) {
     var isPressed by remember { mutableStateOf(false) }
-    
+
     val scale by animateFloatAsState(
         targetValue = if (isPressed) 0.95f else 1f,
         animationSpec = spring(
@@ -178,7 +178,7 @@ fun XiaomiBounceAnimation(
         ),
         label = "bounce"
     )
-    
+
     Box(
         modifier = modifier
             .scale(scale)
@@ -193,7 +193,7 @@ fun XiaomiBounceAnimation(
     ) {
         content()
     }
-    
+
     LaunchedEffect(isPressed) {
         if (isPressed) {
             delay(100)
@@ -217,7 +217,7 @@ fun XiaomiAnimatedFAB(
     contentColor: Color = MaterialTheme.colorScheme.onPrimary
 ) {
     val density = LocalDensity.current
-    
+
     AnimatedVisibility(
         visible = true,
         enter = slideInVertically {
@@ -273,14 +273,14 @@ fun XiaomiWaveAnimation(
     animationDuration: Int = 2000
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "wave")
-    
+
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
         repeat(waveCount) { index ->
             val animationDelay = (animationDuration / waveCount) * index
-            
+
             val scale by infiniteTransition.animateFloat(
                 initialValue = 0f,
                 targetValue = 1f,
@@ -294,7 +294,7 @@ fun XiaomiWaveAnimation(
                 ),
                 label = "wave_scale_$index"
             )
-            
+
             val alpha by infiniteTransition.animateFloat(
                 initialValue = 0.7f,
                 targetValue = 0f,
@@ -308,7 +308,7 @@ fun XiaomiWaveAnimation(
                 ),
                 label = "wave_alpha_$index"
             )
-            
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -335,7 +335,7 @@ fun XiaomiTypingDots(
     animationDuration: Int = 1400
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "typing")
-    
+
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -343,7 +343,7 @@ fun XiaomiTypingDots(
     ) {
         repeat(3) { index ->
             val animationDelay = (animationDuration / 6) * index
-            
+
             val offsetY by infiniteTransition.animateFloat(
                 initialValue = 0f,
                 targetValue = -10f,
@@ -357,7 +357,7 @@ fun XiaomiTypingDots(
                 ),
                 label = "dot_offset_$index"
             )
-            
+
             Box(
                 modifier = Modifier
                     .size(dotSize)
@@ -389,7 +389,7 @@ fun XiaomiProgressWave(
         ),
         label = "progress"
     )
-    
+
     val infiniteTransition = rememberInfiniteTransition(label = "wave")
     val waveOffset by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -400,7 +400,7 @@ fun XiaomiProgressWave(
         ),
         label = "wave_offset"
     )
-    
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -447,7 +447,7 @@ fun XiaomiFlipCard(
         ),
         label = "flip"
     )
-    
+
     Box(
         modifier = modifier
             .graphicsLayer {
@@ -482,7 +482,7 @@ fun XiaomiSlideReveal(
     content: @Composable () -> Unit
 ) {
     val density = LocalDensity.current
-    
+
     AnimatedVisibility(
         visible = visible,
         modifier = modifier,
@@ -539,7 +539,7 @@ fun XiaomiLoadingSpinnerPreview() {
             ) {
                 Text("Loading Spinner")
                 XiaomiLoadingSpinner()
-                
+
                 Text("Large Spinner")
                 XiaomiLoadingSpinner(size = 60.dp, strokeWidth = 6.dp)
             }
@@ -592,7 +592,7 @@ fun XiaomiShimmerEffectPreview() {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text("Shimmer Loading Effect")
-                
+
                 // Simulate loading cards
                 repeat(3) {
                     Row(
@@ -637,7 +637,7 @@ fun XiaomiWaveAnimationPreview() {
                 XiaomiWaveAnimation(
                     modifier = Modifier.size(100.dp)
                 )
-                
+
                 Text("Typing Dots")
                 XiaomiTypingDots()
             }
@@ -656,14 +656,14 @@ fun XiaomiAnimatedFABPreview() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("Animated FAB")
-                
+
                 XiaomiAnimatedFAB(
                     onClick = {},
                     icon = Icons.Default.Add,
                     text = "Create",
                     expanded = true
                 )
-                
+
                 XiaomiAnimatedFAB(
                     onClick = {},
                     icon = Icons.Default.Edit
@@ -683,17 +683,17 @@ fun XiaomiProgressWavePreview() {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text("Progress Wave")
-                
+
                 XiaomiProgressWave(
                     progress = 0.3f,
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 XiaomiProgressWave(
                     progress = 0.7f,
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 XiaomiProgressWave(
                     progress = 1f,
                     modifier = Modifier.fillMaxWidth()
@@ -714,11 +714,11 @@ fun XiaomiAnimationsDarkPreview() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("Dark Theme Animations")
-                
+
                 XiaomiLoadingSpinner()
-                
+
                 XiaomiTypingDots()
-                
+
                 XiaomiProgressWave(
                     progress = 0.6f,
                     modifier = Modifier.fillMaxWidth()

@@ -26,7 +26,7 @@ class Converters {
         if (value.isNullOrEmpty()) return emptyMap()
         // Simple JSON-like parsing for basic types
         return try {
-            value.split(",").associate { 
+            value.split(",").associate {
                 val parts = it.split(":")
                 parts[0].trim() to (parts.getOrNull(1)?.trim() ?: "") as Any
             }
@@ -53,36 +53,30 @@ data class UserDataEntity(
      */
     @PrimaryKey
     val id: Int,
-    
     /**
      * The ID of the user who owns this data.
      */
     val userId: String,
-    
     /**
      * The type of data (e.g., "metric", "content", "preference", "setting", etc.).
      */
     val dataType: String,
-    
     /**
      * The actual data value stored as string.
      */
     val value: String,
-    
     /**
      * Optional unit for numeric values.
      */
     val unit: String? = null,
-    
     /**
      * The timestamp when this data was created/updated.
      */
     val timestamp: Date,
-    
     /**
      * Optional metadata stored as key-value pairs.
      */
-    val metadata: Map<String, Any> = emptyMap()
+    val metadata: Map<String, Any> = emptyMap(),
 )
 
 /**
@@ -96,7 +90,7 @@ fun UserDataEntity.toUserData(): UserData {
         value = this.value,
         unit = this.unit,
         timestamp = this.timestamp,
-        metadata = this.metadata
+        metadata = this.metadata,
     )
 }
 
@@ -111,6 +105,6 @@ fun UserData.toUserDataEntity(): UserDataEntity {
         value = this.value,
         unit = this.unit,
         timestamp = this.timestamp,
-        metadata = this.metadata
+        metadata = this.metadata,
     )
 }

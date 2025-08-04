@@ -53,24 +53,24 @@ import kotlinx.coroutines.withContext
 @Composable
 fun LegoComponentDemo() {
     val context = LocalContext.current
-    
+
     // Initialize components
     val registry = ComponentRegistry
     val selector = remember { ComponentSelector(registry) }
     val customizer = remember { TemplateCustomizer() }
     val engine = remember { TemplateEngine() }
-    
+
     // Demo state
     var userRequirement by remember { mutableStateOf("I want a blue submit button with icon") }
     var isProcessing by remember { mutableStateOf(false) }
     var suggestionResult by remember { mutableStateOf<String?>(null) }
     var generatedCode by remember { mutableStateOf<String?>(null) }
-    
+
     // Initialize demo data
     LaunchedEffect(Unit) {
         initializeDemoData(registry)
     }
-    
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -91,15 +91,15 @@ fun LegoComponentDemo() {
                 text = "AI-Powered Component Generation",
                 style = MaterialTheme.typography.headlineMedium
             )
-            
+
             Text(
                 text = "Describe what component you want to create, and our AI will suggest and generate it for you.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             // Input Section
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -113,7 +113,7 @@ fun LegoComponentDemo() {
                         text = "Describe Your Component",
                         style = MaterialTheme.typography.titleMedium
                     )
-                    
+
                     OutlinedTextField(
                         value = userRequirement,
                         onValueChange = { userRequirement = it },
@@ -122,7 +122,7 @@ fun LegoComponentDemo() {
                         placeholder = { Text("e.g., 'I want a red login button with loading state'") },
                         maxLines = 3
                     )
-                    
+
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -150,7 +150,7 @@ fun LegoComponentDemo() {
                         ) {
                             Text(if (isProcessing) "Processing..." else "Generate Component")
                         }
-                        
+
                         Button(
                             onClick = {
                                 userRequirement = ""
@@ -164,7 +164,7 @@ fun LegoComponentDemo() {
                     }
                 }
             }
-            
+
             // Example Prompts
             Card(
                 modifier = Modifier.fillMaxWidth()
@@ -177,7 +177,7 @@ fun LegoComponentDemo() {
                         text = "Example Prompts",
                         style = MaterialTheme.typography.titleMedium
                     )
-                    
+
                     val examples = listOf(
                         "Create a primary button with icon and loading state",
                         "I need an email input field with validation",
@@ -185,7 +185,7 @@ fun LegoComponentDemo() {
                         "Create a large red submit button",
                         "I want a multiline text area for comments"
                     )
-                    
+
                     examples.forEach { example ->
                         Button(
                             onClick = { userRequirement = example },
@@ -199,7 +199,7 @@ fun LegoComponentDemo() {
                     }
                 }
             }
-            
+
             // AI Suggestion Result
             suggestionResult?.let { suggestion ->
                 Card(
@@ -216,7 +216,7 @@ fun LegoComponentDemo() {
                             text = "AI Analysis Result",
                             style = MaterialTheme.typography.titleMedium
                         )
-                        
+
                         Text(
                             text = suggestion,
                             style = MaterialTheme.typography.bodyMedium
@@ -224,7 +224,7 @@ fun LegoComponentDemo() {
                     }
                 }
             }
-            
+
             // Generated Code
             generatedCode?.let { code ->
                 Card(
@@ -241,7 +241,7 @@ fun LegoComponentDemo() {
                             text = "Generated Component Code",
                             style = MaterialTheme.typography.titleMedium
                         )
-                        
+
                         Text(
                             text = code,
                             style = MaterialTheme.typography.bodySmall,
@@ -250,7 +250,7 @@ fun LegoComponentDemo() {
                     }
                 }
             }
-            
+
             // System Stats
             Card(
                 modifier = Modifier.fillMaxWidth()
@@ -263,7 +263,7 @@ fun LegoComponentDemo() {
                         text = "System Statistics",
                         style = MaterialTheme.typography.titleMedium
                     )
-                    
+
                     val totalComponents = registry.findComponents().size
                     val categoriesCount = ComponentCategory.values().size
                     Text("Total Components: $totalComponents")
@@ -317,7 +317,7 @@ private fun initializeDemoData(registry: ComponentRegistry) {
             )
         )
     )
-    
+
     // Register Text Field
     val textFieldMetadata = ComponentMetadata(
         id = "text_field",
@@ -349,7 +349,7 @@ private fun initializeDemoData(registry: ComponentRegistry) {
             )
         )
     )
-    
+
     registry.registerComponent(primaryButtonMetadata)
     registry.registerComponent(textFieldMetadata)
 }
@@ -370,7 +370,7 @@ private suspend fun processUserRequirement(
     withContext(Dispatchers.IO) {
         try {
             delay(1000) // Simulate AI processing time
-            
+
             val projectContext = ProjectContext(
                 projectName = "Demo Project",
                 basePackage = "com.example.demo",
@@ -392,16 +392,16 @@ private suspend fun processUserRequirement(
                 hasViewBinding = false,
                 architecturePattern = "MVVM"
             )
-            
+
             // Step 1: Analyze requirement
             val suggestion = selector.analyzeRequirement(requirement, projectContext)
-            
+
             val suggestionText = buildString {
                 appendLine("🎯 Detected Intent: ${suggestion.detectedIntent.displayName}")
                 appendLine("🔍 Keywords: ${suggestion.keywords.joinToString(", ")}")
                 appendLine("📊 Confidence: ${(suggestion.confidence * 100).toInt()}%")
                 appendLine()
-                
+
                 if (suggestion.suggestedComponents.isNotEmpty()) {
                     appendLine("💡 Suggested Components:")
                     suggestion.suggestedComponents.take(3).forEach { match ->
@@ -414,13 +414,13 @@ private suspend fun processUserRequirement(
                     appendLine("❌ No matching components found")
                 }
             }
-            
+
             withContext(Dispatchers.Main) {
                 onSuggestion(suggestionText)
             }
-            
+
             delay(500) // Simulate customization time
-            
+
             // Step 2: Generate component if suggestion found
             if (suggestion.suggestedComponents.isNotEmpty()) {
                 val bestMatch = suggestion.getBestSuggestion()!!
@@ -429,13 +429,13 @@ private suspend fun processUserRequirement(
                     requirement,
                     projectContext
                 )
-                
+
                 val generatedComponent = engine.generateComponent(
                     bestMatch.component,
                     customizationResult.customizations,
                     projectContext
                 )
-                
+
                 val codePreview = buildString {
                     appendLine("// Generated Component: ${generatedComponent.fileName}")
                     appendLine("// Package: ${generatedComponent.packageName}")
@@ -449,12 +449,12 @@ private suspend fun processUserRequirement(
                     appendLine("// Preview of generated code:")
                     appendLine(generatedComponent.sourceCode.take(500) + "...")
                 }
-                
+
                 withContext(Dispatchers.Main) {
                     onGenerated(codePreview)
                 }
             }
-            
+
         } catch (e: Exception) {
             withContext(Dispatchers.Main) {
                 onSuggestion("❌ Error processing requirement: ${e.message}")

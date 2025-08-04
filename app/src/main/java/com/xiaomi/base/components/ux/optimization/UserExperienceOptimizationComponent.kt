@@ -190,7 +190,7 @@ data class UXOptimizationConfig(
 /**
  * User Experience Optimization Component
  * Comprehensive UX optimization and user journey analytics
- * 
+ *
  * @param config UX optimization configuration
  * @param onMetricUpdate Callback when metrics are updated
  * @param onIssueDetected Callback when UX issue is detected
@@ -209,43 +209,43 @@ fun UserExperienceOptimizationComponent(
     var recommendations by remember { mutableStateOf<List<OptimizationRecommendation>>(emptyList()) }
     var journeys by remember { mutableStateOf<List<UserJourney>>(emptyList()) }
     var abTests by remember { mutableStateOf<List<ABTestConfig>>(emptyList()) }
-    
+
     // Simulate real-time data updates
     LaunchedEffect(config.enableRealTimeTracking) {
         if (config.enableRealTimeTracking) {
             while (true) {
                 delay(5000) // Update every 5 seconds
-                
+
                 // Generate new metrics
                 val newMetrics = generateMockUXMetrics()
                 metrics = newMetrics
                 newMetrics.forEach { onMetricUpdate(it) }
-                
+
                 // Detect issues
                 val detectedIssues = detectUXIssues(newMetrics)
                 issues = detectedIssues
                 detectedIssues.forEach { onIssueDetected(it) }
-                
+
                 // Generate recommendations
                 val newRecommendations = generateOptimizationRecommendations(newMetrics, detectedIssues)
                 recommendations = newRecommendations
                 newRecommendations.forEach { onRecommendationGenerated(it) }
-                
+
                 // Update journeys
                 journeys = generateMockUserJourneys()
-                
+
                 // Update A/B tests
                 abTests = generateMockABTests()
             }
         }
     }
-    
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         // Header
         UXOptimizationHeader()
-        
+
         // Tab Navigation
         TabRow(
             selectedTabIndex = selectedTab
@@ -258,7 +258,7 @@ fun UserExperienceOptimizationComponent(
                 "A/B Tests",
                 "Recommendations"
             )
-            
+
             tabs.forEachIndexed { index, title ->
                 Tab(
                     selected = selectedTab == index,
@@ -267,7 +267,7 @@ fun UserExperienceOptimizationComponent(
                 )
             }
         }
-        
+
         // Tab Content
         when (selectedTab) {
             0 -> UXOverviewTab(metrics, issues, recommendations)
@@ -283,7 +283,7 @@ fun UserExperienceOptimizationComponent(
 /**
  * Real-time UX Metrics Component
  * Monitor UX metrics in real-time
- * 
+ *
  * @param metrics List of UX metrics
  * @param onMetricClick Callback when metric is clicked
  */
@@ -308,7 +308,7 @@ fun RealTimeUXMetricsComponent(
 /**
  * User Journey Analytics Component
  * Analyze user journeys and behavior
- * 
+ *
  * @param journeys List of user journeys
  * @param onJourneySelect Callback when journey is selected
  */
@@ -318,7 +318,7 @@ fun UserJourneyAnalyticsComponent(
     onJourneySelect: (UserJourney) -> Unit = {}
 ) {
     var selectedJourney by remember { mutableStateOf<UserJourney?>(null) }
-    
+
     if (selectedJourney != null) {
         UserJourneyDetailView(
             journey = selectedJourney!!,
@@ -345,7 +345,7 @@ fun UserJourneyAnalyticsComponent(
 /**
  * A/B Testing Component
  * Manage and monitor A/B tests
- * 
+ *
  * @param tests List of A/B tests
  * @param onTestToggle Callback when test is toggled
  * @param onTestCreate Callback when new test is created
@@ -370,7 +370,7 @@ fun ABTestingComponent(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Button(
                 onClick = onTestCreate
             ) {
@@ -382,7 +382,7 @@ fun ABTestingComponent(
                 Text("Create Test")
             }
         }
-        
+
         // Tests list
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -403,7 +403,7 @@ fun ABTestingComponent(
 /**
  * UX Issue Detection Component
  * Detect and display UX issues
- * 
+ *
  * @param issues List of detected issues
  * @param onIssueResolve Callback when issue is resolved
  */
@@ -423,7 +423,7 @@ fun UXIssueDetectionComponent(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         items(issues) { issue ->
             UXIssueCard(
                 issue = issue,
@@ -436,7 +436,7 @@ fun UXIssueDetectionComponent(
 /**
  * Optimization Recommendations Component
  * Display optimization recommendations
- * 
+ *
  * @param recommendations List of recommendations
  * @param onRecommendationApply Callback when recommendation is applied
  */
@@ -456,7 +456,7 @@ fun OptimizationRecommendationsComponent(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         items(recommendations) { recommendation ->
             OptimizationRecommendationCard(
                 recommendation = recommendation,
@@ -489,16 +489,16 @@ private fun UXOptimizationHeader() {
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(32.dp)
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column {
                 Text(
                     text = "UX Optimization Dashboard",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Text(
                     text = "Monitor and optimize user experience",
                     style = MaterialTheme.typography.bodyMedium,
@@ -526,11 +526,11 @@ private fun UXOverviewTab(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             UXOverviewCards(metrics, issues, recommendations)
         }
-        
+
         item {
             Text(
                 text = "Key Metrics",
@@ -538,11 +538,11 @@ private fun UXOverviewTab(
                 fontWeight = FontWeight.Medium
             )
         }
-        
+
         item {
             RealTimeUXMetricsComponent(metrics.take(4))
         }
-        
+
         item {
             Text(
                 text = "Critical Issues",
@@ -550,7 +550,7 @@ private fun UXOverviewTab(
                 fontWeight = FontWeight.Medium
             )
         }
-        
+
         items(issues.filter { it.severity == UXIssueSeverity.CRITICAL }.take(3)) { issue ->
             UXIssueCard(issue = issue)
         }
@@ -570,7 +570,7 @@ private fun UXMetricsTab(metrics: List<UXMetric>) {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         items(metrics) { metric ->
             UXMetricDetailCard(metric = metric)
         }
@@ -626,7 +626,7 @@ private fun UXOverviewCards(
                 )
             }
         }
-        
+
         Card(
             modifier = Modifier.weight(1f)
         ) {
@@ -646,7 +646,7 @@ private fun UXOverviewCards(
                 )
             }
         }
-        
+
         Card(
             modifier = Modifier.weight(1f)
         ) {
@@ -693,7 +693,7 @@ private fun UXMetricCard(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
                 )
-                
+
                 if (metric.trend != 0.0) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
@@ -712,18 +712,18 @@ private fun UXMetricCard(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Text(
                 text = formatMetricType(metric.type),
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             if (metric.target != null) {
                 Spacer(modifier = Modifier.height(4.dp))
-                
+
                 Text(
                     text = "Target: ${formatMetricValue(metric.target, metric.unit)}",
                     style = MaterialTheme.typography.bodySmall,
@@ -753,7 +753,7 @@ private fun UXMetricDetailCard(metric: UXMetric) {
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     Text(
                         text = formatMetricValue(metric.value, metric.unit),
                         style = MaterialTheme.typography.headlineSmall,
@@ -761,7 +761,7 @@ private fun UXMetricDetailCard(metric: UXMetric) {
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
-                
+
                 if (metric.trend != 0.0) {
                     Column(
                         horizontalAlignment = Alignment.End
@@ -782,7 +782,7 @@ private fun UXMetricDetailCard(metric: UXMetric) {
                                 fontWeight = FontWeight.Medium
                             )
                         }
-                        
+
                         Text(
                             text = "vs last period",
                             style = MaterialTheme.typography.bodySmall,
@@ -791,12 +791,12 @@ private fun UXMetricDetailCard(metric: UXMetric) {
                     }
                 }
             }
-            
+
             if (metric.target != null) {
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 val progress = (metric.value / metric.target).toFloat().coerceIn(0f, 1f)
-                
+
                 Column {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -812,18 +812,18 @@ private fun UXMetricDetailCard(metric: UXMetric) {
                             fontWeight = FontWeight.Medium
                         )
                     }
-                    
+
                     Spacer(modifier = Modifier.height(4.dp))
-                    
+
                     LinearProgressIndicator(
                         progress = progress,
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Updated: ${metric.timestamp.format(DateTimeFormatter.ofPattern("MMM dd, HH:mm"))}",
                 style = MaterialTheme.typography.bodySmall,
@@ -857,14 +857,14 @@ private fun UserJourneyCard(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     Text(
                         text = "${journey.events.size} events • ${formatDuration(journey.totalDuration)}",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Column(
                     horizontalAlignment = Alignment.End
                 ) {
@@ -874,7 +874,7 @@ private fun UserJourneyCard(
                         fontWeight = FontWeight.Bold,
                         color = if (journey.completionRate > 0.8) Color.Green else if (journey.completionRate > 0.5) Orange else Color.Red
                     )
-                    
+
                     Text(
                         text = "Completion",
                         style = MaterialTheme.typography.bodySmall,
@@ -882,9 +882,9 @@ private fun UserJourneyCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             // Journey stages visualization
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -902,10 +902,10 @@ private fun UserJourneyCard(
                     )
                 }
             }
-            
+
             if (journey.satisfactionScore != null) {
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -913,7 +913,7 @@ private fun UserJourneyCard(
                         text = "Satisfaction: ",
                         style = MaterialTheme.typography.bodySmall
                     )
-                    
+
                     repeat(5) { index ->
                         Icon(
                             imageVector = if (index < journey.satisfactionScore) Icons.Default.Star else Icons.Default.StarBorder,
@@ -951,16 +951,16 @@ private fun UserJourneyDetailView(
                     contentDescription = "Back"
                 )
             }
-            
+
             Spacer(modifier = Modifier.width(8.dp))
-            
+
             Column {
                 Text(
                     text = "User Journey Details",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Text(
                     text = "User ${journey.userId.take(8)} • Session ${journey.sessionId.take(8)}",
                     style = MaterialTheme.typography.bodyMedium,
@@ -968,7 +968,7 @@ private fun UserJourneyDetailView(
                 )
             }
         }
-        
+
         // Journey events
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -1010,9 +1010,9 @@ private fun UserJourneyEventCard(event: UserJourneyEvent) {
                     modifier = Modifier.size(20.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -1021,13 +1021,13 @@ private fun UserJourneyEventCard(event: UserJourneyEvent) {
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium
                 )
-                
+
                 Text(
                     text = "${event.stage.name} • ${formatDuration(event.duration)}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = event.timestamp.format(DateTimeFormatter.ofPattern("MMM dd, HH:mm:ss")),
                     style = MaterialTheme.typography.bodySmall,
@@ -1050,7 +1050,7 @@ private fun UXIssueCard(
         UXIssueSeverity.LOW -> Color(0xFF4CAF50)
         UXIssueSeverity.INFO -> Color(0xFF2196F3)
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -1073,14 +1073,14 @@ private fun UXIssueCard(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     Text(
                         text = issue.description,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Badge(
                     containerColor = severityColor
                 ) {
@@ -1091,9 +1091,9 @@ private fun UXIssueCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -1103,26 +1103,26 @@ private fun UXIssueCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = "Priority: ${issue.priority}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             if (issue.recommendation.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Text(
                     text = "Recommendation: ${issue.recommendation}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
@@ -1161,22 +1161,22 @@ private fun ABTestCard(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     Text(
                         text = test.description,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Switch(
                     checked = test.isActive,
                     onCheckedChange = onToggle
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -1186,17 +1186,17 @@ private fun ABTestCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = "${test.duration} days",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             if (test.isActive) {
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 // Traffic split visualization
                 Column {
                     Text(
@@ -1204,7 +1204,7 @@ private fun ABTestCard(
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     test.variants.forEach { variant ->
                         val split = test.trafficSplit[variant] ?: 0.0
                         Row(
@@ -1251,14 +1251,14 @@ private fun OptimizationRecommendationCard(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     Text(
                         text = recommendation.description,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Badge(
                     containerColor = when (recommendation.priority) {
                         1 -> Color.Red
@@ -1274,9 +1274,9 @@ private fun OptimizationRecommendationCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -1286,17 +1286,17 @@ private fun OptimizationRecommendationCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = "Effort: ${recommendation.effort}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             if (recommendation.estimatedROI != null) {
                 Spacer(modifier = Modifier.height(4.dp))
-                
+
                 Text(
                     text = "Estimated ROI: ${(recommendation.estimatedROI * 100).toInt()}%",
                     style = MaterialTheme.typography.bodySmall,
@@ -1304,9 +1304,9 @@ private fun OptimizationRecommendationCard(
                     fontWeight = FontWeight.Medium
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
@@ -1354,7 +1354,7 @@ private fun formatDuration(milliseconds: Long): String {
     val seconds = milliseconds / 1000
     val minutes = seconds / 60
     val hours = minutes / 60
-    
+
     return when {
         hours > 0 -> "${hours}h ${minutes % 60}m"
         minutes > 0 -> "${minutes}m ${seconds % 60}s"
@@ -1430,7 +1430,7 @@ private fun generateMockUserJourneys(): List<UserJourney> {
                 success = Random.nextBoolean()
             )
         }
-        
+
         UserJourney(
             userId = "user_$index",
             sessionId = "session_${index}_${Random.nextInt(1000, 9999)}",
@@ -1471,7 +1471,7 @@ private fun generateMockABTests(): List<ABTestConfig> {
 
 private fun detectUXIssues(metrics: List<UXMetric>): List<UXIssue> {
     val issues = mutableListOf<UXIssue>()
-    
+
     metrics.forEach { metric ->
         when (metric.type) {
             UXMetricType.PAGE_LOAD_TIME -> {
@@ -1531,7 +1531,7 @@ private fun detectUXIssues(metrics: List<UXMetric>): List<UXIssue> {
             else -> {}
         }
     }
-    
+
     return issues
 }
 
@@ -1540,7 +1540,7 @@ private fun generateOptimizationRecommendations(
     issues: List<UXIssue>
 ): List<OptimizationRecommendation> {
     val recommendations = mutableListOf<OptimizationRecommendation>()
-    
+
     // Generate recommendations based on metrics and issues
     if (issues.any { it.category == "Performance" }) {
         recommendations.add(
@@ -1558,7 +1558,7 @@ private fun generateOptimizationRecommendations(
             )
         )
     }
-    
+
     if (issues.any { it.category == "Usability" }) {
         recommendations.add(
             OptimizationRecommendation(
@@ -1575,7 +1575,7 @@ private fun generateOptimizationRecommendations(
             )
         )
     }
-    
+
     // Always suggest A/B testing
     recommendations.add(
         OptimizationRecommendation(
@@ -1591,6 +1591,6 @@ private fun generateOptimizationRecommendations(
             estimatedROI = 0.18
         )
     )
-    
+
     return recommendations
 }

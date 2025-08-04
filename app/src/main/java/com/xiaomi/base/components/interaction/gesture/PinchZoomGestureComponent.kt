@@ -44,7 +44,7 @@ data class ZoomGestureState(
 /**
  * Pinch Zoom Gesture Component
  * Handles pinch-to-zoom, pan, and rotation gestures
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param config Configuration for zoom gesture detection
  * @param onZoomStart Callback when zoom starts
@@ -67,7 +67,7 @@ fun PinchZoomGestureComponent(
 ) {
     var gestureState by remember { mutableStateOf(ZoomGestureState()) }
     var isGestureActive by remember { mutableStateOf(false) }
-    
+
     Box(
         modifier = modifier
             .clip(RectangleShape)
@@ -82,19 +82,19 @@ fun PinchZoomGestureComponent(
                         config.minScale,
                         config.maxScale
                     )
-                    
+
                     val newOffset = if (config.enablePan) {
                         gestureState.offset + pan
                     } else {
                         gestureState.offset
                     }
-                    
+
                     val newRotation = if (config.enableRotation) {
                         gestureState.rotation + rotation
                     } else {
                         gestureState.rotation
                     }
-                    
+
                     gestureState = gestureState.copy(
                         scale = newScale,
                         offset = newOffset,
@@ -103,12 +103,12 @@ fun PinchZoomGestureComponent(
                         isPanning = pan != Offset.Zero,
                         isRotating = config.enableRotation && rotation != 0f
                     )
-                    
+
                     // Trigger callbacks
                     if (zoom != 1f) onZoom?.invoke(newScale)
                     if (pan != Offset.Zero) onPan?.invoke(newOffset)
                     if (config.enableRotation && rotation != 0f) onRotation?.invoke(newRotation)
-                    
+
                     // Simple gesture end detection
                     if (zoom == 1f && pan == Offset.Zero && rotation == 0f && isGestureActive) {
                         isGestureActive = false
@@ -124,7 +124,7 @@ fun PinchZoomGestureComponent(
 /**
  * Zoomable Image Component
  * Pre-configured component for zoomable images
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param config Zoom configuration
  * @param clipShape Shape to clip the content
@@ -164,7 +164,7 @@ fun ZoomableImageComponent(
 /**
  * Zoomable Content Component
  * General purpose zoomable content container
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param config Zoom configuration
  * @param resetOnDoubleTap Reset zoom on double tap
@@ -178,7 +178,7 @@ fun ZoomableContentComponent(
     content: @Composable (ZoomGestureState) -> Unit
 ) {
     var gestureState by remember { mutableStateOf(ZoomGestureState()) }
-    
+
     PinchZoomGestureComponent(
         modifier = modifier,
         config = config,
@@ -193,7 +193,7 @@ fun ZoomableContentComponent(
 /**
  * Zoom Controls Component
  * Provides zoom in/out buttons
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param currentScale Current zoom scale
  * @param minScale Minimum zoom scale
@@ -218,7 +218,7 @@ fun ZoomControlsComponent(
     val canZoomIn = currentScale < maxScale
     val canZoomOut = currentScale > minScale
     val canReset = currentScale != 1f
-    
+
     Box(modifier = modifier) {
         content(canZoomIn, canZoomOut, canReset)
     }
@@ -227,7 +227,7 @@ fun ZoomControlsComponent(
 /**
  * Advanced Zoom Component
  * Component with advanced zoom features like boundaries and smooth animations
- * 
+ *
  * @param modifier Modifier to be applied to the component
  * @param config Zoom configuration
  * @param contentSize Size of the content being zoomed
@@ -243,7 +243,7 @@ fun AdvancedZoomComponent(
     content: @Composable (ZoomGestureState) -> Unit
 ) {
     var gestureState by remember { mutableStateOf(ZoomGestureState()) }
-    
+
     // Calculate bounded offset if sizes are provided
     val boundedOffset = if (config.boundContent && contentSize != null && containerSize != null) {
         ZoomGestureUtils.calculateBoundedOffset(
@@ -255,7 +255,7 @@ fun AdvancedZoomComponent(
     } else {
         gestureState.offset
     }
-    
+
     PinchZoomGestureComponent(
         modifier = modifier,
         config = config,
@@ -268,7 +268,7 @@ fun AdvancedZoomComponent(
         } else {
             state
         }
-        
+
         content(finalState)
     }
 }
@@ -289,16 +289,16 @@ class ZoomGestureUtils {
         ): Offset {
             val scaledContentWidth = contentSize.width * scale
             val scaledContentHeight = contentSize.height * scale
-            
+
             val maxOffsetX = max(0f, (scaledContentWidth - containerSize.width) / 2)
             val maxOffsetY = max(0f, (scaledContentHeight - containerSize.height) / 2)
-            
+
             return Offset(
                 x = currentOffset.x.coerceIn(-maxOffsetX, maxOffsetX),
                 y = currentOffset.y.coerceIn(-maxOffsetY, maxOffsetY)
             )
         }
-        
+
         /**
          * Calculate zoom to fit content in container
          */
@@ -310,7 +310,7 @@ class ZoomGestureUtils {
             val scaleY = containerSize.height / contentSize.height
             return min(scaleX, scaleY)
         }
-        
+
         /**
          * Calculate zoom to fill container with content
          */
@@ -322,7 +322,7 @@ class ZoomGestureUtils {
             val scaleY = containerSize.height / contentSize.height
             return max(scaleX, scaleY)
         }
-        
+
         /**
          * Create zoom config for image viewing
          */
@@ -337,7 +337,7 @@ class ZoomGestureUtils {
             doubleTapToZoom = true,
             boundContent = true
         )
-        
+
         /**
          * Create zoom config for document viewing
          */
@@ -352,7 +352,7 @@ class ZoomGestureUtils {
             doubleTapToZoom = true,
             boundContent = true
         )
-        
+
         /**
          * Create zoom config for map viewing
          */
@@ -377,30 +377,30 @@ class ZoomGestureUtils {
 class ZoomStateController {
     private var _state by mutableStateOf(ZoomGestureState())
     val state: ZoomGestureState get() = _state
-    
+
     fun zoomIn(step: Float = 0.5f, maxScale: Float = 5f) {
         val newScale = min(_state.scale + step, maxScale)
         _state = _state.copy(scale = newScale)
     }
-    
+
     fun zoomOut(step: Float = 0.5f, minScale: Float = 0.5f) {
         val newScale = max(_state.scale - step, minScale)
         _state = _state.copy(scale = newScale)
     }
-    
+
     fun reset() {
         _state = ZoomGestureState()
     }
-    
+
     fun setScale(scale: Float, minScale: Float = 0.5f, maxScale: Float = 5f) {
         val clampedScale = scale.coerceIn(minScale, maxScale)
         _state = _state.copy(scale = clampedScale)
     }
-    
+
     fun setOffset(offset: Offset) {
         _state = _state.copy(offset = offset)
     }
-    
+
     fun setRotation(rotation: Float) {
         _state = _state.copy(rotation = rotation)
     }

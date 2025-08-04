@@ -110,7 +110,7 @@ data class SecurityConfig(
 /**
  * Security Validation Component
  * Comprehensive security validation and enforcement
- * 
+ *
  * @param config Security configuration
  * @param onValidationResult Callback with validation results
  * @param content Content to be secured
@@ -124,7 +124,7 @@ fun SecurityValidationComponent(
     var validationResult by remember { mutableStateOf(ValidationResult(false, SecurityLevel.LOW)) }
     var isValidating by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    
+
     LaunchedEffect(config) {
         isValidating = true
         delay(500) // Simulate validation time
@@ -132,14 +132,14 @@ fun SecurityValidationComponent(
         onValidationResult(validationResult)
         isValidating = false
     }
-    
+
     content(validationResult, isValidating)
 }
 
 /**
  * Password Strength Validator Component
  * Validates and displays password strength
- * 
+ *
  * @param password Password to validate
  * @param config Security configuration
  * @param onStrengthChanged Callback when strength changes
@@ -153,17 +153,17 @@ fun PasswordStrengthValidatorComponent(
     val strengthResult = remember(password) {
         validatePasswordStrength(password, config)
     }
-    
+
     LaunchedEffect(strengthResult) {
         onStrengthChanged(strengthResult)
     }
-    
+
     Column {
         // Strength indicator
         PasswordStrengthIndicator(
             result = strengthResult
         )
-        
+
         // Issues and recommendations
         if (strengthResult.issues.isNotEmpty()) {
             Spacer(modifier = Modifier.height(8.dp))
@@ -177,7 +177,7 @@ fun PasswordStrengthValidatorComponent(
 /**
  * Biometric Authentication Component
  * Handles biometric authentication
- * 
+ *
  * @param title Authentication title
  * @param subtitle Authentication subtitle
  * @param onSuccess Callback on successful authentication
@@ -195,11 +195,11 @@ fun BiometricAuthenticationComponent(
     val context = LocalContext.current
     var isAvailable by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
-    
+
     LaunchedEffect(Unit) {
         isAvailable = isBiometricAvailable(context)
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -220,25 +220,25 @@ fun BiometricAuthenticationComponent(
                     MaterialTheme.colorScheme.onSurfaceVariant
                 }
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = if (isAvailable) subtitle else "Biometric authentication not available",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
             )
-            
+
             errorMessage?.let { error ->
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -248,9 +248,9 @@ fun BiometricAuthenticationComponent(
                     textAlign = TextAlign.Center
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Button(
                 onClick = {
                     if (isAvailable) {
@@ -279,7 +279,7 @@ fun BiometricAuthenticationComponent(
 /**
  * Two-Factor Authentication Component
  * Handles 2FA verification
- * 
+ *
  * @param phoneNumber Phone number for SMS
  * @param onCodeSent Callback when code is sent
  * @param onVerificationSuccess Callback on successful verification
@@ -296,7 +296,7 @@ fun TwoFactorAuthenticationComponent(
     var isCodeSent by remember { mutableStateOf(false) }
     var isVerifying by remember { mutableStateOf(false) }
     var countdown by remember { mutableStateOf(0) }
-    
+
     // Countdown timer for resend
     LaunchedEffect(isCodeSent) {
         if (isCodeSent) {
@@ -307,7 +307,7 @@ fun TwoFactorAuthenticationComponent(
             }
         }
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -330,18 +330,18 @@ fun TwoFactorAuthenticationComponent(
                     fontWeight = FontWeight.Bold
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             if (!isCodeSent) {
                 Text(
                     text = "We'll send a verification code to $phoneNumber",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Button(
                     onClick = {
                         isCodeSent = true
@@ -357,9 +357,9 @@ fun TwoFactorAuthenticationComponent(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 OutlinedTextField(
                     value = verificationCode,
                     onValueChange = { if (it.length <= 6) verificationCode = it },
@@ -367,9 +367,9 @@ fun TwoFactorAuthenticationComponent(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Button(
                     onClick = {
                         if (verificationCode.length == 6) {
@@ -396,9 +396,9 @@ fun TwoFactorAuthenticationComponent(
                         Text("Verify")
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 TextButton(
                     onClick = {
                         if (countdown == 0) {
@@ -420,7 +420,7 @@ fun TwoFactorAuthenticationComponent(
 /**
  * Security Dashboard Component
  * Overview of security status and recommendations
- * 
+ *
  * @param validationResult Current security validation result
  * @param onActionClick Callback when action is clicked
  */
@@ -440,9 +440,9 @@ fun SecurityDashboardComponent(
                 score = validationResult.score,
                 level = validationResult.securityLevel
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Issues summary
             if (validationResult.issues.isNotEmpty()) {
                 Text(
@@ -450,16 +450,16 @@ fun SecurityDashboardComponent(
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 validationResult.issues.take(3).forEach { issue ->
                     SecurityIssueItem(
                         issue = issue,
                         onClick = { onActionClick("fix_${issue.type}") }
                     )
                 }
-                
+
                 if (validationResult.issues.size > 3) {
                     TextButton(
                         onClick = { onActionClick("view_all_issues") }
@@ -468,19 +468,19 @@ fun SecurityDashboardComponent(
                     }
                 }
             }
-            
+
             // Recommendations
             if (validationResult.recommendations.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Text(
                     text = "Recommendations",
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 validationResult.recommendations.take(2).forEach { recommendation ->
                     RecommendationItem(
                         text = recommendation,
@@ -505,14 +505,14 @@ private fun PasswordStrengthIndicator(
         SecurityLevel.HIGH -> MaterialTheme.colorScheme.primary
         SecurityLevel.CRITICAL -> Color(0xFF4CAF50) // Green
     }
-    
+
     val strengthText = when (result.securityLevel) {
         SecurityLevel.LOW -> "Weak"
         SecurityLevel.MEDIUM -> "Fair"
         SecurityLevel.HIGH -> "Good"
         SecurityLevel.CRITICAL -> "Strong"
     }
-    
+
     Column {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -524,16 +524,16 @@ private fun PasswordStrengthIndicator(
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Text(
                 text = "${result.score}/100",
                 style = MaterialTheme.typography.bodySmall,
                 color = strengthColor
             )
         }
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         LinearProgressIndicator(
             progress = result.score / 100f,
             modifier = Modifier
@@ -559,14 +559,14 @@ private fun SecurityScoreIndicator(
         SecurityLevel.HIGH -> MaterialTheme.colorScheme.primary
         SecurityLevel.CRITICAL -> Color(0xFF4CAF50)
     }
-    
+
     val scoreIcon = when (level) {
         SecurityLevel.LOW -> Icons.Default.Warning
         SecurityLevel.MEDIUM -> Icons.Default.Info
         SecurityLevel.HIGH -> Icons.Default.CheckCircle
         SecurityLevel.CRITICAL -> Icons.Default.Verified
     }
-    
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -577,9 +577,9 @@ private fun SecurityScoreIndicator(
             modifier = Modifier.size(32.dp),
             tint = scoreColor
         )
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -588,7 +588,7 @@ private fun SecurityScoreIndicator(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Text(
                 text = "$score/100 - ${level.name.lowercase().replaceFirstChar { it.uppercase() }}",
                 style = MaterialTheme.typography.bodyMedium,
@@ -629,7 +629,7 @@ private fun SecurityIssueItem(
         SecurityLevel.HIGH -> MaterialTheme.colorScheme.error
         SecurityLevel.CRITICAL -> Color(0xFFD32F2F)
     }
-    
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -650,9 +650,9 @@ private fun SecurityIssueItem(
                 modifier = Modifier.size(16.dp),
                 tint = severityColor
             )
-            
+
             Spacer(modifier = Modifier.width(8.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -661,7 +661,7 @@ private fun SecurityIssueItem(
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Medium
                 )
-                
+
                 Text(
                     text = issue.recommendation,
                     style = MaterialTheme.typography.labelSmall,
@@ -700,15 +700,15 @@ private fun RecommendationItem(
                 modifier = Modifier.size(16.dp),
                 tint = MaterialTheme.colorScheme.primary
             )
-            
+
             Spacer(modifier = Modifier.width(8.dp))
-            
+
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.weight(1f)
             )
-            
+
             IconButton(
                 onClick = onClick,
                 modifier = Modifier.size(24.dp)
@@ -737,7 +737,7 @@ private fun performSecurityValidation(
     val issues = mutableListOf<SecurityIssue>()
     val recommendations = mutableListOf<String>()
     var score = 100
-    
+
     // Check device security
     if (!isDeviceSecure(context)) {
         issues.add(
@@ -750,7 +750,7 @@ private fun performSecurityValidation(
         )
         score -= 30
     }
-    
+
     // Check app permissions
     if (hasExcessivePermissions(context)) {
         issues.add(
@@ -763,7 +763,7 @@ private fun performSecurityValidation(
         )
         score -= 15
     }
-    
+
     // Check encryption
     if (!config.enableEncryption) {
         issues.add(
@@ -776,20 +776,20 @@ private fun performSecurityValidation(
         )
         score -= 25
     }
-    
+
     // Generate recommendations
     if (config.requiredSecurityLevel == SecurityLevel.HIGH) {
         recommendations.add("Enable two-factor authentication")
         recommendations.add("Use biometric authentication when available")
     }
-    
+
     val securityLevel = when {
         score >= 90 -> SecurityLevel.CRITICAL
         score >= 70 -> SecurityLevel.HIGH
         score >= 50 -> SecurityLevel.MEDIUM
         else -> SecurityLevel.LOW
     }
-    
+
     return ValidationResult(
         isValid = score >= 70,
         securityLevel = securityLevel,
@@ -808,7 +808,7 @@ private fun validatePasswordStrength(
 ): ValidationResult {
     val issues = mutableListOf<SecurityIssue>()
     var score = 0
-    
+
     // Length check
     if (password.length >= config.passwordMinLength) {
         score += 25
@@ -822,7 +822,7 @@ private fun validatePasswordStrength(
             )
         )
     }
-    
+
     // Uppercase check
     if (config.passwordRequireUppercase && password.any { it.isUpperCase() }) {
         score += 15
@@ -836,7 +836,7 @@ private fun validatePasswordStrength(
             )
         )
     }
-    
+
     // Numbers check
     if (config.passwordRequireNumbers && password.any { it.isDigit() }) {
         score += 15
@@ -850,7 +850,7 @@ private fun validatePasswordStrength(
             )
         )
     }
-    
+
     // Special characters check
     if (config.passwordRequireSpecialChars && password.any { !it.isLetterOrDigit() }) {
         score += 15
@@ -864,19 +864,19 @@ private fun validatePasswordStrength(
             )
         )
     }
-    
+
     // Complexity bonus
     if (password.length > 12) score += 10
     if (password.any { it.isLowerCase() }) score += 10
     if (hasVariedCharacters(password)) score += 10
-    
+
     val securityLevel = when {
         score >= 80 -> SecurityLevel.CRITICAL
         score >= 60 -> SecurityLevel.HIGH
         score >= 40 -> SecurityLevel.MEDIUM
         else -> SecurityLevel.LOW
     }
-    
+
     return ValidationResult(
         isValid = score >= 60,
         securityLevel = securityLevel,
@@ -917,7 +917,7 @@ private fun authenticateWithBiometric(
                     super.onAuthenticationSucceeded(result)
                     onSuccess()
                 }
-                
+
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
                     if (errorCode == BiometricPrompt.ERROR_USER_CANCELED) {
@@ -926,20 +926,20 @@ private fun authenticateWithBiometric(
                         onError(errString.toString())
                     }
                 }
-                
+
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
                     onError("Authentication failed")
                 }
             }
         )
-        
+
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(title)
             .setSubtitle(subtitle)
             .setNegativeButtonText("Cancel")
             .build()
-        
+
         biometricPrompt.authenticate(promptInfo)
     }
 }
@@ -989,7 +989,7 @@ class SecurityUtils {
             val hash = digest.digest((password + salt).toByteArray())
             return hash.joinToString("") { "%02x".format(it) }
         }
-        
+
         /**
          * Generate secure random salt
          */
@@ -999,7 +999,7 @@ class SecurityUtils {
             random.nextBytes(salt)
             return salt.joinToString("") { "%02x".format(it) }
         }
-        
+
         /**
          * Encrypt data
          */
@@ -1008,7 +1008,7 @@ class SecurityUtils {
             cipher.init(Cipher.ENCRYPT_MODE, key)
             return cipher.doFinal(data.toByteArray())
         }
-        
+
         /**
          * Decrypt data
          */

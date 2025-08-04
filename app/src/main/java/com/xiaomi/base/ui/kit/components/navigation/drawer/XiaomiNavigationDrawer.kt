@@ -81,9 +81,9 @@ data class XiaomiDrawerSection(
 
 /**
  * Xiaomi Modal Navigation Drawer
- * 
+ *
  * A modal navigation drawer that slides in from the side.
- * 
+ *
  * @param drawerContent The content of the drawer
  * @param modifier Modifier to be applied to the drawer
  * @param drawerState State of the drawer
@@ -116,9 +116,9 @@ fun XiaomiModalNavigationDrawer(
 
 /**
  * Xiaomi Dismissible Navigation Drawer
- * 
+ *
  * A dismissible navigation drawer that can be swiped away.
- * 
+ *
  * @param drawerContent The content of the drawer
  * @param modifier Modifier to be applied to the drawer
  * @param drawerState State of the drawer
@@ -148,9 +148,9 @@ fun XiaomiDismissibleNavigationDrawer(
 
 /**
  * Xiaomi Permanent Navigation Drawer
- * 
+ *
  * A permanent navigation drawer that is always visible.
- * 
+ *
  * @param drawerContent The content of the drawer
  * @param modifier Modifier to be applied to the drawer
  * @param content The main content of the screen
@@ -174,9 +174,9 @@ fun XiaomiPermanentNavigationDrawer(
 
 /**
  * Xiaomi Navigation Drawer Item
- * 
+ *
  * A single item in the navigation drawer.
- * 
+ *
  * @param label The text label for the item
  * @param selected Whether the item is currently selected
  * @param onClick Callback when the item is clicked
@@ -208,9 +208,9 @@ fun XiaomiNavigationDrawerItem(
 
 /**
  * Xiaomi Drawer Header
- * 
+ *
  * A header component for the navigation drawer.
- * 
+ *
  * @param title The main title text
  * @param subtitle Optional subtitle text
  * @param modifier Modifier to be applied to the header
@@ -249,7 +249,7 @@ fun XiaomiDrawerHeader(
                     )
                 }
             }
-            
+
             // Content
             Column(
                 modifier = Modifier.align(Alignment.BottomStart),
@@ -266,7 +266,7 @@ fun XiaomiDrawerHeader(
                         tint = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }
-                
+
                 // Title
                 Text(
                     text = title,
@@ -276,7 +276,7 @@ fun XiaomiDrawerHeader(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                
+
                 // Subtitle
                 if (subtitle != null) {
                     Text(
@@ -294,9 +294,9 @@ fun XiaomiDrawerHeader(
 
 /**
  * Xiaomi Drawer Content
- * 
+ *
  * A complete drawer content with header and sections.
- * 
+ *
  * @param title The header title
  * @param subtitle Optional header subtitle
  * @param sections List of drawer sections
@@ -320,7 +320,7 @@ fun XiaomiDrawerContent(
             subtitle = subtitle,
             onCloseClick = onCloseClick
         )
-        
+
         // Content
         LazyColumn(
             modifier = Modifier.weight(1f),
@@ -349,7 +349,7 @@ fun XiaomiDrawerContent(
                         )
                     }
                 }
-                
+
                 // Section items
                 items(section.items) { item ->
                     XiaomiNavigationDrawerItem(
@@ -384,9 +384,9 @@ fun XiaomiDrawerContent(
 
 /**
  * Xiaomi Simple Drawer Content
- * 
+ *
  * A simplified drawer content with just items.
- * 
+ *
  * @param items List of drawer items
  * @param modifier Modifier to be applied to the content
  */
@@ -482,7 +482,7 @@ fun XiaomiNavigationDrawerPreview() {
                 )
             )
         )
-        
+
         XiaomiDrawerContent(
             title = "Xiaomi App",
             subtitle = "user@xiaomi.com",
@@ -534,7 +534,7 @@ fun XiaomiSimpleDrawerPreview() {
                 icon = Icons.Default.Settings
             )
         )
-        
+
         XiaomiSimpleDrawerContent(
             items = sampleItems,
             modifier = Modifier.width(280.dp)
@@ -564,7 +564,7 @@ fun XiaomiNavigationDrawerDarkPreview() {
                 )
             )
         )
-        
+
         XiaomiDrawerContent(
             title = "Dark Theme",
             subtitle = "Navigation Drawer",

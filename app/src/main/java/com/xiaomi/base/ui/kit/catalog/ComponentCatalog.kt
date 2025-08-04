@@ -44,7 +44,7 @@ data class ComponentItem(
 
 /**
  * Xiaomi Base UI Kit Component Catalog
- * 
+ *
  * A comprehensive showcase of all available components in the UI Kit.
  * This serves as both documentation and testing ground for components.
  */
@@ -53,7 +53,7 @@ fun ComponentCatalog(
     modifier: Modifier = Modifier
 ) {
     val categories = getComponentCategories()
-    
+
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(MaterialTheme.spacing.ScreenPaddingHorizontal),
@@ -74,7 +74,7 @@ fun ComponentCatalog(
                 )
             }
         }
-        
+
         items(categories) { category ->
             ComponentCategorySection(
                 category = category,
@@ -110,7 +110,7 @@ fun ComponentCategorySection(
                 modifier = Modifier.padding(top = MaterialTheme.spacing.ExtraSmall)
             )
         }
-        
+
         // Components in this category
         Column(
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.XXL)
@@ -153,7 +153,7 @@ fun ComponentShowcase(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             // Component preview
             component.content()
         }
@@ -334,7 +334,7 @@ fun getFoundationComponents(): List<ComponentItem> {
                     style = MaterialTheme.typography.titleSmall
                 )
                 Text(
-                    text = "Success", 
+                    text = "Success",
                     color = Color(0xFF4CAF50), // Green color for success
                     style = MaterialTheme.typography.titleSmall
                 )

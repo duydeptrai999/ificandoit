@@ -38,7 +38,7 @@ fun FavoriteScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val favoriteItems = viewModel.favoriteItems.collectAsLazyPagingItems()
-    
+
     Box(modifier = Modifier.fillMaxSize()) {
         when {
             uiState.isLoading -> {
@@ -58,7 +58,7 @@ fun FavoriteScreen(
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(16.dp)
                     )
-                    
+
                     if (favoriteItems.itemCount == 0) {
                         Box(
                             modifier = Modifier.fillMaxSize(),

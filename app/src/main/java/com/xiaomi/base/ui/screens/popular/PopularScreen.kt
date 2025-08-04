@@ -35,7 +35,7 @@ fun PopularScreen(
     viewModel: PopularViewModel = hiltViewModel()
 ) {
     val popularItems = viewModel.popularItems.collectAsLazyPagingItems()
-    
+
     Box(modifier = Modifier.fillMaxSize()) {
         when (popularItems.loadState.refresh) {
             is LoadState.Loading -> {
@@ -60,7 +60,7 @@ fun PopularScreen(
                             modifier = Modifier.padding(16.dp)
                         )
                     }
-                    
+
                     items(
                         count = popularItems.itemCount,
                         key = { index -> popularItems[index]?.id ?: index }
@@ -72,7 +72,7 @@ fun PopularScreen(
                             )
                         }
                     }
-                    
+
                     when (popularItems.loadState.append) {
                         is LoadState.Loading -> {
                             item {

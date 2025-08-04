@@ -446,7 +446,7 @@ fun AccessibilityI18nComponent(
 ) {
     var selectedTab by remember { mutableStateOf(0) }
     val tabs = listOf("Overview", "Accessibility", "Localization", "Testing", "Reports")
-    
+
     // Sample data - now using properly defined functions
     val accessibilitySettings by remember { mutableStateOf(generateSampleAccessibilitySettings()) }
     val locales by remember { mutableStateOf(generateSampleLocales()) }
@@ -455,7 +455,7 @@ fun AccessibilityI18nComponent(
     val i18nTests by remember { mutableStateOf(generateSampleI18nTests()) }
     val accessibilityAudits by remember { mutableStateOf(generateSampleAccessibilityAudits()) }
     val i18nReports by remember { mutableStateOf(generateSampleI18nReports()) }
-    
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -467,7 +467,7 @@ fun AccessibilityI18nComponent(
             accessibilityScore = accessibilityTests.map { it.score }.average(),
             localizationProgress = locales.map { it.completeness }.average()
         )
-        
+
         // Tab Row
         TabRow(
             selectedTabIndex = selectedTab,
@@ -481,7 +481,7 @@ fun AccessibilityI18nComponent(
                 )
             }
         }
-        
+
         // Content
         when (selectedTab) {
             0 -> AccessibilityI18nOverviewComponent(
@@ -538,9 +538,9 @@ fun AccessibilityI18nHeader(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -550,7 +550,7 @@ fun AccessibilityI18nHeader(
                     score = accessibilityScore,
                     color = getAccessibilityColor(accessibilityScore)
                 )
-                
+
                 ScoreCard(
                     title = "Localization Progress",
                     score = localizationProgress,
@@ -577,9 +577,9 @@ fun ScoreCard(
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center
         )
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
@@ -617,7 +617,7 @@ fun AccessibilityI18nOverviewComponent(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             QuickStatsCard(
                 accessibilitySettings = accessibilitySettings,
@@ -626,7 +626,7 @@ fun AccessibilityI18nOverviewComponent(
                 i18nTests = i18nTests
             )
         }
-        
+
         item {
             RecentTestsCard(
                 accessibilityTests = accessibilityTests.take(3),
@@ -656,9 +656,9 @@ fun QuickStatsCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -667,12 +667,12 @@ fun QuickStatsCard(
                     label = "Enabled Features",
                     value = "${accessibilitySettings.count { it.enabled }}/${accessibilitySettings.size}"
                 )
-                
+
                 StatItem(
                     label = "Active Locales",
                     value = "${locales.count { it.enabled }}/${locales.size}"
                 )
-                
+
                 StatItem(
                     label = "Passed Tests",
                     value = "${accessibilityTests.count { it.status == TestStatus.PASSED } + i18nTests.count { it.status == TestStatus.PASSED }}"
@@ -698,7 +698,7 @@ fun StatItem(
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
         )
-        
+
         Text(
             text = label,
             style = MaterialTheme.typography.bodySmall,
@@ -725,26 +725,26 @@ fun RecentTestsCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             accessibilityTests.forEach { test ->
                 TestStatusRow(
                     name = test.name,
                     status = test.status,
                     score = test.score
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
             }
-            
+
             i18nTests.forEach { test ->
                 TestStatusRow(
                     name = test.name,
                     status = test.status,
                     score = test.score
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
             }
         }
@@ -768,11 +768,11 @@ fun TestStatusRow(
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.weight(1f)
         )
-        
+
         TestStatusBadge(status = status)
-        
+
         Spacer(modifier = Modifier.width(8.dp))
-        
+
         Text(
             text = "${(score * 100).toInt()}%",
             style = MaterialTheme.typography.bodySmall,
@@ -793,7 +793,7 @@ fun TestStatusBadge(
         TestStatus.SKIPPED -> Color.Gray to "SKIPPED"
         TestStatus.WARNING -> Orange to "WARNING"
     }
-    
+
     Box(
         modifier = modifier
             .background(color, RoundedCornerShape(4.dp))
@@ -828,7 +828,7 @@ fun AccessibilityManagementComponent(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         items(settings) { setting ->
             AccessibilitySettingCard(
                 setting = setting,
@@ -862,7 +862,7 @@ fun AccessibilitySettingCard(
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     if (setting.description.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
@@ -872,7 +872,7 @@ fun AccessibilitySettingCard(
                         )
                     }
                 }
-                
+
                 Switch(
                     checked = setting.enabled,
                     onCheckedChange = { onToggle() }
@@ -902,7 +902,7 @@ fun LocalizationManagementComponent(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         items(locales) { locale ->
             LocaleCard(
                 locale = locale,
@@ -936,16 +936,16 @@ fun LocaleCard(
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     Spacer(modifier = Modifier.height(4.dp))
-                    
+
                     Text(
                         text = "${(locale.completeness * 100).toInt()}% complete",
                         style = MaterialTheme.typography.bodySmall,
                         color = getLocalizationColor(locale.completeness)
                     )
                 }
-                
+
                 Switch(
                     checked = locale.enabled,
                     onCheckedChange = { onToggle() }
@@ -974,7 +974,7 @@ fun AccessibilityI18nTestingComponent(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             Text(
                 text = "Accessibility Tests",
@@ -982,11 +982,11 @@ fun AccessibilityI18nTestingComponent(
                 fontWeight = FontWeight.Medium
             )
         }
-        
+
         items(accessibilityTests) { test ->
             AccessibilityTestCard(test = test)
         }
-        
+
         item {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
@@ -995,7 +995,7 @@ fun AccessibilityI18nTestingComponent(
                 fontWeight = FontWeight.Medium
             )
         }
-        
+
         items(i18nTests) { test ->
             I18nTestCard(test = test)
         }
@@ -1026,7 +1026,7 @@ fun AccessibilityTestCard(
                 )
                 TestStatusBadge(status = test.status)
             }
-            
+
             if (test.description.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
@@ -1063,7 +1063,7 @@ fun I18nTestCard(
                 )
                 TestStatusBadge(status = test.status)
             }
-            
+
             if (test.description.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
@@ -1095,7 +1095,7 @@ fun AccessibilityI18nReportsComponent(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             Text(
                 text = "Accessibility Audits",
@@ -1103,11 +1103,11 @@ fun AccessibilityI18nReportsComponent(
                 fontWeight = FontWeight.Medium
             )
         }
-        
+
         items(accessibilityAudits) { audit ->
             AccessibilityAuditCard(audit = audit)
         }
-        
+
         item {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
@@ -1116,7 +1116,7 @@ fun AccessibilityI18nReportsComponent(
                 fontWeight = FontWeight.Medium
             )
         }
-        
+
         items(i18nReports) { report ->
             I18nReportCard(report = report)
         }
@@ -1145,20 +1145,20 @@ fun AccessibilityAuditCard(
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 ScoreChip(score = audit.overallScore)
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = audit.summary,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -1168,13 +1168,13 @@ fun AccessibilityAuditCard(
                     value = audit.criticalIssues.toString(),
                     color = Color.Red
                 )
-                
+
                 StatChip(
                     label = "Warnings",
                     value = audit.warnings.toString(),
                     color = Orange
                 )
-                
+
                 StatChip(
                     label = "Passed",
                     value = audit.passed.toString(),
@@ -1207,20 +1207,20 @@ fun I18nReportCard(
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 ScoreChip(score = report.completeness)
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "${report.translatedStrings}/${report.totalStrings} strings translated",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Locales: ${report.locales.joinToString(", ")}",
                 style = MaterialTheme.typography.bodySmall,
@@ -1236,7 +1236,7 @@ fun ScoreChip(
     modifier: Modifier = Modifier
 ) {
     val color = getAccessibilityColor(score)
-    
+
     Box(
         modifier = modifier
             .background(color, RoundedCornerShape(12.dp))
@@ -1268,7 +1268,7 @@ fun StatChip(
             color = color,
             fontWeight = FontWeight.Bold
         )
-        
+
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,

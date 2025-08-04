@@ -55,18 +55,18 @@ fun ChartAppearanceCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Color Scheme Selection
             Text(
                 text = "Color Scheme",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -79,9 +79,9 @@ fun ChartAppearanceCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Toggle Options
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -97,9 +97,9 @@ fun ChartAppearanceCard(
                     onCheckedChange = onGridToggle
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -114,9 +114,9 @@ fun ChartAppearanceCard(
                     onCheckedChange = onLegendToggle
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -143,7 +143,7 @@ fun ColorSchemeChip(
 ) {
     val backgroundColor = if (selected) Blue.copy(alpha = 0.1f) else Color.Transparent
     val borderColor = if (selected) Blue else Color.Gray.copy(alpha = 0.3f)
-    
+
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
@@ -183,9 +183,9 @@ fun ColorSchemeChip(
                     ColorDot(Color(0xFFE53935))
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(4.dp))
-            
+
             Text(
                 text = name,
                 fontSize = 12.sp,
@@ -228,36 +228,36 @@ fun DataProcessingCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Smoothing Slider
             Text(
                 text = "Smoothing: ${(smoothingLevel * 100).toInt()}%",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Slider(
                 value = smoothingLevel,
                 onValueChange = onSmoothingChange,
                 valueRange = 0f..1f,
                 steps = 10
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Aggregation Method
             Text(
                 text = "Aggregation Method",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -270,9 +270,9 @@ fun DataProcessingCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             // Outlier Removal
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -301,7 +301,7 @@ fun AggregationMethodChip(
     val backgroundColor = if (selected) Blue.copy(alpha = 0.1f) else Color.Transparent
     val borderColor = if (selected) Blue else Color.Gray.copy(alpha = 0.3f)
     val textColor = if (selected) Blue else MaterialTheme.colorScheme.onSurface
-    
+
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
@@ -344,9 +344,9 @@ fun LineChartCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -356,9 +356,9 @@ fun LineChartCard(
                     if (showGrid) {
                         drawGrid(Color.Gray.copy(alpha = 0.2f))
                     }
-                    
+
                     drawAxes(Color.Gray)
-                    
+
                     if (data.isNotEmpty()) {
                         val xValues = data.map { it.first }
                         val yValues = data.map { it.second }
@@ -366,7 +366,7 @@ fun LineChartCard(
                         val xMax = xValues.maxOrNull() ?: 1f
                         val yMin = yValues.minOrNull() ?: 0f
                         val yMax = yValues.maxOrNull() ?: 1f
-                        
+
                         drawLineSeries(
                             data = data,
                             color = color,
@@ -377,9 +377,9 @@ fun LineChartCard(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -389,7 +389,7 @@ fun LineChartCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = yLabel,
                     style = MaterialTheme.typography.bodySmall,
@@ -424,9 +424,9 @@ fun BarChartCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -436,9 +436,9 @@ fun BarChartCard(
                     if (showGrid) {
                         drawGrid(Color.Gray.copy(alpha = 0.2f))
                     }
-                    
+
                     drawAxes(Color.Gray)
-                    
+
                     if (data.isNotEmpty()) {
                         val xValues = data.map { it.first }
                         val yValues = data.map { it.second }
@@ -446,7 +446,7 @@ fun BarChartCard(
                         val xMax = xValues.maxOrNull() ?: 1f
                         val yMin = yValues.minOrNull() ?: 0f
                         val yMax = yValues.maxOrNull() ?: 1f
-                        
+
                         drawBarSeries(
                             data = data,
                             color = color,
@@ -456,9 +456,9 @@ fun BarChartCard(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -468,7 +468,7 @@ fun BarChartCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = yLabel,
                     style = MaterialTheme.typography.bodySmall,
@@ -503,9 +503,9 @@ fun ScatterChartCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -515,9 +515,9 @@ fun ScatterChartCard(
                     if (showGrid) {
                         drawGrid(Color.Gray.copy(alpha = 0.2f))
                     }
-                    
+
                     drawAxes(Color.Gray)
-                    
+
                     if (data.isNotEmpty()) {
                         val xValues = data.map { it.first }
                         val yValues = data.map { it.second }
@@ -525,7 +525,7 @@ fun ScatterChartCard(
                         val xMax = xValues.maxOrNull() ?: 1f
                         val yMin = yValues.minOrNull() ?: 0f
                         val yMax = yValues.maxOrNull() ?: 1f
-                        
+
                         drawScatterSeries(
                             data = data,
                             color = color,
@@ -535,9 +535,9 @@ fun ScatterChartCard(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -547,7 +547,7 @@ fun ScatterChartCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = yLabel,
                     style = MaterialTheme.typography.bodySmall,
@@ -582,9 +582,9 @@ fun AreaChartCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -594,9 +594,9 @@ fun AreaChartCard(
                     if (showGrid) {
                         drawGrid(Color.Gray.copy(alpha = 0.2f))
                     }
-                    
+
                     drawAxes(Color.Gray)
-                    
+
                     if (data.isNotEmpty()) {
                         val xValues = data.map { it.first }
                         val yValues = data.map { it.second }
@@ -604,7 +604,7 @@ fun AreaChartCard(
                         val xMax = xValues.maxOrNull() ?: 1f
                         val yMin = yValues.minOrNull() ?: 0f
                         val yMax = yValues.maxOrNull() ?: 1f
-                        
+
                         drawAreaSeries(
                             data = data,
                             color = color,
@@ -614,9 +614,9 @@ fun AreaChartCard(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -626,7 +626,7 @@ fun AreaChartCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = yLabel,
                     style = MaterialTheme.typography.bodySmall,
@@ -662,9 +662,9 @@ fun CandlestickChartCard(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -674,9 +674,9 @@ fun CandlestickChartCard(
                     if (showGrid) {
                         drawGrid(Color.Gray.copy(alpha = 0.2f))
                     }
-                    
+
                     drawAxes(Color.Gray)
-                    
+
                     if (data.isNotEmpty()) {
                         drawCandlestickSeries(
                             data = data,
@@ -686,9 +686,9 @@ fun CandlestickChartCard(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -698,7 +698,7 @@ fun CandlestickChartCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = yLabel,
                     style = MaterialTheme.typography.bodySmall,
@@ -716,7 +716,7 @@ fun ChartTypeSelector(
     onTypeSelected: (String) -> Unit
 ) {
     val chartTypes = listOf("Line", "Bar", "Area", "Scatter", "Pie", "Candlestick")
-    
+
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier.padding(vertical = 8.dp)
@@ -740,7 +740,7 @@ fun ChartTypeChip(
     val backgroundColor = if (selected) Blue.copy(alpha = 0.1f) else Color.Transparent
     val borderColor = if (selected) Blue else Color.Gray.copy(alpha = 0.3f)
     val textColor = if (selected) Blue else MaterialTheme.colorScheme.onSurface
-    
+
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
@@ -766,9 +766,9 @@ fun ChartTypeChip(
                 tint = textColor,
                 modifier = Modifier.size(16.dp)
             )
-            
+
             Spacer(modifier = Modifier.width(4.dp))
-            
+
             Text(
                 text = type,
                 fontSize = 14.sp,
@@ -819,9 +819,9 @@ fun MetricCard(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -832,7 +832,7 @@ fun MetricCard(
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -841,16 +841,16 @@ fun MetricCard(
                             "decreasing" -> Icons.Default.TrendingDown to Red
                             else -> Icons.Default.TrendingFlat to Color.Gray
                         }
-                        
+
                         Icon(
                             imageVector = icon,
                             contentDescription = trend,
                             tint = trendColor,
                             modifier = Modifier.size(16.dp)
                         )
-                        
+
                         Spacer(modifier = Modifier.width(4.dp))
-                        
+
                         Text(
                             text = trend.capitalizeWords(),
                             style = MaterialTheme.typography.bodySmall,
@@ -858,7 +858,7 @@ fun MetricCard(
                         )
                     }
                 }
-                
+
                 MetricMiniChart(
                     data = data,
                     color = color

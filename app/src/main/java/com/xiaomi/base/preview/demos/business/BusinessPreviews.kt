@@ -115,7 +115,7 @@ fun BusinessDashboard() {
         SalesMetric("Customers", "892", "+15.3%", true, Icons.Default.People),
         SalesMetric("Conversion", "3.2%", "-2.1%", false, Icons.Default.Analytics)
     )
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -129,7 +129,7 @@ fun BusinessDashboard() {
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -139,7 +139,7 @@ fun BusinessDashboard() {
                 }
             }
         }
-        
+
         item {
             Card(
                 modifier = Modifier.fillMaxWidth()
@@ -152,9 +152,9 @@ fun BusinessDashboard() {
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Spacer(modifier = Modifier.height(16.dp))
-                    
+
                     // Chart placeholder
                     Box(
                         modifier = Modifier
@@ -175,7 +175,7 @@ fun BusinessDashboard() {
                                 modifier = Modifier.size(48.dp),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant
                             )
-                            
+
                             Text(
                                 text = "Sales Chart",
                                 style = MaterialTheme.typography.bodyMedium,
@@ -186,7 +186,7 @@ fun BusinessDashboard() {
                 }
             }
         }
-        
+
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -203,25 +203,25 @@ fun BusinessDashboard() {
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.SemiBold
                         )
-                        
+
                         Spacer(modifier = Modifier.height(12.dp))
-                        
+
                         QuickActionButton(
                             icon = Icons.Default.Add,
                             label = "New Order",
                             onClick = { }
                         )
-                        
+
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                         QuickActionButton(
                             icon = Icons.Default.Person,
                             label = "Add Customer",
                             onClick = { }
                         )
-                        
+
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                         QuickActionButton(
                             icon = Icons.Default.Inventory,
                             label = "Manage Inventory",
@@ -229,7 +229,7 @@ fun BusinessDashboard() {
                         )
                     }
                 }
-                
+
                 Card(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -241,25 +241,25 @@ fun BusinessDashboard() {
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.SemiBold
                         )
-                        
+
                         Spacer(modifier = Modifier.height(12.dp))
-                        
+
                         ActivityItem(
                             title = "New order #1247",
                             time = "2 min ago",
                             icon = Icons.Default.ShoppingCart
                         )
-                        
+
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                         ActivityItem(
                             title = "Customer registered",
                             time = "5 min ago",
                             icon = Icons.Default.PersonAdd
                         )
-                        
+
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                         ActivityItem(
                             title = "Payment received",
                             time = "10 min ago",
@@ -290,7 +290,7 @@ fun TeamManagement() {
         TeamMember("David Wilson", "QA Engineer", "Available", Color(0xFF9C27B0), true),
         TeamMember("Eva Brown", "Marketing", "Offline", Color(0xFFF44336), false)
     )
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -308,7 +308,7 @@ fun TeamManagement() {
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 IconButton(
                     onClick = { }
                 ) {
@@ -319,7 +319,7 @@ fun TeamManagement() {
                 }
             }
         }
-        
+
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -331,14 +331,14 @@ fun TeamManagement() {
                     icon = Icons.Default.People,
                     color = MaterialTheme.colorScheme.primary
                 )
-                
+
                 TeamStatsCard(
                     title = "Online",
                     value = "${teamMembers.count { it.isOnline }}",
                     icon = Icons.Default.Circle,
                     color = Color(0xFF4CAF50)
                 )
-                
+
                 TeamStatsCard(
                     title = "Away",
                     value = "${teamMembers.count { !it.isOnline }}",
@@ -347,7 +347,7 @@ fun TeamManagement() {
                 )
             }
         }
-        
+
         items(teamMembers) { member ->
             TeamMemberCard(member)
         }
@@ -372,7 +372,7 @@ fun ProjectManagement() {
         ProjectTask("Test mobile app", "David Wilson", TaskPriority.HIGH, "Dec 18", 0.60f),
         ProjectTask("Create marketing materials", "Eva Brown", TaskPriority.LOW, "Dec 25", 0.10f)
     )
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -390,7 +390,7 @@ fun ProjectManagement() {
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 IconButton(
                     onClick = { }
                 ) {
@@ -401,7 +401,7 @@ fun ProjectManagement() {
                 }
             }
         }
-        
+
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -428,7 +428,7 @@ fun ProjectManagement() {
                 }
             }
         }
-        
+
         items(tasks) { task ->
             ProjectTaskCard(task)
         }
@@ -453,7 +453,7 @@ fun InventoryManagement() {
         InventoryItem("iPad Pro 12.9", "IPD-PRO-1TB", 23, "$1,099", InventoryStatus.IN_STOCK),
         InventoryItem("Apple Watch SE", "AWS-SE-44", 0, "$249", InventoryStatus.DISCONTINUED)
     )
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -471,7 +471,7 @@ fun InventoryManagement() {
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 IconButton(
                     onClick = { }
                 ) {
@@ -482,7 +482,7 @@ fun InventoryManagement() {
                 }
             }
         }
-        
+
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -493,13 +493,13 @@ fun InventoryManagement() {
                     value = inventoryItems.size.toString(),
                     color = MaterialTheme.colorScheme.primary
                 )
-                
+
                 InventoryStatsCard(
                     title = "Low Stock",
                     value = inventoryItems.count { it.status == InventoryStatus.LOW_STOCK }.toString(),
                     color = Color(0xFFFF9800)
                 )
-                
+
                 InventoryStatsCard(
                     title = "Out of Stock",
                     value = inventoryItems.count { it.status == InventoryStatus.OUT_OF_STOCK }.toString(),
@@ -507,7 +507,7 @@ fun InventoryManagement() {
                 )
             }
         }
-        
+
         items(inventoryItems) { item ->
             InventoryItemCard(item)
         }
@@ -532,7 +532,7 @@ fun CustomerSupport() {
         CustomerTicket("#1004", "Sarah Wilson", "Bug report", TicketPriority.NORMAL, TicketStatus.RESOLVED, "David", "2 days ago"),
         CustomerTicket("#1005", "Tom Brown", "Account deletion", TicketPriority.HIGH, TicketStatus.CLOSED, "Eva", "3 days ago")
     )
-    
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -550,7 +550,7 @@ fun CustomerSupport() {
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 IconButton(
                     onClick = { }
                 ) {
@@ -561,7 +561,7 @@ fun CustomerSupport() {
                 }
             }
         }
-        
+
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -572,13 +572,13 @@ fun CustomerSupport() {
                     value = tickets.count { it.status == TicketStatus.OPEN }.toString(),
                     color = Color(0xFF2196F3)
                 )
-                
+
                 SupportStatsCard(
                     title = "In Progress",
                     value = tickets.count { it.status == TicketStatus.IN_PROGRESS }.toString(),
                     color = Color(0xFFFF9800)
                 )
-                
+
                 SupportStatsCard(
                     title = "Resolved",
                     value = tickets.count { it.status == TicketStatus.RESOLVED }.toString(),
@@ -586,7 +586,7 @@ fun CustomerSupport() {
                 )
             }
         }
-        
+
         items(tickets) { ticket ->
             CustomerTicketCard(ticket)
         }
@@ -612,7 +612,7 @@ fun SalesMetricCard(metric: SalesMetric) {
                     contentDescription = metric.title,
                     tint = MaterialTheme.colorScheme.primary
                 )
-                
+
                 Text(
                     text = metric.change,
                     style = MaterialTheme.typography.labelSmall,
@@ -620,15 +620,15 @@ fun SalesMetricCard(metric: SalesMetric) {
                     fontWeight = FontWeight.SemiBold
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = metric.value,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Text(
                 text = metric.title,
                 style = MaterialTheme.typography.bodySmall,
@@ -657,9 +657,9 @@ fun QuickActionButton(
             modifier = Modifier.size(20.dp),
             tint = MaterialTheme.colorScheme.primary
         )
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Text(
             text = label,
             style = MaterialTheme.typography.bodyMedium
@@ -682,9 +682,9 @@ fun ActivityItem(
             modifier = Modifier.size(16.dp),
             tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        
+
         Spacer(modifier = Modifier.width(8.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -692,7 +692,7 @@ fun ActivityItem(
                 text = title,
                 style = MaterialTheme.typography.bodySmall
             )
-            
+
             Text(
                 text = time,
                 style = MaterialTheme.typography.labelSmall,
@@ -722,16 +722,16 @@ fun TeamStatsCard(
                 tint = color,
                 modifier = Modifier.size(24.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = value,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = color
             )
-            
+
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodySmall,
@@ -767,7 +767,7 @@ fun TeamMemberCard(member: TeamMember) {
                         )
                     }
                 }
-                
+
                 if (member.isOnline) {
                     Surface(
                         shape = CircleShape,
@@ -779,9 +779,9 @@ fun TeamMemberCard(member: TeamMember) {
                     ) {}
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -790,14 +790,14 @@ fun TeamMemberCard(member: TeamMember) {
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Text(
                     text = member.role,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Surface(
                 shape = RoundedCornerShape(12.dp),
                 color = if (member.isOnline) {
@@ -838,16 +838,16 @@ fun ProjectTaskCard(task: ProjectTask) {
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Spacer(modifier = Modifier.height(4.dp))
-                    
+
                     Text(
                         text = "Assigned to ${task.assignee}",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Surface(
                     shape = RoundedCornerShape(12.dp),
                     color = task.priority.color.copy(alpha = 0.2f)
@@ -860,9 +860,9 @@ fun ProjectTaskCard(task: ProjectTask) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -874,13 +874,13 @@ fun ProjectTaskCard(task: ProjectTask) {
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
                     LinearProgressIndicator(
                         progress = task.progress,
                         modifier = Modifier.width(120.dp)
                     )
                 }
-                
+
                 Text(
                     text = "Due ${task.dueDate}",
                     style = MaterialTheme.typography.bodySmall,
@@ -910,7 +910,7 @@ fun InventoryStatsCard(
                 fontWeight = FontWeight.Bold,
                 color = color
             )
-            
+
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodySmall,
@@ -937,15 +937,15 @@ fun InventoryItemCard(item: InventoryItem) {
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Text(
                     text = "SKU: ${item.sku}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Spacer(modifier = Modifier.height(4.dp))
-                
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -953,9 +953,9 @@ fun InventoryItemCard(item: InventoryItem) {
                         text = "Stock: ${item.stock}",
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    
+
                     Spacer(modifier = Modifier.width(16.dp))
-                    
+
                     Surface(
                         shape = RoundedCornerShape(12.dp),
                         color = item.status.color.copy(alpha = 0.2f)
@@ -969,7 +969,7 @@ fun InventoryItemCard(item: InventoryItem) {
                     }
                 }
             }
-            
+
             Text(
                 text = item.price,
                 style = MaterialTheme.typography.titleMedium,
@@ -999,7 +999,7 @@ fun SupportStatsCard(
                 fontWeight = FontWeight.Bold,
                 color = color
             )
-            
+
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodySmall,
@@ -1034,9 +1034,9 @@ fun CustomerTicketCard(ticket: CustomerTicket) {
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.SemiBold
                         )
-                        
+
                         Spacer(modifier = Modifier.width(8.dp))
-                        
+
                         Surface(
                             shape = RoundedCornerShape(12.dp),
                             color = ticket.priority.color.copy(alpha = 0.2f)
@@ -1049,22 +1049,22 @@ fun CustomerTicketCard(ticket: CustomerTicket) {
                             )
                         }
                     }
-                    
+
                     Spacer(modifier = Modifier.height(4.dp))
-                    
+
                     Text(
                         text = ticket.subject,
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Text(
                         text = "Customer: ${ticket.customer}",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Surface(
                     shape = RoundedCornerShape(12.dp),
                     color = ticket.status.color.copy(alpha = 0.2f)
@@ -1077,9 +1077,9 @@ fun CustomerTicketCard(ticket: CustomerTicket) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -1089,7 +1089,7 @@ fun CustomerTicketCard(ticket: CustomerTicket) {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Text(
                     text = ticket.createdAt,
                     style = MaterialTheme.typography.bodySmall,
@@ -1115,7 +1115,7 @@ fun registerBusinessPreviews() {
             content = { BusinessDashboardPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "team_management",
@@ -1129,7 +1129,7 @@ fun registerBusinessPreviews() {
             content = { TeamManagementPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "project_management",
@@ -1143,7 +1143,7 @@ fun registerBusinessPreviews() {
             content = { ProjectManagementPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "inventory_management",
@@ -1157,7 +1157,7 @@ fun registerBusinessPreviews() {
             content = { InventoryManagementPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "customer_support",

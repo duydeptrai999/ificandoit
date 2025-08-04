@@ -119,14 +119,14 @@ fun SocialFeed() {
         displayName = "John Doe",
         avatar = Color(0xFF2196F3)
     )
-    
+
     val stories = listOf(
         Story("1", User("1", "alice", "Alice Smith", Color(0xFFE91E63)), Color(0xFFE91E63)),
         Story("2", User("2", "bob", "Bob Johnson", Color(0xFF4CAF50)), Color(0xFF4CAF50), isLive = true),
         Story("3", User("3", "carol", "Carol Wilson", Color(0xFFFF9800)), Color(0xFFFF9800), isViewed = true),
         Story("4", User("4", "david", "David Brown", Color(0xFF9C27B0)), Color(0xFF9C27B0))
     )
-    
+
     val posts = listOf(
         Post(
             id = "1",
@@ -161,22 +161,22 @@ fun SocialFeed() {
             images = listOf(Color(0xFFFF5722))
         )
     )
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             SocialFeedHeader(currentUser)
         }
-        
+
         item {
             StoriesSection(stories)
         }
-        
+
         item {
             CreatePostSection(currentUser)
         }
-        
+
         items(posts) { post ->
             PostCard(post)
         }
@@ -206,47 +206,47 @@ fun UserProfile() {
         isVerified = true,
         isFollowing = false
     )
-    
+
     val userPosts = listOf(
         Color(0xFF4CAF50), Color(0xFF2196F3), Color(0xFFFF9800),
         Color(0xFF9C27B0), Color(0xFFF44336), Color(0xFF607D8B),
         Color(0xFF795548), Color(0xFF3F51B5), Color(0xFF009688)
     )
-    
+
     val highlights = listOf(
         "Travel" to Color(0xFF4CAF50),
         "Food" to Color(0xFFFF9800),
         "Work" to Color(0xFF2196F3),
         "Friends" to Color(0xFFE91E63)
     )
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             ProfileHeader(user)
         }
-        
+
         item {
             ProfileStats(user)
         }
-        
+
         item {
             ProfileBio(user)
         }
-        
+
         item {
             ProfileActions(user)
         }
-        
+
         item {
             HighlightsSection(highlights)
         }
-        
+
         item {
             ProfileTabsSection()
         }
-        
+
         item {
             PostsGrid(userPosts)
         }
@@ -312,18 +312,18 @@ fun MessagingInterface() {
             unreadCount = 5
         )
     )
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             MessagingHeader()
         }
-        
+
         item {
             ActiveUsersSection()
         }
-        
+
         items(chats) { chat ->
             ChatItem(chat)
         }
@@ -348,7 +348,7 @@ fun ChatDetail() {
         avatar = Color(0xFFE91E63),
         isOnline = true
     )
-    
+
     val messages = listOf(
         Message(
             id = "1",
@@ -386,14 +386,14 @@ fun ChatDetail() {
             isRead = false
         )
     )
-    
+
     var messageText by remember { mutableStateOf("") }
-    
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         ChatHeader(otherUser)
-        
+
         LazyColumn(
             modifier = Modifier
                 .weight(1f)
@@ -409,7 +409,7 @@ fun ChatDetail() {
                 )
             }
         }
-        
+
         MessageInput(
             messageText = messageText,
             onMessageTextChange = { messageText = it },
@@ -474,14 +474,14 @@ fun Notifications() {
             isRead = true
         )
     )
-    
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             NotificationsHeader()
         }
-        
+
         items(notifications) { notification ->
             NotificationItem(notification)
         }
@@ -503,7 +503,7 @@ fun SocialFeedHeader(currentUser: User) {
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
-        
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -513,14 +513,14 @@ fun SocialFeedHeader(currentUser: User) {
                     contentDescription = "Search"
                 )
             }
-            
+
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Default.Notifications,
                     contentDescription = "Notifications"
                 )
             }
-            
+
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Default.Message,
@@ -578,7 +578,7 @@ fun StoryItem(story: Story) {
                     }
                 }
             }
-            
+
             if (story.isLive) {
                 Surface(
                     shape = RoundedCornerShape(8.dp),
@@ -597,9 +597,9 @@ fun StoryItem(story: Story) {
                 }
             }
         }
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         Text(
             text = story.user.username,
             style = MaterialTheme.typography.bodySmall,
@@ -638,9 +638,9 @@ fun CreatePostSection(currentUser: User) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Text(
                 text = "What's on your mind?",
                 style = MaterialTheme.typography.bodyMedium,
@@ -649,7 +649,7 @@ fun CreatePostSection(currentUser: User) {
                     .weight(1f)
                     .clickable { }
             )
-            
+
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Default.PhotoCamera,
@@ -690,9 +690,9 @@ fun PostCard(post: Post) {
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.width(12.dp))
-                
+
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -704,7 +704,7 @@ fun PostCard(post: Post) {
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.SemiBold
                         )
-                        
+
                         if (post.user.isVerified) {
                             Spacer(modifier = Modifier.width(4.dp))
                             Icon(
@@ -715,7 +715,7 @@ fun PostCard(post: Post) {
                             )
                         }
                     }
-                    
+
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -724,21 +724,21 @@ fun PostCard(post: Post) {
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        
+
                         if (post.location != null) {
                             Text(
                                 text = " • ",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
-                            
+
                             Icon(
                                 imageVector = Icons.Default.LocationOn,
                                 contentDescription = "Location",
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.size(12.dp)
                             )
-                            
+
                             Text(
                                 text = post.location,
                                 style = MaterialTheme.typography.bodySmall,
@@ -747,7 +747,7 @@ fun PostCard(post: Post) {
                         }
                     }
                 }
-                
+
                 IconButton(onClick = { }) {
                     Icon(
                         imageVector = Icons.Default.MoreVert,
@@ -755,18 +755,18 @@ fun PostCard(post: Post) {
                     )
                 }
             }
-            
+
             // Post Content
             Text(
                 text = post.content,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
-            
+
             // Post Images
             if (post.images.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(12.dp))
-                
+
                 when (post.images.size) {
                     1 -> {
                         Surface(
@@ -786,9 +786,9 @@ fun PostCard(post: Post) {
                                     .weight(1f)
                                     .fillMaxHeight()
                             ) {}
-                            
+
                             Spacer(modifier = Modifier.width(2.dp))
-                            
+
                             Surface(
                                 color = post.images[1],
                                 modifier = Modifier
@@ -799,7 +799,7 @@ fun PostCard(post: Post) {
                     }
                 }
             }
-            
+
             // Post Actions
             Row(
                 modifier = Modifier
@@ -816,20 +816,20 @@ fun PostCard(post: Post) {
                         isActive = post.isLiked,
                         onClick = { }
                     )
-                    
+
                     PostActionButton(
                         icon = Icons.Default.ChatBubbleOutline,
                         count = post.comments,
                         onClick = { }
                     )
-                    
+
                     PostActionButton(
                         icon = Icons.Default.Share,
                         count = post.shares,
                         onClick = { }
                     )
                 }
-                
+
                 IconButton(
                     onClick = { }
                 ) {
@@ -861,9 +861,9 @@ fun PostActionButton(
             tint = if (isActive) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.size(20.dp)
         )
-        
+
         Spacer(modifier = Modifier.width(4.dp))
-        
+
         Text(
             text = count.toString(),
             style = MaterialTheme.typography.bodySmall,
@@ -889,7 +889,7 @@ fun ProfileHeader(user: User) {
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
-            
+
             if (user.isVerified) {
                 Spacer(modifier = Modifier.width(8.dp))
                 Icon(
@@ -900,7 +900,7 @@ fun ProfileHeader(user: User) {
                 )
             }
         }
-        
+
         Row {
             IconButton(onClick = { }) {
                 Icon(
@@ -908,7 +908,7 @@ fun ProfileHeader(user: User) {
                     contentDescription = "Add"
                 )
             }
-            
+
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
@@ -943,7 +943,7 @@ fun ProfileStats(user: User) {
                 )
             }
         }
-        
+
         ProfileStatItem("Posts", user.posts)
         ProfileStatItem("Followers", user.followers)
         ProfileStatItem("Following", user.following)
@@ -964,7 +964,7 @@ fun ProfileStatItem(label: String, count: Int) {
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold
         )
-        
+
         Text(
             text = label,
             style = MaterialTheme.typography.bodySmall,
@@ -983,10 +983,10 @@ fun ProfileBio(user: User) {
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.SemiBold
         )
-        
+
         if (user.bio.isNotEmpty()) {
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Text(
                 text = user.bio,
                 style = MaterialTheme.typography.bodyMedium
@@ -1018,14 +1018,14 @@ fun ProfileActions(user: User) {
                 Text("Follow")
             }
         }
-        
+
         OutlinedButton(
             onClick = { },
             modifier = Modifier.weight(1f)
         ) {
             Text("Message")
         }
-        
+
         OutlinedButton(
             onClick = { }
         ) {
@@ -1064,9 +1064,9 @@ fun HighlightsSection(highlights: List<Pair<String, Color>>) {
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(4.dp))
-                
+
                 Text(
                     text = title,
                     style = MaterialTheme.typography.bodySmall,
@@ -1081,7 +1081,7 @@ fun HighlightsSection(highlights: List<Pair<String, Color>>) {
 fun ProfileTabsSection() {
     var selectedTab by remember { mutableStateOf(0) }
     val tabs = listOf("Posts", "Reels", "Tagged")
-    
+
     TabRow(
         selectedTabIndex = selectedTab,
         modifier = Modifier.padding(horizontal = 16.dp)
@@ -1099,7 +1099,7 @@ fun ProfileTabsSection() {
 @Composable
 fun PostsGrid(posts: List<Color>) {
     val chunkedPosts = posts.chunked(3)
-    
+
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
@@ -1116,13 +1116,13 @@ fun PostsGrid(posts: List<Color>) {
                             .aspectRatio(1f)
                     ) {}
                 }
-                
+
                 // Fill remaining space if row is not complete
                 repeat(3 - rowPosts.size) {
                     Spacer(modifier = Modifier.weight(1f))
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(2.dp))
         }
     }
@@ -1142,7 +1142,7 @@ fun MessagingHeader() {
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
-        
+
         Row {
             IconButton(onClick = { }) {
                 Icon(
@@ -1150,7 +1150,7 @@ fun MessagingHeader() {
                     contentDescription = "Search"
                 )
             }
-            
+
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Default.Edit,
@@ -1169,7 +1169,7 @@ fun ActiveUsersSection() {
         User("3", "carol", "Carol", Color(0xFFFF9800), isOnline = true),
         User("4", "david", "David", Color(0xFF9C27B0), isOnline = true)
     )
-    
+
     LazyRow(
         modifier = Modifier.padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -1196,7 +1196,7 @@ fun ActiveUsersSection() {
                             )
                         }
                     }
-                    
+
                     Surface(
                         shape = CircleShape,
                         color = Color(0xFF4CAF50),
@@ -1205,9 +1205,9 @@ fun ActiveUsersSection() {
                             .align(Alignment.BottomEnd)
                     ) {}
                 }
-                
+
                 Spacer(modifier = Modifier.height(4.dp))
-                
+
                 Text(
                     text = user.displayName,
                     style = MaterialTheme.typography.bodySmall,
@@ -1266,7 +1266,7 @@ fun ChatItem(chat: Chat) {
                         )
                     }
                 }
-                
+
                 if (user.isOnline) {
                     Surface(
                         shape = CircleShape,
@@ -1278,9 +1278,9 @@ fun ChatItem(chat: Chat) {
                 }
             }
         }
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -1301,7 +1301,7 @@ fun ChatItem(chat: Chat) {
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                
+
                 if (chat.lastMessage != null) {
                     Text(
                         text = chat.lastMessage.timestamp,
@@ -1310,9 +1310,9 @@ fun ChatItem(chat: Chat) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -1335,7 +1335,7 @@ fun ChatItem(chat: Chat) {
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                
+
                 if (chat.unreadCount > 0) {
                     Surface(
                         shape = CircleShape,
@@ -1373,7 +1373,7 @@ fun ChatHeader(user: User) {
                 contentDescription = "Back"
             )
         }
-        
+
         Surface(
             shape = CircleShape,
             color = user.avatar,
@@ -1390,9 +1390,9 @@ fun ChatHeader(user: User) {
                 )
             }
         }
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -1401,28 +1401,28 @@ fun ChatHeader(user: User) {
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold
             )
-            
+
             Text(
                 text = if (user.isOnline) "Online" else "Last seen recently",
                 style = MaterialTheme.typography.bodySmall,
                 color = if (user.isOnline) Color(0xFF4CAF50) else MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         IconButton(onClick = { }) {
             Icon(
                 imageVector = Icons.Default.VideoCall,
                 contentDescription = "Video Call"
             )
         }
-        
+
         IconButton(onClick = { }) {
             Icon(
                 imageVector = Icons.Default.Call,
                 contentDescription = "Voice Call"
             )
         }
-        
+
         IconButton(onClick = { }) {
             Icon(
                 imageVector = Icons.Default.MoreVert,
@@ -1459,10 +1459,10 @@ fun MessageBubble(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.width(8.dp))
         }
-        
+
         Column(
             horizontalAlignment = if (isFromCurrentUser) Alignment.End else Alignment.Start,
             modifier = Modifier.widthIn(max = 280.dp)
@@ -1491,9 +1491,9 @@ fun MessageBubble(
                     modifier = Modifier.padding(12.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(2.dp))
-            
+
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -1502,10 +1502,10 @@ fun MessageBubble(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 if (isFromCurrentUser) {
                     Spacer(modifier = Modifier.width(4.dp))
-                    
+
                     Icon(
                         imageVector = if (message.isRead) Icons.Default.DoneAll else Icons.Default.Done,
                         contentDescription = if (message.isRead) "Read" else "Sent",
@@ -1515,10 +1515,10 @@ fun MessageBubble(
                 }
             }
         }
-        
+
         if (isFromCurrentUser) {
             Spacer(modifier = Modifier.width(8.dp))
-            
+
             Surface(
                 shape = CircleShape,
                 color = Color(0xFF2196F3),
@@ -1561,7 +1561,7 @@ fun MessageInput(
                     contentDescription = "Attach"
                 )
             }
-            
+
             OutlinedTextField(
                 value = messageText,
                 onValueChange = onMessageTextChange,
@@ -1569,9 +1569,9 @@ fun MessageInput(
                 modifier = Modifier.weight(1f),
                 maxLines = 4
             )
-            
+
             Spacer(modifier = Modifier.width(8.dp))
-            
+
             if (messageText.isNotBlank()) {
                 IconButton(
                     onClick = onSendMessage
@@ -1590,7 +1590,7 @@ fun MessageInput(
                             contentDescription = "Camera"
                         )
                     }
-                    
+
                     IconButton(onClick = { }) {
                         Icon(
                             imageVector = Icons.Default.Mic,
@@ -1617,7 +1617,7 @@ fun NotificationsHeader() {
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
-        
+
         TextButton(onClick = { }) {
             Text("Mark all as read")
         }
@@ -1634,7 +1634,7 @@ fun NotificationItem(notification: Notification) {
         NotificationType.MESSAGE -> Color(0xFF9C27B0)
         NotificationType.POST -> Color(0xFF607D8B)
     }
-    
+
     val icon = when (notification.type) {
         NotificationType.LIKE -> Icons.Default.Favorite
         NotificationType.COMMENT -> Icons.Default.ChatBubble
@@ -1643,7 +1643,7 @@ fun NotificationItem(notification: Notification) {
         NotificationType.MESSAGE -> Icons.Default.Message
         NotificationType.POST -> Icons.Default.Article
     }
-    
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -1677,7 +1677,7 @@ fun NotificationItem(notification: Notification) {
                     }
                 }
             }
-            
+
             Surface(
                 shape = CircleShape,
                 color = iconColor,
@@ -1697,9 +1697,9 @@ fun NotificationItem(notification: Notification) {
                 }
             }
         }
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -1710,7 +1710,7 @@ fun NotificationItem(notification: Notification) {
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.SemiBold
                     )
-                    
+
                     Text(
                         text = " ${notification.content}",
                         style = MaterialTheme.typography.bodyMedium
@@ -1722,16 +1722,16 @@ fun NotificationItem(notification: Notification) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(2.dp))
-            
+
             Text(
                 text = notification.timestamp,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         if (!notification.isRead) {
             Surface(
                 shape = CircleShape,
@@ -1756,7 +1756,7 @@ fun registerSocialPreviews() {
             content = { SocialFeedPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "user_profile",
@@ -1769,7 +1769,7 @@ fun registerSocialPreviews() {
             content = { UserProfilePreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "messaging_interface",
@@ -1782,7 +1782,7 @@ fun registerSocialPreviews() {
             content = { MessagingInterfacePreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "chat_detail",
@@ -1795,7 +1795,7 @@ fun registerSocialPreviews() {
             content = { ChatDetailPreview() }
         )
     )
-    
+
     PreviewRegistry.registerPreview(
         PreviewItem(
             id = "notifications",

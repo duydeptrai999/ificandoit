@@ -53,10 +53,10 @@ data class XiaomiBottomNavItem(
 
 /**
  * Xiaomi Bottom Navigation Bar
- * 
+ *
  * A Material Design 3 bottom navigation bar component with Xiaomi design tokens.
  * Provides navigation between top-level destinations in an app.
- * 
+ *
  * @param modifier Modifier to be applied to the navigation bar
  * @param containerColor The color used for the background of this navigation bar
  * @param contentColor The preferred color for content inside this navigation bar
@@ -85,9 +85,9 @@ fun XiaomiBottomNavigationBar(
 
 /**
  * Xiaomi Bottom Navigation Item
- * 
+ *
  * A single item in the bottom navigation bar.
- * 
+ *
  * @param selected Whether this item is currently selected
  * @param onClick Callback when this item is clicked
  * @param icon The icon for this item
@@ -125,9 +125,9 @@ fun RowScope.XiaomiBottomNavigationItem(
 
 /**
  * Xiaomi Simple Bottom Navigation
- * 
+ *
  * A simplified bottom navigation with predefined items.
- * 
+ *
  * @param items List of navigation items
  * @param selectedItemId Currently selected item ID
  * @param onItemSelected Callback when an item is selected
@@ -147,7 +147,7 @@ fun XiaomiSimpleBottomNavigation(
     ) {
         items.forEach { item ->
             val isSelected = item.id == selectedItemId
-            
+
             XiaomiBottomNavigationItem(
                 selected = isSelected,
                 onClick = {
@@ -196,9 +196,9 @@ fun XiaomiSimpleBottomNavigation(
 
 /**
  * Xiaomi Icon Only Bottom Navigation
- * 
+ *
  * A bottom navigation with only icons, no labels.
- * 
+ *
  * @param items List of navigation items
  * @param selectedItemId Currently selected item ID
  * @param onItemSelected Callback when an item is selected
@@ -222,9 +222,9 @@ fun XiaomiIconOnlyBottomNavigation(
 
 /**
  * Xiaomi Badge Bottom Navigation
- * 
+ *
  * A bottom navigation with badge support.
- * 
+ *
  * @param items List of navigation items with badges
  * @param selectedItemId Currently selected item ID
  * @param onItemSelected Callback when an item is selected
@@ -242,7 +242,7 @@ fun XiaomiBadgeBottomNavigation(
     ) {
         items.forEach { item ->
             val isSelected = item.id == selectedItemId
-            
+
             XiaomiBottomNavigationItem(
                 selected = isSelected,
                 onClick = {
@@ -285,9 +285,9 @@ fun XiaomiBadgeBottomNavigation(
 
 /**
  * Xiaomi Custom Bottom Navigation
- * 
+ *
  * A customizable bottom navigation with full control over appearance.
- * 
+ *
  * @param items List of navigation items
  * @param selectedItemId Currently selected item ID
  * @param onItemSelected Callback when an item is selected
@@ -315,7 +315,7 @@ fun XiaomiCustomBottomNavigation(
     ) {
         items.forEach { item ->
             val isSelected = item.id == selectedItemId
-            
+
             XiaomiBottomNavigationItem(
                 selected = isSelected,
                 onClick = {
@@ -368,7 +368,7 @@ fun XiaomiCustomBottomNavigation(
 fun XiaomiBottomNavigationPreview() {
     XiaomiPreviewTheme {
         var selectedItem by remember { mutableIntStateOf(0) }
-        
+
         val items = listOf(
             XiaomiBottomNavItem(
                 id = "home",
@@ -396,7 +396,7 @@ fun XiaomiBottomNavigationPreview() {
                 unselectedIcon = Icons.Outlined.Person
             )
         )
-        
+
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -405,7 +405,7 @@ fun XiaomiBottomNavigationPreview() {
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(16.dp)
             )
-            
+
             XiaomiSimpleBottomNavigation(
                 items = items,
                 selectedItemId = items[selectedItem].id,
@@ -422,7 +422,7 @@ fun XiaomiBottomNavigationPreview() {
 fun XiaomiBadgeBottomNavigationPreview() {
     XiaomiPreviewTheme {
         var selectedItem by remember { mutableIntStateOf(0) }
-        
+
         val items = listOf(
             XiaomiBottomNavItem(
                 id = "home",
@@ -451,7 +451,7 @@ fun XiaomiBadgeBottomNavigationPreview() {
                 unselectedIcon = Icons.Outlined.Settings
             )
         )
-        
+
         XiaomiBadgeBottomNavigation(
             items = items,
             selectedItemId = items[selectedItem].id,
@@ -467,7 +467,7 @@ fun XiaomiBadgeBottomNavigationPreview() {
 fun XiaomiIconOnlyBottomNavigationPreview() {
     XiaomiPreviewTheme {
         var selectedItem by remember { mutableIntStateOf(0) }
-        
+
         val items = listOf(
             XiaomiBottomNavItem(
                 id = "home",
@@ -501,7 +501,7 @@ fun XiaomiIconOnlyBottomNavigationPreview() {
                 unselectedIcon = Icons.Outlined.Settings
             )
         )
-        
+
         XiaomiIconOnlyBottomNavigation(
             items = items,
             selectedItemId = items[selectedItem].id,
@@ -517,7 +517,7 @@ fun XiaomiIconOnlyBottomNavigationPreview() {
 fun XiaomiBottomNavigationDarkPreview() {
     XiaomiPreviewTheme(darkTheme = true) {
         var selectedItem by remember { mutableIntStateOf(0) }
-        
+
         val items = listOf(
             XiaomiBottomNavItem(
                 id = "home",
@@ -539,7 +539,7 @@ fun XiaomiBottomNavigationDarkPreview() {
                 badge = "2"
             )
         )
-        
+
         XiaomiSimpleBottomNavigation(
             items = items,
             selectedItemId = items[selectedItem].id,

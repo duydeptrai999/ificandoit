@@ -35,10 +35,10 @@ import com.xiaomi.base.ui.kit.foundation.shapes.ComponentShapes
 
 /**
  * Xiaomi Base UI Kit Assist Chip Component
- * 
+ *
  * Assist chips represent smart or automated actions that can span multiple apps,
  * such as opening a calendar event from the home screen.
- * 
+ *
  * @param onClick Called when the chip is clicked
  * @param label The text label for this chip
  * @param modifier Modifier to be applied to the chip
@@ -82,10 +82,10 @@ fun XiaomiAssistChip(
 
 /**
  * Xiaomi Filter Chip Component
- * 
+ *
  * Filter chips use tags or descriptive words to filter content.
  * They can be a good alternative to toggle buttons or checkboxes.
- * 
+ *
  * @param selected Whether this chip is selected
  * @param onClick Called when the chip is clicked
  * @param label The text label for this chip
@@ -132,9 +132,9 @@ fun XiaomiFilterChip(
 
 /**
  * Xiaomi Input Chip Component
- * 
+ *
  * Input chips represent discrete pieces of information entered by a user.
- * 
+ *
  * @param selected Whether this chip is selected
  * @param onClick Called when the chip is clicked
  * @param label The text label for this chip
@@ -184,10 +184,10 @@ fun XiaomiInputChip(
 
 /**
  * Xiaomi Suggestion Chip Component
- * 
+ *
  * Suggestion chips help narrow a user's intent by presenting dynamically generated suggestions,
  * such as possible responses or search filters.
- * 
+ *
  * @param onClick Called when the chip is clicked
  * @param label The text label for this chip
  * @param modifier Modifier to be applied to the chip
@@ -247,7 +247,7 @@ fun XiaomiChipsPreview() {
                     )
                 }
             )
-            
+
             // Filter Chips
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -257,14 +257,14 @@ fun XiaomiChipsPreview() {
                     onClick = { },
                     label = { Text("Selected") }
                 )
-                
+
                 XiaomiFilterChip(
                     selected = false,
                     onClick = { },
                     label = { Text("Unselected") }
                 )
             }
-            
+
             // Input Chip
             XiaomiInputChip(
                 selected = true,
@@ -278,7 +278,7 @@ fun XiaomiChipsPreview() {
                     )
                 }
             )
-            
+
             // Suggestion Chip
             XiaomiSuggestionChip(
                 onClick = { },
@@ -307,13 +307,13 @@ fun XiaomiChipsDarkPreview() {
                 onClick = { },
                 label = { Text("Assist Chip") }
             )
-            
+
             XiaomiFilterChip(
                 selected = true,
                 onClick = { },
                 label = { Text("Filter Chip") }
             )
-            
+
             XiaomiSuggestionChip(
                 onClick = { },
                 label = { Text("Suggestion") }

@@ -33,10 +33,10 @@ import com.xiaomi.base.ui.kit.foundation.spacing.SemanticSpacing
 
 /**
  * Xiaomi Base UI Kit Horizontal Divider
- * 
+ *
  * A Material Design 3 horizontal divider component with Xiaomi design tokens.
  * Used to separate content horizontally.
- * 
+ *
  * @param modifier Modifier to be applied to the divider
  * @param thickness The thickness of the divider line
  * @param color The color of the divider
@@ -56,10 +56,10 @@ fun XiaomiHorizontalDivider(
 
 /**
  * Xiaomi Base UI Kit Vertical Divider
- * 
+ *
  * A Material Design 3 vertical divider component with Xiaomi design tokens.
  * Used to separate content vertically.
- * 
+ *
  * @param modifier Modifier to be applied to the divider
  * @param thickness The thickness of the divider line
  * @param color The color of the divider
@@ -79,9 +79,9 @@ fun XiaomiVerticalDivider(
 
 /**
  * Xiaomi Thick Divider
- * 
+ *
  * A thicker divider for stronger visual separation.
- * 
+ *
  * @param modifier Modifier to be applied to the divider
  * @param thickness The thickness of the divider line
  * @param color The color of the divider
@@ -101,9 +101,9 @@ fun XiaomiThickDivider(
 
 /**
  * Xiaomi Section Divider
- * 
+ *
  * A divider with padding for section separation.
- * 
+ *
  * @param modifier Modifier to be applied to the divider
  * @param thickness The thickness of the divider line
  * @param color The color of the divider
@@ -125,9 +125,9 @@ fun XiaomiSectionDivider(
 
 /**
  * Xiaomi Inset Divider
- * 
+ *
  * A divider with left inset, commonly used in lists.
- * 
+ *
  * @param modifier Modifier to be applied to the divider
  * @param inset The left inset amount
  * @param thickness The thickness of the divider line
@@ -149,9 +149,9 @@ fun XiaomiInsetDivider(
 
 /**
  * Xiaomi Middle Divider
- * 
+ *
  * A divider with equal padding on both sides.
- * 
+ *
  * @param modifier Modifier to be applied to the divider
  * @param padding The padding on both sides
  * @param thickness The thickness of the divider line
@@ -173,9 +173,9 @@ fun XiaomiMiddleDivider(
 
 /**
  * Xiaomi Gradient Divider
- * 
+ *
  * A divider with gradient effect using background.
- * 
+ *
  * @param modifier Modifier to be applied to the divider
  * @param height The height of the gradient divider
  * @param startColor The starting color of the gradient
@@ -202,9 +202,9 @@ fun XiaomiGradientDivider(
 
 /**
  * Xiaomi Rounded Divider
- * 
+ *
  * A divider with rounded corners.
- * 
+ *
  * @param modifier Modifier to be applied to the divider
  * @param thickness The thickness of the divider line
  * @param color The color of the divider
@@ -228,9 +228,9 @@ fun XiaomiRoundedDivider(
 
 /**
  * Xiaomi Dotted Divider
- * 
+ *
  * A divider with dotted pattern effect.
- * 
+ *
  * @param modifier Modifier to be applied to the divider
  * @param dotSize The size of each dot
  * @param spacing The spacing between dots
@@ -261,9 +261,9 @@ fun XiaomiDottedDivider(
 
 /**
  * Xiaomi Text Divider
- * 
+ *
  * A divider with text in the center.
- * 
+ *
  * @param text The text to display in the center
  * @param modifier Modifier to be applied to the divider
  * @param textColor The color of the text
@@ -288,14 +288,14 @@ fun XiaomiTextDivider(
             thickness = thickness,
             color = dividerColor
         )
-        
+
         Text(
             text = text,
             style = MaterialTheme.typography.labelMedium,
             color = textColor,
             fontWeight = FontWeight.Medium
         )
-        
+
         XiaomiHorizontalDivider(
             modifier = Modifier.weight(1f),
             thickness = thickness,
@@ -306,9 +306,9 @@ fun XiaomiTextDivider(
 
 /**
  * Xiaomi Icon Divider
- * 
+ *
  * A divider with an icon in the center.
- * 
+ *
  * @param icon The icon composable to display in the center
  * @param modifier Modifier to be applied to the divider
  * @param dividerColor The color of the divider lines
@@ -331,9 +331,9 @@ fun XiaomiIconDivider(
             thickness = thickness,
             color = dividerColor
         )
-        
+
         icon()
-        
+
         XiaomiHorizontalDivider(
             modifier = Modifier.weight(1f),
             thickness = thickness,
@@ -344,9 +344,9 @@ fun XiaomiIconDivider(
 
 /**
  * Xiaomi Space Divider
- * 
+ *
  * An invisible divider that provides spacing.
- * 
+ *
  * @param height The height of the space
  * @param modifier Modifier to be applied to the divider
  */
@@ -370,34 +370,34 @@ fun XiaomiDividersPreview() {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text("Basic Dividers", style = MaterialTheme.typography.titleMedium)
-            
+
             Text("Standard Horizontal Divider")
             XiaomiHorizontalDivider()
-            
+
             Text("Thick Divider")
             XiaomiThickDivider()
-            
+
             Text("Section Divider")
             XiaomiSectionDivider()
-            
+
             Text("Inset Divider")
             XiaomiInsetDivider()
-            
+
             Text("Middle Divider")
             XiaomiMiddleDivider()
-            
+
             Text("Rounded Divider")
             XiaomiRoundedDivider()
-            
+
             Text("Gradient Divider")
             XiaomiGradientDivider()
-            
+
             Text("Dotted Divider")
             XiaomiDottedDivider()
-            
+
             Text("Text Divider")
             XiaomiTextDivider(text = "OR")
-            
+
             Text("Icon Divider")
             XiaomiIconDivider(
                 icon = {
@@ -421,9 +421,9 @@ fun XiaomiVerticalDividersPreview() {
             modifier = Modifier.padding(16.dp)
         ) {
             Text("Vertical Dividers", style = MaterialTheme.typography.titleMedium)
-            
+
             androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(16.dp))
-            
+
             Row(
                 modifier = Modifier.height(100.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -435,9 +435,9 @@ fun XiaomiVerticalDividersPreview() {
                 ) {
                     Text("Section A", textAlign = TextAlign.Center)
                 }
-                
+
                 XiaomiVerticalDivider()
-                
+
                 Column(
                     modifier = Modifier.weight(1f),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -445,12 +445,12 @@ fun XiaomiVerticalDividersPreview() {
                 ) {
                     Text("Section B", textAlign = TextAlign.Center)
                 }
-                
+
                 XiaomiVerticalDivider(
                     thickness = 2.dp,
                     color = MaterialTheme.colorScheme.primary
                 )
-                
+
                 Column(
                     modifier = Modifier.weight(1f),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -473,15 +473,15 @@ fun XiaomiDividersDarkPreview() {
         ) {
             Text("Content Above")
             XiaomiHorizontalDivider()
-            
+
             Text("Content Below")
             XiaomiTextDivider(text = "SECTION")
-            
+
             Text("More Content")
             XiaomiRoundedDivider(
                 color = MaterialTheme.colorScheme.secondary
             )
-            
+
             Text("Final Content")
         }
     }

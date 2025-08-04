@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 /**
  * Shimmer Loading Component
  * Creates a shimmer effect for loading states
- * 
+ *
  * @param isLoading Whether the shimmer effect should be active
  * @param modifier Modifier to be applied to the component
  * @param shimmerColors List of colors for the shimmer gradient
@@ -75,7 +75,7 @@ fun Modifier.shimmerEffect(
         ),
         label = "shimmer_translate"
     )
-    
+
     background(
         brush = Brush.linearGradient(
             colors = colors,
@@ -181,7 +181,7 @@ fun ShimmerCard(
             shimmerColors = shimmerColors,
             modifier = Modifier.fillMaxWidth()
         )
-        
+
         // Content placeholder
         Column(
             modifier = Modifier.padding(contentPadding),
@@ -194,14 +194,14 @@ fun ShimmerCard(
                 height = 20.dp,
                 shimmerColors = shimmerColors
             )
-            
+
             // Description
             ShimmerText(
                 isLoading = isLoading,
                 lines = 2,
                 shimmerColors = shimmerColors
             )
-            
+
             // Action buttons
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -258,7 +258,7 @@ fun ShimmerListItem(
                 shimmerColors = shimmerColors
             )
         }
-        
+
         // Content
         Column(
             modifier = Modifier.weight(1f),
@@ -271,7 +271,7 @@ fun ShimmerListItem(
                 height = 16.dp,
                 shimmerColors = shimmerColors
             )
-            
+
             // Subtitle
             if (hasSubtitle) {
                 ShimmerBox(
@@ -282,7 +282,7 @@ fun ShimmerListItem(
                 )
             }
         }
-        
+
         // Trailing icon
         if (hasTrailingIcon) {
             ShimmerBox(
@@ -328,7 +328,7 @@ fun ShimmerGridItem(
                 .fillMaxWidth()
                 .aspectRatio(aspectRatio)
         )
-        
+
         // Title
         if (hasTitle) {
             ShimmerBox(
@@ -338,7 +338,7 @@ fun ShimmerGridItem(
                 shimmerColors = shimmerColors
             )
         }
-        
+
         // Subtitle
         if (hasSubtitle) {
             ShimmerBox(

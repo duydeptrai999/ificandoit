@@ -140,17 +140,17 @@ data class SensorReading(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
-        
+
         other as SensorReading
-        
+
         if (type != other.type) return false
         if (!values.contentEquals(other.values)) return false
         if (accuracy != other.accuracy) return false
         if (timestamp != other.timestamp) return false
-        
+
         return true
     }
-    
+
     override fun hashCode(): Int {
         var result = type.hashCode()
         result = 31 * result + values.contentHashCode()
@@ -176,7 +176,7 @@ data class DeviceAdaptationConfig(
 /**
  * Device Adaptation Component
  * Comprehensive device adaptation and hardware integration
- * 
+ *
  * @param config Device adaptation configuration
  * @param onHardwareDetected Callback when hardware is detected
  * @param onSensorReading Callback for sensor readings
@@ -189,7 +189,7 @@ fun DeviceAdaptationComponent(
 ) {
     val context = LocalContext.current
     var selectedTab by remember { mutableStateOf(0) }
-    
+
     val hardwareFeatures = remember {
         if (config.enableHardwareDetection) {
             detectHardwareFeatures(context)
@@ -197,11 +197,11 @@ fun DeviceAdaptationComponent(
             emptyList()
         }
     }
-    
+
     LaunchedEffect(hardwareFeatures) {
         onHardwareDetected(hardwareFeatures)
     }
-    
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -229,7 +229,7 @@ fun DeviceAdaptationComponent(
                 text = { Text("Testing") }
             )
         }
-        
+
         when (selectedTab) {
             0 -> HardwareDetectionComponent(
                 hardwareFeatures = hardwareFeatures,
@@ -255,7 +255,7 @@ fun DeviceAdaptationComponent(
 /**
  * Hardware Detection Component
  * Detects and displays available hardware features
- * 
+ *
  * @param hardwareFeatures List of detected hardware features
  * @param config Device adaptation configuration
  */
@@ -275,18 +275,18 @@ fun HardwareDetectionComponent(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             HardwareSummaryCard(hardwareFeatures = hardwareFeatures)
         }
-        
+
         items(hardwareFeatures.groupBy { it.type.name.take(1) }.toList()) { (category, features) ->
             HardwareCategoryCard(
                 category = category,
                 features = features
             )
         }
-        
+
         if (config.enableSimulationMode) {
             item {
                 SimulationModeCard()
@@ -298,7 +298,7 @@ fun HardwareDetectionComponent(
 /**
  * Sensor Monitoring Component
  * Real-time sensor data monitoring
- * 
+ *
  * @param hardwareFeatures List of available hardware features
  * @param config Device adaptation configuration
  * @param onSensorReading Callback for sensor readings
@@ -312,11 +312,11 @@ fun SensorMonitoringComponent(
     val context = LocalContext.current
     var isMonitoring by remember { mutableStateOf(false) }
     var sensorReadings by remember { mutableStateOf<Map<SensorDataType, SensorReading>>(emptyMap()) }
-    
+
     val sensorManager = remember {
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     }
-    
+
     LaunchedEffect(isMonitoring) {
         if (isMonitoring && config.enableSensorMonitoring) {
             // Start sensor monitoring
@@ -328,10 +328,10 @@ fun SensorMonitoringComponent(
                         onSensorReading(reading)
                     }
                 }
-                
+
                 override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
             }
-            
+
             // Register sensors
             val sensors = getSensorsToMonitor(sensorManager, hardwareFeatures)
             sensors.forEach { sensor ->
@@ -343,7 +343,7 @@ fun SensorMonitoringComponent(
             }
         }
     }
-    
+
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(16.dp)
@@ -359,14 +359,14 @@ fun SensorMonitoringComponent(
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Switch(
                     checked = isMonitoring,
                     onCheckedChange = { isMonitoring = it }
                 )
             }
         }
-        
+
         if (isMonitoring) {
             items(sensorReadings.values.toList()) { reading ->
                 SensorReadingCard(reading = reading)
@@ -398,7 +398,7 @@ fun SensorMonitoringComponent(
 /**
  * Adaptation Strategies Component
  * Shows adaptation strategies for different hardware scenarios
- * 
+ *
  * @param hardwareFeatures List of available hardware features
  * @param config Device adaptation configuration
  */
@@ -410,7 +410,7 @@ fun AdaptationStrategiesComponent(
     val adaptationStrategies = remember(hardwareFeatures) {
         generateAdaptationStrategies(hardwareFeatures)
     }
-    
+
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(16.dp)
@@ -422,14 +422,14 @@ fun AdaptationStrategiesComponent(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             AdaptationOverviewCard(
                 strategies = adaptationStrategies,
                 config = config
             )
         }
-        
+
         items(adaptationStrategies) { strategy ->
             AdaptationStrategyCard(strategy = strategy)
         }
@@ -439,7 +439,7 @@ fun AdaptationStrategiesComponent(
 /**
  * Hardware Testing Component
  * Interactive testing of hardware features
- * 
+ *
  * @param hardwareFeatures List of available hardware features
  * @param config Device adaptation configuration
  */
@@ -450,7 +450,7 @@ fun HardwareTestingComponent(
 ) {
     val context = LocalContext.current
     var testResults by remember { mutableStateOf<Map<HardwareFeatureType, Boolean>>(emptyMap()) }
-    
+
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(16.dp)
@@ -462,11 +462,11 @@ fun HardwareTestingComponent(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             TestResultsSummaryCard(testResults = testResults)
         }
-        
+
         items(hardwareFeatures.filter { it.isAvailable }) { feature ->
             HardwareTestCard(
                 feature = feature,
@@ -476,7 +476,7 @@ fun HardwareTestingComponent(
                 }
             )
         }
-        
+
         item {
             HapticFeedbackTestCard()
         }
@@ -492,7 +492,7 @@ private fun HardwareSummaryCard(hardwareFeatures: List<HardwareFeatureInfo>) {
     val availableCount = hardwareFeatures.count { it.isAvailable }
     val totalCount = hardwareFeatures.size
     val availabilityPercentage = if (totalCount > 0) (availableCount * 100) / totalCount else 0
-    
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -504,9 +504,9 @@ private fun HardwareSummaryCard(hardwareFeatures: List<HardwareFeatureInfo>) {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -516,22 +516,22 @@ private fun HardwareSummaryCard(hardwareFeatures: List<HardwareFeatureInfo>) {
                     value = availableCount.toString(),
                     color = Color.Green
                 )
-                
+
                 SummaryItem(
                     label = "Total",
                     value = totalCount.toString(),
                     color = MaterialTheme.colorScheme.primary
                 )
-                
+
                 SummaryItem(
                     label = "Coverage",
                     value = "$availabilityPercentage%",
                     color = if (availabilityPercentage >= 70) Color.Green else Orange
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             LinearProgressIndicator(
                 progress = availabilityPercentage / 100f,
                 modifier = Modifier.fillMaxWidth(),
@@ -556,7 +556,7 @@ private fun SummaryItem(
             fontWeight = FontWeight.Bold,
             color = color
         )
-        
+
         Text(
             text = label,
             style = MaterialTheme.typography.bodySmall,
@@ -581,12 +581,12 @@ private fun HardwareCategoryCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             features.forEach { feature ->
                 HardwareFeatureRow(feature = feature)
-                
+
                 if (feature != features.last()) {
                     Spacer(modifier = Modifier.height(8.dp))
                 }
@@ -610,14 +610,14 @@ private fun HardwareFeatureRow(feature: HardwareFeatureInfo) {
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Text(
                 text = feature.capabilityLevel.name,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         Icon(
             imageVector = if (feature.isAvailable) Icons.Default.CheckCircle else Icons.Default.Cancel,
             contentDescription = if (feature.isAvailable) "Available" else "Not Available",
@@ -645,7 +645,7 @@ private fun SensorReadingCard(reading: SensorReading) {
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium
                 )
-                
+
                 Badge {
                     Text(
                         text = "Accuracy: ${reading.accuracy}",
@@ -653,9 +653,9 @@ private fun SensorReadingCard(reading: SensorReading) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             if (reading.formattedValue.isNotEmpty()) {
                 Text(
                     text = reading.formattedValue,
@@ -669,9 +669,9 @@ private fun SensorReadingCard(reading: SensorReading) {
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Text(
                 text = "Updated: ${formatTimestamp(reading.timestamp)}",
                 style = MaterialTheme.typography.bodySmall,
@@ -688,7 +688,7 @@ private fun HardwareTestCard(
     onTest: (Boolean) -> Unit
 ) {
     val context = LocalContext.current
-    
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -708,14 +708,14 @@ private fun HardwareTestCard(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     Text(
                         text = feature.type.name,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 testResult?.let { result ->
                     Icon(
                         imageVector = if (result) Icons.Default.CheckCircle else Icons.Default.Error,
@@ -725,9 +725,9 @@ private fun HardwareTestCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Button(
                 onClick = {
                     val success = testHardwareFeature(context, feature)
@@ -744,7 +744,7 @@ private fun HardwareTestCard(
 @Composable
 private fun HapticFeedbackTestCard() {
     val context = LocalContext.current
-    
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -756,9 +756,9 @@ private fun HapticFeedbackTestCard() {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -769,14 +769,14 @@ private fun HapticFeedbackTestCard() {
                 ) {
                     Text("Light")
                 }
-                
+
                 Button(
                     onClick = { triggerHapticFeedback(context, "medium") },
                     modifier = Modifier.weight(1f)
                 ) {
                     Text("Medium")
                 }
-                
+
                 Button(
                     onClick = { triggerHapticFeedback(context, "heavy") },
                     modifier = Modifier.weight(1f)
@@ -807,9 +807,9 @@ private fun SimulationModeCard() {
                     contentDescription = "Simulation Mode",
                     tint = MaterialTheme.colorScheme.onSecondaryContainer
                 )
-                
+
                 Spacer(modifier = Modifier.width(8.dp))
-                
+
                 Text(
                     text = "Simulation Mode Active",
                     style = MaterialTheme.typography.titleMedium,
@@ -817,9 +817,9 @@ private fun SimulationModeCard() {
                     color = MaterialTheme.colorScheme.onSecondaryContainer
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Hardware features are being simulated for testing purposes. Real device capabilities may differ.",
                 style = MaterialTheme.typography.bodyMedium,
@@ -845,18 +845,18 @@ private fun AdaptationOverviewCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Text(
                 text = "Primary Strategy: ${config.fallbackStrategy.name}",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.primary
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "${strategies.size} adaptation strategies identified",
                 style = MaterialTheme.typography.bodySmall,
@@ -885,7 +885,7 @@ private fun AdaptationStrategyCard(strategy: AdaptationStrategyInfo) {
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.weight(1f)
                 )
-                
+
                 Badge(
                     containerColor = when (strategy.priority) {
                         "HIGH" -> Color.Red
@@ -901,17 +901,17 @@ private fun AdaptationStrategyCard(strategy: AdaptationStrategyInfo) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = strategy.description,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Implementation: ${strategy.implementation}",
                 style = MaterialTheme.typography.bodySmall,
@@ -925,7 +925,7 @@ private fun AdaptationStrategyCard(strategy: AdaptationStrategyInfo) {
 private fun TestResultsSummaryCard(testResults: Map<HardwareFeatureType, Boolean>) {
     val passedTests = testResults.values.count { it }
     val totalTests = testResults.size
-    
+
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -937,9 +937,9 @@ private fun TestResultsSummaryCard(testResults: Map<HardwareFeatureType, Boolean
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             if (totalTests > 0) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -950,13 +950,13 @@ private fun TestResultsSummaryCard(testResults: Map<HardwareFeatureType, Boolean
                         value = passedTests.toString(),
                         color = Color.Green
                     )
-                    
+
                     SummaryItem(
                         label = "Failed",
                         value = (totalTests - passedTests).toString(),
                         color = Color.Red
                     )
-                    
+
                     SummaryItem(
                         label = "Success Rate",
                         value = "${(passedTests * 100) / totalTests}%",
@@ -992,10 +992,10 @@ private fun detectHardwareFeatures(context: Context): List<HardwareFeatureInfo> 
     val features = mutableListOf<HardwareFeatureInfo>()
     val packageManager = context.packageManager
     val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-    
+
     // Detect sensors
     val sensorList = sensorManager.getSensorList(Sensor.TYPE_ALL)
-    
+
     sensorList.forEach { sensor ->
         val featureType = mapSensorToFeatureType(sensor.type)
         if (featureType != null) {
@@ -1016,7 +1016,7 @@ private fun detectHardwareFeatures(context: Context): List<HardwareFeatureInfo> 
             )
         }
     }
-    
+
     // Detect other hardware features
     val hardwareFeatures = mapOf(
         HardwareFeatureType.CAMERA to PackageManager.FEATURE_CAMERA,
@@ -1026,7 +1026,7 @@ private fun detectHardwareFeatures(context: Context): List<HardwareFeatureInfo> 
         HardwareFeatureType.GPS to PackageManager.FEATURE_LOCATION_GPS,
         HardwareFeatureType.FINGERPRINT to PackageManager.FEATURE_FINGERPRINT
     )
-    
+
     hardwareFeatures.forEach { (featureType, featureName) ->
         val isAvailable = packageManager.hasSystemFeature(featureName)
         if (features.none { it.type == featureType }) {
@@ -1040,7 +1040,7 @@ private fun detectHardwareFeatures(context: Context): List<HardwareFeatureInfo> 
             )
         }
     }
-    
+
     return features.sortedBy { it.type.name }
 }
 
@@ -1077,7 +1077,7 @@ private fun getSensorsToMonitor(
     hardwareFeatures: List<HardwareFeatureInfo>
 ): List<Sensor> {
     val sensors = mutableListOf<Sensor>()
-    
+
     hardwareFeatures.filter { it.isAvailable }.forEach { feature ->
         val sensorType = when (feature.type) {
             HardwareFeatureType.ACCELEROMETER -> Sensor.TYPE_ACCELEROMETER
@@ -1088,14 +1088,14 @@ private fun getSensorsToMonitor(
             HardwareFeatureType.PRESSURE -> Sensor.TYPE_PRESSURE
             else -> null
         }
-        
+
         sensorType?.let { type ->
             sensorManager.getDefaultSensor(type)?.let { sensor ->
                 sensors.add(sensor)
             }
         }
     }
-    
+
     return sensors
 }
 
@@ -1113,7 +1113,7 @@ private fun convertSensorEvent(event: SensorEvent): SensorReading {
         Sensor.TYPE_STEP_COUNTER -> SensorDataType.STEP_COUNT
         else -> SensorDataType.ACCELERATION
     }
-    
+
     val formattedValue = when (dataType) {
         SensorDataType.ACCELERATION -> "${sqrt(event.values[0].pow(2) + event.values[1].pow(2) + event.values[2].pow(2)).roundToInt()} m/s²"
         SensorDataType.PROXIMITY_DISTANCE -> "${event.values[0]} cm"
@@ -1125,7 +1125,7 @@ private fun convertSensorEvent(event: SensorEvent): SensorReading {
         SensorDataType.STEP_COUNT -> "${event.values[0].roundToInt()} steps"
         else -> ""
     }
-    
+
     return SensorReading(
         type = dataType,
         values = event.values.clone(),
@@ -1137,9 +1137,9 @@ private fun convertSensorEvent(event: SensorEvent): SensorReading {
 
 private fun generateAdaptationStrategies(hardwareFeatures: List<HardwareFeatureInfo>): List<AdaptationStrategyInfo> {
     val strategies = mutableListOf<AdaptationStrategyInfo>()
-    
+
     val unavailableFeatures = hardwareFeatures.filter { !it.isAvailable }
-    
+
     if (unavailableFeatures.any { it.type == HardwareFeatureType.GPS }) {
         strategies.add(
             AdaptationStrategyInfo(
@@ -1151,7 +1151,7 @@ private fun generateAdaptationStrategies(hardwareFeatures: List<HardwareFeatureI
             )
         )
     }
-    
+
     if (unavailableFeatures.any { it.type == HardwareFeatureType.CAMERA }) {
         strategies.add(
             AdaptationStrategyInfo(
@@ -1163,7 +1163,7 @@ private fun generateAdaptationStrategies(hardwareFeatures: List<HardwareFeatureI
             )
         )
     }
-    
+
     if (unavailableFeatures.any { it.type == HardwareFeatureType.FINGERPRINT }) {
         strategies.add(
             AdaptationStrategyInfo(
@@ -1175,7 +1175,7 @@ private fun generateAdaptationStrategies(hardwareFeatures: List<HardwareFeatureI
             )
         )
     }
-    
+
     return strategies
 }
 
@@ -1189,15 +1189,15 @@ private fun testHardwareFeature(context: Context, feature: HardwareFeatureInfo):
                 false
             }
         }
-        
+
         HardwareFeatureType.CAMERA -> {
             context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)
         }
-        
+
         HardwareFeatureType.NFC -> {
             context.packageManager.hasSystemFeature(PackageManager.FEATURE_NFC)
         }
-        
+
         else -> feature.isAvailable
     }
 }
@@ -1207,19 +1207,19 @@ private fun triggerHapticFeedback(context: Context, intensity: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
             val vibrator = vibratorManager.defaultVibrator
-            
+
             val effect = when (intensity) {
                 "light" -> VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK)
                 "medium" -> VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK)
                 "heavy" -> VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK)
                 else -> VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK)
             }
-            
+
             vibrator.vibrate(effect)
         } else {
             @Suppress("DEPRECATION")
             val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val duration = when (intensity) {
                     "light" -> 50L
@@ -1227,7 +1227,7 @@ private fun triggerHapticFeedback(context: Context, intensity: String) {
                     "heavy" -> 200L
                     else -> 100L
                 }
-                
+
                 vibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE))
             } else {
                 @Suppress("DEPRECATION")
@@ -1242,7 +1242,7 @@ private fun triggerHapticFeedback(context: Context, intensity: String) {
 private fun formatTimestamp(timestamp: Long): String {
     val currentTime = System.currentTimeMillis()
     val diff = (currentTime - timestamp / 1000000) // Convert nanoseconds to milliseconds
-    
+
     return when {
         diff < 1000 -> "Just now"
         diff < 60000 -> "${diff / 1000}s ago"

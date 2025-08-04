@@ -19,13 +19,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    
     /**
      * Base URL for the API.
      * In a real application, this would be defined in BuildConfig or a properties file.
      */
     private const val BASE_URL = "https://api.example.com/v1/"
-    
+
     /**
      * Provides an OkHttpClient instance with logging and timeout configurations.
      *
@@ -34,14 +33,16 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = if (BuildConfig.DEBUG) {
-                HttpLoggingInterceptor.Level.BODY
-            } else {
-                HttpLoggingInterceptor.Level.NONE
+        val loggingInterceptor =
+            HttpLoggingInterceptor().apply {
+                level =
+                    if (BuildConfig.DEBUG) {
+                        HttpLoggingInterceptor.Level.BODY
+                    } else {
+                        HttpLoggingInterceptor.Level.NONE
+                    }
             }
-        }
-        
+
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -49,7 +50,7 @@ object NetworkModule {
             .writeTimeout(30, TimeUnit.SECONDS)
             .build()
     }
-    
+
     /**
      * Provides a Retrofit instance configured with the base URL and Gson converter.
      *
@@ -65,7 +66,7 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-    
+
     /**
      * Provides an ApiService instance for making API calls.
      *

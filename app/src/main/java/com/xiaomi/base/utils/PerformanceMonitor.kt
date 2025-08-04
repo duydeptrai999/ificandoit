@@ -31,19 +31,19 @@ import javax.inject.Singleton
  */
 @Singleton
 class PerformanceMonitor @Inject constructor() {
-    
+
     private val performanceMetrics = ConcurrentHashMap<String, PerformanceMetric>()
     private val frameRateMonitor = FrameRateMonitor()
     private val memoryMonitor = MemoryMonitor()
     private var isMonitoring = false
     private var monitoringJob: Job? = null
-    
+
     /**
      * Start performance monitoring
      */
     fun startMonitoring() {
         if (isMonitoring) return
-        
+
         isMonitoring = true
         monitoringJob = CoroutineScope(Dispatchers.Default).launch {
             while (isActive && isMonitoring) {
@@ -51,13 +51,13 @@ class PerformanceMonitor @Inject constructor() {
                 delay(1000) // Collect metrics every second
             }
         }
-        
+
         frameRateMonitor.start()
         memoryMonitor.start()
-        
+
         Timber.d("Performance monitoring started")
     }
-    
+
     /**
      * Stop performance monitoring
      */
@@ -66,10 +66,10 @@ class PerformanceMonitor @Inject constructor() {
         monitoringJob?.cancel()
         frameRateMonitor.stop()
         memoryMonitor.stop()
-        
+
         Timber.d("Performance monitoring stopped")
     }
-    
+
     /**
      * Record a performance event
      */
@@ -80,27 +80,27 @@ class PerformanceMonitor @Inject constructor() {
             timestamp = System.currentTimeMillis(),
             metadata = metadata
         )
-        
+
         performanceMetrics["${eventName}_${System.currentTimeMillis()}"] = metric
-        
+
         Timber.d("Performance event recorded: $eventName took ${duration}ms")
     }
-    
+
     /**
      * Get current performance metrics
      */
     fun getMetrics(): Map<String, PerformanceMetric> = performanceMetrics.toMap()
-    
+
     /**
      * Get current frame rate
      */
     fun getCurrentFrameRate(): Float = frameRateMonitor.getCurrentFrameRate()
-    
+
     /**
      * Get current memory usage
      */
     fun getCurrentMemoryUsage(): MemoryUsage = memoryMonitor.getCurrentMemoryUsage()
-    
+
     /**
      * Clear all collected metrics
      */
@@ -108,10 +108,10 @@ class PerformanceMonitor @Inject constructor() {
         performanceMetrics.clear()
         Timber.d("Performance metrics cleared")
     }
-    
+
     private fun collectMetrics() {
         val currentTime = System.currentTimeMillis()
-        
+
         // Record frame rate
         recordEvent(
             "frame_rate",
@@ -121,7 +121,7 @@ class PerformanceMonitor @Inject constructor() {
                 "timestamp" to currentTime
             )
         )
-        
+
         // Record memory usage
         val memoryUsage = memoryMonitor.getCurrentMemoryUsage()
         recordEvent(
@@ -156,14 +156,14 @@ class FrameRateMonitor {
     private var currentFPS = 0f
     private val handler = Handler(Looper.getMainLooper())
     private var isRunning = false
-    
+
     private val frameCallback = object : Runnable {
         override fun run() {
             if (!isRunning) return
-            
+
             val currentTime = System.currentTimeMillis()
             frameCount++
-            
+
             if (lastFrameTime == 0L) {
                 lastFrameTime = currentTime
             } else {
@@ -174,22 +174,22 @@ class FrameRateMonitor {
                     lastFrameTime = currentTime
                 }
             }
-            
+
             handler.post(this)
         }
     }
-    
+
     fun start() {
         if (isRunning) return
         isRunning = true
         handler.post(frameCallback)
     }
-    
+
     fun stop() {
         isRunning = false
         handler.removeCallbacks(frameCallback)
     }
-    
+
     fun getCurrentFrameRate(): Float = currentFPS
 }
 
@@ -199,21 +199,21 @@ class FrameRateMonitor {
 class MemoryMonitor {
     private val runtime = Runtime.getRuntime()
     private var isRunning = false
-    
+
     fun start() {
         isRunning = true
     }
-    
+
     fun stop() {
         isRunning = false
     }
-    
+
     fun getCurrentMemoryUsage(): MemoryUsage {
         val totalMemory = runtime.totalMemory()
         val freeMemory = runtime.freeMemory()
         val usedMemory = totalMemory - freeMemory
         val maxMemory = runtime.maxMemory()
-        
+
         return MemoryUsage(
             usedMemoryMB = usedMemory / (1024 * 1024),
             totalMemoryMB = totalMemory / (1024 * 1024),
@@ -242,7 +242,7 @@ fun TrackPerformance(
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     var startTime by remember { mutableStateOf(0L) }
-    
+
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
@@ -258,14 +258,14 @@ fun TrackPerformance(
                 else -> {}
             }
         }
-        
+
         lifecycleOwner.lifecycle.addObserver(observer)
-        
+
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
-    
+
     content()
 }
 
@@ -275,18 +275,18 @@ fun TrackPerformance(
 class PerformanceLifecycleCallbacks(
     private val performanceMonitor: PerformanceMonitor
 ) : Application.ActivityLifecycleCallbacks {
-    
+
     private val activityStartTimes = mutableMapOf<String, Long>()
-    
+
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         val activityName = activity::class.java.simpleName
         activityStartTimes[activityName] = System.currentTimeMillis()
     }
-    
+
     override fun onActivityStarted(activity: Activity) {
         // Activity is becoming visible
     }
-    
+
     override fun onActivityResumed(activity: Activity) {
         val activityName = activity::class.java.simpleName
         val startTime = activityStartTimes[activityName]
@@ -300,19 +300,19 @@ class PerformanceLifecycleCallbacks(
             activityStartTimes.remove(activityName)
         }
     }
-    
+
     override fun onActivityPaused(activity: Activity) {
         // Activity is losing focus
     }
-    
+
     override fun onActivityStopped(activity: Activity) {
         // Activity is no longer visible
     }
-    
+
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
         // Activity is saving state
     }
-    
+
     override fun onActivityDestroyed(activity: Activity) {
         val activityName = activity::class.java.simpleName
         activityStartTimes.remove(activityName)

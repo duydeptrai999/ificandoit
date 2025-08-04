@@ -10,14 +10,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor() : ViewModel() {
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading = _isLoading.asStateFlow()
+class MainActivityViewModel
+    @Inject
+    constructor() : ViewModel() {
+        private val _isLoading = MutableStateFlow(true)
+        val isLoading = _isLoading.asStateFlow()
 
-    init {
-        viewModelScope.launch {
-            delay(1000)
-            _isLoading.value = false
+        init {
+            viewModelScope.launch {
+                delay(1000)
+                _isLoading.value = false
+            }
         }
     }
-}

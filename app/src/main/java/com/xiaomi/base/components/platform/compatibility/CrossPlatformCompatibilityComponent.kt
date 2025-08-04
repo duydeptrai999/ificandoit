@@ -172,7 +172,7 @@ enum class FallbackStrategy {
 /**
  * Cross-Platform Compatibility Component
  * Comprehensive cross-platform compatibility and responsive design
- * 
+ *
  * @param config Adaptive layout configuration
  * @param onCompatibilityIssue Callback when compatibility issue is detected
  * @param content Content to make compatible
@@ -187,14 +187,14 @@ fun CrossPlatformCompatibilityComponent(
     val compatibilityIssues = remember(deviceInfo) {
         detectCompatibilityIssues(deviceInfo)
     }
-    
+
     // Report compatibility issues
     LaunchedEffect(compatibilityIssues) {
         compatibilityIssues.forEach { issue ->
             onCompatibilityIssue(issue)
         }
     }
-    
+
     // Apply adaptive layout
     AdaptiveLayoutProvider(
         deviceInfo = deviceInfo,
@@ -222,7 +222,7 @@ fun CrossPlatformCompatibilityComponentPreview() {
 /**
  * Responsive Grid Component
  * Adaptive grid that responds to screen size
- * 
+ *
  * @param items Items to display
  * @param itemContent Content for each item
  */
@@ -234,7 +234,7 @@ fun <T> ResponsiveGridComponent(
 ) {
     val deviceInfo = LocalDeviceInfo.current
     val breakpoint = getResponsiveBreakpoint(deviceInfo.screenWidth)
-    
+
     when (deviceInfo.screenSizeCategory) {
         ScreenSizeCategory.COMPACT -> {
             LazyColumn(
@@ -247,7 +247,7 @@ fun <T> ResponsiveGridComponent(
                 }
             }
         }
-        
+
         ScreenSizeCategory.MEDIUM -> {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(breakpoint.columns),
@@ -261,7 +261,7 @@ fun <T> ResponsiveGridComponent(
                 }
             }
         }
-        
+
         ScreenSizeCategory.EXPANDED,
         ScreenSizeCategory.EXTRA_LARGE -> {
             LazyVerticalGrid(
@@ -295,7 +295,7 @@ fun ResponsiveGridComponentPreview() {
 /**
  * Adaptive Navigation Component
  * Navigation that adapts to different screen sizes
- * 
+ *
  * @param navigationItems Navigation items
  * @param selectedItem Currently selected item
  * @param onItemSelected Callback when item is selected
@@ -309,7 +309,7 @@ fun AdaptiveNavigationComponent(
     content: @Composable () -> Unit
 ) {
     val deviceInfo = LocalDeviceInfo.current
-    
+
     when (deviceInfo.screenSizeCategory) {
         ScreenSizeCategory.COMPACT -> {
             // Bottom navigation for compact screens
@@ -319,7 +319,7 @@ fun AdaptiveNavigationComponent(
                 ) {
                     content()
                 }
-                
+
                 NavigationBar {
                     navigationItems.forEach { item ->
                         NavigationBarItem(
@@ -337,7 +337,7 @@ fun AdaptiveNavigationComponent(
                 }
             }
         }
-        
+
         ScreenSizeCategory.MEDIUM -> {
             // Navigation rail for medium screens
             Row {
@@ -356,7 +356,7 @@ fun AdaptiveNavigationComponent(
                         )
                     }
                 }
-                
+
                 Box(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -364,7 +364,7 @@ fun AdaptiveNavigationComponent(
                 }
             }
         }
-        
+
         ScreenSizeCategory.EXPANDED,
         ScreenSizeCategory.EXTRA_LARGE -> {
             // Navigation drawer for large screens
@@ -374,7 +374,7 @@ fun AdaptiveNavigationComponent(
                     selectedItem = selectedItem,
                     onItemSelected = onItemSelected
                 )
-                
+
                 Box(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -408,7 +408,7 @@ fun AdaptiveNavigationComponentPreview() {
 /**
  * Platform-Specific Component
  * Component that renders differently based on platform
- * 
+ *
  * @param androidContent Content for Android
  * @param iosContent Content for iOS
  * @param desktopContent Content for Desktop
@@ -424,7 +424,7 @@ fun PlatformSpecificComponent(
     fallbackContent: @Composable () -> Unit = {}
 ) {
     val deviceInfo = LocalDeviceInfo.current
-    
+
     when (deviceInfo.platformType) {
         PlatformType.ANDROID_PHONE,
         PlatformType.ANDROID_TABLET,
@@ -432,10 +432,10 @@ fun PlatformSpecificComponent(
         PlatformType.ANDROID_TV,
         PlatformType.ANDROID_WEAR,
         PlatformType.ANDROID_AUTO -> androidContent()
-        
+
         PlatformType.IOS_PHONE,
         PlatformType.IOS_TABLET -> iosContent()
-        
+
         PlatformType.DESKTOP -> desktopContent()
         PlatformType.WEB -> webContent()
         PlatformType.UNKNOWN -> fallbackContent()
@@ -457,7 +457,7 @@ fun PlatformSpecificComponentPreview() {
 /**
  * Responsive Text Component
  * Text that scales based on screen size
- * 
+ *
  * @param text Text content
  * @param baseSize Base text size
  * @param scaleFactor Scale factor for different screen sizes
@@ -471,14 +471,14 @@ fun ResponsiveText(
     style: androidx.compose.ui.text.TextStyle = LocalTextStyle.current
 ) {
     val deviceInfo = LocalDeviceInfo.current
-    
+
     val adjustedSize = when (deviceInfo.screenSizeCategory) {
         ScreenSizeCategory.COMPACT -> baseSize * 0.9f * scaleFactor
         ScreenSizeCategory.MEDIUM -> baseSize * scaleFactor
         ScreenSizeCategory.EXPANDED -> baseSize * 1.1f * scaleFactor
         ScreenSizeCategory.EXTRA_LARGE -> baseSize * 1.2f * scaleFactor
     }
-    
+
     Text(
         text = text,
         modifier = modifier,
@@ -500,7 +500,7 @@ fun ResponsiveTextPreview() {
 /**
  * Adaptive Spacing Component
  * Spacing that adapts to screen size
- * 
+ *
  * @param baseSpacing Base spacing value
  */
 @Composable
@@ -508,7 +508,7 @@ fun AdaptiveSpacing(
     baseSpacing: Dp = 16.dp
 ): Dp {
     val deviceInfo = LocalDeviceInfo.current
-    
+
     return when (deviceInfo.screenSizeCategory) {
         ScreenSizeCategory.COMPACT -> baseSpacing * 0.75f
         ScreenSizeCategory.MEDIUM -> baseSpacing
@@ -528,7 +528,7 @@ fun AdaptiveSpacingPreview() {
 /**
  * Compatibility Dashboard Component
  * Dashboard showing compatibility status
- * 
+ *
  * @param deviceInfo Current device information
  * @param issues Detected compatibility issues
  */
@@ -548,18 +548,18 @@ fun CompatibilityDashboardComponent(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         item {
             DeviceInfoCard(deviceInfo = deviceInfo)
         }
-        
+
         item {
             CompatibilityStatusCard(
                 deviceInfo = deviceInfo,
                 issues = issues
             )
         }
-        
+
         if (issues.isNotEmpty()) {
             item {
                 Text(
@@ -568,12 +568,12 @@ fun CompatibilityDashboardComponent(
                     fontWeight = FontWeight.Medium
                 )
             }
-            
+
             items(issues) { issue ->
                 CompatibilityIssueCard(issue = issue)
             }
         }
-        
+
         item {
             ResponsiveDesignDemoCard()
         }
@@ -670,34 +670,34 @@ private fun DeviceInfoCard(deviceInfo: DeviceInfo) {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             DeviceInfoRow("Platform", deviceInfo.platformType.name)
             DeviceInfoRow("Screen Size", deviceInfo.screenSizeCategory.name)
             DeviceInfoRow("Orientation", deviceInfo.orientation.name)
             DeviceInfoRow("Resolution", "${deviceInfo.screenWidth} x ${deviceInfo.screenHeight}")
             DeviceInfoRow("Density", "${deviceInfo.density}x")
             DeviceInfoRow("API Level", deviceInfo.apiLevel.toString())
-            
+
             if (deviceInfo.manufacturer.isNotEmpty()) {
                 DeviceInfoRow("Manufacturer", deviceInfo.manufacturer)
             }
-            
+
             if (deviceInfo.model.isNotEmpty()) {
                 DeviceInfoRow("Model", deviceInfo.model)
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Capabilities",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
@@ -733,7 +733,7 @@ private fun DeviceInfoRow(
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        
+
         Text(
             text = value,
             style = MaterialTheme.typography.bodySmall,
@@ -749,21 +749,21 @@ private fun CompatibilityStatusCard(
 ) {
     val criticalIssues = issues.count { it.severity == CompatibilitySeverity.CRITICAL }
     val highIssues = issues.count { it.severity == CompatibilitySeverity.HIGH }
-    
+
     val statusColor = when {
         criticalIssues > 0 -> Color.Red
         highIssues > 0 -> Orange
         issues.isNotEmpty() -> Color.Yellow
         else -> Color.Green
     }
-    
+
     val statusText = when {
         criticalIssues > 0 -> "Critical Issues Detected"
         highIssues > 0 -> "High Priority Issues"
         issues.isNotEmpty() -> "Minor Issues Detected"
         else -> "Fully Compatible"
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -787,9 +787,9 @@ private fun CompatibilityStatusCard(
                 tint = statusColor,
                 modifier = Modifier.size(32.dp)
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column {
                 Text(
                     text = statusText,
@@ -797,7 +797,7 @@ private fun CompatibilityStatusCard(
                     fontWeight = FontWeight.Medium,
                     color = statusColor
                 )
-                
+
                 if (issues.isNotEmpty()) {
                     Text(
                         text = "${issues.size} issues found",
@@ -819,7 +819,7 @@ private fun CompatibilityIssueCard(issue: CompatibilityIssue) {
         CompatibilitySeverity.LOW -> Color(0xFF4CAF50)
         CompatibilitySeverity.INFO -> Color(0xFF2196F3)
     }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -840,7 +840,7 @@ private fun CompatibilityIssueCard(issue: CompatibilityIssue) {
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.weight(1f)
                 )
-                
+
                 Badge(
                     containerColor = severityColor
                 ) {
@@ -851,23 +851,23 @@ private fun CompatibilityIssueCard(issue: CompatibilityIssue) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = issue.description,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Affected Platforms:",
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Medium
             )
-            
+
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
@@ -883,18 +883,18 @@ private fun CompatibilityIssueCard(issue: CompatibilityIssue) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = "Recommendation: ${issue.recommendation}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.primary
             )
-            
+
             if (issue.workaround != null) {
                 Spacer(modifier = Modifier.height(4.dp))
-                
+
                 Text(
                     text = "Workaround: ${issue.workaround}",
                     style = MaterialTheme.typography.bodySmall,
@@ -918,11 +918,11 @@ private fun ResponsiveDesignDemoCard() {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             val demoItems = (1..6).map { "Item $it" }
-            
+
             ResponsiveGridComponent(
                 items = demoItems,
                 modifier = Modifier.height(200.dp)
@@ -978,27 +978,27 @@ val LocalAdaptiveLayoutConfig = compositionLocalOf { AdaptiveLayoutConfig() }
 fun rememberDeviceInfo(): DeviceInfo {
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current
-    
+
     return remember(configuration, density) {
         val screenWidth = with(density) { configuration.screenWidthDp.dp }
         val screenHeight = with(density) { configuration.screenHeightDp.dp }
-        
+
         val screenSizeCategory = when {
             screenWidth < 600.dp -> ScreenSizeCategory.COMPACT
             screenWidth < 840.dp -> ScreenSizeCategory.MEDIUM
             screenWidth < 1200.dp -> ScreenSizeCategory.EXPANDED
             else -> ScreenSizeCategory.EXTRA_LARGE
         }
-        
+
         val orientation = when {
             configuration.orientation == Configuration.ORIENTATION_LANDSCAPE -> OrientationType.LANDSCAPE
             configuration.orientation == Configuration.ORIENTATION_PORTRAIT -> OrientationType.PORTRAIT
             else -> OrientationType.SQUARE
         }
-        
+
         val platformType = determinePlatformType(configuration)
         val capabilities = detectDeviceCapabilities()
-        
+
         DeviceInfo(
             platformType = platformType,
             screenSizeCategory = screenSizeCategory,
@@ -1029,20 +1029,20 @@ private fun determinePlatformType(configuration: Configuration): PlatformType {
 
 private fun detectDeviceCapabilities(): Set<DeviceCapability> {
     val capabilities = mutableSetOf<DeviceCapability>()
-    
+
     // Add basic capabilities (would need proper detection)
     capabilities.add(DeviceCapability.TOUCH_SCREEN)
     capabilities.add(DeviceCapability.WIFI)
     capabilities.add(DeviceCapability.BLUETOOTH)
-    
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         capabilities.add(DeviceCapability.BIOMETRIC)
     }
-    
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         capabilities.add(DeviceCapability.HAPTIC_FEEDBACK)
     }
-    
+
     return capabilities
 }
 
@@ -1084,7 +1084,7 @@ private fun getResponsiveBreakpoint(screenWidth: Dp): ResponsiveBreakpoint {
 
 private fun detectCompatibilityIssues(deviceInfo: DeviceInfo): List<CompatibilityIssue> {
     val issues = mutableListOf<CompatibilityIssue>()
-    
+
     // Check API level compatibility
     if (deviceInfo.apiLevel < 21) {
         issues.add(
@@ -1099,7 +1099,7 @@ private fun detectCompatibilityIssues(deviceInfo: DeviceInfo): List<Compatibilit
             )
         )
     }
-    
+
     // Check screen size compatibility
     if (deviceInfo.screenSizeCategory == ScreenSizeCategory.COMPACT && deviceInfo.orientation == OrientationType.LANDSCAPE) {
         issues.add(
@@ -1114,7 +1114,7 @@ private fun detectCompatibilityIssues(deviceInfo: DeviceInfo): List<Compatibilit
             )
         )
     }
-    
+
     // Check platform-specific issues
     when (deviceInfo.platformType) {
         PlatformType.ANDROID_TV -> {
@@ -1132,7 +1132,7 @@ private fun detectCompatibilityIssues(deviceInfo: DeviceInfo): List<Compatibilit
                 )
             }
         }
-        
+
         PlatformType.ANDROID_WEAR -> {
             if (deviceInfo.screenWidth < 200.dp) {
                 issues.add(
@@ -1148,9 +1148,9 @@ private fun detectCompatibilityIssues(deviceInfo: DeviceInfo): List<Compatibilit
                 )
             }
         }
-        
+
         else -> {}
     }
-    
+
     return issues
 }

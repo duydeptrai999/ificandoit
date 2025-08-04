@@ -15,7 +15,7 @@ import java.util.Locale
 class ItemMapper {
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     private val categoryMapper = CategoryMapper()
-    
+
     /**
      * Convert from data model to domain model.
      *
@@ -30,18 +30,18 @@ class ItemMapper {
                 null
             }
         }
-        
+
         val categories = when {
             dto.genres != null -> dto.genres.map { categoryMapper.mapToDomain(it) }
             dto.genreIds != null -> dto.genreIds.map { Category(it, "") }
             else -> emptyList()
         }
-        
+
         // Build metadata from additional DTO fields
         val metadata = mutableMapOf<String, Any>()
         dto.originalLanguage?.let { metadata["language"] = it }
         dto.runtime?.let { metadata["duration"] = it }
-        
+
         return Item(
             id = dto.id,
             title = dto.title,
@@ -58,7 +58,7 @@ class ItemMapper {
             tags = emptyList() // Can be populated from other sources
         )
     }
-    
+
     /**
      * Convert from domain model to data model.
      *
@@ -73,9 +73,9 @@ class ItemMapper {
                 null
             }
         }
-        
+
         val genreIds = domain.categories.map { it.id }
-        
+
         return ItemDto(
             id = domain.id,
             title = domain.title,
@@ -89,7 +89,7 @@ class ItemMapper {
             genreIds = genreIds
         )
     }
-    
+
     /**
      * Convert a list of data models to domain models.
      *

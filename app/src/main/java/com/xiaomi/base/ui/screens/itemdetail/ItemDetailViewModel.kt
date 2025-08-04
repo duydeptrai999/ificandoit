@@ -25,7 +25,7 @@ data class ItemDetailUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val item: Item? = null,
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
 )
 
 /**
@@ -35,65 +35,69 @@ data class ItemDetailUiState(
  * @property toggleFavoriteItemUseCase Use case for toggling favorite status.
  */
 @HiltViewModel
-class ItemDetailViewModel @Inject constructor(
-    private val getItemDetailsUseCase: GetItemDetailsUseCase,
-    private val toggleFavoriteItemUseCase: ToggleFavoriteItemUseCase
-) : ViewModel() {
-    
-    private val _uiState = MutableStateFlow(ItemDetailUiState())
-    val uiState: StateFlow<ItemDetailUiState> = _uiState.asStateFlow()
-    
-    private var currentItemId: Int? = null
-    
-    /**
-     * Load item details for the given item ID.
-     *
-     * @param itemId The ID of the item to load.
-     */
-    fun loadItemDetails(itemId: Int) {
-        if (currentItemId == itemId && _uiState.value.item != null) {
-            // Already loaded this item
-            return
+class ItemDetailViewModel
+    @Inject
+    constructor(
+        private val getItemDetailsUseCase: GetItemDetailsUseCase,
+        private val toggleFavoriteItemUseCase: ToggleFavoriteItemUseCase,
+    ) : ViewModel() {
+        private val _uiState = MutableStateFlow(ItemDetailUiState())
+        val uiState: StateFlow<ItemDetailUiState> = _uiState.asStateFlow()
+
+        private var currentItemId: Int? = null
+
+        /**
+         * Load item details for the given item ID.
+         *
+         * @param itemId The ID of the item to load.
+         */
+        fun loadItemDetails(itemId: Int) {
+            if (currentItemId == itemId && _uiState.value.item != null) {
+                // Already loaded this item
+                return
+            }
+
+            currentItemId = itemId
+            viewModelScope.launch {
+                _uiState.value = ItemDetailUiState(isLoading = true)
+
+                getItemDetailsUseCase(itemId)
+                    .catch { e ->
+                        _uiState.value =
+                            ItemDetailUiState(
+                                isLoading = false,
+                                error = e.message ?: "Unknown error",
+                            )
+                    }
+                    .collect { item ->
+                        _uiState.value =
+                            ItemDetailUiState(
+                                isLoading = false,
+                                item = item,
+                                isFavorite = item.isFavorite ?: false,
+                            )
+                    }
+            }
         }
-        
-        currentItemId = itemId
-        viewModelScope.launch {
-            _uiState.value = ItemDetailUiState(isLoading = true)
-            
-            getItemDetailsUseCase(itemId)
-                .catch { e ->
-                    _uiState.value = ItemDetailUiState(
-                        isLoading = false,
-                        error = e.message ?: "Unknown error"
-                    )
+
+        /**
+         * Toggle the favorite status of the current item.
+         */
+        fun toggleFavorite() {
+            val currentItem = _uiState.value.item ?: return
+
+            viewModelScope.launch {
+                try {
+                    val newFavoriteStatus = toggleFavoriteItemUseCase(currentItem)
+                    _uiState.value =
+                        _uiState.value.copy(
+                            isFavorite = newFavoriteStatus,
+                            item = currentItem.copy(isFavorite = newFavoriteStatus),
+                        )
+                } catch (e: Exception) {
+                    // Handle error - could show a snackbar or toast
+                    // For now, we'll just ignore the error
                 }
-                .collect { item ->
-                    _uiState.value = ItemDetailUiState(
-                        isLoading = false,
-                        item = item,
-                        isFavorite = item.isFavorite ?: false
-                    )
-                }
-        }
-    }
-    
-    /**
-     * Toggle the favorite status of the current item.
-     */
-    fun toggleFavorite() {
-        val currentItem = _uiState.value.item ?: return
-        
-        viewModelScope.launch {
-            try {
-                val newFavoriteStatus = toggleFavoriteItemUseCase(currentItem)
-                _uiState.value = _uiState.value.copy(
-                    isFavorite = newFavoriteStatus,
-                    item = currentItem.copy(isFavorite = newFavoriteStatus)
-                )
-            } catch (e: Exception) {
-                // Handle error - could show a snackbar or toast
-                // For now, we'll just ignore the error
             }
         }
     }
-}
