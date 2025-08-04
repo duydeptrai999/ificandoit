@@ -188,23 +188,47 @@ private fun CameraPreviewContent(
     lifecycleOwner: androidx.lifecycle.LifecycleOwner,
     modifier: Modifier = Modifier
 ) {
-    AndroidView(
-        factory = { context ->
-            CameraTextureView(context).apply {
-                // Set callbacks
-                this.onCameraReady = { onCameraReady() }
-                this.onCameraError = { error -> onCameraError(error) }
-                this.onFilterChanged = { filter -> onFilterChanged(filter) }
-                
-                // Register lifecycle
-                lifecycleOwner.lifecycle.addObserver(this)
-                
-                // Notify parent
-                onCameraTextureViewCreated(this)
-            }
-        },
+    // Full screen camera preview like default camera app
+    Box(
         modifier = modifier
-    )
+            .fillMaxSize()
+            .background(Color.Black)
+    ) {
+        AndroidView(
+            factory = { context ->
+                CameraTextureView(context).apply {
+                    // Set callbacks
+                    this.onCameraReady = { onCameraReady() }
+                    this.onCameraError = { error -> onCameraError(error) }
+                    this.onFilterChanged = { filter -> onFilterChanged(filter) }
+                    
+                    // Register lifecycle
+                    lifecycleOwner.lifecycle.addObserver(this)
+                    
+                    // Notify parent
+                    onCameraTextureViewCreated(this)
+                }
+            },
+            modifier = Modifier
+                .fillMaxSize()
+                .aspectRatio(9f / 16f) // Standard phone camera ratio
+        )
+        
+        // Camera loading indicator
+        if (!isCameraReady) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    color = Color.White,
+                    modifier = Modifier.size(48.dp)
+                )
+            }
+        }
+    }
 }
 
 @Composable

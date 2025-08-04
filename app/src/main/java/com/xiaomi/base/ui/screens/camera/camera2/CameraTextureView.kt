@@ -133,6 +133,10 @@ class CameraTextureView @JvmOverloads constructor(
                 val previewSize = camera2Manager.getPreviewSize()
                 if (previewSize != null) {
                     surfaceTexture.setDefaultBufferSize(previewSize.width, previewSize.height)
+                    Log.d(TAG, "Surface texture size set to: ${previewSize.width}x${previewSize.height}")
+                    
+                    // Update aspect ratio for proper display
+                    updateAspectRatio(previewSize.width, previewSize.height)
                 }
                 
                 // Open camera
@@ -157,6 +161,40 @@ class CameraTextureView @JvmOverloads constructor(
                 withContext(Dispatchers.Main) {
                     onCameraError?.invoke("Failed to start camera: ${e.message}")
                 }
+            }
+        }
+    }
+    
+    /**
+     * Update aspect ratio for natural camera preview like default camera app
+     */
+    private fun updateAspectRatio(previewWidth: Int, previewHeight: Int) {
+        post {
+            val viewWidth = width
+            val viewHeight = height
+            
+            if (viewWidth > 0 && viewHeight > 0) {
+                val previewRatio = previewWidth.toFloat() / previewHeight.toFloat()
+                val viewRatio = viewWidth.toFloat() / viewHeight.toFloat()
+                
+                Log.d(TAG, "Preview ratio: $previewRatio, View ratio: $viewRatio")
+                
+                // Use center crop scaling like default camera apps
+                // This fills the entire view while maintaining aspect ratio
+                val layoutParams = this.layoutParams
+                
+                if (previewRatio > viewRatio) {
+                    // Preview is wider, scale to fill height and crop sides
+                    layoutParams.width = (viewHeight * previewRatio).toInt()
+                    layoutParams.height = viewHeight
+                } else {
+                    // Preview is taller, scale to fill width and crop top/bottom
+                    layoutParams.width = viewWidth
+                    layoutParams.height = (viewWidth / previewRatio).toInt()
+                }
+                
+                this.layoutParams = layoutParams
+                Log.d(TAG, "Natural camera aspect ratio applied: ${layoutParams.width}x${layoutParams.height}")
             }
         }
     }

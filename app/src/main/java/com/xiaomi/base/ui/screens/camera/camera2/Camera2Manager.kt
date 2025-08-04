@@ -231,16 +231,43 @@ class Camera2Manager(private val context: Context) {
 
     /**
      * Choose optimal size for preview based on target dimensions
+     * Prioritizes common aspect ratios (16:9, 4:3) for better compatibility
      */
     private fun chooseOptimalSize(choices: Array<Size>, targetWidth: Int, targetHeight: Int): Size {
-        val targetRatio = targetWidth.toDouble() / targetHeight
+        // Common aspect ratios in order of preference
+        val preferredRatios = listOf(
+            16.0 / 9.0,  // 16:9 - most common for modern devices
+            4.0 / 3.0,   // 4:3 - traditional camera ratio
+            18.0 / 9.0,  // 18:9 - newer tall screens
+            19.5 / 9.0   // 19.5:9 - iPhone X style
+        )
         
-        return choices
-            .filter { it.width <= targetWidth && it.height <= targetHeight }
-            .minByOrNull { 
-                val ratio = it.width.toDouble() / it.height
-                kotlin.math.abs(ratio - targetRatio)
-            } ?: choices.maxByOrNull { it.width * it.height } ?: Size(1920, 1080)
+        // Filter sizes that are reasonable for preview (not too large)
+        val reasonableSizes = choices.filter { 
+            it.width <= 1920 && it.height <= 1080 && it.width >= 640 && it.height >= 480
+        }
+        
+        // Find best match for preferred aspect ratios
+        for (preferredRatio in preferredRatios) {
+            val bestForRatio = reasonableSizes.minByOrNull { size ->
+                val ratio = size.width.toDouble() / size.height
+                kotlin.math.abs(ratio - preferredRatio)
+            }
+            
+            if (bestForRatio != null) {
+                val ratio = bestForRatio.width.toDouble() / bestForRatio.height
+                // Accept if ratio is close enough (within 5% tolerance)
+                if (kotlin.math.abs(ratio - preferredRatio) < 0.05) {
+                    Log.d(TAG, "Selected preview size: ${bestForRatio.width}x${bestForRatio.height} (ratio: ${String.format("%.2f", ratio)})")
+                    return bestForRatio
+                }
+            }
+        }
+        
+        // Fallback: choose largest reasonable size
+        return reasonableSizes.maxByOrNull { it.width * it.height } 
+            ?: choices.maxByOrNull { it.width * it.height } 
+            ?: Size(1280, 720) // Safe fallback
     }
 
     /**

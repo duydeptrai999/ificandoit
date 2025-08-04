@@ -182,14 +182,14 @@ class GLRenderer(private val context: Context) : GLSurfaceView.Renderer {
         // Set viewport
         GLES30.glViewport(0, 0, width, height)
         
-        // Calculate projection matrix
-        val ratio = width.toFloat() / height.toFloat()
-        Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1f, 1f, 3f, 7f)
+        // Use orthographic projection to avoid distortion
+        // This ensures the camera preview maintains its aspect ratio
+        Matrix.orthoM(projectionMatrix, 0, -1f, 1f, -1f, 1f, -1f, 1f)
         
-        // Set view matrix
-        Matrix.setLookAtM(viewMatrix, 0, 0f, 0f, 3f, 0f, 0f, 0f, 0f, 1f, 0f)
+        // Set identity view matrix (no camera transformation needed)
+        Matrix.setIdentityM(viewMatrix, 0)
         
-        // Calculate MVP matrix
+        // Calculate MVP matrix (just use projection since view is identity)
         Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, viewMatrix, 0)
     }
 
