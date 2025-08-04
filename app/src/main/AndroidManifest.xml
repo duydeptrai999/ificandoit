@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".BaseApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.splashScreenTheme">
+        <activity
+            android:name=".ui.screens.activity.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.splashScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <!-- Lego Component System Demo Activity -->
+        <activity
+            android:name=".templates.demo.DemoActivity"
+            android:exported="true"
+            android:label="Lego Component Demo"
+            android:theme="@style/Theme.splashScreenTheme" />
+        
+        <!-- Preview Catalog Activity -->
+        <activity
+            android:name=".preview.catalog.PreviewCatalogActivity"
+            android:exported="false"
+            android:label="Preview Catalog"
+            android:theme="@style/Theme.splashScreenTheme" />
+        
+        <!-- Preview Viewer Activity -->
+        <activity
+            android:name=".preview.catalog.PreviewViewerActivity"
+            android:exported="false"
+            android:label="Preview Viewer"
+            android:theme="@style/Theme.splashScreenTheme" />
+            
+        <!-- Demo Activity (for standalone preview demos) -->
+        <activity
+            android:name=".preview.catalog.DemoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.splashScreenTheme" />
+    </application>
+
+</manifest>

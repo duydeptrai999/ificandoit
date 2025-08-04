@@ -1,0 +1,280 @@
+---
+description: Claude-specific configuration for info-hub integration and precision-driven development
+globs: "*.md,*.mdc"
+alwaysApply: false
+---
+
+# Claude Configuration for Info-Hub Integration
+
+## Info-Hub Integration Rules
+
+### Automatic Checking
+- **BẮT BUỘC** check `info-hub.md` before ANY task execution
+- **BẮT BUỘC** read "Currently Working" to prevent conflicts
+- **BẮT BUỘC** verify no duplicate work with other AI tools
+- **BẮT BUỘC** update status after completing significant tasks
+- **NGHIÊM CẤM** ignore info-hub check even if user doesn't mention it
+
+### Update Protocol for Claude
+```markdown
+## Before starting work
+1. Check info-hub.md for active assignments
+2. Verify no conflicts with other tools
+3. Update "Currently Working" with:
+   - Tool: Claude
+   - Status: Working
+   - Task: [Specific task description]
+   - Started: [timestamp]
+
+## After completing work
+1. Update completion status in info-hub.md
+2. Document any discovered issues
+3. Clear "Currently Working" entry
+4. Add to "Recent Completions" with details
+```
+
+## Claude-Specific Optimizations
+
+### Precision-Driven Development
+- **BẮT BUỘC** apply surgical precision approach
+- **BẮT BUỘC** ONE atomic change at a time
+- **BẮT BUỘC** document reasoning before action
+- **BẮT BUỘC** validate after each change
+- **NGHIÊM CẤM** batch multiple changes together
+
+### Response Structure
+```markdown
+## Claude Response Pattern
+1. **Analysis**: Understand the task completely
+2. **Planning**: Break down into atomic steps
+3. **Reasoning**: Document WHY before HOW
+4. **Execution**: ONE change at a time
+5. **Validation**: Verify each step
+```
+
+## Context Management
+
+### Effective Context Usage
+```markdown
+## Context Optimization
+- Focus on current task context
+- Reference relevant files explicitly
+- Minimize context switching
+- Maintain task continuity
+```
+
+### Multi-Turn Task Handling
+```markdown
+## Task State Management
+1. Remember task context across interactions
+2. Reference previous decisions explicitly
+3. Update info-hub at logical breakpoints
+4. Maintain atomic change discipline
+```
+
+## Integration with Spec-Driven Development
+
+### Claude Spec-Driven Patterns
+```markdown
+## Spec-Driven Execution
+1. **Analyze Requirements**: Parse EARS format
+2. **Plan Atomic Actions**: Break into smallest units
+3. **Document Reasoning**: Explain each decision
+4. **Execute Precisely**: One change, one validation
+5. **Evaluate Results**: Check against criteria
+```
+
+### Code Generation Excellence
+```markdown
+## Claude Code Generation
+- Generate minimal, focused code blocks
+- Include comprehensive inline comments
+- Provide clear usage examples
+- Explain architectural decisions
+- Maintain consistency with existing patterns
+```
+
+## Error Handling Patterns
+
+### Common Claude Scenarios
+```markdown
+## Issue Prevention & Mitigation
+1. **Context Confusion**:
+   - Prevention: Regular info-hub checks
+   - Recovery: Re-read project context
+
+2. **Over-Engineering**:
+   - Prevention: Focus on ONE requirement
+   - Recovery: Simplify to atomic changes
+
+3. **Assumption Making**:
+   - Prevention: Always verify with user
+   - Recovery: Document and correct
+```
+
+### Recovery Protocol
+```markdown
+## Recovery Steps
+1. Stop current action immediately
+2. Document issue in info-hub.md
+3. Analyze root cause
+4. Propose corrective action
+5. Wait for user confirmation
+```
+
+## Performance Optimization
+
+### Response Efficiency
+```markdown
+## Optimization Strategies
+- Concise, focused responses
+- Avoid redundant explanations
+- Direct answers to questions
+- Efficient file operations
+```
+
+### Quality Metrics
+```markdown
+## Claude Quality Tracking
+- First-attempt success rate
+- Code correctness metrics
+- Task completion efficiency
+- User intervention frequency
+```
+
+## Conflict Prevention
+
+### Multi-Tool Awareness
+```markdown
+## Coordination Rules
+1. Always check active tools first
+2. Respect task boundaries strictly
+3. Communicate via info-hub only
+4. Never assume tool availability
+```
+
+### File Access Management
+```markdown
+## Claude File Operations
+- Check file locks before editing
+- Use atomic file operations
+- Release resources promptly
+- Handle conflicts gracefully
+```
+
+## Integration Points
+
+### With Planning Workflow
+- Follow EARS requirement format strictly
+- Generate precise Kiro tasks
+- Maintain planning document consistency
+
+### With Auto-Task-Execution
+- Apply surgical precision principles
+- Document reasoning thoroughly
+- Enable clean rollback paths
+
+### With Context7
+- Leverage validated patterns
+- Apply best practices consistently
+- Cache successful approaches
+
+## Testing Configuration
+
+### Output Validation
+```markdown
+## Claude Output Testing
+- Syntax validation for all code
+- Logic verification before execution
+- Completeness check for responses
+- Atomic change verification
+```
+
+### Integration Testing
+```markdown
+## Multi-Tool Validation
+- Info-hub synchronization testing
+- Conflict resolution verification
+- Performance impact assessment
+- Atomic change isolation
+```
+
+## Monitoring and Analytics
+
+### Execution Patterns
+```markdown
+## Track Claude Metrics
+- Atomic changes per task
+- Rollback frequency
+- First-attempt success rate
+- Context switches per session
+```
+
+### Continuous Improvement
+```markdown
+## Optimization Areas
+- Identify common rollback causes
+- Optimize atomic change size
+- Improve reasoning documentation
+- Enhance validation strategies
+```
+
+## Debugging Support
+
+### Claude Debug Mode
+```markdown
+## Enable detailed tracking
+CLAUDE_DEBUG=true
+
+## Debug information includes:
+- Atomic change planning
+- Reasoning documentation
+- Validation results
+- Info-hub sync operations
+```
+
+### Troubleshooting Guide
+```markdown
+## Common Issues
+1. Task scope creep
+   - Solution: Return to atomic changes
+   
+2. Context overload
+   - Solution: Focus on current task
+   
+3. Validation failures
+   - Solution: Smaller atomic units
+```
+
+## Claude-Specific Best Practices
+
+### Communication Excellence
+```markdown
+## Response Guidelines
+- Be concise but complete
+- Focus on the asked task
+- Avoid assumptions
+- Request clarification when needed
+```
+
+### Task Execution Excellence
+```markdown
+## Execution Standards
+- ONE file, ONE change, ONE commit
+- Always validate before proceeding
+- Document unexpected findings
+- Maintain reversibility
+```
+
+### Collaboration Excellence
+```markdown
+## Team Coordination
+- Respect other tools' work areas
+- Update info-hub proactively
+- Handle handoffs cleanly
+- Maintain clear boundaries
+```
+
+---
+
+**Note**: This configuration ensures Claude operates with surgical precision within the multi-AI ecosystem, focusing on atomic changes, thorough documentation, and seamless coordination through info-hub synchronization.

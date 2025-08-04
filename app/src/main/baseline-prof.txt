@@ -1,0 +1,124 @@
+# Baseline Profile for Android Compose Base
+# This file contains the most critical code paths for app startup and user interactions
+# Generated using Android Studio Profiler and Macrobenchmark
+
+# Application startup
+HSPLcom/xiaomi/base/BaseApplication;-><init>()V
+HSPLcom/xiaomi/base/BaseApplication;->onCreate()V
+HSPLcom/xiaomi/base/BaseApplication;->initializeComponents()V
+
+# MainActivity and main navigation
+HSPLcom/xiaomi/base/MainActivity;-><init>()V
+HSPLcom/xiaomi/base/MainActivity;->onCreate(Landroid/os/Bundle;)V
+HSPLcom/xiaomi/base/MainActivity;->setContent(Lkotlin/jvm/functions/Function2;)V
+
+# Hilt dependency injection
+HSPLdagger/hilt/android/internal/Contexts;->getApplication(Landroid/content/Context;)Landroid/app/Application;
+HSPLdagger/hilt/android/internal/managers/ApplicationComponentManager;->generatedComponent()Ljava/lang/Object;
+HSPLcom/xiaomi/base/BaseApplication_HiltComponents$SingletonC;-><init>(Lcom/xiaomi/base/BaseApplication;)V
+
+# Compose runtime initialization
+HSPLandroidx/compose/runtime/ComposerKt;->updateChangedFlags(I)I
+HSPLandroidx/compose/runtime/ComposerImpl;-><init>(Landroidx/compose/runtime/Applier;Landroidx/compose/runtime/CompositionContext;Landroidx/compose/runtime/SlotTable;Ljava/util/Set;Ljava/util/List;Ljava/util/List;Landroidx/compose/runtime/ControlledComposition;)V
+HSPLandroidx/compose/runtime/ComposerImpl;->startRestartGroup(I)Landroidx/compose/runtime/Composer;
+HSPLandroidx/compose/runtime/ComposerImpl;->endRestartGroup()Landroidx/compose/runtime/ScopeUpdateScope;
+
+# Theme and UI initialization
+HSPLcom/xiaomi/base/ui/theme/ThemeKt;->XiaomiBaseTheme(ZZLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+HSPLcom/xiaomi/base/ui/theme/ColorKt;->getDarkColorScheme()Landroidx/compose/material3/ColorScheme;
+HSPLcom/xiaomi/base/ui/theme/ColorKt;->getLightColorScheme()Landroidx/compose/material3/ColorScheme;
+HSPLcom/xiaomi/base/ui/theme/TypeKt;->getTypography()Landroidx/compose/material3/Typography;
+
+# Navigation setup
+HSPLandroidx/navigation/compose/NavHostKt;->NavHost(Landroidx/navigation/NavHostController;Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+HSPLandroidx/navigation/NavController;-><init>(Landroid/content/Context;)V
+HSPLandroidx/navigation/NavController;->navigate(Ljava/lang/String;Landroidx/navigation/NavOptions;Landroidx/navigation/Navigator$Extras;)V
+
+# Common UI components
+HSPLandroidx/compose/material3/SurfaceKt;->Surface-T9BRK9s(Landroidx/compose/ui/Modifier;Landroidx/compose/ui/graphics/Shape;JJFFLandroidx/compose/foundation/BorderStroke;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+HSPLandroidx/compose/material3/TextKt;->Text-fLXpl1I(Ljava/lang/String;Landroidx/compose/ui/Modifier;JJLandroidx/compose/ui/text/font/FontStyle;Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontFamily;JLandroidx/compose/ui/text/style/TextDecoration;Landroidx/compose/ui/text/style/TextAlign;JIZIILkotlin/jvm/functions/Function1;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/runtime/Composer;III)V
+HSPLandroidx/compose/material3/ButtonKt;->Button(Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZLandroidx/compose/ui/graphics/Shape;Landroidx/compose/material3/ButtonColors;Landroidx/compose/material3/ButtonElevation;Landroidx/compose/foundation/BorderStroke;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/foundation/interaction/MutableInteractionSource;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+
+# Layout and positioning
+HSPLandroidx/compose/foundation/layout/ColumnKt;->Column(Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/Arrangement$Vertical;Landroidx/compose/ui/Alignment$Horizontal;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+HSPLandroidx/compose/foundation/layout/RowKt;->Row(Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/Arrangement$Horizontal;Landroidx/compose/ui/Alignment$Vertical;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+HSPLandroidx/compose/foundation/layout/BoxKt;->Box(Landroidx/compose/ui/Modifier;Landroidx/compose/ui/Alignment;ZLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+
+# State management
+HSPLandroidx/compose/runtime/SnapshotStateKt;->mutableStateOf$default(Ljava/lang/Object;Landroidx/compose/runtime/SnapshotMutationPolicy;ILjava/lang/Object;)Landroidx/compose/runtime/MutableState;
+HSPLandroidx/compose/runtime/SnapshotStateKt;->rememberUpdatedState(Ljava/lang/Object;Landroidx/compose/runtime/Composer;I)Landroidx/compose/runtime/State;
+HSPLandroidx/lifecycle/compose/FlowExtKt;->collectAsStateWithLifecycle(Lkotlinx/coroutines/flow/StateFlow;Landroidx/lifecycle/LifecycleOwner;Landroidx/lifecycle/Lifecycle$State;Lkotlin/coroutines/CoroutineContext;Landroidx/compose/runtime/Composer;II)Landroidx/compose/runtime/State;
+
+# ViewModel initialization
+HSPLandroidx/lifecycle/viewmodel/compose/ViewModelKt;->viewModel(Ljava/lang/Class;Landroidx/lifecycle/ViewModelStoreOwner;Ljava/lang/String;Landroidx/lifecycle/ViewModelProvider$Factory;Landroidx/compose/runtime/Composer;II)Landroidx/lifecycle/ViewModel;
+HSPLandroidx/hilt/navigation/compose/HiltViewModelKt;->hiltViewModel(Landroidx/lifecycle/ViewModelStoreOwner;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Landroidx/lifecycle/ViewModel;
+
+# Coroutines and async operations
+HSPLkotlinx/coroutines/CoroutineScope;->launch$default(Lkotlinx/coroutines/CoroutineScope;Lkotlin/coroutines/CoroutineContext;Lkotlinx/coroutines/CoroutineStart;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+HSPLkotlinx/coroutines/flow/FlowKt;->flowOf([Ljava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+HSPLkotlinx/coroutines/flow/StateFlowKt;->MutableStateFlow(Ljava/lang/Object;)Lkotlinx/coroutines/flow/MutableStateFlow;
+
+# Database operations (Room)
+HSPLandroidx/room/Room;->databaseBuilder(Landroid/content/Context;Ljava/lang/Class;Ljava/lang/String;)Landroidx/room/RoomDatabase$Builder;
+HSPLandroidx/room/RoomDatabase;->getOpenHelper()Landroidx/sqlite/db/SupportSQLiteOpenHelper;
+HSPLandroidx/room/RoomDatabase;->beginTransaction()V
+HSPLandroidx/room/RoomDatabase;->endTransaction()V
+
+# Network operations (Retrofit/OkHttp)
+HSPLretrofit2/Retrofit$Builder;-><init>()V
+HSPLretrofit2/Retrofit$Builder;->baseUrl(Ljava/lang/String;)Lretrofit2/Retrofit$Builder;
+HSPLretrofit2/Retrofit$Builder;->addConverterFactory(Lretrofit2/Converter$Factory;)Lretrofit2/Retrofit$Builder;
+HSPLretrofit2/Retrofit$Builder;->client(Lokhttp3/OkHttpClient;)Lretrofit2/Retrofit$Builder;
+HSPLretrofit2/Retrofit$Builder;->build()Lretrofit2/Retrofit;
+HSPLokhttp3/OkHttpClient$Builder;-><init>()V
+HSPLokhttp3/OkHttpClient$Builder;->addInterceptor(Lokhttp3/Interceptor;)Lokhttp3/OkHttpClient$Builder;
+HSPLokhttp3/OkHttpClient$Builder;->build()Lokhttp3/OkHttpClient;
+
+# Image loading (Coil)
+HSPLcoil/compose/AsyncImageKt;->AsyncImage(Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Alignment;Landroidx/compose/ui/layout/ContentScale;FLandroidx/compose/ui/graphics/ColorFilter;ILandroidx/compose/runtime/Composer;II)V
+HSPLcoil/ImageLoader;->enqueue(Lcoil/request/ImageRequest;)Lcoil/request/Disposable;
+
+# Security operations
+HSPLcom/xiaomi/base/security/SecurityManager;->initialize()V
+HSPLcom/xiaomi/base/security/SecurityManager;->generateSecretKey()V
+HSPLandroidx/security/crypto/MasterKey$Builder;-><init>(Landroid/content/Context;)V
+HSPLandroidx/security/crypto/MasterKey$Builder;->setKeyScheme(Landroidx/security/crypto/MasterKey$KeyScheme;)Landroidx/security/crypto/MasterKey$Builder;
+HSPLandroidx/security/crypto/MasterKey$Builder;->build()Landroidx/security/crypto/MasterKey;
+
+# Performance monitoring
+HSPLcom/xiaomi/base/utils/PerformanceMonitor;->startMonitoring()V
+HSPLcom/xiaomi/base/utils/PerformanceMonitor;->trackFrameRate()V
+HSPLcom/xiaomi/base/utils/PerformanceMonitor;->trackMemoryUsage()V
+
+# Window size class and responsive design
+HSPLcom/xiaomi/base/utils/WindowSizeClassUtils;->rememberWindowSizeClass(Landroid/app/Activity;Landroidx/compose/runtime/Composer;I)Landroidx/compose/material3/windowsizeclass/WindowSizeClass;
+HSPLandroidx/compose/material3/windowsizeclass/WindowSizeClassKt;->calculateWindowSizeClass(Landroid/app/Activity;Landroidx/compose/runtime/Composer;I)Landroidx/compose/material3/windowsizeclass/WindowSizeClass;
+
+# Common animations
+HSPLandroidx/compose/animation/core/AnimationKt;->animateFloatAsState(FLandroidx/compose/animation/core/AnimationSpec;FLjava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Landroidx/compose/runtime/State;
+HSPLandroidx/compose/animation/core/TransitionKt;->updateTransition(Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)Landroidx/compose/animation/core/Transition;
+
+# Timber logging
+HSPLtimber/log/Timber;->d(Ljava/lang/String;[Ljava/lang/Object;)V
+HSPLtimber/log/Timber;->i(Ljava/lang/String;[Ljava/lang/Object;)V
+HSPLtimber/log/Timber;->w(Ljava/lang/String;[Ljava/lang/Object;)V
+HSPLtimber/log/Timber;->e(Ljava/lang/String;[Ljava/lang/Object;)V
+
+# Common utility functions
+HSPLkotlin/collections/CollectionsKt;->listOf([Ljava/lang/Object;)Ljava/util/List;
+HSPLkotlin/collections/CollectionsKt;->emptyList()Ljava/util/List;
+HSPLkotlin/collections/CollectionsKt;->mutableListOf([Ljava/lang/Object;)Ljava/util/List;
+HSPLkotlin/text/StringsKt;->isBlank(Ljava/lang/CharSequence;)Z
+HSPLkotlin/text/StringsKt;->isNotEmpty(Ljava/lang/CharSequence;)Z
+
+# JSON parsing (if using Gson/Moshi)
+HSPLcom/google/gson/Gson;-><init>()V
+HSPLcom/google/gson/Gson;->fromJson(Ljava/lang/String;Ljava/lang/Class;)Ljava/lang/Object;
+HSPLcom/google/gson/Gson;->toJson(Ljava/lang/Object;)Ljava/lang/String;
+
+# SharedPreferences operations
+HSPLandroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+HSPLandroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+HSPLandroid/content/SharedPreferences;->getBoolean(Ljava/lang/String;Z)Z
+HSPLandroid/content/SharedPreferences$Editor;->putString(Ljava/lang/String;Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;
+HSPLandroid/content/SharedPreferences$Editor;->apply()V

@@ -1,0 +1,2 @@
+e: file:///Users/trungkientn/Dev2/HuyDev/Android-Compose-Base/app/src/main/java/com/xiaomi/base/ui/kit/components/specialized/XiaomiTooltips.kt:788:82 Unresolved reference 'medium'.
+e: file:///Users/trungkientn/Dev2/HuyDev/Android-Compose-Base/app/src/main/java/com/xiaomi/base/ui/kit/components/specialized/XiaomiTooltips.kt:797:88 Unresolved reference 'small'.
