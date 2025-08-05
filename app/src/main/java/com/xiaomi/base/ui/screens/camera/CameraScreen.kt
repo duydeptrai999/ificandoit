@@ -73,7 +73,19 @@ fun CameraScreen(
             FilterType.BLACK_WHITE,
             FilterType.VINTAGE,
             FilterType.COOL,
-            FilterType.WARM
+            FilterType.WARM,
+            // New filters
+            FilterType.PINK_DREAM,
+            FilterType.RETRO_80S,
+            FilterType.OLD_FILM,
+            FilterType.SPRING,
+            FilterType.SUMMER,
+            FilterType.AUTUMN,
+            FilterType.WINTER,
+            FilterType.NEON_NIGHTS,
+            FilterType.GOLDEN_HOUR,
+            FilterType.CYBERPUNK,
+            FilterType.CHERRY_BLOSSOM
         )
     }
     

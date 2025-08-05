@@ -92,6 +92,19 @@
     <string name="filter_cool">Cool</string>
     <string name="filter_warm">Warm</string>
     
+    <!-- New Filter Names -->
+    <string name="filter_pink_dream">Pink Dream</string>
+    <string name="filter_retro_80s">Retro 80s</string>
+    <string name="filter_old_film">Old Film</string>
+    <string name="filter_spring">Spring</string>
+    <string name="filter_summer">Summer</string>
+    <string name="filter_autumn">Autumn</string>
+    <string name="filter_winter">Winter</string>
+    <string name="filter_neon_nights">Neon Nights</string>
+    <string name="filter_golden_hour">Golden Hour</string>
+    <string name="filter_cyberpunk">Cyberpunk</string>
+    <string name="filter_cherry_blossom">Cherry Blossom</string>
+    
     <!-- Photo Capture Strings -->
     <string name="capture_failed">Failed to capture photo</string>
     <string name="save_failed">Failed to save photo</string>

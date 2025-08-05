@@ -101,6 +101,18 @@ private fun FilterPreviewContent(
         FilterType.VINTAGE -> Color(0xFFDEB887) // Burlywood
         FilterType.COOL -> Color(0xFF87CEEB) // Sky blue
         FilterType.WARM -> Color(0xFFFFB347) // Peach
+        // New filters
+        FilterType.PINK_DREAM -> Color(0xFFFF69B4) // Hot pink
+        FilterType.RETRO_80S -> Color(0xFFFF00FF) // Magenta
+        FilterType.OLD_FILM -> Color(0xFF8B7355) // Dark tan
+        FilterType.SPRING -> Color(0xFF90EE90) // Light green
+        FilterType.SUMMER -> Color(0xFFFFD700) // Gold
+        FilterType.AUTUMN -> Color(0xFFFF8C00) // Dark orange
+        FilterType.WINTER -> Color(0xFF87CEFA) // Light sky blue
+        FilterType.NEON_NIGHTS -> Color(0xFF00FFFF) // Cyan
+        FilterType.GOLDEN_HOUR -> Color(0xFFFFB347) // Peach
+        FilterType.CYBERPUNK -> Color(0xFF9400D3) // Violet
+        FilterType.CHERRY_BLOSSOM -> Color(0xFFFFB6C1) // Light pink
     }
     
     Box(
@@ -190,6 +202,162 @@ private fun FilterPreviewContent(
                         )
                 )
             }
+            // New filters
+            FilterType.PINK_DREAM -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.radialGradient(
+                                colors = listOf(
+                                    Color(0xFFFF69B4),
+                                    Color(0xFFFF1493)
+                                )
+                            )
+                        )
+                )
+            }
+            FilterType.RETRO_80S -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.linearGradient(
+                                colors = listOf(
+                                    Color(0xFFFF00FF),
+                                    Color(0xFF00FFFF)
+                                )
+                            )
+                        )
+                )
+            }
+            FilterType.OLD_FILM -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.radialGradient(
+                                colors = listOf(
+                                    Color(0xFF8B7355),
+                                    Color(0xFF654321)
+                                )
+                            )
+                        )
+                )
+            }
+            FilterType.SPRING -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.linearGradient(
+                                colors = listOf(
+                                    Color(0xFF90EE90),
+                                    Color(0xFF32CD32)
+                                )
+                            )
+                        )
+                )
+            }
+            FilterType.SUMMER -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.radialGradient(
+                                colors = listOf(
+                                    Color(0xFFFFD700),
+                                    Color(0xFFFF8C00)
+                                )
+                            )
+                        )
+                )
+            }
+            FilterType.AUTUMN -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.linearGradient(
+                                colors = listOf(
+                                    Color(0xFFFF8C00),
+                                    Color(0xFFDC143C)
+                                )
+                            )
+                        )
+                )
+            }
+            FilterType.WINTER -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.radialGradient(
+                                colors = listOf(
+                                    Color(0xFF87CEFA),
+                                    Color(0xFF4169E1)
+                                )
+                            )
+                        )
+                )
+            }
+            FilterType.NEON_NIGHTS -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.linearGradient(
+                                colors = listOf(
+                                    Color(0xFF00FFFF),
+                                    Color(0xFFFF00FF)
+                                )
+                            )
+                        )
+                )
+            }
+            FilterType.GOLDEN_HOUR -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.radialGradient(
+                                colors = listOf(
+                                    Color(0xFFFFD700),
+                                    Color(0xFFFF6347)
+                                )
+                            )
+                        )
+                )
+            }
+            FilterType.CYBERPUNK -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.linearGradient(
+                                colors = listOf(
+                                    Color(0xFF9400D3),
+                                    Color(0xFF00FFFF)
+                                )
+                            )
+                        )
+                )
+            }
+            FilterType.CHERRY_BLOSSOM -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.radialGradient(
+                                colors = listOf(
+                                    Color(0xFFFFB6C1),
+                                    Color(0xFFFFC0CB),
+                                    Color(0xFFFFE4E1)
+                                )
+                            )
+                        )
+                )
+            }
         }
     }
 }
@@ -203,5 +371,17 @@ private fun getFilterDisplayName(filterType: FilterType): String {
         FilterType.VINTAGE -> stringResource(R.string.filter_vintage)
         FilterType.COOL -> stringResource(R.string.filter_cool)
         FilterType.WARM -> stringResource(R.string.filter_warm)
+        // New filters
+        FilterType.PINK_DREAM -> stringResource(R.string.filter_pink_dream)
+        FilterType.RETRO_80S -> stringResource(R.string.filter_retro_80s)
+        FilterType.OLD_FILM -> stringResource(R.string.filter_old_film)
+        FilterType.SPRING -> stringResource(R.string.filter_spring)
+        FilterType.SUMMER -> stringResource(R.string.filter_summer)
+        FilterType.AUTUMN -> stringResource(R.string.filter_autumn)
+        FilterType.WINTER -> stringResource(R.string.filter_winter)
+        FilterType.NEON_NIGHTS -> stringResource(R.string.filter_neon_nights)
+        FilterType.GOLDEN_HOUR -> stringResource(R.string.filter_golden_hour)
+        FilterType.CYBERPUNK -> stringResource(R.string.filter_cyberpunk)
+        FilterType.CHERRY_BLOSSOM -> stringResource(R.string.filter_cherry_blossom)
     }
 }
