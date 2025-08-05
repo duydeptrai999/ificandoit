@@ -116,10 +116,16 @@ class GLRenderer(private val context: Context) : GLSurfaceView.Renderer {
     // Callbacks
     var onSurfaceTextureReady: ((SurfaceTexture) -> Unit)? = null
     var onFrameRendered: (() -> Unit)? = null
+    var onFrameCaptured: ((ByteArray) -> Unit)? = null
     
-    // Performance tracking
+    // Performance monitoring
     private var frameCount = 0
     private var lastFpsTime = System.currentTimeMillis()
+    
+    // Capture state
+    private var shouldCaptureFrame = false
+    private var captureWidth = 0
+    private var captureHeight = 0
     
     init {
         // Initialize vertex buffer
@@ -262,6 +268,12 @@ class GLRenderer(private val context: Context) : GLSurfaceView.Renderer {
         }
         if (currentTextureCoordHandle >= 0) {
             GLES30.glDisableVertexAttribArray(currentTextureCoordHandle)
+        }
+        
+        // Capture frame if requested
+        if (shouldCaptureFrame) {
+            captureCurrentFrame()
+            shouldCaptureFrame = false
         }
         
         // Update FPS counter
@@ -464,6 +476,53 @@ class GLRenderer(private val context: Context) : GLSurfaceView.Renderer {
         val error = GLES30.glGetError()
         if (error != GLES30.GL_NO_ERROR) {
             Log.e(TAG, "OpenGL error in $operation: $error")
+        }
+    }
+
+    /**
+     * Request frame capture on next render
+     */
+    fun captureFrame(width: Int = 1080, height: Int = 1920) {
+        captureWidth = width
+        captureHeight = height
+        shouldCaptureFrame = true
+        Log.d(TAG, "Frame capture requested: ${width}x${height}")
+    }
+    
+    /**
+     * Capture current frame as bitmap data
+     */
+    private fun captureCurrentFrame() {
+        try {
+            val width = if (captureWidth > 0) captureWidth else 1080
+            val height = if (captureHeight > 0) captureHeight else 1920
+            
+            // Create buffer for pixel data
+            val pixelBuffer = ByteBuffer.allocateDirect(width * height * 4)
+            pixelBuffer.order(ByteOrder.nativeOrder())
+            
+            // Read pixels from current framebuffer
+            GLES30.glReadPixels(
+                0, 0, width, height,
+                GLES30.GL_RGBA, GLES30.GL_UNSIGNED_BYTE,
+                pixelBuffer
+            )
+            
+            checkGLError("glReadPixels")
+            
+            // Convert to byte array
+            val pixelData = ByteArray(pixelBuffer.remaining())
+            pixelBuffer.rewind()
+            pixelBuffer.get(pixelData)
+            
+            // Notify capture complete
+            onFrameCaptured?.invoke(pixelData)
+            
+            Log.d(TAG, "Frame captured successfully: ${width}x${height}, ${pixelData.size} bytes")
+            
+        } catch (e: Exception) {
+            Log.e(TAG, "Error capturing frame", e)
+            onFrameCaptured?.invoke(ByteArray(0))
         }
     }
 

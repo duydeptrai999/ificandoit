@@ -13,6 +13,8 @@ import com.xiaomi.base.ui.screens.camera.filter.FilterManager
 import com.xiaomi.base.ui.screens.camera.filter.FilterShader
 import com.xiaomi.base.ui.screens.camera.filter.FilterType
 import com.xiaomi.base.ui.screens.camera.opengl.GLRenderer
+import com.xiaomi.base.ui.screens.camera.utils.PhotoUtils
+import android.graphics.Bitmap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,9 +47,13 @@ class CameraTextureView @JvmOverloads constructor(
     var onCameraReady: (() -> Unit)? = null
     var onCameraError: ((String) -> Unit)? = null
     var onFilterChanged: ((FilterType) -> Unit)? = null
+    var onPhotoCaptured: ((Bitmap) -> Unit)? = null
     
     // Coroutine scope for async operations
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
+    
+    // Photo capture state
+    private var pendingCaptureCallback: ((Bitmap?) -> Unit)? = null
     
     init {
         setupGLSurfaceView()
@@ -93,6 +99,10 @@ class CameraTextureView @JvmOverloads constructor(
         
         glRenderer.onFrameRendered = {
             // Frame rendered callback for performance monitoring
+        }
+        
+        glRenderer.onFrameCaptured = { pixelData ->
+            handleCapturedFrame(pixelData)
         }
         
         setRenderer(glRenderer)
@@ -313,10 +323,68 @@ class CameraTextureView @JvmOverloads constructor(
     /**
      * Capture photo (future implementation)
      */
-    fun capturePhoto(callback: (ByteArray?) -> Unit) {
-        // TODO: Implement photo capture
-        Log.d(TAG, "Photo capture not implemented yet")
-        callback(null)
+    /**
+     * Capture photo with current filter applied
+     */
+    fun capturePhoto(callback: (Bitmap?) -> Unit) {
+        if (!isInitialized) {
+            Log.w(TAG, "Camera not ready for photo capture")
+            callback(null)
+            return
+        }
+        
+        Log.d(TAG, "Capturing photo with filter: $currentFilter")
+        
+        // Store callback for when capture completes
+        val captureCallback: (Bitmap?) -> Unit = { bitmap ->
+            callback(bitmap)
+            bitmap?.let { onPhotoCaptured?.invoke(it) }
+        }
+        
+        // Store callback temporarily
+        pendingCaptureCallback = captureCallback
+        
+        // Request frame capture from GL renderer
+        glRenderer.captureFrame(1080, 1920)
+    }
+    
+    /**
+     * Handle captured frame data from OpenGL
+     */
+    private fun handleCapturedFrame(pixelData: ByteArray) {
+        coroutineScope.launch(Dispatchers.IO) {
+            try {
+                if (pixelData.isEmpty()) {
+                    Log.e(TAG, "Received empty pixel data")
+                    withContext(Dispatchers.Main) {
+                        pendingCaptureCallback?.invoke(null)
+                        pendingCaptureCallback = null
+                    }
+                    return@launch
+                }
+                
+                // Convert pixel data to bitmap
+                val bitmap = PhotoUtils.pixelDataToBitmap(pixelData, 1080, 1920)
+                
+                withContext(Dispatchers.Main) {
+                    if (bitmap != null) {
+                        Log.d(TAG, "Photo captured successfully: ${bitmap.width}x${bitmap.height}")
+                        pendingCaptureCallback?.invoke(bitmap)
+                    } else {
+                        Log.e(TAG, "Failed to convert pixel data to bitmap")
+                        pendingCaptureCallback?.invoke(null)
+                    }
+                    pendingCaptureCallback = null
+                }
+                
+            } catch (e: Exception) {
+                Log.e(TAG, "Error processing captured frame", e)
+                withContext(Dispatchers.Main) {
+                    pendingCaptureCallback?.invoke(null)
+                    pendingCaptureCallback = null
+                }
+            }
+        }
     }
     
     /**

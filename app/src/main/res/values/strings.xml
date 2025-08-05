@@ -91,4 +91,21 @@
     <string name="filter_vintage">Vintage</string>
     <string name="filter_cool">Cool</string>
     <string name="filter_warm">Warm</string>
+    
+    <!-- Photo Capture Strings -->
+    <string name="capture_failed">Failed to capture photo</string>
+    <string name="save_failed">Failed to save photo</string>
+    <string name="photo_saved">Photo saved to gallery</string>
+    
+    <!-- Photo Preview Strings -->
+    <string name="save_photo">Save</string>
+    <string name="discard_photo">Discard</string>
+    <string name="retake_photo">Retake</string>
+    <string name="photo_preview">Photo Preview</string>
+    <string name="saving">Saving...</string>
+    <string name="save">Save</string>
+    <string name="photo_saved_message">Your photo has been saved to the gallery successfully.</string>
+    <string name="ok">OK</string>
+    <string name="captured_photo">Captured Photo</string>
+    <string name="retake">Retake</string>
 </resources>

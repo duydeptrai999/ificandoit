@@ -29,6 +29,9 @@ import com.xiaomi.base.R
 import com.xiaomi.base.ui.screens.camera.camera2.CameraTextureView
 import com.xiaomi.base.ui.screens.camera.components.FilterPreviewItem
 import com.xiaomi.base.ui.screens.camera.filter.FilterType
+import com.xiaomi.base.ui.screens.camera.utils.PhotoUtils
+import android.graphics.Bitmap
+import kotlinx.coroutines.launch
 
 /**
  * Modern camera screen with real-time filters using Camera2 + OpenGL
@@ -51,6 +54,13 @@ fun CameraScreen(
     var cameraError by remember { mutableStateOf<String?>(null) }
     var currentFilter by remember { mutableStateOf(FilterType.ORIGINAL) }
     var showFilterPanel by remember { mutableStateOf(true) }
+    
+    // Photo capture state
+    var capturedPhoto by remember { mutableStateOf<Bitmap?>(null) }
+    var isCapturing by remember { mutableStateOf(false) }
+    
+    // Coroutine scope
+    val scope = rememberCoroutineScope()
     
     // Camera texture view reference
     var cameraTextureView by remember { mutableStateOf<CameraTextureView?>(null) }
@@ -79,95 +89,134 @@ fun CameraScreen(
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        when {
-            cameraPermissionState.status.isGranted -> {
-                // Camera preview with OpenGL rendering
-                CameraPreviewContent(
-                    isCameraReady = isCameraReady,
-                    cameraError = cameraError,
-                    currentFilter = currentFilter,
-                    availableFilters = availableFilters,
-                    showFilterPanel = showFilterPanel,
-                    onCameraReady = { isCameraReady = true },
-                    onCameraError = { error -> cameraError = error },
-                    onFilterChanged = { filter -> 
-                        currentFilter = filter
-                        cameraTextureView?.applyFilter(filter)
-                    },
-                    onToggleFilterPanel = { showFilterPanel = !showFilterPanel },
-                    onCameraTextureViewCreated = { view -> cameraTextureView = view },
-                    lifecycleOwner = lifecycleOwner,
-                    modifier = Modifier.fillMaxSize()
-                )
-                
-                // Top controls
-                CameraTopControls(
-                    onNavigateBack = onNavigateBack,
-                    onToggleFilterPanel = { showFilterPanel = !showFilterPanel },
-                    showFilterPanel = showFilterPanel,
-                    modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .fillMaxWidth()
-                        .statusBarsPadding()
-                )
-                
-                // Bottom controls
-                CameraBottomControls(
-                    isCameraReady = isCameraReady,
-                    onCapturePhoto = {
-                        cameraTextureView?.capturePhoto { photoData ->
-                            // Handle captured photo
+        // Photo preview overlay (highest priority)
+        capturedPhoto?.let { bitmap ->
+            PhotoPreviewScreen(
+                photoBitmap = bitmap,
+                onSavePhoto = {
+                    scope.launch {
+                        try {
+                            val uri = PhotoUtils.saveBitmapToGallery(context, bitmap)
+                            if (uri != null) {
+                                // Photo saved successfully
+                                capturedPhoto = null
+                            } else {
+                                cameraError = context.getString(R.string.save_failed)
+                            }
+                        } catch (e: Exception) {
+                            cameraError = context.getString(R.string.save_failed)
                         }
-                    },
-                    onSwitchCamera = {
-                        cameraTextureView?.switchCamera()
-                    },
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .fillMaxWidth()
-                        .navigationBarsPadding()
-                )
-                
-                // Filter panel
-                if (showFilterPanel) {
-                    FilterPanel(
-                        availableFilters = availableFilters,
+                    }
+                },
+                onDiscardPhoto = {
+                    capturedPhoto = null
+                },
+                onRetakePhoto = {
+                    capturedPhoto = null
+                },
+                modifier = Modifier.fillMaxSize()
+            )
+        } ?: run {
+            // Camera content when no photo is captured
+            when {
+                cameraPermissionState.status.isGranted -> {
+                    // Camera preview with OpenGL rendering
+                    CameraPreviewContent(
+                        isCameraReady = isCameraReady,
+                        cameraError = cameraError,
                         currentFilter = currentFilter,
-                        onFilterSelected = { filter ->
+                        availableFilters = availableFilters,
+                        showFilterPanel = showFilterPanel,
+                        onCameraReady = { isCameraReady = true },
+                        onCameraError = { error -> cameraError = error },
+                        onFilterChanged = { filter -> 
                             currentFilter = filter
                             cameraTextureView?.applyFilter(filter)
+                        },
+                        onToggleFilterPanel = { showFilterPanel = !showFilterPanel },
+                        onCameraTextureViewCreated = { view -> cameraTextureView = view },
+                        lifecycleOwner = lifecycleOwner,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    
+                    // Top controls
+                    CameraTopControls(
+                        onNavigateBack = onNavigateBack,
+                        onToggleFilterPanel = { showFilterPanel = !showFilterPanel },
+                        showFilterPanel = showFilterPanel,
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .fillMaxWidth()
+                            .statusBarsPadding()
+                    )
+                    
+                    // Bottom controls
+                    CameraBottomControls(
+                        isCameraReady = isCameraReady,
+                        isCapturing = isCapturing,
+                        onCapturePhoto = {
+                            if (!isCapturing && isCameraReady) {
+                                isCapturing = true
+                                cameraTextureView?.capturePhoto { bitmap ->
+                                    isCapturing = false
+                                    if (bitmap != null) {
+                                        capturedPhoto = bitmap
+                                    } else {
+                                        cameraError = context.getString(R.string.capture_failed)
+                                    }
+                                }
+                            }
+                        },
+                        onSwitchCamera = {
+                            cameraTextureView?.switchCamera()
                         },
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
                             .fillMaxWidth()
-                            .padding(bottom = 120.dp)
+                            .navigationBarsPadding()
                     )
+                    
+                    // Filter panel
+                    if (showFilterPanel) {
+                        FilterPanel(
+                            availableFilters = availableFilters,
+                            currentFilter = currentFilter,
+                            onFilterSelected = { filter ->
+                                currentFilter = filter
+                                cameraTextureView?.applyFilter(filter)
+                            },
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .fillMaxWidth()
+                                .padding(bottom = 120.dp)
+                        )
+                    }
+                    
+                    // Error display
+                    cameraError?.let { error ->
+                        ErrorDisplay(
+                            error = error,
+                            onDismiss = { cameraError = null },
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
                 }
                 
-                // Error display
-                cameraError?.let { error ->
-                    ErrorDisplay(
-                        error = error,
-                        onDismiss = { cameraError = null },
+                cameraPermissionState.status.shouldShowRationale -> {
+                    // Permission rationale
+                    PermissionRationale(
+                        onRequestPermission = { cameraPermissionState.launchPermissionRequest() },
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
-            }
-            
-            cameraPermissionState.status.shouldShowRationale -> {
-                // Permission rationale
-                PermissionRationale(
-                    onRequestPermission = { cameraPermissionState.launchPermissionRequest() },
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-            
-            else -> {
-                // Permission denied
-                PermissionDenied(
-                    onRequestPermission = { cameraPermissionState.launchPermissionRequest() },
-                    modifier = Modifier.align(Alignment.Center)
-                )
+                
+                else -> {
+                    // Permission denied
+                    PermissionDenied(
+                        onRequestPermission = { cameraPermissionState.launchPermissionRequest() },
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
             }
         }
     }
@@ -283,6 +332,7 @@ private fun CameraTopControls(
 @Composable
 private fun CameraBottomControls(
     isCameraReady: Boolean,
+    isCapturing: Boolean = false,
     onCapturePhoto: () -> Unit,
     onSwitchCamera: () -> Unit,
     modifier: Modifier = Modifier
@@ -313,21 +363,29 @@ private fun CameraBottomControls(
         // Capture button
         Button(
             onClick = onCapturePhoto,
-            enabled = isCameraReady,
+            enabled = isCameraReady && !isCapturing,
             modifier = Modifier
                 .size(72.dp),
             shape = CircleShape,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.White,
+                containerColor = if (isCapturing) Color.Gray else Color.White,
                 disabledContainerColor = Color.Gray
             )
         ) {
-            Icon(
-                imageVector = Icons.Default.CameraAlt,
-                contentDescription = stringResource(R.string.capture_photo),
-                tint = Color.Black,
-                modifier = Modifier.size(32.dp)
-            )
+            if (isCapturing) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(32.dp),
+                    color = Color.Black,
+                    strokeWidth = 3.dp
+                )
+            } else {
+                Icon(
+                    imageVector = Icons.Default.CameraAlt,
+                    contentDescription = stringResource(R.string.capture_photo),
+                    tint = Color.Black,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
         
         // Switch camera button
