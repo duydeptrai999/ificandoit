@@ -3,11 +3,15 @@ package com.xiaomi.base.ui.screens.camera
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,8 +29,8 @@ import com.xiaomi.base.R
 import kotlinx.coroutines.launch
 
 /**
- * Photo preview screen with save/discard options
- * Shows captured photo with applied filter
+ * Photo preview screen with edit options
+ * Shows captured photo with editing tools
  */
 @Composable
 fun PhotoPreviewScreen(
@@ -41,38 +45,19 @@ fun PhotoPreviewScreen(
     
     var isSaving by remember { mutableStateOf(false) }
     var showSaveDialog by remember { mutableStateOf(false) }
+    var selectedEditOption by remember { mutableStateOf("") }
     
-    // Sử dụng Box làm container chính để có control tuyệt đối về positioning
-    Box(
+    // Sử dụng Column để layout theo chiều dọc
+    Column(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        // Top controls - Cố định ở đầu màn hình
-        PhotoPreviewTopControls(
-            onDiscard = onDiscardPhoto,
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .fillMaxWidth()
-                .statusBarsPadding()
-        )
-        
-        // Photo preview - Căn giữa hoàn hảo theo cả 2 chiều
-        Image(
-            bitmap = photoBitmap.asImageBitmap(),
-            contentDescription = stringResource(R.string.captured_photo),
-            modifier = Modifier
-                .align(Alignment.Center) // Căn giữa tuyệt đối
-                .fillMaxWidth(0.85f) // 85% chiều rộng màn hình = margin 7.5% mỗi bên
-                .aspectRatio(3f/4f) // Tỷ lệ 3:4
-                .clip(RoundedCornerShape(12.dp)),
-            contentScale = ContentScale.Crop
-        )
-        
-        // Bottom controls - Cố định ở cuối màn hình
-        PhotoPreviewBottomControls(
-            isSaving = isSaving,
-            onRetake = onRetakePhoto,
+        // Top controls - Header với tiêu đề và action buttons
+        PhotoEditTopBar(
+            onBack = onDiscardPhoto,
+            onUndo = { /* TODO: Implement undo */ },
+            onRedo = { /* TODO: Implement redo */ },
             onSave = {
                 scope.launch {
                     isSaving = true
@@ -85,13 +70,54 @@ fun PhotoPreviewScreen(
                 }
             },
             modifier = Modifier
-                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .statusBarsPadding()
+        )
+        
+        // Photo preview - chiếm toàn bộ không gian còn lại
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f)
+                .background(Color.Black)
+        ) {
+            // Main photo
+            Image(
+                bitmap = photoBitmap.asImageBitmap(),
+                contentDescription = "Edit photo",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp),
+                contentScale = ContentScale.Fit
+            )
+            
+            // Loading indicator when saving
+            if (isSaving) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.5f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(48.dp)
+                    )
+                }
+            }
+        }
+        
+        // Bottom edit options
+        PhotoEditBottomBar(
+            selectedOption = selectedEditOption,
+            onOptionSelected = { option -> selectedEditOption = option },
+            modifier = Modifier
                 .fillMaxWidth()
                 .navigationBarsPadding()
         )
     }
     
-    // Save success dialog - Đặt bên ngoài Box để hiển thị overlay
+    // Save success dialog
     if (showSaveDialog) {
         SaveSuccessDialog(
             onDismiss = { 
@@ -103,129 +129,164 @@ fun PhotoPreviewScreen(
 }
 
 @Composable
-private fun PhotoPreviewTopControls(
-    onDiscard: () -> Unit,
+private fun PhotoEditTopBar(
+    onBack: () -> Unit,
+    onUndo: () -> Unit,
+    onRedo: () -> Unit,
+    onSave: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        color = Color.Black.copy(alpha = 0.9f),
+        tonalElevation = 4.dp
     ) {
-        // Discard button
-        IconButton(
-            onClick = onDiscard,
+        Row(
             modifier = Modifier
-                .background(
-                    Color.Black.copy(alpha = 0.5f),
-                    CircleShape
+                .padding(horizontal = 8.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Back button
+            IconButton(
+                onClick = onBack,
+                modifier = Modifier.size(48.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    tint = Color.White,
+                    modifier = Modifier.size(24.dp)
                 )
-        ) {
-            Icon(
-                imageVector = Icons.Default.Close,
-                contentDescription = stringResource(R.string.discard_photo),
-                tint = Color.White
-            )
-        }
-        
-        Spacer(modifier = Modifier.weight(1f))
-        
-        // Photo info
-        Card(
-            colors = CardDefaults.cardColors(
-                containerColor = Color.Black.copy(alpha = 0.5f)
-            ),
-            shape = RoundedCornerShape(16.dp)
-        ) {
+            }
+            
+            // Title
             Text(
-                text = stringResource(R.string.photo_preview),
-                style = MaterialTheme.typography.bodyMedium,
+                text = "Edit Photo",
+                style = MaterialTheme.typography.titleLarge,
                 color = Color.White,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                modifier = Modifier.weight(1f),
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center
             )
+            
+            // Action buttons
+            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                IconButton(
+                    onClick = onUndo,
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Undo,
+                        contentDescription = "Undo",
+                        tint = Color.White.copy(alpha = 0.9f),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                IconButton(
+                    onClick = onRedo,
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Redo,
+                        contentDescription = "Redo",
+                        tint = Color.White.copy(alpha = 0.9f),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                IconButton(
+                    onClick = onSave,
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Save,
+                        contentDescription = "Save",
+                        tint = Color.White,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun PhotoPreviewBottomControls(
-    isSaving: Boolean,
-    onRetake: () -> Unit,
-    onSave: () -> Unit,
+private fun PhotoEditBottomBar(
+    selectedOption: String,
+    onOptionSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
+    val editOptions = listOf(
+        EditOption("Crop", Icons.Default.Crop),
+        EditOption("Filter", Icons.Default.PhotoFilter),
+        EditOption("Adjust", Icons.Default.Tune),
+        EditOption("Effect", Icons.Default.AutoAwesome),
+        EditOption("Cutout", Icons.Default.ContentCut)
+    )
+    
+    Surface(
         modifier = modifier
-            .padding(24.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
+            .fillMaxWidth(),
+        color = Color.Black.copy(alpha = 0.9f),
+        tonalElevation = 8.dp
     ) {
-        // Retake button
-        OutlinedButton(
-            onClick = onRetake,
-            enabled = !isSaving,
+        Row(
             modifier = Modifier
-                .height(48.dp)
-                .weight(1f),
-            shape = RoundedCornerShape(24.dp),
-            colors = ButtonDefaults.outlinedButtonColors(
-                contentColor = Color.White
-            ),
-            border = ButtonDefaults.outlinedButtonBorder.copy(
-                brush = androidx.compose.ui.graphics.SolidColor(Color.White)
-            )
+                .padding(vertical = 16.dp, horizontal = 8.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Icon(
-                imageVector = Icons.Default.Refresh,
-                contentDescription = null,
-                modifier = Modifier.size(20.dp)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = stringResource(R.string.retake),
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Medium
-            )
-        }
-        
-        Spacer(modifier = Modifier.width(16.dp))
-        
-        // Save button
-        Button(
-            onClick = onSave,
-            enabled = !isSaving,
-            modifier = Modifier
-                .height(48.dp)
-                .weight(1f),
-            shape = RoundedCornerShape(24.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
-        ) {
-            if (isSaving) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(20.dp),
-                    color = Color.White,
-                    strokeWidth = 2.dp
-                )
-            } else {
-                Icon(
-                    imageVector = Icons.Default.Save,
-                    contentDescription = null,
-                    modifier = Modifier.size(20.dp)
+            editOptions.forEach { option ->
+                EditOptionItem(
+                    option = option,
+                    isSelected = selectedOption == option.name,
+                    onClick = { onOptionSelected(option.name) },
+                    modifier = Modifier.weight(1f)
                 )
             }
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = if (isSaving) stringResource(R.string.saving) else stringResource(R.string.save),
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Medium
-            )
         }
     }
 }
+
+@Composable
+private fun EditOptionItem(
+    option: EditOption,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .clip(RoundedCornerShape(12.dp))
+            .background(
+                if (isSelected) 
+                    MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                else 
+                    Color.Transparent
+            )
+            .clickable { onClick() }
+            .padding(vertical = 12.dp, horizontal = 4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Icon(
+            imageVector = option.icon,
+            contentDescription = option.name,
+            tint = if (isSelected) MaterialTheme.colorScheme.primary else Color.White.copy(alpha = 0.9f),
+            modifier = Modifier.size(24.dp)
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = option.name,
+            style = MaterialTheme.typography.labelSmall,
+            color = if (isSelected) MaterialTheme.colorScheme.primary else Color.White.copy(alpha = 0.9f),
+            fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal
+        )
+    }
+}
+
+data class EditOption(
+    val name: String,
+    val icon: androidx.compose.ui.graphics.vector.ImageVector
+)
 
 @Composable
 private fun SaveSuccessDialog(
