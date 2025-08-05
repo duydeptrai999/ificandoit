@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -41,22 +42,13 @@ fun PhotoPreviewScreen(
     var isSaving by remember { mutableStateOf(false) }
     var showSaveDialog by remember { mutableStateOf(false) }
     
+    // Sử dụng Box làm container chính để có control tuyệt đối về positioning
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        // Photo preview
-        Image(
-            bitmap = photoBitmap.asImageBitmap(),
-            contentDescription = stringResource(R.string.captured_photo),
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(RoundedCornerShape(0.dp)),
-            contentScale = ContentScale.Fit
-        )
-        
-        // Top controls
+        // Top controls - Cố định ở đầu màn hình
         PhotoPreviewTopControls(
             onDiscard = onDiscardPhoto,
             modifier = Modifier
@@ -65,7 +57,19 @@ fun PhotoPreviewScreen(
                 .statusBarsPadding()
         )
         
-        // Bottom controls
+        // Photo preview - Căn giữa hoàn hảo theo cả 2 chiều
+        Image(
+            bitmap = photoBitmap.asImageBitmap(),
+            contentDescription = stringResource(R.string.captured_photo),
+            modifier = Modifier
+                .align(Alignment.Center) // Căn giữa tuyệt đối
+                .fillMaxWidth(0.85f) // 85% chiều rộng màn hình = margin 7.5% mỗi bên
+                .aspectRatio(3f/4f) // Tỷ lệ 3:4
+                .clip(RoundedCornerShape(12.dp)),
+            contentScale = ContentScale.Crop
+        )
+        
+        // Bottom controls - Cố định ở cuối màn hình
         PhotoPreviewBottomControls(
             isSaving = isSaving,
             onRetake = onRetakePhoto,
@@ -85,16 +89,16 @@ fun PhotoPreviewScreen(
                 .fillMaxWidth()
                 .navigationBarsPadding()
         )
-        
-        // Save success dialog
-        if (showSaveDialog) {
-            SaveSuccessDialog(
-                onDismiss = { 
-                    showSaveDialog = false
-                    onDiscardPhoto()
-                }
-            )
-        }
+    }
+    
+    // Save success dialog - Đặt bên ngoài Box để hiển thị overlay
+    if (showSaveDialog) {
+        SaveSuccessDialog(
+            onDismiss = { 
+                showSaveDialog = false
+                onDiscardPhoto()
+            }
+        )
     }
 }
 

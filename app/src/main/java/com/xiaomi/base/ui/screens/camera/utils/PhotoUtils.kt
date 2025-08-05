@@ -58,8 +58,8 @@ object PhotoUtils {
             
             bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
             
-            // Rotate bitmap to correct orientation (portrait)
-            rotateBitmap(bitmap, 90f)
+            // Return bitmap without automatic rotation
+            bitmap
             
         } catch (e: Exception) {
             Log.e(TAG, "Error converting pixel data to bitmap", e)
