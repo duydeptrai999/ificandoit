@@ -120,11 +120,12 @@ fun CameraScreen(
         // Photo preview overlay (highest priority)
         capturedPhoto?.let { bitmap ->
             PhotoPreviewScreen(
-                photoBitmap = bitmap,
-                onSavePhoto = {
+                rawPhotoBitmap = bitmap, // Pass raw bitmap without filter
+                initialFilter = currentFilter, // Pass current filter as initial
+                onSavePhoto = { processedBitmap ->
                     scope.launch {
                         try {
-                            val uri = PhotoUtils.saveBitmapToGallery(context, bitmap)
+                            val uri = PhotoUtils.saveBitmapToGallery(context, processedBitmap)
                             if (uri != null) {
                                 // Photo saved successfully
                                 capturedPhoto = null
@@ -185,10 +186,10 @@ fun CameraScreen(
                         onCapturePhoto = {
                             if (!isCapturing && isCameraReady) {
                                 isCapturing = true
-                                cameraTextureView?.capturePhoto { bitmap ->
+                                cameraTextureView?.captureRawPhoto { bitmap ->
                                     isCapturing = false
                                     if (bitmap != null) {
-                                        capturedPhoto = bitmap
+                                        capturedPhoto = bitmap // Store raw bitmap
                                     } else {
                                         cameraError = context.getString(R.string.capture_failed)
                                     }

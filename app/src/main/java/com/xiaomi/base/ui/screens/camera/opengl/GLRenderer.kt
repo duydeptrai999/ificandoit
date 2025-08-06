@@ -124,6 +124,7 @@ class GLRenderer(private val context: Context) : GLSurfaceView.Renderer {
     
     // Capture state
     private var shouldCaptureFrame = false
+    private var shouldCaptureRawFrame = false
     private var captureWidth = 0
     private var captureHeight = 0
     private var actualCaptureWidth = 0
@@ -274,8 +275,13 @@ class GLRenderer(private val context: Context) : GLSurfaceView.Renderer {
         
         // Capture frame if requested
         if (shouldCaptureFrame) {
-            captureCurrentFrame()
+            captureCurrentFrame(false) // Capture with filter
             shouldCaptureFrame = false
+        }
+        
+        if (shouldCaptureRawFrame) {
+            captureCurrentFrame(true) // Capture without filter
+            shouldCaptureRawFrame = false
         }
         
         // Update FPS counter
@@ -482,13 +488,23 @@ class GLRenderer(private val context: Context) : GLSurfaceView.Renderer {
     }
 
     /**
-     * Request frame capture on next render
+     * Request frame capture on next render (with current filter applied)
      */
     fun captureFrame(width: Int = 1080, height: Int = 1920) {
         captureWidth = width
         captureHeight = height
         shouldCaptureFrame = true
         Log.d(TAG, "Frame capture requested: ${width}x${height}")
+    }
+    
+    /**
+     * Request raw frame capture on next render (without filter)
+     */
+    fun captureRawFrame(width: Int = 1080, height: Int = 1920) {
+        captureWidth = width
+        captureHeight = height
+        shouldCaptureRawFrame = true
+        Log.d(TAG, "Raw frame capture requested: ${width}x${height}")
     }
     
     /**
@@ -500,9 +516,15 @@ class GLRenderer(private val context: Context) : GLSurfaceView.Renderer {
     
     /**
      * Capture current frame as bitmap data
+     * @param isRawCapture true to capture without filter, false to capture with filter
      */
-    private fun captureCurrentFrame() {
+    private fun captureCurrentFrame(isRawCapture: Boolean = false) {
         try {
+            if (isRawCapture) {
+                // Render one frame without filter for raw capture
+                renderFrameForCapture(false)
+            }
+            
             // Get current viewport dimensions
             val viewport = IntArray(4)
             GLES30.glGetIntegerv(GLES30.GL_VIEWPORT, viewport, 0)
@@ -541,12 +563,92 @@ class GLRenderer(private val context: Context) : GLSurfaceView.Renderer {
             // Notify capture complete
             onFrameCaptured?.invoke(pixelData)
             
-            Log.d(TAG, "Frame captured successfully: ${width}x${height}, ${pixelData.size} bytes")
+            Log.d(TAG, "Frame captured successfully (raw: $isRawCapture): ${width}x${height}, ${pixelData.size} bytes")
             
         } catch (e: Exception) {
             Log.e(TAG, "Error capturing frame", e)
             onFrameCaptured?.invoke(ByteArray(0))
         }
+    }
+    
+    /**
+     * Render a single frame for capture purposes
+     * @param useFilter whether to apply current filter
+     */
+    private fun renderFrameForCapture(useFilter: Boolean) {
+        // Clear buffers
+        GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT or GLES30.GL_DEPTH_BUFFER_BIT)
+        
+        // Update surface texture
+        surfaceTexture?.updateTexImage()
+        surfaceTexture?.getTransformMatrix(textureMatrix)
+        
+        // Choose program based on useFilter parameter
+        val (currentProgram, currentPositionHandle, currentTextureCoordHandle, 
+             currentMvpMatrixHandle, currentTextureMatrixHandle, currentTextureHandle) = 
+            if (useFilter && filterProgram != 0 && currentFilter != null) {
+                // Use filter program
+                val filterPositionHandle = GLES30.glGetAttribLocation(filterProgram, "aPosition")
+                val filterTextureCoordHandle = GLES30.glGetAttribLocation(filterProgram, "aTextureCoord")
+                val filterMvpMatrixHandle = filterUniforms["uMVPMatrix"] ?: -1
+                val filterTextureMatrixHandle = filterUniforms["uTexMatrix"] ?: -1
+                val filterTextureHandle = filterUniforms["uTexture"] ?: -1
+                
+                Tuple6(filterProgram, filterPositionHandle, filterTextureCoordHandle,
+                      filterMvpMatrixHandle, filterTextureMatrixHandle, filterTextureHandle)
+            } else {
+                // Use default program (no filter)
+                Tuple6(program, positionHandle, textureCoordHandle,
+                      mvpMatrixHandle, textureMatrixHandle, textureHandle)
+            }
+        
+        GLES30.glUseProgram(currentProgram)
+        
+        // Set vertex attributes
+        if (currentPositionHandle >= 0) {
+            GLES30.glEnableVertexAttribArray(currentPositionHandle)
+            GLES30.glVertexAttribPointer(currentPositionHandle, 3, GLES30.GL_FLOAT, false, 0, vertexBuffer)
+        }
+        
+        if (currentTextureCoordHandle >= 0) {
+            GLES30.glEnableVertexAttribArray(currentTextureCoordHandle)
+            GLES30.glVertexAttribPointer(currentTextureCoordHandle, 2, GLES30.GL_FLOAT, false, 0, textureBuffer)
+        }
+        
+        // Set matrices
+        if (currentMvpMatrixHandle >= 0) {
+            GLES30.glUniformMatrix4fv(currentMvpMatrixHandle, 1, false, mvpMatrix, 0)
+        }
+        if (currentTextureMatrixHandle >= 0) {
+            GLES30.glUniformMatrix4fv(currentTextureMatrixHandle, 1, false, textureMatrix, 0)
+        }
+        
+        // Bind camera texture
+        GLES30.glActiveTexture(GLES30.GL_TEXTURE0)
+        GLES30.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, cameraTexture)
+        if (currentTextureHandle >= 0) {
+            GLES30.glUniform1i(currentTextureHandle, 0)
+        }
+        
+        // Apply filter uniforms if using filter
+        if (useFilter) {
+            currentFilter?.let { filter ->
+                applyFilterUniforms(filter)
+            }
+        }
+        
+        // Draw quad
+        GLES30.glDrawArrays(GLES30.GL_TRIANGLE_STRIP, 0, 4)
+        
+        // Disable vertex arrays
+        if (currentPositionHandle >= 0) {
+            GLES30.glDisableVertexAttribArray(currentPositionHandle)
+        }
+        if (currentTextureCoordHandle >= 0) {
+            GLES30.glDisableVertexAttribArray(currentTextureCoordHandle)
+        }
+        
+        checkGLError("renderFrameForCapture")
     }
 
     /**

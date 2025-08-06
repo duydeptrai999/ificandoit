@@ -324,6 +324,41 @@ class CameraTextureView @JvmOverloads constructor(
      * Capture photo (future implementation)
      */
     /**
+     * Capture raw photo without any filter applied
+     */
+    fun captureRawPhoto(callback: (Bitmap?) -> Unit) {
+        if (!isInitialized) {
+            Log.w(TAG, "Camera not ready for photo capture")
+            callback(null)
+            return
+        }
+        
+        Log.d(TAG, "Capturing raw photo (no filter)")
+        
+        // Get actual preview size from camera
+        val previewSize = camera2Manager.getPreviewSize()
+        if (previewSize == null) {
+            Log.e(TAG, "Preview size not available for capture")
+            callback(null)
+            return
+        }
+        
+        Log.d(TAG, "Using preview size for raw capture: ${previewSize.width}x${previewSize.height}")
+        
+        // Store callback for when capture completes
+        val captureCallback: (Bitmap?) -> Unit = { bitmap ->
+            callback(bitmap)
+            bitmap?.let { onPhotoCaptured?.invoke(it) }
+        }
+        
+        // Store callback temporarily
+        pendingCaptureCallback = captureCallback
+        
+        // Request raw frame capture from GL renderer (without filter)
+        glRenderer.captureRawFrame(previewSize.width, previewSize.height)
+    }
+    
+    /**
      * Capture photo with current filter applied
      */
     fun capturePhoto(callback: (Bitmap?) -> Unit) {

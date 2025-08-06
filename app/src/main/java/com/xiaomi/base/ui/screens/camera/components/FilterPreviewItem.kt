@@ -88,6 +88,32 @@ fun FilterPreviewItem(
     }
 }
 
+/**
+ * Get display name for filter type
+ */
+@Composable
+private fun getFilterDisplayName(filterType: FilterType): String {
+    return when (filterType) {
+        FilterType.ORIGINAL -> stringResource(R.string.filter_original)
+        FilterType.SEPIA -> stringResource(R.string.filter_sepia)
+        FilterType.BLACK_WHITE -> stringResource(R.string.filter_black_white)
+        FilterType.VINTAGE -> stringResource(R.string.filter_vintage)
+        FilterType.COOL -> stringResource(R.string.filter_cool)
+        FilterType.WARM -> stringResource(R.string.filter_warm)
+        FilterType.PINK_DREAM -> stringResource(R.string.filter_pink_dream)
+        FilterType.RETRO_80S -> stringResource(R.string.filter_retro_80s)
+        FilterType.OLD_FILM -> stringResource(R.string.filter_old_film)
+        FilterType.SPRING -> stringResource(R.string.filter_spring)
+        FilterType.SUMMER -> stringResource(R.string.filter_summer)
+        FilterType.AUTUMN -> stringResource(R.string.filter_autumn)
+        FilterType.WINTER -> stringResource(R.string.filter_winter)
+        FilterType.NEON_NIGHTS -> stringResource(R.string.filter_neon_nights)
+        FilterType.GOLDEN_HOUR -> stringResource(R.string.filter_golden_hour)
+        FilterType.CYBERPUNK -> stringResource(R.string.filter_cyberpunk)
+        FilterType.CHERRY_BLOSSOM -> stringResource(R.string.filter_cherry_blossom)
+    }
+}
+
 @Composable
 private fun FilterPreviewContent(
     filterType: FilterType,
@@ -101,7 +127,6 @@ private fun FilterPreviewContent(
         FilterType.VINTAGE -> Color(0xFFDEB887) // Burlywood
         FilterType.COOL -> Color(0xFF87CEEB) // Sky blue
         FilterType.WARM -> Color(0xFFFFB347) // Peach
-        // New filters
         FilterType.PINK_DREAM -> Color(0xFFFF69B4) // Hot pink
         FilterType.RETRO_80S -> Color(0xFFFF00FF) // Magenta
         FilterType.OLD_FILM -> Color(0xFF8B7355) // Dark tan
@@ -362,26 +387,3 @@ private fun FilterPreviewContent(
     }
 }
 
-@Composable
-private fun getFilterDisplayName(filterType: FilterType): String {
-    return when (filterType) {
-        FilterType.ORIGINAL -> stringResource(R.string.filter_original)
-        FilterType.SEPIA -> stringResource(R.string.filter_sepia)
-        FilterType.BLACK_WHITE -> stringResource(R.string.filter_black_white)
-        FilterType.VINTAGE -> stringResource(R.string.filter_vintage)
-        FilterType.COOL -> stringResource(R.string.filter_cool)
-        FilterType.WARM -> stringResource(R.string.filter_warm)
-        // New filters
-        FilterType.PINK_DREAM -> stringResource(R.string.filter_pink_dream)
-        FilterType.RETRO_80S -> stringResource(R.string.filter_retro_80s)
-        FilterType.OLD_FILM -> stringResource(R.string.filter_old_film)
-        FilterType.SPRING -> stringResource(R.string.filter_spring)
-        FilterType.SUMMER -> stringResource(R.string.filter_summer)
-        FilterType.AUTUMN -> stringResource(R.string.filter_autumn)
-        FilterType.WINTER -> stringResource(R.string.filter_winter)
-        FilterType.NEON_NIGHTS -> stringResource(R.string.filter_neon_nights)
-        FilterType.GOLDEN_HOUR -> stringResource(R.string.filter_golden_hour)
-        FilterType.CYBERPUNK -> stringResource(R.string.filter_cyberpunk)
-        FilterType.CHERRY_BLOSSOM -> stringResource(R.string.filter_cherry_blossom)
-    }
-}

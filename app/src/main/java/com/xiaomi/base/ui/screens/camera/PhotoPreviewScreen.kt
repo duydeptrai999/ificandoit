@@ -26,18 +26,24 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import android.util.Log
 import com.xiaomi.base.R
 import com.xiaomi.base.ui.screens.camera.components.PhotoCropView
+import com.xiaomi.base.ui.screens.camera.components.FilterPreviewItem
+import com.xiaomi.base.ui.screens.camera.filter.FilterType
+import com.xiaomi.base.ui.screens.camera.filter.FilterManager
+import com.xiaomi.base.ui.screens.camera.utils.PhotoUtils
 import kotlinx.coroutines.launch
 
 /**
  * Photo preview screen with edit options
- * Shows captured photo with editing tools
+ * Shows captured photo with editing tools and filter selection
  */
 @Composable
 fun PhotoPreviewScreen(
-    photoBitmap: Bitmap,
-    onSavePhoto: () -> Unit,
+    rawPhotoBitmap: Bitmap, // Raw bitmap without any filter applied
+    initialFilter: FilterType = FilterType.ORIGINAL,
+    onSavePhoto: (Bitmap) -> Unit, // Pass the final processed bitmap
     onDiscardPhoto: () -> Unit,
     onRetakePhoto: () -> Unit,
     modifier: Modifier = Modifier
@@ -50,12 +56,58 @@ fun PhotoPreviewScreen(
     var showDiscardDialog by remember { mutableStateOf(false) }
     var selectedEditOption by remember { mutableStateOf("") }
     
+    // Filter state
+    var currentFilter by remember { mutableStateOf(initialFilter) }
+    var currentBitmap by remember { mutableStateOf(rawPhotoBitmap) }
+    var showFilterPanel by remember { mutableStateOf(false) }
+    
+    // Filter manager
+    val filterManager = remember { FilterManager() }
+    val availableFilters = remember {
+        listOf(
+            FilterType.ORIGINAL,
+            FilterType.SEPIA,
+            FilterType.BLACK_WHITE,
+            FilterType.VINTAGE,
+            FilterType.COOL,
+            FilterType.WARM,
+            FilterType.PINK_DREAM,
+            FilterType.RETRO_80S,
+            FilterType.OLD_FILM,
+            FilterType.SPRING,
+            FilterType.SUMMER,
+            FilterType.AUTUMN,
+            FilterType.WINTER,
+            FilterType.NEON_NIGHTS,
+            FilterType.GOLDEN_HOUR,
+            FilterType.CYBERPUNK,
+            FilterType.CHERRY_BLOSSOM
+        )
+    }
+    
     // Handle back gesture to show discard dialog
     BackHandler {
         showDiscardDialog = true
     }
-    var currentBitmap by remember { mutableStateOf(photoBitmap) }
+    
     var showCropView by remember { mutableStateOf(false) }
+    
+    // Apply filter to raw bitmap when filter changes
+    LaunchedEffect(currentFilter) {
+        if (currentFilter != FilterType.ORIGINAL) {
+            scope.launch {
+                try {
+                    val filteredBitmap = PhotoUtils.applyFilterToBitmap(rawPhotoBitmap, currentFilter)
+                    currentBitmap = filteredBitmap ?: rawPhotoBitmap
+                } catch (e: Exception) {
+                    Log.e("PhotoPreview", "Error applying filter", e)
+                    currentBitmap = rawPhotoBitmap
+                }
+            }
+        } else {
+            currentBitmap = rawPhotoBitmap
+        }
+    }
     
     // Show crop view when crop option is selected
     if (showCropView) {
@@ -90,7 +142,7 @@ fun PhotoPreviewScreen(
                 scope.launch {
                     isSaving = true
                     try {
-                        onSavePhoto()
+                        onSavePhoto(currentBitmap) // Pass the processed bitmap
                         showSaveDialog = true
                     } finally {
                         isSaving = false
@@ -140,14 +192,33 @@ fun PhotoPreviewScreen(
             selectedOption = selectedEditOption,
             onOptionSelected = { option -> 
                 selectedEditOption = option
-                if (option == "Crop") {
-                    showCropView = true
+                when (option) {
+                    "Crop" -> showCropView = true
+                    "Filter" -> showFilterPanel = !showFilterPanel
+                    else -> {
+                        // Handle other edit options
+                    }
                 }
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .navigationBarsPadding()
         )
+        
+        // Filter panel overlay
+        if (showFilterPanel) {
+            FilterSelectionPanel(
+                availableFilters = availableFilters,
+                currentFilter = currentFilter,
+                onFilterSelected = { filter ->
+                    currentFilter = filter
+                },
+                onDismiss = { showFilterPanel = false },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .navigationBarsPadding()
+            )
+        }
     }
     
     // Save success dialog
@@ -367,6 +438,72 @@ private fun SaveSuccessDialog(
         titleContentColor = MaterialTheme.colorScheme.onSurface,
         textContentColor = MaterialTheme.colorScheme.onSurfaceVariant
     )
+}
+
+@Composable
+private fun FilterSelectionPanel(
+    availableFilters: List<FilterType>,
+    currentFilter: FilterType,
+    onFilterSelected: (FilterType) -> Unit,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        shape = RoundedCornerShape(16.dp),
+        color = Color.Black.copy(alpha = 0.9f),
+        tonalElevation = 8.dp
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            // Header
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Filters",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
+                
+                IconButton(
+                    onClick = onDismiss,
+                    modifier = Modifier.size(32.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close filters",
+                        tint = Color.White,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
+            
+            Spacer(modifier = Modifier.height(12.dp))
+            
+            // Filter list
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(horizontal = 4.dp)
+            ) {
+                items(availableFilters) { filter ->
+                    FilterPreviewItem(
+                        filterType = filter,
+                        isSelected = filter == currentFilter,
+                        onClick = { 
+                            onFilterSelected(filter)
+                        }
+                    )
+                }
+            }
+        }
+    }
 }
 
 @Composable

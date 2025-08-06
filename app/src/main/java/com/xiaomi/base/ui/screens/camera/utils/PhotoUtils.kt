@@ -16,6 +16,12 @@ import java.io.FileOutputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import com.xiaomi.base.ui.screens.camera.filter.FilterType
+import com.xiaomi.base.ui.screens.camera.filter.FilterManager
+import android.graphics.Canvas
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
 
 /**
  * Utility class for photo operations
@@ -215,6 +221,228 @@ object PhotoUtils {
             sizeInBytes < 1024 -> "${sizeInBytes} B"
             sizeInBytes < 1024 * 1024 -> "${sizeInBytes / 1024} KB"
             else -> "${sizeInBytes / (1024 * 1024)} MB"
+        }
+    }
+    
+    /**
+     * Apply filter to bitmap using CPU-based processing
+     * This is a simplified version for preview purposes
+     */
+    suspend fun applyFilterToBitmap(
+        originalBitmap: Bitmap,
+        filterType: FilterType
+    ): Bitmap? = withContext(Dispatchers.Default) {
+        return@withContext try {
+            if (filterType == FilterType.ORIGINAL) {
+                return@withContext originalBitmap.copy(originalBitmap.config ?: Bitmap.Config.ARGB_8888, false)
+            }
+            
+            val filteredBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true)
+            val canvas = Canvas(filteredBitmap)
+            val paint = Paint()
+            
+            // Apply filter based on type
+            when (filterType) {
+                FilterType.SEPIA -> {
+                    val sepiaMatrix = ColorMatrix().apply {
+                        setSaturation(0f)
+                        val sepiaColorMatrix = ColorMatrix(floatArrayOf(
+                            0.393f, 0.769f, 0.189f, 0f, 0f,
+                            0.349f, 0.686f, 0.168f, 0f, 0f,
+                            0.272f, 0.534f, 0.131f, 0f, 0f,
+                            0f, 0f, 0f, 1f, 0f
+                        ))
+                        postConcat(sepiaColorMatrix)
+                    }
+                    paint.colorFilter = ColorMatrixColorFilter(sepiaMatrix)
+                }
+                
+                FilterType.BLACK_WHITE -> {
+                    val bwMatrix = ColorMatrix().apply {
+                        setSaturation(0f)
+                    }
+                    paint.colorFilter = ColorMatrixColorFilter(bwMatrix)
+                }
+                
+                FilterType.VINTAGE -> {
+                    val vintageMatrix = ColorMatrix().apply {
+                        setSaturation(0.8f)
+                        val contrastMatrix = ColorMatrix(floatArrayOf(
+                            1.1f, 0f, 0f, 0f, 10f,
+                            0f, 1.1f, 0f, 0f, 10f,
+                            0f, 0f, 0.9f, 0f, 10f,
+                            0f, 0f, 0f, 1f, 0f
+                        ))
+                        postConcat(contrastMatrix)
+                    }
+                    paint.colorFilter = ColorMatrixColorFilter(vintageMatrix)
+                }
+                
+                FilterType.COOL -> {
+                    val coolMatrix = ColorMatrix(floatArrayOf(
+                        0.8f, 0f, 0f, 0f, 0f,
+                        0f, 1f, 0f, 0f, 0f,
+                        0f, 0f, 1.3f, 0f, 0f,
+                        0f, 0f, 0f, 1f, 0f
+                    ))
+                    paint.colorFilter = ColorMatrixColorFilter(coolMatrix)
+                }
+                
+                FilterType.WARM -> {
+                    val warmMatrix = ColorMatrix(floatArrayOf(
+                        1.3f, 0f, 0f, 0f, 0f,
+                        0f, 1.1f, 0f, 0f, 0f,
+                        0f, 0f, 0.8f, 0f, 0f,
+                        0f, 0f, 0f, 1f, 0f
+                    ))
+                    paint.colorFilter = ColorMatrixColorFilter(warmMatrix)
+                }
+                
+                FilterType.PINK_DREAM -> {
+                    val pinkMatrix = ColorMatrix(floatArrayOf(
+                        1.2f, 0f, 0f, 0f, 20f,
+                        0f, 0.9f, 0f, 0f, 10f,
+                        0f, 0f, 1.1f, 0f, 20f,
+                        0f, 0f, 0f, 1f, 0f
+                    ))
+                    paint.colorFilter = ColorMatrixColorFilter(pinkMatrix)
+                }
+                
+                FilterType.RETRO_80S -> {
+                    val retroMatrix = ColorMatrix().apply {
+                        setSaturation(1.8f)
+                        val neonMatrix = ColorMatrix(floatArrayOf(
+                            1.4f, 0f, 0f, 0f, 0f,
+                            0f, 0.6f, 0f, 0f, 0f,
+                            0f, 0f, 1.2f, 0f, 0f,
+                            0f, 0f, 0f, 1f, 0f
+                        ))
+                        postConcat(neonMatrix)
+                    }
+                    paint.colorFilter = ColorMatrixColorFilter(retroMatrix)
+                }
+                
+                FilterType.OLD_FILM -> {
+                    val filmMatrix = ColorMatrix().apply {
+                        setSaturation(0.85f)
+                        val sepiaMatrix = ColorMatrix(floatArrayOf(
+                            1.1f, 0f, 0f, 0f, 15f,
+                            0f, 0.95f, 0f, 0f, 10f,
+                            0f, 0f, 0.8f, 0f, 5f,
+                            0f, 0f, 0f, 1f, 0f
+                        ))
+                        postConcat(sepiaMatrix)
+                    }
+                    paint.colorFilter = ColorMatrixColorFilter(filmMatrix)
+                }
+                
+                FilterType.SPRING -> {
+                    val springMatrix = ColorMatrix(floatArrayOf(
+                        0.9f, 0f, 0f, 0f, 10f,
+                        0f, 1.2f, 0f, 0f, 15f,
+                        0f, 0f, 0.95f, 0f, 5f,
+                        0f, 0f, 0f, 1f, 0f
+                    ))
+                    paint.colorFilter = ColorMatrixColorFilter(springMatrix)
+                }
+                
+                FilterType.SUMMER -> {
+                    val summerMatrix = ColorMatrix(floatArrayOf(
+                        1.15f, 0f, 0f, 0f, 20f,
+                        0f, 1.08f, 0f, 0f, 15f,
+                        0f, 0f, 0.9f, 0f, 0f,
+                        0f, 0f, 0f, 1f, 0f
+                    ))
+                    paint.colorFilter = ColorMatrixColorFilter(summerMatrix)
+                }
+                
+                FilterType.AUTUMN -> {
+                    val autumnMatrix = ColorMatrix(floatArrayOf(
+                        1.3f, 0f, 0f, 0f, 15f,
+                        0f, 0.9f, 0f, 0f, 10f,
+                        0f, 0f, 0.6f, 0f, 0f,
+                        0f, 0f, 0f, 1f, 0f
+                    ))
+                    paint.colorFilter = ColorMatrixColorFilter(autumnMatrix)
+                }
+                
+                FilterType.WINTER -> {
+                    val winterMatrix = ColorMatrix().apply {
+                        setSaturation(0.7f)
+                        val coolMatrix = ColorMatrix(floatArrayOf(
+                            0.8f, 0f, 0f, 0f, 5f,
+                            0f, 0.9f, 0f, 0f, 10f,
+                            0f, 0f, 1.2f, 0f, 20f,
+                            0f, 0f, 0f, 1f, 0f
+                        ))
+                        postConcat(coolMatrix)
+                    }
+                    paint.colorFilter = ColorMatrixColorFilter(winterMatrix)
+                }
+                
+                FilterType.NEON_NIGHTS -> {
+                    val neonMatrix = ColorMatrix().apply {
+                        setSaturation(2.0f)
+                        val glowMatrix = ColorMatrix(floatArrayOf(
+                            1.5f, 0f, 0f, 0f, 0f,
+                            0f, 0.5f, 0f, 0f, 0f,
+                            0f, 0f, 1.5f, 0f, 0f,
+                            0f, 0f, 0f, 1f, 0f
+                        ))
+                        postConcat(glowMatrix)
+                    }
+                    paint.colorFilter = ColorMatrixColorFilter(neonMatrix)
+                }
+                
+                FilterType.GOLDEN_HOUR -> {
+                    val goldenMatrix = ColorMatrix(floatArrayOf(
+                        1.2f, 0f, 0f, 0f, 25f,
+                        0f, 1.1f, 0f, 0f, 15f,
+                        0f, 0f, 0.8f, 0f, 0f,
+                        0f, 0f, 0f, 1f, 0f
+                    ))
+                    paint.colorFilter = ColorMatrixColorFilter(goldenMatrix)
+                }
+                
+                FilterType.CYBERPUNK -> {
+                    val cyberMatrix = ColorMatrix().apply {
+                        setSaturation(1.5f)
+                        val futuristicMatrix = ColorMatrix(floatArrayOf(
+                            0.7f, 0f, 0f, 0f, 0f,
+                            0f, 1.2f, 0f, 0f, 0f,
+                            0f, 0f, 1.4f, 0f, 0f,
+                            0f, 0f, 0f, 1f, 0f
+                        ))
+                        postConcat(futuristicMatrix)
+                    }
+                    paint.colorFilter = ColorMatrixColorFilter(cyberMatrix)
+                }
+                
+                FilterType.CHERRY_BLOSSOM -> {
+                    val cherryMatrix = ColorMatrix(floatArrayOf(
+                        1.1f, 0f, 0f, 0f, 15f,
+                        0f, 0.95f, 0f, 0f, 5f,
+                        0f, 0f, 1.05f, 0f, 10f,
+                        0f, 0f, 0f, 1f, 0f
+                    ))
+                    paint.colorFilter = ColorMatrixColorFilter(cherryMatrix)
+                }
+                
+                else -> {
+                    // Default: no filter
+                    paint.colorFilter = null
+                }
+            }
+            
+            // Draw the original bitmap with the filter applied
+            canvas.drawBitmap(originalBitmap, 0f, 0f, paint)
+            
+            Log.d(TAG, "Filter applied to bitmap: $filterType")
+            filteredBitmap
+            
+        } catch (e: Exception) {
+            Log.e(TAG, "Error applying filter to bitmap", e)
+            originalBitmap.copy(originalBitmap.config ?: Bitmap.Config.ARGB_8888, false)
         }
     }
     
