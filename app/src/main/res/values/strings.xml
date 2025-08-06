@@ -121,4 +121,12 @@
     <string name="ok">OK</string>
     <string name="captured_photo">Captured Photo</string>
     <string name="retake">Retake</string>
+    
+    <!-- Crop feature strings -->
+    <string name="crop">Crop</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
+    <string name="crop_photo">Crop Photo</string>
+    <string name="crop_lock_ratio">Lock Ratio</string>
+    <string name="crop_unlock_ratio">Free Adjust</string>
 </resources>

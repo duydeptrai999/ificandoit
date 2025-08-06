@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.xiaomi.base.R
+import com.xiaomi.base.ui.screens.camera.components.PhotoCropView
 import kotlinx.coroutines.launch
 
 /**
@@ -46,6 +47,26 @@ fun PhotoPreviewScreen(
     var isSaving by remember { mutableStateOf(false) }
     var showSaveDialog by remember { mutableStateOf(false) }
     var selectedEditOption by remember { mutableStateOf("") }
+    var currentBitmap by remember { mutableStateOf(photoBitmap) }
+    var showCropView by remember { mutableStateOf(false) }
+    
+    // Show crop view when crop option is selected
+    if (showCropView) {
+        PhotoCropView(
+            bitmap = currentBitmap,
+            onCropConfirmed = { croppedBitmap ->
+                currentBitmap = croppedBitmap
+                showCropView = false
+                selectedEditOption = ""
+            },
+            onCropCancelled = {
+                showCropView = false
+                selectedEditOption = ""
+            },
+            modifier = modifier.fillMaxSize()
+        )
+        return
+    }
     
     // Sử dụng Column để layout theo chiều dọc
     Column(
@@ -83,7 +104,7 @@ fun PhotoPreviewScreen(
         ) {
             // Main photo
             Image(
-                bitmap = photoBitmap.asImageBitmap(),
+                bitmap = currentBitmap.asImageBitmap(),
                 contentDescription = "Edit photo",
                 modifier = Modifier
                     .fillMaxSize()
@@ -110,7 +131,12 @@ fun PhotoPreviewScreen(
         // Bottom edit options
         PhotoEditBottomBar(
             selectedOption = selectedEditOption,
-            onOptionSelected = { option -> selectedEditOption = option },
+            onOptionSelected = { option -> 
+                selectedEditOption = option
+                if (option == "Crop") {
+                    showCropView = true
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .navigationBarsPadding()
