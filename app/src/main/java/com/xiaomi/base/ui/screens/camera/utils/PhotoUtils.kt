@@ -38,12 +38,14 @@ object PhotoUtils {
             // Create bitmap from pixel data
             val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
             
-            // Convert RGBA to ARGB and flip vertically (OpenGL coordinates)
+            // Convert RGBA to ARGB and flip vertically
+            // OpenGL has origin at bottom-left, Android bitmap has origin at top-left
             val pixels = IntArray(width * height)
             for (i in 0 until height) {
                 for (j in 0 until width) {
                     val pixelIndex = (i * width + j) * 4
-                    val bitmapIndex = ((height - 1 - i) * width + j) // Flip vertically
+                    // Flip vertically: map row i to row (height - 1 - i)
+                    val bitmapIndex = ((height - 1 - i) * width + j)
                     
                     if (pixelIndex + 3 < pixelData.size) {
                         val r = pixelData[pixelIndex].toInt() and 0xFF
@@ -58,7 +60,7 @@ object PhotoUtils {
             
             bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
             
-            // Return bitmap without automatic rotation
+            Log.d(TAG, "Bitmap created successfully: ${width}x${height} (flipped vertically)")
             bitmap
             
         } catch (e: Exception) {

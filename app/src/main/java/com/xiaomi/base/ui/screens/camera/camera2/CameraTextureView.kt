@@ -335,6 +335,16 @@ class CameraTextureView @JvmOverloads constructor(
         
         Log.d(TAG, "Capturing photo with filter: $currentFilter")
         
+        // Get actual preview size from camera
+        val previewSize = camera2Manager.getPreviewSize()
+        if (previewSize == null) {
+            Log.e(TAG, "Preview size not available for capture")
+            callback(null)
+            return
+        }
+        
+        Log.d(TAG, "Using preview size for capture: ${previewSize.width}x${previewSize.height}")
+        
         // Store callback for when capture completes
         val captureCallback: (Bitmap?) -> Unit = { bitmap ->
             callback(bitmap)
@@ -344,8 +354,8 @@ class CameraTextureView @JvmOverloads constructor(
         // Store callback temporarily
         pendingCaptureCallback = captureCallback
         
-        // Request frame capture from GL renderer
-        glRenderer.captureFrame(1080, 1920)
+        // Request frame capture from GL renderer with actual preview size
+        glRenderer.captureFrame(previewSize.width, previewSize.height)
     }
     
     /**
@@ -363,8 +373,21 @@ class CameraTextureView @JvmOverloads constructor(
                     return@launch
                 }
                 
-                // Convert pixel data to bitmap
-                val bitmap = PhotoUtils.pixelDataToBitmap(pixelData, 1080, 1920)
+                // Get actual capture dimensions from GL renderer
+                val (actualWidth, actualHeight) = glRenderer.getActualCaptureSize()
+                if (actualWidth <= 0 || actualHeight <= 0) {
+                    Log.e(TAG, "Invalid capture dimensions: ${actualWidth}x${actualHeight}")
+                    withContext(Dispatchers.Main) {
+                        pendingCaptureCallback?.invoke(null)
+                        pendingCaptureCallback = null
+                    }
+                    return@launch
+                }
+                
+                Log.d(TAG, "Converting pixel data to bitmap with actual capture size: ${actualWidth}x${actualHeight}")
+                
+                // Convert pixel data to bitmap using actual capture dimensions
+                val bitmap = PhotoUtils.pixelDataToBitmap(pixelData, actualWidth, actualHeight)
                 
                 withContext(Dispatchers.Main) {
                     if (bitmap != null) {

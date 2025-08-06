@@ -126,6 +126,8 @@ class GLRenderer(private val context: Context) : GLSurfaceView.Renderer {
     private var shouldCaptureFrame = false
     private var captureWidth = 0
     private var captureHeight = 0
+    private var actualCaptureWidth = 0
+    private var actualCaptureHeight = 0
     
     init {
         // Initialize vertex buffer
@@ -490,12 +492,29 @@ class GLRenderer(private val context: Context) : GLSurfaceView.Renderer {
     }
     
     /**
+     * Get actual capture dimensions (set after capture completes)
+     */
+    fun getActualCaptureSize(): Pair<Int, Int> {
+        return Pair(actualCaptureWidth, actualCaptureHeight)
+    }
+    
+    /**
      * Capture current frame as bitmap data
      */
     private fun captureCurrentFrame() {
         try {
-            val width = if (captureWidth > 0) captureWidth else 1080
-            val height = if (captureHeight > 0) captureHeight else 1920
+            // Get current viewport dimensions
+            val viewport = IntArray(4)
+            GLES30.glGetIntegerv(GLES30.GL_VIEWPORT, viewport, 0)
+            val viewportWidth = viewport[2]
+            val viewportHeight = viewport[3]
+            
+            Log.d(TAG, "Current viewport: ${viewportWidth}x${viewportHeight}")
+            Log.d(TAG, "Requested capture size: ${captureWidth}x${captureHeight}")
+            
+            // Use viewport dimensions for capture to ensure we read the actual rendered content
+            val width = viewportWidth
+            val height = viewportHeight
             
             // Create buffer for pixel data
             val pixelBuffer = ByteBuffer.allocateDirect(width * height * 4)
@@ -514,6 +533,10 @@ class GLRenderer(private val context: Context) : GLSurfaceView.Renderer {
             val pixelData = ByteArray(pixelBuffer.remaining())
             pixelBuffer.rewind()
             pixelBuffer.get(pixelData)
+            
+            // Store actual capture dimensions for bitmap conversion
+            actualCaptureWidth = width
+            actualCaptureHeight = height
             
             // Notify capture complete
             onFrameCaptured?.invoke(pixelData)
