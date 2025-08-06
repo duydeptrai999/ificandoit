@@ -4,6 +4,38 @@ All notable changes to this project will be documented in this file.
 
 ## [Latest] - 2024-12-19
 
+### ✅ Fixed Camera Session Crash - Safe Back Navigation with Confirmation Dialog
+
+**Yêu cầu**: Giải quyết lỗi crash app khi swipe back từ màn hình PhotoPreviewScreen với thông báo "Session has been closed; further changes are illegal". Thêm dialog xác nhận khi người dùng muốn hủy bỏ thay đổi.
+
+**Vấn đề gốc**:
+- App crash với lỗi camera session khi navigate back từ PhotoPreviewScreen
+- Người dùng có thể vô tình mất công sức chỉnh sửa ảnh
+- Không có cảnh báo khi hủy bỏ thay đổi
+
+**Cách triển khai**:
+1. **BackHandler Integration**: Thêm `BackHandler` trong PhotoPreviewScreen để intercept back gesture
+2. **Confirmation Dialog**: Tạo `DiscardChangesDialog` để xác nhận hành động hủy bỏ
+3. **Safe Camera Cleanup**: Thêm `DisposableEffect` trong CameraScreen để cleanup camera resources
+4. **Error Handling**: Xử lý lỗi trong quá trình cleanup mà không crash app
+
+**Kết quả đạt được**:
+- ✅ Không còn crash app khi swipe back từ PhotoPreviewScreen
+- ✅ Dialog xác nhận xuất hiện khi người dùng muốn hủy bỏ thay đổi
+- ✅ Camera session được đóng an toàn khi navigate away
+- ✅ Người dùng có thể chọn tiếp tục chỉnh sửa hoặc hủy bỏ
+- ✅ Improved UX với safe navigation pattern
+
+**Files đã chỉnh sửa**:
+- `PhotoPreviewScreen.kt`: Thêm BackHandler và DiscardChangesDialog
+- `CameraScreen.kt`: Thêm DisposableEffect cho camera cleanup
+- `strings.xml`: Thêm string resources cho dialog
+- `Help.md`: Cập nhật documentation
+
+---
+
+## [Previous] - 2024-12-19
+
 ### ✅ Enhanced Photo Crop Feature - Smart Aspect Ratio Application
 
 **Yêu cầu**: Cải tiến tính năng Crop để khi chọn tỷ lệ khung hình, khung cắt sẽ áp dụng tỷ lệ ngay lập tức, nhưng sau đó người dùng vẫn có thể điều chỉnh kích thước một cách độc lập, không bị ràng buộc bởi tỷ lệ đã chọn.

@@ -96,6 +96,22 @@ fun CameraScreen(
         }
     }
     
+    // Cleanup camera resources when component is disposed
+    DisposableEffect(lifecycleOwner) {
+        onDispose {
+            // Ensure camera is properly closed when navigating away
+            cameraTextureView?.let { view ->
+                try {
+                    // Stop preview and close camera safely
+                    view.onDestroy(lifecycleOwner)
+                } catch (e: Exception) {
+                    // Log error but don't crash
+                    android.util.Log.e("CameraScreen", "Error during camera cleanup", e)
+                }
+            }
+        }
+    }
+    
     Box(
         modifier = modifier
             .fillMaxSize()

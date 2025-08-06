@@ -48,6 +48,42 @@ Tính năng crop ảnh cho phép người dùng cắt và điều chỉnh kích 
 - `PhotoCropView.kt`: Component xử lý logic cắt ảnh
 - `strings.xml`: Chứa các chuỗi text cho UI
 
+## Tính năng Xử lý Back Gesture và Dialog Xác nhận
+
+### Mô tả
+Tính năng xử lý back gesture an toàn cho màn hình PhotoPreviewScreen, ngăn chặn crash app khi người dùng swipe back hoặc nhấn nút back. Thay vào đó, hiển thị dialog xác nhận để người dùng quyết định có muốn hủy bỏ các thay đổi hay không.
+
+### Vấn đề đã giải quyết
+- **Camera Session Crash**: Lỗi "Session has been closed; further changes are illegal" khi navigate back
+- **Unsafe Navigation**: Người dùng có thể vô tình mất công sức chỉnh sửa ảnh
+- **Poor UX**: Không có cảnh báo khi hủy bỏ thay đổi
+
+### Cách hoạt động
+1. **Back Gesture Interception**: Sử dụng `BackHandler` để intercept gesture back
+2. **Dialog Confirmation**: Hiển thị dialog xác nhận thay vì navigate trực tiếp
+3. **Safe Camera Cleanup**: Đảm bảo camera session được đóng đúng cách
+4. **User Choice**: Cho phép người dùng chọn tiếp tục chỉnh sửa hoặc hủy bỏ
+
+### Thành phần chính
+- **BackHandler**: Component xử lý gesture back trong PhotoPreviewScreen
+- **DiscardChangesDialog**: Dialog xác nhận hủy bỏ thay đổi
+- **DisposableEffect**: Cleanup camera resources khi component bị dispose
+- **Camera2Manager cleanup**: Đóng camera session an toàn
+
+### Dialog Options
+- **"Hủy bỏ"**: Xác nhận hủy bỏ tất cả thay đổi và quay về CameraScreen
+- **"Tiếp tục chỉnh sửa"**: Đóng dialog và tiếp tục chỉnh sửa ảnh
+
+### Cải tiến an toàn
+- **Resource Management**: Tự động cleanup camera resources
+- **Error Handling**: Xử lý lỗi trong quá trình cleanup mà không crash app
+- **Lifecycle Awareness**: Tích hợp với Android lifecycle để cleanup đúng thời điểm
+
+### Files được cập nhật
+- `PhotoPreviewScreen.kt`: Thêm BackHandler và DiscardChangesDialog
+- `CameraScreen.kt`: Thêm DisposableEffect cho camera cleanup
+- `strings.xml`: Thêm các string resources cho dialog
+
 ### Cách tích hợp
 Tính năng được tích hợp vào PhotoPreviewScreen thông qua:
 - Biến trạng thái `showCropView` để điều khiển hiển thị

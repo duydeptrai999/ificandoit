@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.activity.compose.BackHandler
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,7 +47,13 @@ fun PhotoPreviewScreen(
     
     var isSaving by remember { mutableStateOf(false) }
     var showSaveDialog by remember { mutableStateOf(false) }
+    var showDiscardDialog by remember { mutableStateOf(false) }
     var selectedEditOption by remember { mutableStateOf("") }
+    
+    // Handle back gesture to show discard dialog
+    BackHandler {
+        showDiscardDialog = true
+    }
     var currentBitmap by remember { mutableStateOf(photoBitmap) }
     var showCropView by remember { mutableStateOf(false) }
     
@@ -76,7 +83,7 @@ fun PhotoPreviewScreen(
     ) {
         // Top controls - Header với tiêu đề và action buttons
         PhotoEditTopBar(
-            onBack = onDiscardPhoto,
+            onBack = { showDiscardDialog = true },
             onUndo = { /* TODO: Implement undo */ },
             onRedo = { /* TODO: Implement redo */ },
             onSave = {
@@ -149,6 +156,19 @@ fun PhotoPreviewScreen(
             onDismiss = { 
                 showSaveDialog = false
                 onDiscardPhoto()
+            }
+        )
+    }
+    
+    // Discard confirmation dialog
+    if (showDiscardDialog) {
+        DiscardChangesDialog(
+            onConfirm = {
+                showDiscardDialog = false
+                onDiscardPhoto()
+            },
+            onDismiss = {
+                showDiscardDialog = false
             }
         )
     }
@@ -320,24 +340,16 @@ private fun SaveSuccessDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        icon = {
-            Icon(
-                imageVector = Icons.Default.CheckCircle,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(48.dp)
-            )
-        },
         title = {
             Text(
                 text = stringResource(R.string.photo_saved),
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
         },
         text = {
             Text(
-                text = stringResource(R.string.photo_saved_message),
+                text = stringResource(R.string.photo_saved_gallery),
                 style = MaterialTheme.typography.bodyMedium
             )
         },
@@ -345,10 +357,63 @@ private fun SaveSuccessDialog(
             TextButton(
                 onClick = onDismiss
             ) {
-                Text(stringResource(R.string.ok))
+                Text(
+                    text = stringResource(R.string.ok),
+                    fontWeight = FontWeight.Medium
+                )
             }
         },
         containerColor = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(16.dp)
+        titleContentColor = MaterialTheme.colorScheme.onSurface,
+        textContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+    )
+}
+
+@Composable
+private fun DiscardChangesDialog(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(R.string.discard_changes),
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
+            )
+        },
+        text = {
+            Text(
+                text = stringResource(R.string.discard_changes_message),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        },
+        dismissButton = {
+            TextButton(
+                onClick = onDismiss
+            ) {
+                Text(
+                    text = stringResource(R.string.cancel),
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = onConfirm,
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor = MaterialTheme.colorScheme.error
+                )
+            ) {
+                Text(
+                    text = stringResource(R.string.discard),
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        },
+        containerColor = MaterialTheme.colorScheme.surface,
+        titleContentColor = MaterialTheme.colorScheme.onSurface,
+        textContentColor = MaterialTheme.colorScheme.onSurfaceVariant
     )
 }

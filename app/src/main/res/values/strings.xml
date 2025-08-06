@@ -129,4 +129,10 @@
     <string name="crop_photo">Crop Photo</string>
     <string name="crop_lock_ratio">Lock Ratio</string>
     <string name="crop_unlock_ratio">Free Adjust</string>
+    
+    <!-- Discard changes dialog -->
+    <string name="discard_changes">Discard Changes?</string>
+    <string name="discard_changes_message">Are you sure you want to discard all changes and go back to camera?</string>
+    <string name="discard">Discard</string>
+    <string name="photo_saved_gallery">Your photo has been saved to the gallery successfully.</string>
 </resources>
