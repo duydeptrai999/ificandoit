@@ -652,6 +652,11 @@ class GLRenderer(private val context: Context) : GLSurfaceView.Renderer {
     }
 
     /**
+     * Get current surface texture for camera switching
+     */
+    fun getCurrentSurfaceTexture(): SurfaceTexture? = surfaceTexture
+    
+    /**
      * Release OpenGL resources
      */
     fun release() {

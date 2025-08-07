@@ -75,6 +75,7 @@
     <string name="gallery">Gallery</string>
     <string name="capture_photo">Capture Photo</string>
     <string name="switch_camera">Switch Camera</string>
+    <string name="camera_switch_unavailable">Camera switching not available</string>
     <string name="camera_error">Camera Error</string>
     <string name="dismiss">Dismiss</string>
     <string name="camera_permission_required">Camera Permission Required</string>

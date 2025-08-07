@@ -33,6 +33,11 @@ class Camera2Manager(private val context: Context) {
     
     private var previewSize: Size? = null
     private var cameraId: String? = null
+    private var currentLensFacing: Int = CameraCharacteristics.LENS_FACING_BACK
+    
+    // Available cameras
+    private var backCameraId: String? = null
+    private var frontCameraId: String? = null
     
     // Camera state callbacks
     private var onCameraOpened: ((CameraDevice) -> Unit)? = null
@@ -51,15 +56,40 @@ class Camera2Manager(private val context: Context) {
      */
     private fun setupCamera() {
         try {
-            // Get back camera ID
-            cameraId = getCameraId(CameraCharacteristics.LENS_FACING_BACK)
+            // Get available camera IDs
+            backCameraId = getCameraId(CameraCharacteristics.LENS_FACING_BACK)
+            frontCameraId = getCameraId(CameraCharacteristics.LENS_FACING_FRONT)
+            
+            // Start with back camera by default
+            cameraId = backCameraId
+            currentLensFacing = CameraCharacteristics.LENS_FACING_BACK
+            
             if (cameraId == null) {
-                Log.e(TAG, "No back camera found")
+                Log.e(TAG, "No back camera found, trying front camera")
+                cameraId = frontCameraId
+                currentLensFacing = CameraCharacteristics.LENS_FACING_FRONT
+            }
+            
+            if (cameraId == null) {
+                Log.e(TAG, "No cameras found")
                 return
             }
 
-            // Get camera characteristics
-            val characteristics = cameraManager.getCameraCharacteristics(cameraId!!)
+            // Get camera characteristics for current camera
+            setupCameraCharacteristics(cameraId!!)
+            
+            Log.d(TAG, "Camera setup completed. Back: $backCameraId, Front: $frontCameraId, Current: $cameraId")
+        } catch (e: CameraAccessException) {
+            Log.e(TAG, "Camera access exception during setup", e)
+        }
+    }
+    
+    /**
+     * Setup camera characteristics for given camera ID
+     */
+    private fun setupCameraCharacteristics(cameraId: String) {
+        try {
+            val characteristics = cameraManager.getCameraCharacteristics(cameraId)
             val map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
             
             // Choose optimal preview size (1080p for balance of quality and performance)
@@ -68,9 +98,9 @@ class Camera2Manager(private val context: Context) {
                 1920, 1080
             )
             
-            Log.d(TAG, "Camera setup completed. Preview size: ${previewSize?.width}x${previewSize?.height}")
+            Log.d(TAG, "Camera characteristics setup for $cameraId. Preview size: ${previewSize?.width}x${previewSize?.height}")
         } catch (e: CameraAccessException) {
-            Log.e(TAG, "Camera access exception during setup", e)
+            Log.e(TAG, "Failed to setup camera characteristics for $cameraId", e)
         }
     }
 
@@ -299,6 +329,75 @@ class Camera2Manager(private val context: Context) {
      */
     fun getPreviewSize(): Size? = previewSize
 
+    /**
+     * Switch between front and back camera
+     */
+    suspend fun switchCamera(): CameraDevice? {
+        Log.d(TAG, "Switching camera from ${if (currentLensFacing == CameraCharacteristics.LENS_FACING_BACK) "back" else "front"}")
+        
+        // Determine target camera
+        val targetCameraId = if (currentLensFacing == CameraCharacteristics.LENS_FACING_BACK) {
+            frontCameraId
+        } else {
+            backCameraId
+        }
+        
+        if (targetCameraId == null) {
+            Log.w(TAG, "Target camera not available")
+            return null
+        }
+        
+        // Stop current preview and close camera
+        stopPreview()
+        captureSession?.close()
+        captureSession = null
+        cameraDevice?.close()
+        cameraDevice = null
+        
+        // Update camera settings
+        cameraId = targetCameraId
+        currentLensFacing = if (currentLensFacing == CameraCharacteristics.LENS_FACING_BACK) {
+            CameraCharacteristics.LENS_FACING_FRONT
+        } else {
+            CameraCharacteristics.LENS_FACING_BACK
+        }
+        
+        // Setup characteristics for new camera
+        setupCameraCharacteristics(targetCameraId)
+        
+        // Open new camera
+        return try {
+            val newCamera = openCamera()
+            Log.d(TAG, "Camera switched successfully to ${if (currentLensFacing == CameraCharacteristics.LENS_FACING_BACK) "back" else "front"}")
+            newCamera
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to switch camera", e)
+            null
+        }
+    }
+    
+    /**
+     * Check if camera switching is available
+     */
+    fun canSwitchCamera(): Boolean {
+        return backCameraId != null && frontCameraId != null
+    }
+    
+    /**
+     * Get current camera facing
+     */
+    fun getCurrentCameraFacing(): Int = currentLensFacing
+    
+    /**
+     * Check if current camera is front facing
+     */
+    fun isFrontCamera(): Boolean = currentLensFacing == CameraCharacteristics.LENS_FACING_FRONT
+    
+    /**
+     * Check if current camera is back facing
+     */
+    fun isBackCamera(): Boolean = currentLensFacing == CameraCharacteristics.LENS_FACING_BACK
+    
     /**
      * Set camera state callbacks
      */

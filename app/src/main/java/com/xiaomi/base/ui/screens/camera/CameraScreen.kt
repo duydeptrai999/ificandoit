@@ -58,6 +58,7 @@ fun CameraScreen(
     // Photo capture state
     var capturedPhoto by remember { mutableStateOf<Bitmap?>(null) }
     var isCapturing by remember { mutableStateOf(false) }
+    var isSwitchingCamera by remember { mutableStateOf(false) }
     
     // Coroutine scope
     val scope = rememberCoroutineScope()
@@ -156,7 +157,10 @@ fun CameraScreen(
                         currentFilter = currentFilter,
                         availableFilters = availableFilters,
                         showFilterPanel = showFilterPanel,
-                        onCameraReady = { isCameraReady = true },
+                        onCameraReady = { 
+                            isCameraReady = true 
+                            isSwitchingCamera = false
+                        },
                         onCameraError = { error -> cameraError = error },
                         onFilterChanged = { filter -> 
                             currentFilter = filter
@@ -183,6 +187,7 @@ fun CameraScreen(
                     CameraBottomControls(
                         isCameraReady = isCameraReady,
                         isCapturing = isCapturing,
+                        isSwitchingCamera = isSwitchingCamera,
                         onCapturePhoto = {
                             if (!isCapturing && isCameraReady) {
                                 isCapturing = true
@@ -197,7 +202,17 @@ fun CameraScreen(
                             }
                         },
                         onSwitchCamera = {
-                            cameraTextureView?.switchCamera()
+                            cameraTextureView?.let { view ->
+                                if (view.canSwitchCamera() && !isSwitchingCamera) {
+                                    isSwitchingCamera = true
+                                    isCameraReady = false // Show loading during switch
+                                    view.switchCamera()
+                                } else if (isSwitchingCamera) {
+                                    // Already switching, ignore
+                                } else {
+                                    cameraError = context.getString(R.string.camera_switch_unavailable)
+                                }
+                            }
                         },
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
@@ -362,6 +377,7 @@ private fun CameraTopControls(
 private fun CameraBottomControls(
     isCameraReady: Boolean,
     isCapturing: Boolean = false,
+    isSwitchingCamera: Boolean = false,
     onCapturePhoto: () -> Unit,
     onSwitchCamera: () -> Unit,
     modifier: Modifier = Modifier
@@ -418,21 +434,34 @@ private fun CameraBottomControls(
         }
         
         // Switch camera button
-        IconButton(
-            onClick = onSwitchCamera,
-            enabled = isCameraReady,
+        Box(
             modifier = Modifier
                 .size(48.dp)
                 .background(
                     Color.Black.copy(alpha = 0.5f),
                     CircleShape
-                )
+                ),
+            contentAlignment = Alignment.Center
         ) {
-            Icon(
-                imageVector = Icons.Default.FlipCameraAndroid,
-                contentDescription = stringResource(R.string.switch_camera),
-                tint = if (isCameraReady) Color.White else Color.Gray
-            )
+            if (isSwitchingCamera) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = Color.White,
+                    strokeWidth = 2.dp
+                )
+            } else {
+                IconButton(
+                    onClick = onSwitchCamera,
+                    enabled = isCameraReady && !isSwitchingCamera,
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.FlipCameraAndroid,
+                        contentDescription = stringResource(R.string.switch_camera),
+                        tint = if (isCameraReady) Color.White else Color.Gray
+                    )
+                }
+            }
         }
     }
 }

@@ -446,12 +446,101 @@ class CameraTextureView @JvmOverloads constructor(
     }
     
     /**
-     * Switch camera (future implementation)
+     * Switch between front and back camera
      */
     fun switchCamera() {
-        // TODO: Implement camera switching
-        Log.d(TAG, "Camera switching not implemented yet")
+        if (!isInitialized) {
+            Log.w(TAG, "Camera not ready for switching")
+            return
+        }
+        
+        if (!camera2Manager.canSwitchCamera()) {
+            Log.w(TAG, "Camera switching not available")
+            onCameraError?.invoke("Camera switching not available")
+            return
+        }
+        
+        Log.d(TAG, "Switching camera from ${if (camera2Manager.isFrontCamera()) "front" else "back"} to ${if (camera2Manager.isFrontCamera()) "back" else "front"}")
+        
+        coroutineScope.launch {
+            try {
+                // Temporarily mark as not ready during switch
+                isInitialized = false
+                
+                // Switch camera in manager
+                val newCamera = camera2Manager.switchCamera()
+                if (newCamera == null) {
+                    Log.e(TAG, "Camera switching failed - no camera returned")
+                    withContext(Dispatchers.Main) {
+                        onCameraError?.invoke("Failed to switch camera")
+                    }
+                    return@launch
+                }
+                
+                // Get new surface texture from GL renderer
+                val surfaceTexture = glRenderer.getCurrentSurfaceTexture()
+                if (surfaceTexture == null) {
+                    Log.e(TAG, "Surface texture not available for camera switch")
+                    withContext(Dispatchers.Main) {
+                        onCameraError?.invoke("Surface texture not available")
+                    }
+                    return@launch
+                }
+                
+                // Update surface texture size for new camera
+                val newPreviewSize = camera2Manager.getPreviewSize()
+                if (newPreviewSize != null) {
+                    surfaceTexture.setDefaultBufferSize(newPreviewSize.width, newPreviewSize.height)
+                    Log.d(TAG, "Updated surface texture size for new camera: ${newPreviewSize.width}x${newPreviewSize.height}")
+                    
+                    // Update aspect ratio for new camera on main thread
+                    withContext(Dispatchers.Main) {
+                        updateAspectRatio(newPreviewSize.width, newPreviewSize.height)
+                    }
+                }
+                
+                // Create new surface and capture session
+                val surface = Surface(surfaceTexture)
+                val captureSession = camera2Manager.createCaptureSession(surface)
+                
+                // Start preview with new camera
+                camera2Manager.startPreview(surface)
+                
+                // Mark as ready
+                isInitialized = true
+                
+                Log.d(TAG, "Camera switched successfully to ${if (camera2Manager.isFrontCamera()) "front" else "back"}")
+                
+                // Notify on main thread
+                withContext(Dispatchers.Main) {
+                    onCameraReady?.invoke()
+                }
+                
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to switch camera", e)
+                withContext(Dispatchers.Main) {
+                    onCameraError?.invoke("Failed to switch camera: ${e.message}")
+                    // Try to restore previous state
+                    isInitialized = true
+                }
+            }
+        }
     }
+    
+    /**
+     * Check if camera switching is available
+     */
+    fun canSwitchCamera(): Boolean = camera2Manager.canSwitchCamera()
+    
+    /**
+     * Check if current camera is front facing
+     */
+    fun isFrontCamera(): Boolean = camera2Manager.isFrontCamera()
+    
+    /**
+     * Check if current camera is back facing
+     */
+    fun isBackCamera(): Boolean = camera2Manager.isBackCamera()
     
     /**
      * Set zoom level (future implementation)
