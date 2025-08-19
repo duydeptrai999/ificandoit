@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import android.util.Log
 import com.xiaomi.base.R
 import com.xiaomi.base.ui.screens.camera.components.PhotoCropView
+import com.xiaomi.base.ui.screens.camera.components.PhotoAdjustView
 import com.xiaomi.base.ui.screens.camera.components.FilterPreviewItem
 import com.xiaomi.base.ui.screens.camera.filter.FilterType
 import com.xiaomi.base.ui.screens.camera.filter.FilterManager
@@ -60,6 +61,9 @@ fun PhotoPreviewScreen(
     var currentFilter by remember { mutableStateOf(initialFilter) }
     var currentBitmap by remember { mutableStateOf(rawPhotoBitmap) }
     var showFilterPanel by remember { mutableStateOf(false) }
+    
+    // Adjustment state
+    var showAdjustView by remember { mutableStateOf(false) }
     
     // Filter manager
     val filterManager = remember { FilterManager() }
@@ -127,6 +131,8 @@ fun PhotoPreviewScreen(
         return
     }
     
+    // Remove the separate adjust view block - we'll integrate it into the main layout
+    
     // Sử dụng Column để layout theo chiều dọc
     Column(
         modifier = modifier
@@ -154,11 +160,11 @@ fun PhotoPreviewScreen(
                 .statusBarsPadding()
         )
         
-        // Photo preview - chiếm toàn bộ không gian còn lại
+        // Photo preview - chiếm 3/4 màn hình khi adjust view hiển thị, toàn bộ khi không
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
+                .fillMaxWidth()
+                .weight(if (showAdjustView) 3f else 1f)
                 .background(Color.Black)
         ) {
             // Main photo
@@ -187,6 +193,30 @@ fun PhotoPreviewScreen(
             }
         }
         
+        // Photo Adjust View - chiếm 1/4 màn hình khi hiển thị
+        if (showAdjustView) {
+            PhotoAdjustView(
+                originalBitmap = rawPhotoBitmap,
+                onAdjustmentApplied = { adjustedBitmap ->
+                    currentBitmap = adjustedBitmap
+                    showAdjustView = false
+                    selectedEditOption = ""
+                },
+                onCancel = {
+                    showAdjustView = false
+                    selectedEditOption = ""
+                },
+                onPreviewUpdate = { previewBitmap ->
+                    // Cập nhật ảnh preview theo thời gian thực khi điều chỉnh
+                    currentBitmap = previewBitmap
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .background(Color.Black)
+            )
+        }
+        
         // Bottom edit options
         PhotoEditBottomBar(
             selectedOption = selectedEditOption,
@@ -195,6 +225,7 @@ fun PhotoPreviewScreen(
                 when (option) {
                     "Crop" -> showCropView = true
                     "Filter" -> showFilterPanel = !showFilterPanel
+                    "Adjust" -> showAdjustView = true
                     else -> {
                         // Handle other edit options
                     }

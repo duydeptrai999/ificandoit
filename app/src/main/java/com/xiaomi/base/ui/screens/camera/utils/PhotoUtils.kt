@@ -22,6 +22,9 @@ import android.graphics.Canvas
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
+import com.xiaomi.base.ui.screens.camera.components.AdjustmentValues
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * Utility class for photo operations
@@ -461,6 +464,147 @@ object PhotoUtils {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error cleaning up temp files", e)
+        }
+    }
+    
+    /**
+     * Apply color adjustments to bitmap
+     */
+    suspend fun applyAdjustments(
+        originalBitmap: Bitmap,
+        adjustments: AdjustmentValues
+    ): Bitmap? = withContext(Dispatchers.Default) {
+        try {
+            val width = originalBitmap.width
+            val height = originalBitmap.height
+            val adjustedBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(adjustedBitmap)
+            val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+            
+            // Create color matrix for adjustments
+            val colorMatrix = ColorMatrix()
+            
+            // Apply brightness
+            if (adjustments.brightness != 0f) {
+                val brightnessMatrix = ColorMatrix()
+                val brightness = adjustments.brightness / 100f * 255f
+                brightnessMatrix.set(floatArrayOf(
+                    1f, 0f, 0f, 0f, brightness,
+                    0f, 1f, 0f, 0f, brightness,
+                    0f, 0f, 1f, 0f, brightness,
+                    0f, 0f, 0f, 1f, 0f
+                ))
+                colorMatrix.postConcat(brightnessMatrix)
+            }
+            
+            // Apply contrast
+            if (adjustments.contrast != 0f) {
+                val contrastMatrix = ColorMatrix()
+                val contrast = (adjustments.contrast + 100f) / 100f
+                val offset = (1f - contrast) * 128f
+                contrastMatrix.set(floatArrayOf(
+                    contrast, 0f, 0f, 0f, offset,
+                    0f, contrast, 0f, 0f, offset,
+                    0f, 0f, contrast, 0f, offset,
+                    0f, 0f, 0f, 1f, 0f
+                ))
+                colorMatrix.postConcat(contrastMatrix)
+            }
+            
+            // Apply saturation
+            if (adjustments.saturation != 0f) {
+                val saturationMatrix = ColorMatrix()
+                val saturation = (adjustments.saturation + 100f) / 100f
+                saturationMatrix.setSaturation(saturation)
+                colorMatrix.postConcat(saturationMatrix)
+            }
+            
+            // Apply warmth (temperature adjustment)
+            if (adjustments.warmth != 0f) {
+                val warmthMatrix = ColorMatrix()
+                val warmth = adjustments.warmth / 100f
+                if (warmth > 0) {
+                    // Warmer - increase red, decrease blue
+                    warmthMatrix.set(floatArrayOf(
+                        1f + warmth * 0.3f, 0f, 0f, 0f, 0f,
+                        0f, 1f, 0f, 0f, 0f,
+                        0f, 0f, 1f - warmth * 0.3f, 0f, 0f,
+                        0f, 0f, 0f, 1f, 0f
+                    ))
+                } else {
+                    // Cooler - decrease red, increase blue
+                    val coolness = -warmth
+                    warmthMatrix.set(floatArrayOf(
+                        1f - coolness * 0.3f, 0f, 0f, 0f, 0f,
+                        0f, 1f, 0f, 0f, 0f,
+                        0f, 0f, 1f + coolness * 0.3f, 0f, 0f,
+                        0f, 0f, 0f, 1f, 0f
+                    ))
+                }
+                colorMatrix.postConcat(warmthMatrix)
+            }
+            
+            // Apply tint (magenta/green adjustment)
+            if (adjustments.tint != 0f) {
+                val tintMatrix = ColorMatrix()
+                val tint = adjustments.tint / 100f
+                if (tint > 0) {
+                    // More magenta
+                    tintMatrix.set(floatArrayOf(
+                        1f + tint * 0.2f, 0f, 0f, 0f, 0f,
+                        0f, 1f - tint * 0.1f, 0f, 0f, 0f,
+                        0f, 0f, 1f + tint * 0.2f, 0f, 0f,
+                        0f, 0f, 0f, 1f, 0f
+                    ))
+                } else {
+                    // More green
+                    val greenness = -tint
+                    tintMatrix.set(floatArrayOf(
+                        1f - greenness * 0.1f, 0f, 0f, 0f, 0f,
+                        0f, 1f + greenness * 0.2f, 0f, 0f, 0f,
+                        0f, 0f, 1f - greenness * 0.1f, 0f, 0f,
+                        0f, 0f, 0f, 1f, 0f
+                    ))
+                }
+                colorMatrix.postConcat(tintMatrix)
+            }
+            
+            // Apply highlights adjustment
+            if (adjustments.highlights != 0f) {
+                val highlightsMatrix = ColorMatrix()
+                val highlights = adjustments.highlights / 100f
+                val factor = 1f - highlights * 0.3f
+                highlightsMatrix.set(floatArrayOf(
+                    factor, 0f, 0f, 0f, highlights * 50f,
+                    0f, factor, 0f, 0f, highlights * 50f,
+                    0f, 0f, factor, 0f, highlights * 50f,
+                    0f, 0f, 0f, 1f, 0f
+                ))
+                colorMatrix.postConcat(highlightsMatrix)
+            }
+            
+            // Apply shadows adjustment
+            if (adjustments.shadows != 0f) {
+                val shadowsMatrix = ColorMatrix()
+                val shadows = adjustments.shadows / 100f
+                val factor = 1f + shadows * 0.3f
+                shadowsMatrix.set(floatArrayOf(
+                    factor, 0f, 0f, 0f, -shadows * 30f,
+                    0f, factor, 0f, 0f, -shadows * 30f,
+                    0f, 0f, factor, 0f, -shadows * 30f,
+                    0f, 0f, 0f, 1f, 0f
+                ))
+                colorMatrix.postConcat(shadowsMatrix)
+            }
+            
+            // Apply the color matrix
+            paint.colorFilter = ColorMatrixColorFilter(colorMatrix)
+            canvas.drawBitmap(originalBitmap, 0f, 0f, paint)
+            
+            adjustedBitmap
+        } catch (e: Exception) {
+            Log.e(TAG, "Error applying adjustments", e)
+            null
         }
     }
 }

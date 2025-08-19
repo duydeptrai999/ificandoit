@@ -4,6 +4,71 @@ All notable changes to this project will be documented in this file.
 
 ## [Latest] - 2024-12-19
 
+### Photo Adjust Panel Height Increase
+**Yêu cầu**: Tăng chiều cao panel điều chỉnh ảnh để chiếm nhiều diện tích hơn
+
+**Thực hiện**:
+- Tăng weight của AdjustmentControlsPanel từ 1.2f lên 1.5f để panel chiếm nhiều diện tích hơn
+- Giảm padding ngang và dọc của nội dung cuộn được từ (12.dp, 6.dp) xuống (8.dp, 4.dp)
+- Giảm padding dưới của tiêu đề "Basic adjustments" và "Advanced adjustments" từ 12.dp xuống 8.dp
+- Giảm chiều cao của Spacer giữa các phần điều chỉnh từ 16.dp xuống 8.dp
+- Giảm chiều cao của Spacer cuối cùng từ 12.dp xuống 8.dp
+
+**Kết quả**: Panel điều chỉnh ảnh hiện chiếm nhiều diện tích hơn với layout được tối ưu hóa.
+
+---
+
+### Major Photo Adjustment Panel Redesign
+**Yêu cầu**: Điều chỉnh lại giao diện điều chỉnh ảnh để hiển thị đầy đủ các thanh điều chỉnh và loại bỏ phần top bar để tăng chiều cao tổng thể.
+
+**Thực hiện**:
+- **Loại bỏ AdjustTopBar**: Xóa phần top bar chứa "cancel", "adjust", "reset", "apply" để tăng không gian hiển thị
+- **Tích hợp controls vào panel**: Di chuyển các nút điều khiển xuống cuối panel dưới dạng Row cố định
+- **Tối ưu layout structure**:
+  - Sử dụng Column với weight(1f) cho scrollable content
+  - Row cố định ở dưới chứa 3 nút: Cancel, Reset, Apply
+  - Panel chiếm toàn bộ chiều cao còn lại (weight = 1f)
+- **Cải thiện hiển thị slider**:
+  - Đảm bảo tất cả slider (Basic và Advanced) hiển thị đầy đủ
+  - Tối ưu padding và spacing để tận dụng không gian
+  - Giữ nguyên các cải tiến UI/UX trước đó (icon 20dp, typography cải thiện, slider 48dp)
+
+**Kết quả**: Panel điều chỉnh ảnh hiện hiển thị đầy đủ tất cả các thanh trượt với không gian làm việc tối đa, giao diện gọn gàng và trực quan hơn.
+
+---
+
+## [Unreleased]
+
+### Added
+- **Photo Adjustment Feature**: Tích hợp hoàn chỉnh tính năng điều chỉnh ảnh vào PhotoPreviewScreen
+  - Thêm PhotoAdjustView component với giao diện tối ưu hóa
+  - Thiết kế split-screen: preview ảnh (3/4) + điều khiển (1/4)
+  - Hỗ trợ điều chỉnh cơ bản: Brightness, Contrast, Saturation
+  - Hỗ trợ điều chỉnh nâng cao: Highlights, Shadows, Warmth, Tint
+  - Tích hợp vào PhotoPreviewScreen với state management
+  - Thêm string resources để hỗ trợ đa ngôn ngữ
+  - Xem trước thời gian thực trên ảnh chính khi điều chỉnh
+  - Chức năng Apply/Cancel để xác nhận hoặc hủy bỏ thay đổi
+  - Linear progress indicator cho quá trình xử lý
+  - Hệ thống callback preview trực tiếp cho phản hồi tức thì - 2024-12-19
+
+### Improved
+- **Enhanced UI/UX for Photo Adjustment (Major Update)**
+  - **Expanded Item Design**: Increased adjustment item sizes for better usability
+    - Increased icon size from 16dp to 20dp for better visibility
+    - Enhanced text size from bodySmall to bodyMedium for labels
+    - Changed value text from labelSmall to bodySmall for readability
+    - Increased vertical padding from 4dp to 8dp for easier touch
+    - Increased spacing between icon and text from 6dp to 8dp
+  - **Significantly Increased Panel Height**: Enhanced adjustment panel height (weight from 1.3f to 1.8f)
+  - **Improved Padding**: Optimized panel padding to 16dp horizontal, 8dp vertical
+  - **Enhanced Slider Control**: Increased slider height to 48dp for better touch control
+  - **Improved Typography**: Increased title size from titleSmall to titleMedium
+  - Cải thiện trải nghiệm người dùng với preview ảnh luôn hiển thị
+  - Tối ưu hóa layout mobile cho khả năng sử dụng tốt hơn
+  - Loại bỏ preview ảnh thừa trong panel điều chỉnh
+  - Phản hồi trực quan tốt hơn trong quá trình xử lý
+
 ### ✅ Fixed Camera Session Crash - Safe Back Navigation with Confirmation Dialog
 
 **Yêu cầu**: Giải quyết lỗi crash app khi swipe back từ màn hình PhotoPreviewScreen với thông báo "Session has been closed; further changes are illegal". Thêm dialog xác nhận khi người dùng muốn hủy bỏ thay đổi.

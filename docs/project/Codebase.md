@@ -141,6 +141,35 @@ Standard Flow:
 - Team collaboration features
 - Advanced workflow automation
 
+## Camera Module
+
+### PhotoPreviewScreen (Màn hình xem trước ảnh)
+- showPhotoPreview: Hiển thị ảnh đã chụp
+- handlePhotoSave: Lưu ảnh
+- handlePhotoDiscard: Hủy ảnh
+- handleRetakePhoto: Chụp lại ảnh
+- applyFilter: Áp dụng bộ lọc
+- showFilterPanel: Hiển thị panel chọn bộ lọc
+- showAdjustView: Hiển thị giao diện điều chỉnh ảnh
+- handleAdjustmentApplied: Xử lý khi áp dụng điều chỉnh
+- handleAdjustmentCancel: Xử lý khi hủy điều chỉnh
+
+### PhotoAdjustView (Component điều chỉnh ảnh)
+- displayAdjustmentSliders: Hiển thị các slider điều chỉnh
+- handleSliderChange: Xử lý thay đổi giá trị slider
+- applyAdjustments: Áp dụng điều chỉnh lên ảnh
+- resetAdjustments: Khôi phục về giá trị mặc định
+- previewAdjustments: Xem trước kết quả điều chỉnh
+
+### AdjustmentValues (Data class giá trị điều chỉnh)
+- brightness: Độ sáng (-100 đến 100)
+- contrast: Độ tương phản (-100 đến 100)
+- saturation: Độ bão hòa (-100 đến 100)
+- highlights: Highlights (-100 đến 100)
+- shadows: Shadows (-100 đến 100)
+- warmth: Warmth (-100 đến 100)
+- tint: Tint (-100 đến 100)
+
 ---
 
 **Status**: ✅ **Review Gate V2 Integration Complete**

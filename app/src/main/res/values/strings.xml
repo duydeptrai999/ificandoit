@@ -136,4 +136,19 @@
     <string name="discard_changes_message">Are you sure you want to discard all changes and go back to camera?</string>
     <string name="discard">Discard</string>
     <string name="photo_saved_gallery">Your photo has been saved to the gallery successfully.</string>
+    
+    <!-- Photo Adjustment Strings -->
+    <string name="adjust">Adjust</string>
+    <string name="adjust_photo">Adjust Photo</string>
+    <string name="brightness">Brightness</string>
+    <string name="contrast">Contrast</string>
+    <string name="saturation">Saturation</string>
+    <string name="warmth">Warmth</string>
+    <string name="tint">Tint</string>
+    <string name="highlights">Highlights</string>
+    <string name="shadows">Shadows</string>
+    <string name="reset">Reset</string>
+    <string name="apply">Apply</string>
+    <string name="basic">Basic</string>
+    <string name="advanced">Advanced</string>
 </resources>

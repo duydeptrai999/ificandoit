@@ -1,5 +1,55 @@
 # Help - Hướng dẫn sử dụng các tính năng
 
+## Tính năng Điều chỉnh Ảnh
+
+### Mô tả
+Tính năng điều chỉnh ảnh cho phép người dùng chỉnh sửa các thông số của ảnh như độ sáng, độ tương phản, độ bão hòa, và nhiều thông số khác.
+
+### Thành phần chính
+- **PhotoAdjustView**: Component chính để điều chỉnh ảnh
+- **AdjustmentValues**: Data class chứa các giá trị điều chỉnh
+- **PhotoUtils**: Utility class để áp dụng các điều chỉnh lên bitmap
+
+### Thiết kế UI/UX
+- **Layout tối ưu**: Loại bỏ top bar, panel chiếm toàn bộ chiều cao (weight 1f)
+- **Controls integration**: Nút điều khiển (Cancel, Reset, Apply) được tích hợp ở cuối panel
+- **Scrollable content**: Phần điều chỉnh có thể cuộn để hiển thị đầy đủ tất cả slider
+- **Xem trước thời gian thực**: Điều chỉnh được áp dụng ngay lập tức lên ảnh chính
+- **Giao diện tối ưu cho mobile**: Thiết kế với các điều khiển dễ sử dụng trên thiết bị di động
+- **Kích thước item tối ưu**: Icon 20dp, typography cải thiện (bodyMedium cho nhãn, bodySmall Bold cho giá trị)
+- **Padding tối ưu**: Horizontal 16dp, vertical 8dp để tận dụng tối đa không gian
+- **Slider height**: 48dp cho trải nghiệm touch tốt hơn
+- **Spacing cân bằng**: Khoảng cách icon-text 8dp, padding dọc slider 8dp
+- **Typography cải thiện**: Tiêu đề từ titleSmall lên titleMedium
+
+### Tính năng
+- **Điều chỉnh cơ bản**: Độ sáng, độ tương phản, độ bão hòa
+- **Điều chỉnh nâng cao**: Highlights, Shadows, Warmth, Tint
+- **Xem trước trực tiếp**: Xem thay đổi ngay lập tức trên ảnh chính khi kéo slider
+- **Chức năng Reset**: Khôi phục về trạng thái ban đầu
+- **Apply/Cancel**: Áp dụng hoặc hủy bỏ các thay đổi
+- **Thanh tiến trình**: Hiển thị khi đang xử lý điều chỉnh
+- **Bố cục tối ưu**: Ảnh luôn hiển thị trong khi điều chỉnh để có trải nghiệm tốt hơn
+
+### Cách sử dụng
+1. Trong PhotoPreviewScreen, chọn tùy chọn "Adjust" từ bottom bar
+2. Màn hình chia đôi: ảnh xem trước ở trên (3/4), bảng điều khiển ở dưới (1/4)
+3. Kéo các slider để điều chỉnh - thay đổi hiển thị ngay lập tức trên ảnh chính
+4. Cuộn trong bảng điều chỉnh để truy cập tất cả các điều khiển
+5. Nhấn "Apply" để áp dụng hoặc "Cancel" để hủy bỏ
+
+### Tích hợp
+- Tích hợp vào PhotoPreviewScreen thông qua state management
+- Sử dụng string resources để hỗ trợ đa ngôn ngữ
+- Tuân thủ Material Design 3 guidelines
+
+### Files liên quan
+- `PhotoPreviewScreen.kt`: Màn hình chính chứa tính năng điều chỉnh
+- `PhotoAdjustView.kt`: Component xử lý logic điều chỉnh ảnh
+- `AdjustmentValues.kt`: Data class cho các giá trị điều chỉnh
+- `PhotoUtils.kt`: Utility functions cho xử lý ảnh
+- `strings.xml`: Chứa các chuỗi text cho UI
+
 ## Tính năng Crop Ảnh
 
 ### Mô tả
