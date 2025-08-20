@@ -46,13 +46,14 @@ data class AdjustmentValues(
 @Composable
 fun PhotoAdjustView(
     originalBitmap: Bitmap,
-    onAdjustmentApplied: (Bitmap) -> Unit,
+    initialAdjustmentValues: AdjustmentValues = AdjustmentValues(),
+    onAdjustmentApplied: (AdjustmentValues) -> Unit,
     onCancel: () -> Unit,
-    onPreviewUpdate: ((Bitmap) -> Unit)? = null,
+    onPreviewUpdate: ((AdjustmentValues) -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     val scope = rememberCoroutineScope()
-    var adjustmentValues by remember { mutableStateOf(AdjustmentValues()) }
+    var adjustmentValues by remember { mutableStateOf(initialAdjustmentValues) }
     var adjustedBitmap by remember { mutableStateOf(originalBitmap) }
     var isProcessing by remember { mutableStateOf(false) }
     
@@ -63,12 +64,12 @@ fun PhotoAdjustView(
             try {
                 val newBitmap = PhotoUtils.applyAdjustments(originalBitmap, adjustmentValues)
                 adjustedBitmap = newBitmap ?: originalBitmap
-                // Cập nhật ảnh preview ở trên theo thời gian thực
-                onPreviewUpdate?.invoke(adjustedBitmap)
+                // Cập nhật adjustment values để trigger LaunchedEffect trong PhotoPreviewScreen
+                onPreviewUpdate?.invoke(adjustmentValues)
             } catch (e: Exception) {
                 // Handle error
                 adjustedBitmap = originalBitmap
-                onPreviewUpdate?.invoke(originalBitmap)
+                onPreviewUpdate?.invoke(AdjustmentValues()) // Reset về giá trị mặc định
             } finally {
                 isProcessing = false
             }
@@ -107,7 +108,7 @@ fun PhotoAdjustView(
                 adjustmentValues = AdjustmentValues()
             },
             onApply = {
-                onAdjustmentApplied(adjustedBitmap)
+                onAdjustmentApplied(adjustmentValues)
             },
             modifier = Modifier
                 .fillMaxWidth()

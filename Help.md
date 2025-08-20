@@ -30,6 +30,7 @@ Tính năng điều chỉnh ảnh cho phép người dùng chỉnh sửa các th
 - **Apply/Cancel**: Áp dụng hoặc hủy bỏ các thay đổi
 - **Thanh tiến trình**: Hiển thị khi đang xử lý điều chỉnh
 - **Bố cục tối ưu**: Ảnh luôn hiển thị trong khi điều chỉnh để có trải nghiệm tốt hơn
+- **Tương thích với Filter**: Adjustment có thể áp dụng lên ảnh đã có filter mà không làm mất filter đã áp dụng
 
 ### Cách sử dụng
 1. Trong PhotoPreviewScreen, chọn tùy chọn "Adjust" từ bottom bar
@@ -37,6 +38,17 @@ Tính năng điều chỉnh ảnh cho phép người dùng chỉnh sửa các th
 3. Kéo các slider để điều chỉnh - thay đổi hiển thị ngay lập tức trên ảnh chính
 4. Cuộn trong bảng điều chỉnh để truy cập tất cả các điều khiển
 5. Nhấn "Apply" để áp dụng hoặc "Cancel" để hủy bỏ
+
+### Workflow Filter + Adjustment
+**Tính năng mới**: Có thể áp dụng adjustment lên ảnh đã có filter
+
+**Cách hoạt động**:
+1. **Áp dụng Filter trước**: Chọn filter từ danh sách (Vintage, Black & White, etc.)
+2. **Sau đó Adjust**: Chọn "Adjust" để tinh chỉnh ảnh đã có filter
+3. **Adjustment được áp dụng lên ảnh đã có filter**: Không bị mất filter đã chọn
+4. **Kết quả**: Ảnh cuối cùng có cả filter và adjustment
+
+**Lưu ý kỹ thuật**: PhotoAdjustView nhận `currentBitmap` (ảnh đã có filter) thay vì `rawPhotoBitmap` (ảnh gốc) để đảm bảo adjustment được áp dụng đúng cách
 
 ### Tích hợp
 - Tích hợp vào PhotoPreviewScreen thông qua state management

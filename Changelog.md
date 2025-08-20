@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Latest] - 2024-12-19
 
+### Fix Photo Adjustment on Filtered Images
+**Yêu cầu**: Sửa lỗi khi áp dụng adjustment trên ảnh đã có filter, adjustment bị áp dụng lên ảnh gốc thay vì ảnh đã có filter
+
+**Vấn đề**: PhotoAdjustView nhận rawPhotoBitmap (ảnh gốc) làm input thay vì currentBitmap (ảnh đã có filter), khiến các điều chỉnh bị áp dụng lên ảnh gốc và filter bị mất
+
+**Giải pháp**: 
+- Thay đổi parameter `originalBitmap` trong PhotoAdjustView từ `rawPhotoBitmap` thành `currentBitmap`
+- Điều này đảm bảo adjustment được áp dụng lên ảnh đã có filter thay vì ảnh gốc
+
+**Kết quả**: User có thể áp dụng filter trước, sau đó điều chỉnh (adjust) mà không bị mất filter đã áp dụng
+
+---
+
 ### Photo Adjust Panel Height Increase
 **Yêu cầu**: Tăng chiều cao panel điều chỉnh ảnh để chiếm nhiều diện tích hơn
 

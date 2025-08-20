@@ -30,6 +30,7 @@ import android.util.Log
 import com.xiaomi.base.R
 import com.xiaomi.base.ui.screens.camera.components.PhotoCropView
 import com.xiaomi.base.ui.screens.camera.components.PhotoAdjustView
+import com.xiaomi.base.ui.screens.camera.components.AdjustmentValues
 import com.xiaomi.base.ui.screens.camera.components.FilterPreviewItem
 import com.xiaomi.base.ui.screens.camera.filter.FilterType
 import com.xiaomi.base.ui.screens.camera.filter.FilterManager
@@ -57,12 +58,16 @@ fun PhotoPreviewScreen(
     var showDiscardDialog by remember { mutableStateOf(false) }
     var selectedEditOption by remember { mutableStateOf("") }
     
-    // Filter state
-    var currentFilter by remember { mutableStateOf(initialFilter) }
+    // Photo editing state
+    data class PhotoEditState(
+        val filter: FilterType = FilterType.ORIGINAL,
+        val adjustmentValues: AdjustmentValues = AdjustmentValues(),
+        val hasAdjustments: Boolean = false
+    )
+    
+    var editState by remember { mutableStateOf(PhotoEditState(initialFilter)) }
     var currentBitmap by remember { mutableStateOf(rawPhotoBitmap) }
     var showFilterPanel by remember { mutableStateOf(false) }
-    
-    // Adjustment state
     var showAdjustView by remember { mutableStateOf(false) }
     
     // Filter manager
@@ -96,20 +101,27 @@ fun PhotoPreviewScreen(
     
     var showCropView by remember { mutableStateOf(false) }
     
-    // Apply filter to raw bitmap when filter changes
-    LaunchedEffect(currentFilter) {
-        if (currentFilter != FilterType.ORIGINAL) {
-            scope.launch {
-                try {
-                    val filteredBitmap = PhotoUtils.applyFilterToBitmap(rawPhotoBitmap, currentFilter)
-                    currentBitmap = filteredBitmap ?: rawPhotoBitmap
-                } catch (e: Exception) {
-                    Log.e("PhotoPreview", "Error applying filter", e)
-                    currentBitmap = rawPhotoBitmap
+    // Apply filter and adjustments when edit state changes
+    LaunchedEffect(editState) {
+        scope.launch {
+            try {
+                var processedBitmap = rawPhotoBitmap
+                
+                // Step 1: Apply filter if not original
+                if (editState.filter != FilterType.ORIGINAL) {
+                    processedBitmap = PhotoUtils.applyFilterToBitmap(processedBitmap, editState.filter) ?: processedBitmap
                 }
+                
+                // Step 2: Apply adjustments if any
+                if (editState.hasAdjustments) {
+                    processedBitmap = PhotoUtils.applyAdjustments(processedBitmap, editState.adjustmentValues) ?: processedBitmap
+                }
+                
+                currentBitmap = processedBitmap
+            } catch (e: Exception) {
+                Log.e("PhotoPreview", "Error applying edits", e)
+                currentBitmap = rawPhotoBitmap
             }
-        } else {
-            currentBitmap = rawPhotoBitmap
         }
     }
     
@@ -195,10 +207,15 @@ fun PhotoPreviewScreen(
         
         // Photo Adjust View - chiếm 1/4 màn hình khi hiển thị
         if (showAdjustView) {
+
             PhotoAdjustView(
-                originalBitmap = rawPhotoBitmap,
-                onAdjustmentApplied = { adjustedBitmap ->
-                    currentBitmap = adjustedBitmap
+            originalBitmap = rawPhotoBitmap, // Sử dụng rawPhotoBitmap để đảm bảo tính nhất quán
+            initialAdjustmentValues = editState.adjustmentValues,
+            onAdjustmentApplied = { adjustmentValues ->
+                    editState = editState.copy(
+                        adjustmentValues = adjustmentValues,
+                        hasAdjustments = true
+                    )
                     showAdjustView = false
                     selectedEditOption = ""
                 },
@@ -206,9 +223,12 @@ fun PhotoPreviewScreen(
                     showAdjustView = false
                     selectedEditOption = ""
                 },
-                onPreviewUpdate = { previewBitmap ->
-                    // Cập nhật ảnh preview theo thời gian thực khi điều chỉnh
-                    currentBitmap = previewBitmap
+                onPreviewUpdate = { adjustmentValues ->
+                    // Cập nhật state để trigger LaunchedEffect
+                    editState = editState.copy(
+                        adjustmentValues = adjustmentValues,
+                        hasAdjustments = adjustmentValues != AdjustmentValues()
+                    )
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -217,17 +237,58 @@ fun PhotoPreviewScreen(
             )
         }
         
+        // Filter panel - hiển thị phía trên bottom bar với chiều cao cố định
+        if (showFilterPanel) {
+            FilterSelectionPanel(
+                    availableFilters = availableFilters,
+                    currentFilter = editState.filter,
+                    onFilterSelected = { filter ->
+                        editState = editState.copy(filter = filter)
+                        showFilterPanel = false
+                        selectedEditOption = ""
+                    },
+                    onDismiss = { showFilterPanel = false },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp)
+                    .background(Color.Black)
+            )
+        }
+        
         // Bottom edit options
         PhotoEditBottomBar(
             selectedOption = selectedEditOption,
             onOptionSelected = { option -> 
-                selectedEditOption = option
-                when (option) {
-                    "Crop" -> showCropView = true
-                    "Filter" -> showFilterPanel = !showFilterPanel
-                    "Adjust" -> showAdjustView = true
-                    else -> {
-                        // Handle other edit options
+                // Nếu nhấn vào option đã được chọn, thì tắt UI đó đi
+                if (selectedEditOption == option) {
+                    selectedEditOption = ""
+                    showFilterPanel = false
+                    showAdjustView = false
+                    showCropView = false
+                } else {
+                    selectedEditOption = option
+                    when (option) {
+                        "Crop" -> {
+                            showCropView = true
+                            showFilterPanel = false
+                            showAdjustView = false
+                        }
+                        "Filter" -> {
+                            showFilterPanel = true
+                            showAdjustView = false
+                            showCropView = false
+                        }
+                        "Adjust" -> {
+                            showAdjustView = true
+                            showFilterPanel = false
+                            showCropView = false
+                        }
+                        else -> {
+                            // Handle other edit options
+                            showFilterPanel = false
+                            showAdjustView = false
+                            showCropView = false
+                        }
                     }
                 }
             },
@@ -235,21 +296,6 @@ fun PhotoPreviewScreen(
                 .fillMaxWidth()
                 .navigationBarsPadding()
         )
-        
-        // Filter panel overlay
-        if (showFilterPanel) {
-            FilterSelectionPanel(
-                availableFilters = availableFilters,
-                currentFilter = currentFilter,
-                onFilterSelected = { filter ->
-                    currentFilter = filter
-                },
-                onDismiss = { showFilterPanel = false },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .navigationBarsPadding()
-            )
-        }
     }
     
     // Save success dialog
@@ -481,14 +527,15 @@ private fun FilterSelectionPanel(
 ) {
     Surface(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        shape = RoundedCornerShape(16.dp),
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(0.dp),
         color = Color.Black.copy(alpha = 0.9f),
-        tonalElevation = 8.dp
+        tonalElevation = 0.dp
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             // Header
             Row(
