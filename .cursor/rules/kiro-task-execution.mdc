@@ -27,22 +27,22 @@ Hệ thống Kiro Task Execution tự động xử lý và thực thi các task 
 2. Tìm kiếm `.kiro/specs/` trong project root
 3. Xác định project name từ folder structure
 4. Validate existence của required files (requirements.md, design.md, tasks.md)
-5. Nếu thiếu files → trigger Kiro Fallback Workflow
+5. Nếu thiếu files → trigger Kiro Dynamic Workflow
 ```
 
-### Step 2: Fallback Workflow Trigger
+### Step 2: Dynamic Workflow Trigger
 ```
 1. Kiểm tra sự tồn tại của `.kiro/specs/{project}/requirements.md`
 2. Kiểm tra sự tồn tại của `.kiro/specs/{project}/design.md`
 3. Kiểm tra sự tồn tại của `.kiro/specs/{project}/tasks.md`
-4. Nếu thiếu bất kỳ file nào → kích hoạt [Kiro Fallback Workflow](kiro-fallback-workflow.mdc)
-5. Ưu tiên đề xuất sử dụng Kiro tools trước khi fallback
+4. Nếu thiếu bất kỳ file nào → kích hoạt [Kiro Dynamic Workflow](kiro-dynamic-workflow.mdc)
+5. Ưu tiên đề xuất sử dụng Kiro tools trước khi dynamic workflow
 6. Thực hiện quy trình: Brainstorm → Requirements → Design → Tasks
 ```
 
 ### Step 3: Task File Validation
 ```
-1. Kiểm tra `.kiro/specs/{project}/tasks.md` exists (sau khi fallback nếu cần)
+1. Kiểm tra `.kiro/specs/{project}/tasks.md` exists (sau khi dynamic workflow nếu cần)
 2. Parse task structure theo Kiro format
 3. Validate task dependencies
 4. Kiểm tra task status (Not Started, In Progress, Completed)
@@ -301,34 +301,34 @@ Hệ thống Kiro Task Execution tự động xử lý và thực thi các task 
 - Missing task specifications
 - Performance degradation
 
-## Fallback Workflow Integration
+## Dynamic Workflow Integration
 
-### Automatic Fallback Detection
+### Automatic Dynamic Detection
 - **BẮT BUỘC** kiểm tra sự tồn tại của required Kiro files trước khi execution
-- **BẮT BUỘC** trigger [Kiro Fallback Workflow](kiro-fallback-workflow.mdc) khi thiếu files
-- **KHUYẾN NGHỊ** đề xuất sử dụng Kiro tools trước khi fallback
-- **BẮT BUỘC** validate generated files sau khi fallback workflow hoàn thành
+- **BẮT BUỘC** trigger [Kiro Dynamic Workflow](kiro-dynamic-workflow.mdc) khi thiếu files
+- **KHUYẾN NGHỊ** đề xuất sử dụng Kiro tools trước khi dynamic workflow
+- **BẮT BUỘC** validate generated files sau khi dynamic workflow hoàn thành
 
-### Fallback Execution Flow
+### Dynamic Execution Flow
 ```
 1. Detect missing files (requirements.md, design.md, tasks.md)
 2. Notify user về missing files và options
-3. Offer choice: Use Kiro tools OR Fallback workflow
-4. If fallback chosen:
+3. Offer choice: Use Kiro tools OR Dynamic workflow
+4. If dynamic chosen:
    a. Execute Brainstorm → Requirements → Design → Tasks
    b. Validate generated files format
    c. Test compatibility với Kiro execution
    d. Resume normal task execution
 ```
 
-### Post-Fallback Validation
+### Post-Dynamic Validation
 - **BẮT BUỘC** validate task format compatibility
 - **BẮT BUỘC** check task dependencies structure
 - **BẮT BUỘC** verify acceptance criteria completeness
 - **BẮT BUỘC** test task execution với generated files
 - **BẮT BUỘC** ensure seamless transition to normal workflow
 
-### Fallback Quality Gates
+### Dynamic Quality Gates
 - Requirements must satisfy project objectives
 - Design must address all requirements
 - Tasks must cover all design components
@@ -342,13 +342,13 @@ Hệ thống Kiro Task Execution tự động xử lý và thực thi các task 
 - Automatic dependency detection
 - Smart task prioritization
 - Integration with external tools
-- Enhanced fallback workflow automation
+- Enhanced dynamic workflow automation
 
 ### Extensibility
 - Plugin system for custom task types
 - API for external integrations
 - Custom workflow definitions
 - Advanced analytics and reporting
-- Fallback workflow customization
+- Dynamic workflow customization
 
-This workflow ensures that all task execution follows Kiro specifications while maintaining compatibility with existing development processes and providing robust fallback mechanisms when Kiro files are not available.
+This workflow ensures that all task execution follows Kiro specifications while maintaining compatibility with existing development processes and providing robust dynamic mechanisms when Kiro files are not available.

@@ -11,22 +11,25 @@ import java.io.InputStreamReader
  */
 object ShaderLoader {
     private const val TAG = "ShaderLoader"
-    
+
     /**
      * Load shader source code from assets folder
      */
-    fun loadShaderFromAssets(context: Context, fileName: String): String? {
+    fun loadShaderFromAssets(
+        context: Context,
+        fileName: String,
+    ): String? {
         return try {
             val inputStream = context.assets.open(fileName)
             val reader = BufferedReader(InputStreamReader(inputStream))
             val stringBuilder = StringBuilder()
-            
+
             reader.useLines { lines ->
                 lines.forEach { line ->
                     stringBuilder.append(line).append("\n")
                 }
             }
-            
+
             val shaderCode = stringBuilder.toString()
             Log.d(TAG, "Successfully loaded shader: $fileName")
             shaderCode
@@ -35,14 +38,14 @@ object ShaderLoader {
             null
         }
     }
-    
+
     /**
      * Load vertex shader from assets
      */
     fun loadVertexShader(context: Context): String? {
         return loadShaderFromAssets(context, "shaders/vertex_shader.glsl")
     }
-    
+
     /**
      * Load fragment shader from assets
      */

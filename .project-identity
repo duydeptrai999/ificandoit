@@ -42,15 +42,15 @@
         "android": [
           ".cursor/rules/android-workflow.mdc",
           ".cursor/rules/android-code-deduplication.mdc",
-          ".cursor/rules/tdd-mobile-workflow.mdc"
+          "docs/TSDDR-2.0-Guide.md"
         ],
         "ios": [
           ".cursor/rules/ios-workflow.mdc",
-          ".cursor/rules/tdd-mobile-workflow.mdc"
+          "docs/TSDDR-2.0-Guide.md"
         ],
         "flutter": [
           ".cursor/rules/mobile-utility-workflow.mdc",
-          ".cursor/rules/tdd-mobile-workflow.mdc"
+          "docs/TSDDR-2.0-Guide.md"
         ],
         "web": [
           ".cursor/rules/frontend-rules.mdc",
@@ -79,8 +79,7 @@
       ".cursor/rules/resource-management.mdc"
     ],
     "quality_assurance": [
-      ".cursor/rules/tdd-guidelines.mdc",
-      ".cursor/rules/review-gate-v2-setup.mdc"
+      "docs/TSDDR-2.0-Guide.md"
     ]
   },
   "integrations": {
@@ -96,7 +95,6 @@
       "rule": ".cursor/rules/api-integration-rules.mdc"
     },
     "mcp_tools": {
-      "review_gate": true,
       "browser_debug": true
     }
   },

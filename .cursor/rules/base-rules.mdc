@@ -27,6 +27,15 @@ alwaysApply: true
 - ***NGHIÊM CẤM*** bỏ qua bước kiểm tra info-hub dù người dùng không đề cập
 - ***NGHIÊM CẤM*** làm việc trùng lặp với AI khác đang active
 
+#### Work Intent Declaration Protocol
+- ***BẮT BUỘC*** khi bắt đầu làm việc, phải mô tả rõ ý định và file cụ thể sẽ làm việc vào bảng "Currently Working" trong info-hub.md
+- ***BẮT BUỘC*** format: `[AI Tool] | [Mô tả ý định chi tiết] | [Danh sách files sẽ chỉnh sửa] | In Progress | [Timestamp]`
+- ***BẮT BUỘC*** cập nhật trạng thái ngay khi tìm được file cụ thể cần làm việc
+- ***BẮT BUỘC*** xóa dòng trạng thái khỏi bảng "Currently Working" sau khi hoàn thành việc
+- ***BẮT BUỘC*** áp dụng cho tất cả AI tools: Cursor, Trae, Kiro, Claude, Gemini
+- ***BẮT BUỘC*** kiểm tra xem có AI nào đang làm việc trên cùng file không trước khi bắt đầu
+- ***NGHIÊM CẤM*** chỉnh sửa file đang được AI khác làm việc
+
 ### Phân tích yêu cầu (Enhanced với Context7)
 - ***BẮT BUỘC*** phân tích và suy luận ý định thực sự của người dùng trước khi thực hiện bất kỳ hành động nào
 - ***BẮT BUỘC*** hiểu ngữ cảnh và mục tiêu đằng sau yêu cầu thay vì chỉ làm theo nghĩa đen với Context7 insights
@@ -149,11 +158,11 @@ Luôn kiểm tra .project-identity để biết cấu trúc và ngôn ngữ dự
 - ***BẮT BUỘC*** sử dụng [Task Creation Workflow](task-creation-workflow.mdc) để tự động tạo comprehensive tasks
 - ***NGHIÊM CẤM*** tạo task lists ở nơi khác ngoài Kiro system
 
-### Kiro Fallback Workflow
+### Kiro Dynamic Workflow
 - ***BẮT BUỘC*** kiểm tra sự tồn tại của files: `requirements.md`, `design.md`, `tasks.md` trong `.kiro/specs/{project}/`
-- ***BẮT BUỘC*** kích hoạt [Kiro Fallback Workflow](kiro-fallback-workflow.mdc) khi thiếu bất kỳ file nào
-- ***KHUYẾN NGHỊ*** ưu tiên việc tạo bằng Kiro tools trước khi sử dụng fallback workflow
-- ***BẮT BUỘC*** thực hiện quy trình: Brainstorm → Requirements → Design → Tasks khi fallback
+- ***BẮT BUỘC*** kích hoạt [Kiro Dynamic Workflow](kiro-dynamic-workflow.mdc) khi thiếu bất kỳ file nào
+- ***KHUYẾN NGHỊ*** ưu tiên việc tạo bằng Kiro tools trước khi sử dụng dynamic workflow
+- ***BẮT BUỘC*** thực hiện quy trình: Brainstorm → Requirements → Design → Tasks khi dynamic
 - ***BẮT BUỘC*** đảm bảo generated files tuân thủ Kiro specifications
 - ***BẮT BUỘC*** validate compatibility với Kiro execution system sau khi tạo files
 

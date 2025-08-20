@@ -47,12 +47,12 @@ fun PhotoCropView(
 ) {
     val context = LocalContext.current
     val density = LocalDensity.current
-    
+
     var canvasSize by remember { mutableStateOf(IntSize.Zero) }
     var cropRect by remember { mutableStateOf(Rect.Zero) }
     var isDragging by remember { mutableStateOf(false) }
     var dragHandle by remember { mutableStateOf(DragHandle.NONE) }
-    
+
     // Crop aspect ratios
     val aspectRatios = listOf(
         CropAspectRatio("Free", null),
@@ -62,10 +62,10 @@ fun PhotoCropView(
         CropAspectRatio("3:4", 3f/4f),
         CropAspectRatio("9:16", 9f/16f)
     )
-    
+
     var selectedAspectRatio by remember { mutableStateOf(aspectRatios[0]) }
     // Removed isAspectRatioLocked - no longer needed
-    
+
     // Initialize crop rect when canvas size changes
     LaunchedEffect(canvasSize) {
         if (canvasSize != IntSize.Zero && cropRect == Rect.Zero) {
@@ -79,7 +79,7 @@ fun PhotoCropView(
             )
         }
     }
-    
+
     // Update crop rect when aspect ratio changes
     LaunchedEffect(selectedAspectRatio) {
         if (canvasSize != IntSize.Zero && selectedAspectRatio.ratio != null) {
@@ -87,11 +87,11 @@ fun PhotoCropView(
             val centerY = canvasSize.height / 2f
             val maxWidth = canvasSize.width - 80f
             val maxHeight = canvasSize.height - 80f
-            
+
             val ratio = selectedAspectRatio.ratio!!
             val newWidth: Float
             val newHeight: Float
-            
+
             if (ratio > 1) {
                 // Landscape
                 newWidth = minOf(maxWidth, maxHeight * ratio)
@@ -101,7 +101,7 @@ fun PhotoCropView(
                 newHeight = minOf(maxHeight, maxWidth / ratio)
                 newWidth = newHeight * ratio
             }
-            
+
             cropRect = Rect(
                 offset = Offset(
                     centerX - newWidth / 2,
@@ -111,7 +111,7 @@ fun PhotoCropView(
             )
         }
     }
-    
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -128,7 +128,7 @@ fun PhotoCropView(
                 .fillMaxWidth()
                 .statusBarsPadding()
         )
-        
+
         // Crop canvas
         Box(
             modifier = Modifier
@@ -170,15 +170,15 @@ fun PhotoCropView(
                     dstOffset = IntOffset(imageRect.left.toInt(), imageRect.top.toInt()),
                     dstSize = IntSize(imageRect.width.toInt(), imageRect.height.toInt())
                 )
-                
+
                 // Draw overlay
                 drawCropOverlay(cropRect, size)
-                
+
                 // Draw crop handles
                 drawCropHandles(cropRect)
             }
         }
-        
+
         // Bottom controls
         CropBottomBar(
             aspectRatios = aspectRatios,
@@ -219,14 +219,14 @@ private fun CropTopBar(
                     fontSize = 16.sp
                 )
             }
-            
+
             Text(
                 text = stringResource(R.string.crop),
                 color = Color.White,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium
             )
-            
+
             TextButton(onClick = onConfirm) {
                 Text(
                     text = stringResource(R.string.done),
@@ -267,7 +267,7 @@ private fun CropBottomBar(
                     )
                 }
             }
-            
+
             // Removed lock/unlock toggle - aspect ratio is applied once when selected,
             // then user can freely adjust the crop area
         }
@@ -302,35 +302,35 @@ private fun AspectRatioButton(
 private fun DrawScope.drawCropOverlay(cropRect: Rect, canvasSize: Size) {
     // Draw dark overlay outside crop area
     val overlayColor = Color.Black.copy(alpha = 0.5f)
-    
+
     // Top
     drawRect(
         color = overlayColor,
         topLeft = Offset.Zero,
         size = Size(canvasSize.width, cropRect.top)
     )
-    
+
     // Bottom
     drawRect(
         color = overlayColor,
         topLeft = Offset(0f, cropRect.bottom),
         size = Size(canvasSize.width, canvasSize.height - cropRect.bottom)
     )
-    
+
     // Left
     drawRect(
         color = overlayColor,
         topLeft = Offset(0f, cropRect.top),
         size = Size(cropRect.left, cropRect.height)
     )
-    
+
     // Right
     drawRect(
         color = overlayColor,
         topLeft = Offset(cropRect.right, cropRect.top),
         size = Size(canvasSize.width - cropRect.right, cropRect.height)
     )
-    
+
     // Draw crop border
     drawRect(
         color = Color.White,
@@ -338,11 +338,11 @@ private fun DrawScope.drawCropOverlay(cropRect: Rect, canvasSize: Size) {
         size = cropRect.size,
         style = Stroke(width = 2.dp.toPx())
     )
-    
+
     // Draw grid lines
     val gridColor = Color.White.copy(alpha = 0.5f)
     val gridStroke = Stroke(width = 1.dp.toPx())
-    
+
     // Vertical lines
     val verticalStep = cropRect.width / 3
     for (i in 1..2) {
@@ -354,7 +354,7 @@ private fun DrawScope.drawCropOverlay(cropRect: Rect, canvasSize: Size) {
             strokeWidth = gridStroke.width
         )
     }
-    
+
     // Horizontal lines
     val horizontalStep = cropRect.height / 3
     for (i in 1..2) {
@@ -372,7 +372,7 @@ private fun DrawScope.drawCropHandles(cropRect: Rect) {
     val handleSize = 20.dp.toPx()
     val handleColor = Color.White
     val handleStroke = Stroke(width = 3.dp.toPx())
-    
+
     // Corner handles
     val corners = listOf(
         cropRect.topLeft,
@@ -380,7 +380,7 @@ private fun DrawScope.drawCropHandles(cropRect: Rect) {
         cropRect.bottomRight,
         Offset(cropRect.left, cropRect.bottom)
     )
-    
+
     corners.forEach { corner ->
         drawCircle(
             color = handleColor,
@@ -394,7 +394,7 @@ private fun DrawScope.drawCropHandles(cropRect: Rect) {
             center = corner
         )
     }
-    
+
     // Edge handles
     val edges = listOf(
         Offset(cropRect.center.x, cropRect.top), // Top
@@ -402,7 +402,7 @@ private fun DrawScope.drawCropHandles(cropRect: Rect) {
         Offset(cropRect.center.x, cropRect.bottom), // Bottom
         Offset(cropRect.left, cropRect.center.y) // Left
     )
-    
+
     edges.forEach { edge ->
         drawCircle(
             color = handleColor,
@@ -421,7 +421,7 @@ private fun DrawScope.drawCropHandles(cropRect: Rect) {
 private fun calculateImageRect(imageBitmap: ImageBitmap, canvasSize: Size): Rect {
     val imageAspectRatio = imageBitmap.width.toFloat() / imageBitmap.height.toFloat()
     val canvasAspectRatio = canvasSize.width / canvasSize.height
-    
+
     return if (imageAspectRatio > canvasAspectRatio) {
         // Image is wider, fit to width
         val scaledHeight = canvasSize.width / imageAspectRatio
@@ -443,22 +443,22 @@ private fun calculateImageRect(imageBitmap: ImageBitmap, canvasSize: Size): Rect
 
 private fun getDragHandle(offset: Offset, cropRect: Rect): DragHandle {
     val handleSize = 40f // Touch area
-    
+
     // Check corners first
     if (offset.isNear(cropRect.topLeft, handleSize)) return DragHandle.TOP_LEFT
     if (offset.isNear(Offset(cropRect.right, cropRect.top), handleSize)) return DragHandle.TOP_RIGHT
     if (offset.isNear(cropRect.bottomRight, handleSize)) return DragHandle.BOTTOM_RIGHT
     if (offset.isNear(Offset(cropRect.left, cropRect.bottom), handleSize)) return DragHandle.BOTTOM_LEFT
-    
+
     // Check edge handles
     if (offset.isNear(Offset(cropRect.center.x, cropRect.top), handleSize)) return DragHandle.TOP
     if (offset.isNear(Offset(cropRect.right, cropRect.center.y), handleSize)) return DragHandle.RIGHT
     if (offset.isNear(Offset(cropRect.center.x, cropRect.bottom), handleSize)) return DragHandle.BOTTOM
     if (offset.isNear(Offset(cropRect.left, cropRect.center.y), handleSize)) return DragHandle.LEFT
-    
+
     // Check if inside crop area for moving
     if (cropRect.contains(offset)) return DragHandle.CENTER
-    
+
     return DragHandle.NONE
 }
 
@@ -474,7 +474,7 @@ private fun updateCropRect(
 ): Rect {
     val bounds = Rect(Offset.Zero, Size(canvasSize.width.toFloat(), canvasSize.height.toFloat()))
     val minSize = 50f
-    
+
     return when (handle) {
         DragHandle.TOP_LEFT -> {
             val newLeft = (currentRect.left + dragAmount.x).coerceIn(0f, currentRect.right - minSize)
@@ -547,13 +547,13 @@ private fun updateCropRectWithAspectRatio(
 ): Rect {
     val bounds = Rect(Offset.Zero, Size(canvasSize.width.toFloat(), canvasSize.height.toFloat()))
     val minSize = 50f
-    
+
     return when (handle) {
         DragHandle.TOP_LEFT, DragHandle.TOP_RIGHT, DragHandle.BOTTOM_RIGHT, DragHandle.BOTTOM_LEFT -> {
             // For corner handles, maintain aspect ratio
             val centerX = currentRect.center.x
             val centerY = currentRect.center.y
-            
+
             val dragDistance = when (handle) {
                 DragHandle.TOP_LEFT -> -dragAmount.x - dragAmount.y
                 DragHandle.TOP_RIGHT -> dragAmount.x - dragAmount.y
@@ -561,17 +561,17 @@ private fun updateCropRectWithAspectRatio(
                 DragHandle.BOTTOM_LEFT -> -dragAmount.x + dragAmount.y
                 else -> 0f
             } / 2f
-            
+
             val currentWidth = currentRect.width
             val newWidth = (currentWidth + dragDistance).coerceAtLeast(minSize)
             val newHeight = newWidth / aspectRatio
-            
+
             // Check bounds
             val maxWidth = bounds.width
             val maxHeight = bounds.height
             val finalWidth = minOf(newWidth, maxWidth, maxHeight * aspectRatio)
             val finalHeight = finalWidth / aspectRatio
-            
+
             Rect(
                 left = centerX - finalWidth / 2,
                 top = centerY - finalHeight / 2,
@@ -613,14 +613,14 @@ private fun applyCropAspectRatio(
 ): Rect {
     val centerX = currentRect.center.x
     val centerY = currentRect.center.y
-    
+
     val currentWidth = currentRect.width
     val currentHeight = currentRect.height
-    
+
     // Calculate new dimensions based on aspect ratio
     val newWidth: Float
     val newHeight: Float
-    
+
     if (currentWidth / currentHeight > aspectRatio) {
         // Current rect is wider than target ratio, adjust width
         newHeight = currentHeight
@@ -630,22 +630,22 @@ private fun applyCropAspectRatio(
         newWidth = currentWidth
         newHeight = newWidth / aspectRatio
     }
-    
+
     // Calculate new bounds centered on current position
     val left = (centerX - newWidth / 2f).coerceAtLeast(0f)
     val top = (centerY - newHeight / 2f).coerceAtLeast(0f)
     val right = (left + newWidth).coerceAtMost(canvasSize.width.toFloat())
     val bottom = (top + newHeight).coerceAtMost(canvasSize.height.toFloat())
-    
+
     // Adjust if bounds exceed canvas
     val finalLeft = if (right - left < newWidth) {
         (right - newWidth).coerceAtLeast(0f)
     } else left
-    
+
     val finalTop = if (bottom - top < newHeight) {
         (bottom - newHeight).coerceAtLeast(0f)
     } else top
-    
+
     return Rect(
         left = finalLeft,
         top = finalTop,
@@ -658,7 +658,7 @@ private fun cropBitmap(originalBitmap: Bitmap, cropRect: Rect, canvasSize: IntSi
     // Calculate the scale factor between canvas and bitmap
     val scaleX = originalBitmap.width.toFloat() / canvasSize.width
     val scaleY = originalBitmap.height.toFloat() / canvasSize.height
-    
+
     // Convert crop rect to bitmap coordinates
     val bitmapCropRect = android.graphics.Rect(
         (cropRect.left * scaleX).toInt(),
@@ -666,7 +666,7 @@ private fun cropBitmap(originalBitmap: Bitmap, cropRect: Rect, canvasSize: IntSi
         (cropRect.right * scaleX).toInt(),
         (cropRect.bottom * scaleY).toInt()
     )
-    
+
     // Ensure crop rect is within bitmap bounds
     val clampedRect = android.graphics.Rect(
         bitmapCropRect.left.coerceIn(0, originalBitmap.width),
@@ -674,7 +674,7 @@ private fun cropBitmap(originalBitmap: Bitmap, cropRect: Rect, canvasSize: IntSi
         bitmapCropRect.right.coerceIn(0, originalBitmap.width),
         bitmapCropRect.bottom.coerceIn(0, originalBitmap.height)
     )
-    
+
     return Bitmap.createBitmap(
         originalBitmap,
         clampedRect.left,

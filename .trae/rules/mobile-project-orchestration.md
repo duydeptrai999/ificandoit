@@ -9,7 +9,7 @@ graph TD
     A[User Idea] --> B[App Classification]
     B --> C[Strategic Questions 5Q]
     C --> D[Revenue Strategy Design]
-    D --> E[TDD Planning]
+    D --> E[TSDDR 2.0 Planning]
     E --> F[Cross-Platform Architecture]
     F --> G[Android-First Development]
     G --> H[iOS Adaptation]
@@ -26,19 +26,14 @@ graph TD
 
 ```markdown
 🔗 MANDATORY .cursor/rules Integration (PRIMARY SOURCE):
-✅ [mobile-utility-workflow.mdc](../../.cursor/rules/mobile-utility-workflow.mdc) → Primary workflow controller
-✅ [tdd-mobile-workflow.mdc](../../.cursor/rules/tdd-mobile-workflow.mdc) → Test-driven development enforcement
-✅ [brainstorm-workflow.mdc](../../.cursor/rules/brainstorm-workflow.mdc) → Enhanced with 5-question limit
-✅ [development-control-rules.mdc](../../.cursor/rules/development-control-rules.mdc) → Extended with mobile-specific validations
-✅ [planning-workflow.mdc](../../.cursor/rules/planning-workflow.mdc) → Mobile-aware planning procedures
-✅ [android-workflow.mdc](../../.cursor/rules/android-workflow.mdc) → Android development workflow
-✅ [ios-workflow.mdc](../../.cursor/rules/ios-workflow.mdc) → iOS development workflow
-✅ [project-creation-workflow.mdc](../../.cursor/rules/project-creation-workflow.mdc) → Project creation process
+✅ [mobile-utility-workflow.md](../../.trae/rules/mobile-utility-workflow.md) → Primary workflow controller
 
-📋 Secondary .appdexer/rules Reference:
-□ mobile-app-rules.md → App classification and automation
-□ project-specific-rules.md → Enhanced with mobile utility patterns
-□ global-rules.md → Mobile development standards
+✅ [brainstorm-workflow.md](../../.trae/rules/brainstorm-workflow.md) → Enhanced with 5-question limit
+✅ [development-control-rules.md](../../.trae/rules/development-control-rules.md) → Extended with mobile-specific validations
+✅ [planning-workflow.md](../../.trae/rules/planning-workflow.md) → Mobile-aware planning procedures
+✅ [android-workflow.md](../../.trae/rules/android-workflow.md) → Android development workflow
+✅ [ios-workflow.md](../../.trae/rules/ios-workflow.md) → iOS development workflow
+✅ [project-creation-workflow.md](../../.trae/rules/project-creation-workflow.md) → Project creation process
 
 🔗 .trae/rules Alias Layer (LOWEST PRIORITY):
 □ mobile-project-orchestration.md → This file (coordination controller)
@@ -74,16 +69,15 @@ Phase 3: Revenue Optimization (Continuous)
 □ Cost optimization → AI API usage vs revenue
 ```
 
-## TDD Workflow Orchestration
+## TSDDR 2.0 Workflow Orchestration
 
 ### Test-First Development Coordination:
 
 ```markdown
-TDD Phase Orchestration:
+TSDDR 2.0 Phase Orchestration:
 
 1. 🔴 RED Phase Coordination:
-   □ .cursor/rules/tdd-mobile-workflow.mdc → Generate test specifications
-   □ .appdexer/rules/mobile-app-rules.md → Auto-generate test data
+   □ docs/TSDDR-2.0-Guide.md → Generate test generate test data
    □ Cross-platform test parity → Android + iOS equivalence
    □ Revenue feature testing → Ads + IAP validation
    □ AI integration testing → Fallback scenarios

@@ -45,27 +45,27 @@ fun CameraScreen(
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
-    
+
     // Camera permission state
     val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
-    
+
     // Camera state
     var isCameraReady by remember { mutableStateOf(false) }
     var cameraError by remember { mutableStateOf<String?>(null) }
     var currentFilter by remember { mutableStateOf(FilterType.ORIGINAL) }
     var showFilterPanel by remember { mutableStateOf(true) }
-    
+
     // Photo capture state
     var capturedPhoto by remember { mutableStateOf<Bitmap?>(null) }
     var isCapturing by remember { mutableStateOf(false) }
     var isSwitchingCamera by remember { mutableStateOf(false) }
-    
+
     // Coroutine scope
     val scope = rememberCoroutineScope()
-    
+
     // Camera texture view reference
     var cameraTextureView by remember { mutableStateOf<CameraTextureView?>(null) }
-    
+
     // Available filters
     val availableFilters = remember {
         listOf(
@@ -89,14 +89,14 @@ fun CameraScreen(
             FilterType.CHERRY_BLOSSOM
         )
     }
-    
+
     // Handle permission
     LaunchedEffect(cameraPermissionState.status) {
         if (!cameraPermissionState.status.isGranted && !cameraPermissionState.status.shouldShowRationale) {
             cameraPermissionState.launchPermissionRequest()
         }
     }
-    
+
     // Cleanup camera resources when component is disposed
     DisposableEffect(lifecycleOwner) {
         onDispose {
@@ -112,7 +112,7 @@ fun CameraScreen(
             }
         }
     }
-    
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -157,12 +157,12 @@ fun CameraScreen(
                         currentFilter = currentFilter,
                         availableFilters = availableFilters,
                         showFilterPanel = showFilterPanel,
-                        onCameraReady = { 
-                            isCameraReady = true 
+                        onCameraReady = {
+                            isCameraReady = true
                             isSwitchingCamera = false
                         },
                         onCameraError = { error -> cameraError = error },
-                        onFilterChanged = { filter -> 
+                        onFilterChanged = { filter ->
                             currentFilter = filter
                             cameraTextureView?.applyFilter(filter)
                         },
@@ -171,7 +171,7 @@ fun CameraScreen(
                         lifecycleOwner = lifecycleOwner,
                         modifier = Modifier.fillMaxSize()
                     )
-                    
+
                     // Top controls
                     CameraTopControls(
                         onNavigateBack = onNavigateBack,
@@ -182,7 +182,7 @@ fun CameraScreen(
                             .fillMaxWidth()
                             .statusBarsPadding()
                     )
-                    
+
                     // Bottom controls
                     CameraBottomControls(
                         isCameraReady = isCameraReady,
@@ -219,7 +219,7 @@ fun CameraScreen(
                             .fillMaxWidth()
                             .navigationBarsPadding()
                     )
-                    
+
                     // Filter panel
                     if (showFilterPanel) {
                         FilterPanel(
@@ -235,7 +235,7 @@ fun CameraScreen(
                                 .padding(bottom = 120.dp)
                         )
                     }
-                    
+
                     // Error display
                     cameraError?.let { error ->
                         ErrorDisplay(
@@ -245,7 +245,7 @@ fun CameraScreen(
                         )
                     }
                 }
-                
+
                 cameraPermissionState.status.shouldShowRationale -> {
                     // Permission rationale
                     PermissionRationale(
@@ -253,7 +253,7 @@ fun CameraScreen(
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
-                
+
                 else -> {
                     // Permission denied
                     PermissionDenied(
@@ -294,10 +294,10 @@ private fun CameraPreviewContent(
                     this.onCameraReady = { onCameraReady() }
                     this.onCameraError = { error -> onCameraError(error) }
                     this.onFilterChanged = { filter -> onFilterChanged(filter) }
-                    
+
                     // Register lifecycle
                     lifecycleOwner.lifecycle.addObserver(this)
-                    
+
                     // Notify parent
                     onCameraTextureViewCreated(this)
                 }
@@ -306,7 +306,7 @@ private fun CameraPreviewContent(
                 .fillMaxSize()
                 .aspectRatio(9f / 16f) // Standard phone camera ratio
         )
-        
+
         // Camera loading indicator
         if (!isCameraReady) {
             Box(
@@ -352,9 +352,9 @@ private fun CameraTopControls(
                 tint = Color.White
             )
         }
-        
+
         Spacer(modifier = Modifier.weight(1f))
-        
+
         // Filter toggle button
         IconButton(
             onClick = onToggleFilterPanel,
@@ -404,7 +404,7 @@ private fun CameraBottomControls(
                 tint = Color.White
             )
         }
-        
+
         // Capture button
         Button(
             onClick = onCapturePhoto,
@@ -432,7 +432,7 @@ private fun CameraBottomControls(
                 )
             }
         }
-        
+
         // Switch camera button
         Box(
             modifier = Modifier
@@ -491,7 +491,7 @@ private fun FilterPanel(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
-            
+
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
@@ -530,23 +530,23 @@ private fun ErrorDisplay(
                 tint = MaterialTheme.colorScheme.error,
                 modifier = Modifier.size(48.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = stringResource(R.string.camera_error),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onErrorContainer
             )
-            
+
             Text(
                 text = error,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onErrorContainer
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Button(
                 onClick = onDismiss
             ) {
@@ -574,21 +574,21 @@ private fun PermissionRationale(
                 contentDescription = null,
                 modifier = Modifier.size(64.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Text(
                 text = stringResource(R.string.camera_permission_required),
                 style = MaterialTheme.typography.titleMedium
             )
-            
+
             Text(
                 text = stringResource(R.string.camera_permission_rationale),
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Button(
                 onClick = onRequestPermission
             ) {
@@ -616,21 +616,21 @@ private fun PermissionDenied(
                 contentDescription = null,
                 modifier = Modifier.size(64.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Text(
                 text = stringResource(R.string.camera_permission_denied),
                 style = MaterialTheme.typography.titleMedium
             )
-            
+
             Text(
                 text = stringResource(R.string.camera_permission_denied_message),
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Button(
                 onClick = onRequestPermission
             ) {

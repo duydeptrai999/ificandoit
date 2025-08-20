@@ -28,39 +28,39 @@ class CameraTextureView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : GLSurfaceView(context, attrs), DefaultLifecycleObserver {
-    
+
     companion object {
         private const val TAG = "CameraTextureView"
     }
-    
+
     // Core components
     private val camera2Manager = Camera2Manager(context)
     private val glRenderer = GLRenderer(context)
     private val filterManager = FilterManager()
-    
+
     // State management
     private var isInitialized = false
     private var isPaused = false
     private var currentFilter: FilterType = FilterType.ORIGINAL
-    
+
     // Callbacks
     var onCameraReady: (() -> Unit)? = null
     var onCameraError: ((String) -> Unit)? = null
     var onFilterChanged: ((FilterType) -> Unit)? = null
     var onPhotoCaptured: ((Bitmap) -> Unit)? = null
-    
+
     // Coroutine scope for async operations
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
-    
+
     // Photo capture state
     private var pendingCaptureCallback: ((Bitmap?) -> Unit)? = null
-    
+
     init {
         setupGLSurfaceView()
         setupRenderer()
         setupCamera()
     }
-    
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         Log.d(TAG, "CameraTextureView attached to window")
@@ -71,23 +71,23 @@ class CameraTextureView @JvmOverloads constructor(
             }
         }
     }
-    
+
     /**
      * Configure GLSurfaceView for optimal performance
      */
     private fun setupGLSurfaceView() {
         // Use OpenGL ES 3.0
         setEGLContextClientVersion(3)
-        
+
         // Enable depth buffer
         setEGLConfigChooser(8, 8, 8, 8, 16, 0)
-        
+
         // Preserve EGL context on pause
         preserveEGLContextOnPause = true
-        
+
         Log.d(TAG, "GLSurfaceView configured")
     }
-    
+
     /**
      * Setup OpenGL renderer with callbacks
      */
@@ -96,30 +96,30 @@ class CameraTextureView @JvmOverloads constructor(
             Log.d(TAG, "SurfaceTexture ready, starting camera")
             startCamera(surfaceTexture)
         }
-        
+
         glRenderer.onFrameRendered = {
             // Frame rendered callback for performance monitoring
         }
-        
+
         glRenderer.onFrameCaptured = { pixelData ->
             handleCapturedFrame(pixelData)
         }
-        
+
         setRenderer(glRenderer)
-        
+
         // Set render mode to continuous for smooth preview
         // This must be called after setRenderer to ensure GLThread is initialized
         renderMode = RENDERMODE_CONTINUOUSLY
-        
+
         Log.d(TAG, "Renderer configured")
     }
-    
+
     /**
      * Setup camera manager
      */
     private fun setupCamera() {
         camera2Manager.setCameraCallbacks(
-            onOpened = { 
+            onOpened = {
                 Log.d(TAG, "Camera opened successfully")
                 onCameraReady?.invoke()
             },
@@ -128,11 +128,11 @@ class CameraTextureView @JvmOverloads constructor(
                 onCameraError?.invoke(errorMsg)
             }
         )
-        
+
         camera2Manager.initialize()
         Log.d(TAG, "Camera manager configured")
     }
-    
+
     /**
      * Start camera with surface texture
      */
@@ -144,28 +144,28 @@ class CameraTextureView @JvmOverloads constructor(
                 if (previewSize != null) {
                     surfaceTexture.setDefaultBufferSize(previewSize.width, previewSize.height)
                     Log.d(TAG, "Surface texture size set to: ${previewSize.width}x${previewSize.height}")
-                    
+
                     // Update aspect ratio for proper display
                     updateAspectRatio(previewSize.width, previewSize.height)
                 }
-                
+
                 // Open camera
                 val cameraDevice = camera2Manager.openCamera()
                 Log.d(TAG, "Camera device opened: ${cameraDevice.id}")
-                
+
                 // Create surface from texture
                 val surface = Surface(surfaceTexture)
-                
+
                 // Create capture session
                 val captureSession = camera2Manager.createCaptureSession(surface)
                 Log.d(TAG, "Capture session created")
-                
+
                 // Start preview
                 camera2Manager.startPreview(surface)
                 Log.d(TAG, "Camera preview started")
-                
+
                 isInitialized = true
-                
+
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to start camera", e)
                 withContext(Dispatchers.Main) {
@@ -174,7 +174,7 @@ class CameraTextureView @JvmOverloads constructor(
             }
         }
     }
-    
+
     /**
      * Update aspect ratio for natural camera preview like default camera app
      */
@@ -182,17 +182,17 @@ class CameraTextureView @JvmOverloads constructor(
         post {
             val viewWidth = width
             val viewHeight = height
-            
+
             if (viewWidth > 0 && viewHeight > 0) {
                 val previewRatio = previewWidth.toFloat() / previewHeight.toFloat()
                 val viewRatio = viewWidth.toFloat() / viewHeight.toFloat()
-                
+
                 Log.d(TAG, "Preview ratio: $previewRatio, View ratio: $viewRatio")
-                
+
                 // Use center crop scaling like default camera apps
                 // This fills the entire view while maintaining aspect ratio
                 val layoutParams = this.layoutParams
-                
+
                 if (previewRatio > viewRatio) {
                     // Preview is wider, scale to fill height and crop sides
                     layoutParams.width = (viewHeight * previewRatio).toInt()
@@ -202,46 +202,46 @@ class CameraTextureView @JvmOverloads constructor(
                     layoutParams.width = viewWidth
                     layoutParams.height = (viewWidth / previewRatio).toInt()
                 }
-                
+
                 this.layoutParams = layoutParams
                 Log.d(TAG, "Natural camera aspect ratio applied: ${layoutParams.width}x${layoutParams.height}")
             }
         }
     }
-    
+
     /**
      * Apply filter to camera preview
      */
     fun applyFilter(filterType: FilterType) {
         if (currentFilter == filterType) return
-        
+
         currentFilter = filterType
-        
+
         val filterShader = if (filterType == FilterType.ORIGINAL) {
             null
         } else {
             filterManager.getFilter(filterType)?.shader
         }
-        
+
         // Apply filter on GL thread
         queueEvent {
             glRenderer.setFilter(filterShader)
             Log.d(TAG, "Filter applied: ${filterType.name}")
         }
-        
+
         onFilterChanged?.invoke(filterType)
     }
-    
+
     /**
      * Get current filter
      */
     fun getCurrentFilter(): FilterType = currentFilter
-    
+
     /**
      * Get available filters
      */
     fun getAvailableFilters(): List<FilterType> = filterManager.getAvailableFilters()
-    
+
     /**
      * Add custom filter
      */
@@ -254,59 +254,59 @@ class CameraTextureView @JvmOverloads constructor(
             )
         )
     }
-    
+
     /**
      * Check if camera is ready
      */
     fun isCameraReady(): Boolean = isInitialized && !isPaused
-    
+
     /**
      * Lifecycle: Resume
      */
     override fun onResume(owner: LifecycleOwner) {
         super<DefaultLifecycleObserver>.onResume(owner)
         Log.d(TAG, "Resuming camera view")
-        
+
         if (isPaused) {
             super<GLSurfaceView>.onResume()
             isPaused = false
         }
     }
-    
+
     /**
      * Lifecycle: Pause
      */
     override fun onPause(owner: LifecycleOwner) {
         Log.d(TAG, "Pausing camera view")
-        
+
         if (!isPaused) {
             super<GLSurfaceView>.onPause()
             isPaused = true
         }
-        
+
         super<DefaultLifecycleObserver>.onPause(owner)
     }
-    
+
     /**
      * Lifecycle: Destroy
      */
     override fun onDestroy(owner: LifecycleOwner) {
         Log.d(TAG, "Destroying camera view")
-        
+
         // Stop camera
         camera2Manager.stopPreview()
         camera2Manager.close()
-        
+
         // Release OpenGL resources
         queueEvent {
             glRenderer.release()
         }
-        
+
         isInitialized = false
-        
+
         super.onDestroy(owner)
     }
-    
+
     /**
      * Handle surface destroyed
      */
@@ -314,12 +314,12 @@ class CameraTextureView @JvmOverloads constructor(
         Log.d(TAG, "Surface destroyed")
         super.surfaceDestroyed(holder)
     }
-    
+
     /**
      * Get camera preview size
      */
     fun getPreviewSize() = camera2Manager.getPreviewSize()
-    
+
     /**
      * Capture photo (future implementation)
      */
@@ -332,9 +332,9 @@ class CameraTextureView @JvmOverloads constructor(
             callback(null)
             return
         }
-        
+
         Log.d(TAG, "Capturing raw photo (no filter)")
-        
+
         // Get actual preview size from camera
         val previewSize = camera2Manager.getPreviewSize()
         if (previewSize == null) {
@@ -342,22 +342,22 @@ class CameraTextureView @JvmOverloads constructor(
             callback(null)
             return
         }
-        
+
         Log.d(TAG, "Using preview size for raw capture: ${previewSize.width}x${previewSize.height}")
-        
+
         // Store callback for when capture completes
         val captureCallback: (Bitmap?) -> Unit = { bitmap ->
             callback(bitmap)
             bitmap?.let { onPhotoCaptured?.invoke(it) }
         }
-        
+
         // Store callback temporarily
         pendingCaptureCallback = captureCallback
-        
+
         // Request raw frame capture from GL renderer (without filter)
         glRenderer.captureRawFrame(previewSize.width, previewSize.height)
     }
-    
+
     /**
      * Capture photo with current filter applied
      */
@@ -367,9 +367,9 @@ class CameraTextureView @JvmOverloads constructor(
             callback(null)
             return
         }
-        
+
         Log.d(TAG, "Capturing photo with filter: $currentFilter")
-        
+
         // Get actual preview size from camera
         val previewSize = camera2Manager.getPreviewSize()
         if (previewSize == null) {
@@ -377,22 +377,22 @@ class CameraTextureView @JvmOverloads constructor(
             callback(null)
             return
         }
-        
+
         Log.d(TAG, "Using preview size for capture: ${previewSize.width}x${previewSize.height}")
-        
+
         // Store callback for when capture completes
         val captureCallback: (Bitmap?) -> Unit = { bitmap ->
             callback(bitmap)
             bitmap?.let { onPhotoCaptured?.invoke(it) }
         }
-        
+
         // Store callback temporarily
         pendingCaptureCallback = captureCallback
-        
+
         // Request frame capture from GL renderer with actual preview size
         glRenderer.captureFrame(previewSize.width, previewSize.height)
     }
-    
+
     /**
      * Handle captured frame data from OpenGL
      */
@@ -407,7 +407,7 @@ class CameraTextureView @JvmOverloads constructor(
                     }
                     return@launch
                 }
-                
+
                 // Get actual capture dimensions from GL renderer
                 val (actualWidth, actualHeight) = glRenderer.getActualCaptureSize()
                 if (actualWidth <= 0 || actualHeight <= 0) {
@@ -418,12 +418,12 @@ class CameraTextureView @JvmOverloads constructor(
                     }
                     return@launch
                 }
-                
+
                 Log.d(TAG, "Converting pixel data to bitmap with actual capture size: ${actualWidth}x${actualHeight}")
-                
+
                 // Convert pixel data to bitmap using actual capture dimensions
                 val bitmap = PhotoUtils.pixelDataToBitmap(pixelData, actualWidth, actualHeight)
-                
+
                 withContext(Dispatchers.Main) {
                     if (bitmap != null) {
                         Log.d(TAG, "Photo captured successfully: ${bitmap.width}x${bitmap.height}")
@@ -434,7 +434,7 @@ class CameraTextureView @JvmOverloads constructor(
                     }
                     pendingCaptureCallback = null
                 }
-                
+
             } catch (e: Exception) {
                 Log.e(TAG, "Error processing captured frame", e)
                 withContext(Dispatchers.Main) {
@@ -444,7 +444,7 @@ class CameraTextureView @JvmOverloads constructor(
             }
         }
     }
-    
+
     /**
      * Switch between front and back camera
      */
@@ -453,20 +453,20 @@ class CameraTextureView @JvmOverloads constructor(
             Log.w(TAG, "Camera not ready for switching")
             return
         }
-        
+
         if (!camera2Manager.canSwitchCamera()) {
             Log.w(TAG, "Camera switching not available")
             onCameraError?.invoke("Camera switching not available")
             return
         }
-        
+
         Log.d(TAG, "Switching camera from ${if (camera2Manager.isFrontCamera()) "front" else "back"} to ${if (camera2Manager.isFrontCamera()) "back" else "front"}")
-        
+
         coroutineScope.launch {
             try {
                 // Temporarily mark as not ready during switch
                 isInitialized = false
-                
+
                 // Switch camera in manager
                 val newCamera = camera2Manager.switchCamera()
                 if (newCamera == null) {
@@ -476,7 +476,7 @@ class CameraTextureView @JvmOverloads constructor(
                     }
                     return@launch
                 }
-                
+
                 // Get new surface texture from GL renderer
                 val surfaceTexture = glRenderer.getCurrentSurfaceTexture()
                 if (surfaceTexture == null) {
@@ -486,36 +486,36 @@ class CameraTextureView @JvmOverloads constructor(
                     }
                     return@launch
                 }
-                
+
                 // Update surface texture size for new camera
                 val newPreviewSize = camera2Manager.getPreviewSize()
                 if (newPreviewSize != null) {
                     surfaceTexture.setDefaultBufferSize(newPreviewSize.width, newPreviewSize.height)
                     Log.d(TAG, "Updated surface texture size for new camera: ${newPreviewSize.width}x${newPreviewSize.height}")
-                    
+
                     // Update aspect ratio for new camera on main thread
                     withContext(Dispatchers.Main) {
                         updateAspectRatio(newPreviewSize.width, newPreviewSize.height)
                     }
                 }
-                
+
                 // Create new surface and capture session
                 val surface = Surface(surfaceTexture)
                 val captureSession = camera2Manager.createCaptureSession(surface)
-                
+
                 // Start preview with new camera
                 camera2Manager.startPreview(surface)
-                
+
                 // Mark as ready
                 isInitialized = true
-                
+
                 Log.d(TAG, "Camera switched successfully to ${if (camera2Manager.isFrontCamera()) "front" else "back"}")
-                
+
                 // Notify on main thread
                 withContext(Dispatchers.Main) {
                     onCameraReady?.invoke()
                 }
-                
+
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to switch camera", e)
                 withContext(Dispatchers.Main) {
@@ -526,22 +526,22 @@ class CameraTextureView @JvmOverloads constructor(
             }
         }
     }
-    
+
     /**
      * Check if camera switching is available
      */
     fun canSwitchCamera(): Boolean = camera2Manager.canSwitchCamera()
-    
+
     /**
      * Check if current camera is front facing
      */
     fun isFrontCamera(): Boolean = camera2Manager.isFrontCamera()
-    
+
     /**
      * Check if current camera is back facing
      */
     fun isBackCamera(): Boolean = camera2Manager.isBackCamera()
-    
+
     /**
      * Set zoom level (future implementation)
      */
@@ -549,7 +549,7 @@ class CameraTextureView @JvmOverloads constructor(
         // TODO: Implement zoom control
         Log.d(TAG, "Zoom control not implemented yet")
     }
-    
+
     /**
      * Enable/disable flash (future implementation)
      */

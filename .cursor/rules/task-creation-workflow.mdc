@@ -1,644 +1,441 @@
-# Task Creation Workflow - Automatic Task Expansion Engine
+# Task Creation Workflow - Optimized Implementation Engine
 
 ## Overview
 
-Workflow này tự động chuyển đổi các yêu cầu tính năng cấp cao thành hệ thống task chi tiết, sẵn sàng triển khai trong `.kiro/specs/{project}/tasks.md`. Được thiết kế để hoạt động với Claude, Cursor, Trae AI và Kiro system.
+This workflow converts approved design documents into detailed, actionable task lists ready for implementation in `.kiro/specs/{project}/tasks.md`. **CRITICAL**: This workflow can ONLY be used AFTER requirements and design documents are completed and approved.
 
-## Core Directive
+## 🚨 MANDATORY PREREQUISITES
 
-Khi nhận được BẤT KỲ yêu cầu tính năng nào, tự động tạo ra TẤT CẢ các sub-features, tasks và technical specifications cần thiết cho việc triển khai hoàn chỉnh.
+**BEFORE using this workflow**, the following MUST exist and be approved:
+1. **Requirements Document** - `.kiro/specs/{project}/requirements.md` (approved)
+2. **Design Document** - `.kiro/specs/{project}/design.md` (approved)
+3. **User Approval** - Explicit approval for both requirements and design
 
-## Task Expansion Rules
+**VIOLATION RULE**: If prerequisites are missing, MUST redirect to `spec-driven-development-workflow.mdc` to complete Requirements → Design → Tasks sequence.
 
-### 1. Feature Auto-Expansion Pattern
-Với bất kỳ feature X nào, tự động bao gồm:
-- **Authentication & Authorization**: Xác thực và phân quyền
-- **CRUD Operations**: Create, Read, Update, Delete
-- **User Interface**: Forms, views, lists, components
-- **API Endpoints & Data Models**: Backend APIs và data structures
-- **Validation & Error Handling**: Input validation và xử lý lỗi
-- **Security & Privacy**: Bảo mật và quyền riêng tư
-- **Settings & Preferences**: Cài đặt và tùy chọn
-- **Admin/Management**: Quản trị và điều hành
-- **Analytics & Logging**: Phân tích và ghi log
-- **Related Features**: Các tính năng liên quan mà user mong đợi
+## 🎯 CORE OPTIMIZATION PRINCIPLES
 
-### 2. Task Hierarchy Template
-```
-Feature → Sub-features → Tasks → Subtasks → Technical Details
-Ví dụ: 
-Profile → Edit Profile → Avatar Upload → [2.1 UI Design, 2.2 Validation Logic, 2.3 Storage Integration, 2.4 Testing]
-Mỗi task chính phải có 4-6 subtasks theo pattern: UI → Logic → Integration → Testing
-```
+**TASK OPTIMIZATION MANDATE**: Every task creation follows these principles:
+1. **CODING-FOCUSED ACTIVITIES** - Only tasks involving writing, modifying, or testing code
+2. **INCREMENTAL PROGRESSION** - Each task builds on previous tasks systematically  
+3. **ACTIONABLE SPECIFICATIONS** - Tasks specific enough for immediate execution
+4. **REQUIREMENTS TRACEABILITY** - Clear connection to approved requirements
+5. **SINGLE TASK EXECUTION** - One task at a time, no parallel dependencies
 
-### 3. Mandatory Inclusions
-Mỗi feature PHẢI tạo tasks cho:
-- **UI/UX**: Tất cả screens, forms, components, states (loading/error/empty/success)
-- **Backend**: APIs, validation, business logic, database operations
-- **Security**: Authentication, authorization, data protection, audit logs
-- **Quality**: Error handling, edge cases, performance, testing
-- **Operations**: Deployment, monitoring, documentation
+## Task Optimization Process
 
-### 4. Detail Level Requirements
-Với mỗi task, chỉ định:
-- **What**: Mô tả rõ ràng và acceptance criteria
-- **Subtasks**: 4-6 subtasks theo progressive complexity
-- **UI**: Component specs, layouts, responsive behavior
-- **API**: Endpoints, request/response formats, validation rules
-- **Data**: Models, relationships, constraints
-- **Logic**: Business rules, workflows, calculations
-- **Errors**: Tất cả possible failures và handling
-- **Implementation Guide**: Code examples và technical specifications
+When converting approved design to tasks, **MANDATORY** follow this 5-step optimization:
+1. **Analyze Approved Requirements** - Extract core technical objectives from requirements.md
+2. **Create Implementation Flow** - Service → UI → Integration → Testing
+3. **Build Incremental Sequence** - Each task builds on previous
+4. **Add Specific Details** - What files/components to create/modify
+5. **Validate Against Design** - Ensure all design components covered
 
-### 5. Smart Context Awareness
-- Thích ứng độ phức tạp với target users (người cao tuổi = UI lớn hơn, flows đơn giản hơn)
-- Bao gồm platform-specific needs (mobile = offline mode, desktop = keyboard shortcuts)
-- Xem xét industry requirements (healthcare = HIPAA, finance = PCI)
-- Thêm regional needs khi được chỉ định (country-specific validations, languages)
+## Task Optimization Template
 
-## Kiro Integration Workflow
+### MANDATORY Task Creation Prompt
 
-### Step 1: Project Context Detection
-```
-1. Kiểm tra current working directory
-2. Xác định project name từ .kiro/specs/ structure
-3. Validate existence của .kiro/specs/{project}/
-4. Nếu không tồn tại → tạo project structure
-5. Load existing requirements.md và design.md để hiểu context
-```
+When creating tasks, apply this systematic approach:
 
-### Step 2: Feature Analysis & Expansion
-```
-1. Parse user input để xác định core feature
-2. Apply Auto-Expansion Pattern
-3. Generate comprehensive sub-features list
-4. Cross-reference với existing tasks để tránh duplication
-5. Prioritize tasks based on dependencies và business value
-```
-
-### Step 3: Task Generation
-```
-1. Convert mỗi sub-feature thành detailed tasks với subtask breakdown
-2. Apply progressive complexity ordering (UI → Logic → Integration → Testing)
-3. Generate unique task IDs với hierarchical numbering
-4. Set dependencies và priorities
-5. Create comprehensive acceptance criteria
-6. Add technical depth với implementation guides
-```
-
-### Step 4: Integration & Validation
-```
-1. Merge với existing tasks.md
-2. Validate task dependencies
-3. Check for conflicts với existing tasks
-4. Update task numbering và references
-5. Sync với requirements.md và design.md
-```
-
-## Standard Task Format for Kiro
-
-### Enhanced Professional Task Format (Based on new_task.md Template)
 ```markdown
-### {Task Number}. {Task Name}
-**Status**: ❌ Not Started
-**Priority**: {CRITICAL|HIGH|MEDIUM|LOW}
-**Estimated Time**: {X hours}
-**Dependencies**: {List of dependent tasks or "None"}
+TASK OPTIMIZATION PROMPT:
 
-**Description**: 
-{Comprehensive 2-3 sentence description explaining what this task accomplishes, why it's important, and how it fits into the overall project}
+Convert the feature design into a series of prompts for a code-generation LLM that will implement each step in a test-driven manner. 
 
-**Key Files**: 
-- `{PrimaryFile.kt}` ({modify|new})
-- `{SecondaryFile.kt}` ({modify|new})
-- `{AdditionalFile.kt}` ({modify|new})
-- `{ViewModelFile.kt}` ({modify|new})
+REQUIREMENTS:
+- Prioritize best practices, incremental progress, and early testing
+- Ensure no big jumps in complexity at any stage
+- Make sure each prompt builds on previous prompts
+- End with wiring things together
+- No hanging or orphaned code that isn't integrated
+- Focus ONLY on tasks involving writing, modifying, or testing code
 
-**Subtasks**:
-- [ ] {ID}.1 {Specific UI/Component Implementation}
-  - {Detailed description of UI component or screen to build}
-  - {Specific UI elements, layouts, and interactions required}
-  - {User experience considerations and accessibility requirements}
-  - {Visual design specifications and responsive behavior}
-  - _Requirements: {Specific UI outcome}_
+FORMAT:
+- [ ] X. Task Title
+  - Specific implementation detail 1
+  - Specific implementation detail 2
+  - File/component references
+  - _Requirements: Reference to design requirements_
 
-- [ ] {ID}.2 {Business Logic and Data Processing}
-  - {Detailed description of core functionality and business rules}
-  - {Data processing, validation, and transformation logic}
-  - {Integration with existing business logic and use cases}
-  - {State management and data flow considerations}
-  - _Requirements: {Specific functionality outcome}_
-
-- [ ] {ID}.3 {Data Layer and Storage Integration}
-  - {Database schema changes, entity modifications, or new models}
-  - {Repository pattern implementation and data access logic}
-  - {Data persistence, caching, and synchronization requirements}
-  - {Migration scripts and data integrity considerations}
-  - _Requirements: {Specific data outcome}_
-
-- [ ] {ID}.4 {API and Service Integration}
-  - {External API integrations, network calls, and service connections}
-  - {Request/response handling and data mapping}
-  - {Authentication, authorization, and security considerations}
-  - {Error handling for network failures and service unavailability}
-  - _Requirements: {Specific integration outcome}_
-
-- [ ] {ID}.5 {Error Handling and Edge Cases}
-  - {Comprehensive error scenarios and exception handling}
-  - {Input validation, boundary conditions, and edge cases}
-  - {User feedback for errors and recovery mechanisms}
-  - {Logging, monitoring, and debugging considerations}
-  - _Requirements: {Specific robustness outcome}_
-
-- [ ] {ID}.6 {Testing and Quality Assurance}
-  - {Unit testing for all components and business logic}
-  - {Integration testing for data flow and API connections}
-  - {UI testing for user interactions and accessibility}
-  - {Performance testing and optimization verification}
-  - _Requirements: {Specific quality outcome}_
-
-**Implementation Guide**: `implementation-guides/{task-name-guide}.md`
+VALIDATION CRITERIA:
+- Each task must be executable by coding agent
+- Must specify what files/components to create/modify
+- Must be concrete enough without additional clarification
+- Must reference specific requirements from design
 ```
 
-### Critical Task Creation Standards
+### Implementation Flow Pattern
 
-#### Mandatory Task Structure Requirements
-1. **BẮT BUỘC** mỗi task phải có đúng format trên với tất cả các sections
-2. **BẮT BUỘC** Estimated Time phải realistic (4-20 hours per task)
-3. **BẮT BUỘC** Key Files phải list ra tất cả files sẽ được modify/create
-4. **BẮT BUỘC** mỗi subtask phải có 4 bullet points chi tiết + Requirements line
-5. **BẮT BUỘC** Description phải explain business value và technical context
-6. **BẮT BUỘC** Dependencies phải accurate và reference đúng task numbers
+**MANDATORY** follow this sequence for any feature:
 
-#### Subtask Detail Requirements
-- **Subtask 1 (UI)**: Phải specify exact components, screens, layouts, interactions
-- **Subtask 2 (Logic)**: Phải detail business rules, algorithms, data processing
-- **Subtask 3 (Data)**: Phải specify database changes, models, repositories
-- **Subtask 4 (API)**: Phải detail external integrations, network handling
-- **Subtask 5 (Errors)**: Phải cover all error scenarios và user feedback
-- **Subtask 6 (Testing)**: Phải specify testing types và coverage requirements
+1. **Service Layer First** - Core business logic and data operations
+2. **UI Components Second** - User interface and interaction components  
+3. **Integration Third** - Wiring services with UI components
+4. **Testing Throughout** - Unit, integration, and component tests
 
-#### Content Quality Standards
-- Mỗi bullet point trong subtask phải actionable và specific
-- Tránh generic descriptions, phải có concrete technical details
-- Include user experience considerations trong UI subtasks
-- Specify exact file names và whether they're new or modified
-- Requirements line phải measurable và verifiable
+### Task Structure Requirements
 
-### Phase Organization and Progress Tracking
+**MANDATORY** each task must include:
+- **Clear Objective** - What specific coding outcome to achieve
+- **Implementation Details** - Bullet points with concrete steps
+- **File References** - Specific files to create or modify
+- **Requirements Link** - Reference to design requirements
+- **Success Criteria** - How to validate task completion
 
-#### Mandatory Project Structure
+### Incremental Complexity Rules
+
+**MANDATORY** task ordering principles:
+- Start with foundational components (services, models)
+- Build UI components that use the services
+- Add integration and error handling
+- Finish with comprehensive testing
+- Each task should be completable in 4-20 hours
+- No task should depend on more than 2 previous tasks
+
+## 🔍 STEP 1: ANALYZE APPROVED REQUIREMENTS
+
+### Prerequisites Validation
+**MANDATORY** verify before proceeding:
+
+- [ ] **Requirements Document Exists**
+  - Check `.kiro/specs/{project}/requirements.md` exists
+  - Verify requirements follow EARS format with user stories
+  - Confirm acceptance criteria are complete and testable
+  - Validate user approval was received via userInput tool
+
+- [ ] **Design Document Exists**
+  - Check `.kiro/specs/{project}/design.md` exists
+  - Verify architecture and technical specifications are complete
+  - Confirm all required sections (Overview, Architecture, Components, Data Models, Error Handling, Testing Strategy) are included
+  - Validate user approval was received via userInput tool
+
+### Requirements Analysis Checklist
+**MANDATORY** extract from approved documents:
+
+- [ ] **Extract Core Objectives**
+  - Identify main technical goals from requirements.md user stories
+  - Map acceptance criteria to technical implementation needs
+  - Separate coding activities from non-coding activities
+  - Document core functionality from requirements acceptance criteria
+
+- [ ] **Identify Implementation Components**
+  - List all services/classes specified in design.md
+  - Identify UI components and interfaces from design architecture
+  - Map data models and database changes from design data models
+  - Document API endpoints and integration points from design
+
+- [ ] **Assess Design Specifications**
+  - Review architecture patterns specified in design document
+  - Identify components and interfaces from design specifications
+  - Check data models and technical requirements from design
+  - Document constraints and technical limitations from design
+
+- [ ] **Define Success Criteria**
+  - Extract acceptance criteria from requirements document
+  - Map design specifications to measurable outcomes
+  - Define testing requirements from design testing strategy
+  - Document integration requirements from design architecture
+
+## 🧠 STEP 2: CREATE IMPLEMENTATION FLOW
+
+### Implementation Sequence Design
+**MANDATORY** follow this systematic approach:
+
+1. **Service Layer Foundation**
+   - Identify core business logic services needed
+   - Define data access and repository patterns
+   - Plan service interfaces and method signatures
+   - Map service dependencies and interactions
+
+2. **UI Component Architecture**
+   - List all user interface components required
+   - Define component hierarchy and data flow
+   - Plan state management and user interactions
+   - Design component props and event handling
+
+3. **Integration Strategy**
+   - Plan how services connect to UI components
+   - Define error handling and loading states
+   - Map data flow between different layers
+   - Plan testing strategy for each integration point
+
+### Feature Expansion Rules
+**MANDATORY** for any feature, automatically include:
+- **Core Service Implementation** - Business logic and data operations
+- **UI Components** - User interface and interaction elements
+- **Data Layer** - Models, validation, and persistence
+- **Error Handling** - Comprehensive error scenarios and recovery
+- **Progress Tracking** - Loading states and user feedback
+- **Testing Coverage** - Unit, integration, and component tests
+
+## 🏗️ STEP 3: BUILD INCREMENTAL SEQUENCE
+
+### Task Sequencing Rules
+**MANDATORY** follow this progression:
+
+1. **Foundation First**
+   - Core services and business logic
+   - Data models and validation
+   - Base classes and utilities
+   - Essential infrastructure components
+
+2. **UI Components Second**
+   - User interface components
+   - Forms and input handling
+   - Display and visualization components
+   - Navigation and routing updates
+
+3. **Integration Third**
+   - Connect services to UI components
+   - Error handling and loading states
+   - Progress tracking and user feedback
+   - End-to-end workflow testing
+
+### Task Detail Requirements
+**MANDATORY** each task must include:
+- **Specific Implementation Steps** - Concrete coding activities
+- **File References** - Exact files to create or modify
+- **Component Specifications** - What to build and how
+- **Requirements Traceability** - Link to design requirements
+- **Success Validation** - How to verify completion
+
+### Incremental Dependency Rules
+**MANDATORY** dependency management:
+- Each task builds on maximum 2 previous tasks
+- No circular dependencies between tasks
+- Clear progression from simple to complex
+- Each task completable in 4-20 hours
+- No orphaned code that isn't integrated
+
+## 🔗 STEP 4: ADD SPECIFIC DETAILS
+
+### Implementation Detail Requirements
+**MANDATORY** each task must specify:
+
+- [ ] **Exact Files to Modify/Create**
+  - Full file paths and names
+  - Whether file is new or being modified
+  - Key classes and methods to implement
+  - Import statements and dependencies
+
+- [ ] **Component Specifications**
+  - What UI components to build
+  - What services and methods to implement
+  - What data models and interfaces to create
+  - What tests to write and coverage expected
+
+- [ ] **Integration Points**
+  - How components connect to each other
+  - What APIs or services to call
+  - How data flows between components
+  - What error handling to implement
+
+### Task Quality Checklist
+**MANDATORY** validation before completion:
+- [ ] Task is executable by coding agent without clarification
+- [ ] All implementation steps are concrete and specific
+- [ ] File references are accurate and complete
+- [ ] Requirements are clearly linked and traceable
+- [ ] Success criteria are measurable and verifiable
+
+## 🔗 STEP 5: VALIDATE AGAINST DESIGN
+
+### Design Alignment Verification
+**MANDATORY** ensure complete coverage:
+
+- [ ] **Requirements Coverage**
+  - All design requirements have corresponding tasks
+  - No missing functionality or components
+  - All user stories are addressed in tasks
+  - All technical specifications are implemented
+
+- [ ] **Architecture Consistency**
+  - Tasks follow existing code patterns
+  - No conflicts with current architecture
+  - Proper separation of concerns maintained
+  - Integration points are well-defined
+
+- [ ] **Quality Standards**
+  - All tasks include testing requirements
+  - Error handling is comprehensive
+  - Performance considerations are included
+  - Security requirements are addressed
+
+## Optimized Task Format
+
+### Standard Task Template
 ```markdown
-# {Project Name} - Implementation Tasks
-
-## 📊 Progress Overview
-**Phase 1 ({Phase Name})**: 0/{X} tasks completed (0%)
-**Phase 2 ({Phase Name})**: 0/{Y} tasks completed (0%)
-**Phase 3 ({Phase Name})**: 0/{Z} tasks completed (0%)
-**Total Progress**: 0/{Total} tasks completed (0%)
-
-## 🎯 Project Context
-
-**Current State**: {Current project status and completion percentage}
-**Architecture**: {Architecture pattern being used}
-**Tech Stack**: {Key technologies and frameworks}
-**Main Issues**: {Current problems that need to be addressed}
-
-**Key Files**:
-- {Important File 1}: `{file/path/File1.kt}`
-- {Important File 2}: `{file/path/File2.kt}`
-
----
-
-## 🚨 PHASE 1: {PHASE NAME} (Start Here)
-
-{Phase 1 tasks...}
-
----
-
-## 🚀 PHASE 2: {PHASE NAME}
-
-{Phase 2 tasks...}
-
----
-
-## 🎨 PHASE 3: {PHASE NAME}
-
-{Phase 3 tasks...}
+- [ ] X. Task Title
+  - Specific implementation detail 1
+  - Specific implementation detail 2  
+  - File/component references
+  - _Requirements: Reference to design requirements_
 ```
 
-#### Phase Organization Rules
-1. **BẮT BUỘC** chia tasks thành 3 phases với priorities rõ ràng:
-   - **Phase 1**: CRITICAL/HIGH priority - Core functionality và UX fixes
-   - **Phase 2**: MEDIUM priority - Enhanced features và integrations
-   - **Phase 3**: LOW/NICE-TO-HAVE - Advanced features và optimizations
-
-2. **BẮT BUỘC** mỗi phase phải có:
-   - Clear phase name và description
-   - Appropriate emoji indicators (🚨 for critical, 🚀 for enhanced, 🎨 for advanced)
-   - Logical task ordering với dependencies
-   - Realistic task distribution (3-7 tasks per phase)
-
-3. **BẮT BUỘC** Progress Overview phải:
-   - Show exact task counts per phase
-   - Calculate accurate percentages
-   - Update as tasks are completed
-   - Provide clear project status visibility
-
-#### Task Numbering and Dependencies
-1. **BẮT BUỘC** sử dụng sequential numbering: 1, 2, 3, 4, 5...
-2. **BẮT BUỘC** dependencies phải reference exact task numbers
-3. **BẮT BUỘC** "None" cho tasks không có dependencies
-4. **BẮT BUỘC** logical dependency flow (UI → Logic → Integration → Testing)
-
-#### Project Context Requirements
-1. **BẮT BUỘC** Current State phải accurate và informative
-2. **BắT BUỘC** Architecture phải specify pattern (Clean Architecture, MVVM, etc.)
-3. **BẮT BUỘC** Tech Stack phải list key technologies
-4. **BẮT BUỘC** Main Issues phải identify current problems
-5. **BẮT BUỘC** Key Files phải list most important files với full paths
-
-## Auto-Expansion Examples
-
-### Input: "User Profile"
-**Auto-Expands To:**
-
-### 1. User Registration System
-**Status**: ❌ Not Started | **Priority**: HIGH | **Time**: 12h | **Dependencies**: None
-
-**Key Files**: `RegistrationScreen.kt` (new), `RegistrationViewModel.kt` (new), `UserRepository.kt` (modify)
-
-**Subtasks**: UI Design, Form Validation, API Integration, Email Verification, Error Handling, Testing
-
----
-
-### 2. Profile CRUD Operations  
-**Status**: ❌ Not Started | **Priority**: HIGH | **Time**: 16h | **Dependencies**: 1
-
-**Key Files**: `ProfileScreen.kt` (new), `EditProfileScreen.kt` (new), `ProfileViewModel.kt` (new)
-
-**Subtasks**: Profile View UI, Edit Form, Data Validation, Real-time Updates, Conflict Resolution, Integration Testing
-
----
-
-### 3. Avatar Upload & Management
-**Status**: ❌ Not Started | **Priority**: MEDIUM | **Time**: 10h | **Dependencies**: 2
-
-**Key Files**: `AvatarUploadScreen.kt` (new), `ImageCropScreen.kt` (new), `AvatarViewModel.kt` (new)
-
-**Subtasks**: Upload UI, Image Processing, Storage Integration, Preview & Crop, Error Handling, Performance Testing
-
----
-
-### Input: "Payment System"
-**Auto-Expands To:**
-- **Payment Method Management**
-  - 1.1 Payment Methods UI
-  - 1.2 Card Validation Logic
-  - 1.3 Secure Storage Integration
-  - 1.4 Payment Gateway Connection
-  - 1.5 Error & Security Handling
-  - 1.6 PCI Compliance Testing
-- **Transaction Processing**
-  - 2.1 Transaction Flow UI
-  - 2.2 Payment Processing Logic
-  - 2.3 Gateway Integration
-  - 2.4 Status Tracking
-  - 2.5 Failure Recovery
-  - 2.6 Load Testing
-- **Subscription Management**
-  - 3.1 Subscription Plans UI
-  - 3.2 Billing Cycle Logic
-  - 3.3 Recurring Payment Integration
-  - 3.4 Plan Upgrade/Downgrade
-  - 3.5 Cancellation Handling
-  - 3.6 Revenue Analytics
-
-### Input: "Search Feature"
-**Auto-Expands To:**
-- **Basic Search Implementation**
-  - 1.1 Search Bar UI Design
-  - 1.2 Query Processing Logic
-  - 1.3 Search API Integration
-  - 1.4 Results Display
-  - 1.5 No Results Handling
-  - 1.6 Performance Testing
-- **Advanced Filters**
-  - 2.1 Filter UI Components
-  - 2.2 Filter Logic Implementation
-  - 2.3 Query Builder Integration
-  - 2.4 Filter Persistence
-  - 2.5 Complex Query Handling
-  - 2.6 Filter Analytics
-- **Auto-suggestions**
-  - 3.1 Suggestion UI Component
-  - 3.2 Autocomplete Logic
-  - 3.3 Search History Integration
-  - 3.4 Popular Queries
-  - 3.5 Typo Correction
-  - 3.6 Suggestion Performance
-
-## Task Categories & Modules
-
-### 🏗️ Foundation Module
-- Data models và database setup
-- Core architecture components
-- Base classes và utilities
-- Configuration management
-
-### 🎨 UI/UX Module
-- Screen designs và layouts
-- Component library
-- Navigation flow
-- Responsive design
-- Accessibility features
-
-### 🔧 Backend Module
-- API endpoints
-- Business logic
-- Data validation
-- Authentication/Authorization
-- Background services
-
-### 🧪 Testing Module
-- Unit tests
-- Integration tests
-- UI tests
-- Performance tests
-- Security tests
-
-### 📱 Platform Module
-- Platform-specific implementations
-- Native integrations
-- Performance optimizations
-- Platform guidelines compliance
-
-### 🔒 Security Module
-- Data encryption
-- Secure communication
-- Access controls
-- Audit logging
-- Compliance requirements
-
-### 📊 Analytics Module
-- User behavior tracking
-- Performance monitoring
-- Error reporting
-- Business metrics
-- A/B testing
-
-### 🚀 DevOps Module
-- CI/CD pipeline
-- Deployment automation
-- Monitoring setup
-- Backup strategies
-- Disaster recovery
-
-## Enhanced Quality Gates
-
-### Professional Task Creation Standards
-- **BẮT BUỘC** mỗi task phải có đúng 6 subtasks theo thứ tự: UI→Logic→Data→API→Error→Testing
-- **BẮT BUỘC** mỗi task phải có ít nhất 10 acceptance criteria chi tiết và đo lường được
-- **BẮT BUỘC** mỗi task phải có 4 phần technical requirements: UI/UX, API, Data, Testing
-- **BẮT BUỘC** mỗi subtask phải có mô tả chi tiết về mục tiêu cụ thể
-- **BẮT BUỘC** acceptance criteria phải cover đầy đủ: functionality, performance, security, accessibility
-- **BẮT BUỘC** technical requirements phải mô tả specifications mà KHÔNG chứa implementation code
-- **BẮT BUỘC** task description phải bao gồm business context và technical overview
-
-### Content Quality Standards
-- **BẮT BUỘC** mỗi task phải self-contained và actionable cho developer
-- **BẮT BUỘC** subtasks phải theo progressive complexity từ đơn giản đến phức tạp
-- **BẮT BUỘC** acceptance criteria phải specific, measurable, achievable, relevant, time-bound
-- **BẮT BUỘC** technical requirements phải đủ chi tiết để developer hiểu rõ expectations
-- **BẮT BUỘC** error handling và edge cases phải được address explicitly
-- **BẮT BUỘC** performance và security considerations phải được include
-
-### Integration & Consistency Validation
-- **BẮT BUỘC** check dependencies với existing tasks và avoid conflicts
-- **BẮT BUỘC** validate task ordering và logical flow
-- **BẮT BUỘC** ensure no duplicate functionality across tasks
-- **BẮT BUỘC** maintain consistency với project architecture và coding standards
-- **BẮT BUỘC** verify completeness của feature implementation across all tasks
-- **BẮT BUỘC** ensure proper module organization và separation of concerns
-
-## Execution Commands
-
-### Automatic Task Creation
-```
-kiro:create-tasks [feature-description]
-- Tự động tạo comprehensive task list
-- Apply auto-expansion rules
-- Generate Kiro-compliant format
-- Integrate với existing tasks
-```
-
-### Manual Task Enhancement
-```
-kiro:enhance-task [task-id]
-- Expand existing task với additional details
-- Add missing acceptance criteria
-- Update technical specifications
-- Validate completeness
-```
-
-### Task Validation
-```
-kiro:validate-tasks
-- Check task format compliance
-- Validate dependencies
-- Ensure completeness
-- Generate quality report
-```
-
-## Integration với IDE Systems
-
-### Claude Integration
-- Sử dụng conversation context để hiểu feature requirements
-- Generate tasks trong Claude conversation
-- Export tasks to .kiro/specs/{project}/tasks.md
-- Maintain task traceability
-
-### Cursor Integration
-- Integrate với Cursor's codebase understanding
-- Generate tasks based on existing code structure
-- Suggest refactoring tasks
-- Auto-update task status based on code changes
-
-### Trae AI Integration
-- Leverage Trae's project analysis capabilities
-- Generate context-aware tasks
-- Integrate với Trae's planning workflows
-- Use Trae's code intelligence for task estimation
-
-## Critical Professional Task Creation Rules
-
-### Core Creation Principles
-1. **KHÔNG BAO GIỜ** hỏi clarification - đưa ra reasonable assumptions dựa trên best practices
-2. **LUÔN LUÔN** tạo comprehensive, professional-grade tasks ngay cả từ minimal input
-3. **BẮT BUỘC** mỗi task phải có đúng 6 subtasks theo thứ tự chuẩn: UI→Logic→Data→API→Error→Testing
-4. **BẮT BUỘC** mỗi task phải có ít nhất 10 acceptance criteria chi tiết và measurable
-5. **BẮT BUỘC** technical requirements phải comprehensive nhưng KHÔNG chứa implementation code
-
-### Quality & Completeness Standards
-6. **BẮT BUỘC** include tất cả edge cases, error scenarios, và security considerations
-7. **BẮT BUỘC** output phải đủ chi tiết để developer có thể bắt đầu coding ngay lập tức
-8. **ƯU TIÊN** professional completeness và actionable details hơn brevity
-9. **BẮT BUỘC** mỗi subtask phải có clear, specific objective và deliverable
-10. **BẮT BUỘC** acceptance criteria phải cover functionality, performance, security, accessibility
-
-### Integration & Consistency Requirements
-11. **BẮT BUỘC** tuân thủ Enhanced Professional Task Format standards
-12. **BẮT BUỘC** integrate seamlessly với existing project structure và architecture
-13. **BẮT BUỘC** maintain logical task dependencies và progressive complexity ordering
-14. **BẮT BUỘC** ensure no duplicate functionality và maintain separation of concerns
-15. **BẮT BUỘC** verify completeness của entire feature implementation across all generated tasks
-
-## Professional Success Criteria
-
-### Developer Readiness Standard
-Một developer phải có thể bắt đầu coding ngay lập tức sau khi đọc task output, với đầy đủ thông tin về:
-- **What to build**: Clear functional requirements và expected outcomes
-- **How to build**: Technical specifications và implementation approach
-- **How to validate**: Comprehensive acceptance criteria và testing requirements
-- **How to integrate**: Dependencies, APIs, và integration points
-
-### Quality Benchmarks
-- **Completeness**: 100% coverage của feature requirements across all tasks
-- **Actionability**: Mỗi task và subtask có clear deliverables và success metrics
-- **Professional Standard**: Tasks comparable với enterprise-level project management
-- **Technical Depth**: Sufficient detail để avoid implementation ambiguity
-- **Integration Ready**: Seamless fit với existing codebase và architecture
-
-## Example Usage
-
-### Input
-```
-"Tôi muốn thêm tính năng chat cho ứng dụng"
-```
-
-### Output
+### Detailed Task Format (When Needed)
 ```markdown
-## 💬 CHAT SYSTEM - Comprehensive Implementation Tasks
-
-### 🏗️ MODULE 1: Chat Foundation
-
-#### TASK-001: Chat Data Models & Database
-**Status**: ❌ Not Started
-**Priority**: High
-**Dependencies**: None
-**Module**: Chat Foundation
-
-Create comprehensive chat data models supporting real-time messaging, media sharing, and group conversations.
-
-**Subtasks:**
-- **1.1 Database Schema Design**: Design Room entities và relationships
-- **1.2 Data Access Layer**: Implement DAOs với CRUD operations
-- **1.3 Model Validation**: Add data validation và constraints
-- **1.4 Migration Scripts**: Create database migration strategies
-- **1.5 Encryption Integration**: Implement message encryption support
-- **1.6 Testing Suite**: Unit tests cho data layer
-
-**Acceptance Criteria:**
-- [ ] Create ChatEntity.kt with Room annotations
-- [ ] Create MessageEntity.kt with support for text, image, file, voice
-- [ ] Create ChatParticipantEntity.kt for user management
-- [ ] Create ChatDao.kt with CRUD operations
-- [ ] Update HealthDatabase.kt to include chat entities
-- [ ] Add message encryption support
-- [ ] Add message status tracking (sent, delivered, read)
-- [ ] Add typing indicators support
-- [ ] Add message reactions support
-- [ ] Add message threading support
-
-**Technical Specifications:**
-```kotlin
-@Entity(tableName = "chats")
-data class ChatEntity(
-    @PrimaryKey val id: String,
-    val name: String?,
-    val type: ChatType, // DIRECT, GROUP
-    val createdAt: Long,
-    val updatedAt: Long,
-    val lastMessageId: String?,
-    val isArchived: Boolean = false,
-    val isMuted: Boolean = false
-)
-
-@Entity(tableName = "messages")
-data class MessageEntity(
-    @PrimaryKey val id: String,
-    val chatId: String,
-    val senderId: String,
-    val content: String,
-    val messageType: MessageType, // TEXT, IMAGE, FILE, VOICE
-    val timestamp: Long,
-    val status: MessageStatus, // SENDING, SENT, DELIVERED, READ
-    val replyToMessageId: String?,
-    val isEdited: Boolean = false,
-    val isDeleted: Boolean = false,
-    val encryptedContent: String?
-)
+- [ ] X. Task Title
+  - Create/modify specific files and components
+  - Implement specific methods and functionality
+  - Add specific UI elements and interactions
+  - Include specific validation and error handling
+  - Write specific tests and verification
+  - _Requirements: Specific design requirement reference_
 ```
 
-**Implementation Guide:**
-- Use Room database với TypeConverters cho complex types
-- Implement encryption using Android Keystore
-- Follow Repository pattern cho data access
-- Add proper indexing cho performance
+### Task Quality Standards
+**MANDATORY** each task must include:
+- **Clear Objective** - What specific outcome to achieve
+- **Implementation Steps** - Concrete coding activities
+- **File References** - Specific files to create/modify
+- **Requirements Link** - Connection to design requirements
+- **Success Criteria** - How to validate completion
 
-**Requirements Reference:** Chat System Requirements
-
-#### TASK-002: Real-time Messaging Engine
-**Status**: ❌ Not Started
-**Priority**: High
-**Dependencies**: TASK-001
-**Module**: Chat Foundation
-
-**Subtasks:**
-- **2.1 WebSocket Connection**: Implement real-time connection management
-- **2.2 Message Queue**: Handle message sending/receiving queues
-- **2.3 Offline Support**: Implement offline message storage
-- **2.4 Sync Mechanism**: Handle message synchronization
-- **2.5 Connection Recovery**: Auto-reconnection và error handling
-- **2.6 Performance Testing**: Load testing cho concurrent users
-
-[Continue với detailed task breakdown...]
+### Example Optimized Task
+```markdown
+- [ ] 2. Implement Health Planning Service core functionality
+  - Create HealthPlanService class with CRUD operations
+  - Implement createHealthPlan, getHealthPlans, updateHealthPlan methods
+  - Add health-specific data validation and error handling
+  - Create TypeScript interfaces for HealthPlan and related types
+  - _Requirements: Health Domain Service, Type Safety_
 ```
 
-Workflow này đảm bảo rằng mọi feature request đều được chuyển đổi thành actionable, comprehensive task list sẵn sàng cho implementation.
+## Critical Task Creation Rules
 
-## 🔧 Implementation Notes
+### MANDATORY Task Standards
+1. **CODING ACTIVITIES ONLY** - Tasks must involve writing, modifying, or testing code
+2. **INCREMENTAL PROGRESSION** - Each task builds on previous tasks systematically
+3. **SPECIFIC IMPLEMENTATION** - Concrete steps that coding agent can execute
+4. **REQUIREMENTS TRACEABILITY** - Clear link to design requirements
+5. **REALISTIC SCOPE** - Tasks completable in 4-20 hours
 
-- Always validate task completeness before marking as done
-- Maintain consistent naming conventions across all tasks
-- Ensure proper dependency tracking and resolution
-- Regular progress reviews and timeline adjustments
-- Quality gates at each phase completion
-- Documentation updates with each task completion
+### Task Content Requirements
+- **Clear Objective** - What specific coding outcome to achieve
+- **Implementation Steps** - Bullet points with concrete actions
+- **File References** - Specific files to create or modify
+- **Requirements Link** - Reference to design requirements
+- **Success Criteria** - How to validate task completion
 
-## 🚨 Enforcement Rules
+### Quality Validation Checklist
+**MANDATORY** before task completion:
+- [ ] Task is executable by coding agent without clarification
+- [ ] All implementation steps are concrete and specific
+- [ ] File references are accurate and complete
+- [ ] Requirements are clearly linked and traceable
+- [ ] Success criteria are measurable and verifiable
+- [ ] Task builds incrementally on previous tasks
+- [ ] No non-coding activities included
 
-### BẮT BUỘC - Mandatory Compliance
+## Optimized Task File Structure
 
-1. **Format**: Tasks MUST follow compact format (Status | Priority | Time | Dependencies)
-2. **Time**: 4-20 hours per task
-3. **Files**: List key files with modification status
-4. **Phases**: 3 phases with emoji indicators (🚨🚀🎨)
-5. **Dependencies**: Reference by task number
-6. **Subtasks**: 6 core subtasks minimum
-7. **Vietnamese**: Required sections in Vietnamese
-8. **Structure**: Project overview + phases + tasks
+### Standard Implementation Plan Format
+```markdown
+# Implementation Plan
 
-### Quality Checklist
+## Overview
 
-- [ ] 3 phases with 3-7 tasks each
-- [ ] Realistic time estimates
-- [ ] Clear dependencies
-- [ ] Key files specified
-- [ ] Vietnamese compliance
+This implementation plan converts the [feature] design into actionable coding tasks that build incrementally on each other. Each task focuses on specific code implementation that can be executed by a coding agent.
 
-### Non-Compliance
+## Implementation Tasks
 
-- Incomplete tasks → reject and recreate
-- Wrong format → immediate correction
-- Missing details → expand following workflow
+- [ ] 1. Task Title
+  - Specific implementation detail 1
+  - Specific implementation detail 2
+  - File/component references
+  - _Requirements: Reference to design requirements_
+
+- [ ] 2. Task Title
+  - Specific implementation detail 1
+  - Specific implementation detail 2
+  - File/component references
+  - _Requirements: Reference to design requirements_
+
+[Continue with remaining tasks...]
+```
+
+### Task Organization Principles
+1. **Sequential Numbering** - Simple 1, 2, 3, 4... format
+2. **Incremental Dependencies** - Each task builds on previous
+3. **Clear Progression** - Foundation → UI → Integration → Testing
+4. **Manageable Scope** - 8-15 tasks total for most features
+5. **Coding Focus** - Only tasks involving code implementation
+
+## Implementation Examples
+
+### Example: "User Profile Feature"
+**Optimized Task Output:**
+
+```markdown
+# Implementation Plan
+
+## Overview
+
+This implementation plan converts the user profile design into actionable coding tasks that build incrementally on each other. Each task focuses on specific code implementation that can be executed by a coding agent.
+
+## Implementation Tasks
+
+- [ ] 1. Create User Profile Service
+  - Implement UserProfileService class with CRUD operations
+  - Add getUserProfile, updateProfile, deleteProfile methods
+  - Create TypeScript interfaces for UserProfile data types
+  - Add profile data validation and error handling
+  - _Requirements: User Profile Service, Data Management_
+
+- [ ] 2. Build Profile UI Components
+  - Create ProfileCard component for profile display
+  - Implement ProfileForm component for editing
+  - Add ProfileAvatar component with upload functionality
+  - Include proper TypeScript props and state management
+  - _Requirements: Profile UI Components, User Interface_
+
+- [ ] 3. Implement Profile Data Integration
+  - Connect ProfileService to UI components
+  - Add loading states and error handling
+  - Implement real-time profile updates
+  - Add profile validation and feedback
+  - _Requirements: Data Integration, User Experience_
+
+- [ ] 4. Add Profile Testing Suite
+  - Write unit tests for ProfileService methods
+  - Create component tests for UI elements
+  - Add integration tests for profile workflows
+  - Include accessibility and responsive design tests
+  - _Requirements: Testing Strategy, Quality Assurance_
+```
+
+## 🚨 WORKFLOW INTEGRATION ENFORCEMENT
+
+### Integration with Workflow Coordinator
+This workflow is **SUBORDINATE** to `workflow-coordinator.mdc`:
+
+- **Routing**: All requests route through workflow-coordinator.mdc first
+- **Prerequisites**: Coordinator validates requirements.md and design.md exist and are approved
+- **New Features**: Coordinator redirects to spec-driven-development-workflow.mdc for complete sequence
+- **Task Optimization**: This workflow used ONLY when coordinator confirms prerequisites met
+- **Execution Phase**: All task execution follows single-task rule enforced by coordinator
+
+### Mandatory Workflow Checks
+**BEFORE using this workflow**, verify:
+- [ ] `.kiro/specs/{project}/requirements.md` exists and is approved
+- [ ] `.kiro/specs/{project}/design.md` exists and is approved
+- [ ] User has explicitly approved both documents
+- [ ] No missing prerequisites from spec-driven-development workflow
+
+### Violation Handling
+**IF prerequisites are missing**:
+1. **STOP** current task creation process
+2. **REDIRECT** to spec-driven-development-workflow.mdc
+3. **COMPLETE** Requirements → Design → Tasks sequence
+4. **RETURN** to this workflow only after all approvals
+
+## Summary
+
+This optimized workflow focuses on:
+- **Converting approved designs** into actionable task lists
+- **Coding-only activities** that can be executed by development agents
+- **Incremental task progression** that builds systematically
+- **Requirements traceability** to approved requirements and design
+- **Integration with spec-driven development** workflow
+
+**CRITICAL**: This workflow can ONLY be used as part of the complete spec-driven development process, never as a standalone task creation tool.

@@ -35,13 +35,13 @@ fun FilterPreviewItem(
     } else {
         Color.Transparent
     }
-    
+
     val backgroundColor = if (isSelected) {
         MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
     } else {
         Color.Black.copy(alpha = 0.3f)
     }
-    
+
     Column(
         modifier = modifier
             .clickable { onClick() }
@@ -67,9 +67,9 @@ fun FilterPreviewItem(
                 isSelected = isSelected
             )
         }
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         // Filter name
         Text(
             text = getFilterDisplayName(filterType),
@@ -139,7 +139,7 @@ private fun FilterPreviewContent(
         FilterType.CYBERPUNK -> Color(0xFF9400D3) // Violet
         FilterType.CHERRY_BLOSSOM -> Color(0xFFFFB6C1) // Light pink
     }
-    
+
     Box(
         modifier = Modifier
             .size(32.dp)
@@ -386,4 +386,3 @@ private fun FilterPreviewContent(
         }
     }
 }
-

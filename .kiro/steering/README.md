@@ -20,11 +20,7 @@ This `.kiro/steering/` directory functions as:
    ├── Workflow implementations
    └── Enforcement logic
 
-2. .appdexer/rules/   ← Secondary Reference
-   ├── Global project rules
-   └── Cross-project standards
-
-3. .kiro/steering/    ← Alias Layer (Lowest Priority)
+2. .kiro/steering/    ← Alias Layer (Lowest Priority)
    ├── Alias links to .cursor/rules/
    ├── Synchronization documentation
    └── Kiro-specific configurations

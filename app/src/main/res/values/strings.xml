@@ -115,6 +115,118 @@
     <string name="save_photo">Save</string>
     <string name="discard_photo">Discard</string>
     <string name="retake_photo">Retake</string>
+    
+    <!-- Effect names -->
+    <string name="effect_none">None</string>
+    <string name="effect_original">Original</string>
+    <string name="effect_bokeh">Bokeh</string>
+    <string name="effect_glow">Glow</string>
+    <string name="effect_neon_glow">Neon Glow</string>
+    <string name="effect_golden_hour">Golden Hour</string>
+    <string name="effect_soft_light">Soft Light</string>
+    <string name="effect_lens_flare">Lens Flare</string>
+    <string name="effect_motion_blur">Motion Blur</string>
+    <string name="effect_radial_blur">Radial Blur</string>
+    <string name="effect_zoom_blur">Zoom Blur</string>
+    <string name="effect_tilt_shift">Tilt-shift</string>
+    <string name="effect_glitch">Glitch</string>
+    <string name="effect_vhs">VHS</string>
+    <string name="effect_rgb_split">RGB Split</string>
+    <string name="effect_tv_static">TV Static</string>
+    <string name="effect_film_grain">Film Grain</string>
+    <string name="effect_film_scratches">Film Scratches</string>
+    <string name="effect_dust_spots">Dust Spots</string>
+    <string name="effect_paper_texture">Paper Texture</string>
+    <string name="effect_canvas_texture">Canvas Texture</string>
+    <string name="effect_light_leak">Light Leak</string>
+    <string name="effect_dust_overlay">Dust Overlay</string>
+    <string name="effect_oil_painting">Oil Painting</string>
+    <string name="effect_watercolor">Watercolor</string>
+    <string name="effect_cartoon">Cartoon</string>
+    <string name="effect_pencil_sketch">Pencil Sketch</string>
+    <string name="effect_sketch">Sketch</string>
+    <string name="effect_comic_book">Comic Book</string>
+    <string name="effect_pop_art">Pop Art</string>
+    <string name="effect_negative">Negative</string>
+    <string name="effect_color_splash">Color Splash</string>
+    <string name="effect_duotone">Duotone</string>
+    <string name="effect_gradient_overlay">Gradient Overlay</string>
+    <string name="effect_rainbow">Rainbow</string>
+    <string name="effect_holographic">Holographic</string>
+    <string name="effect_infrared">Infrared</string>
+    <string name="effect_x_ray">X-Ray</string>
+    <string name="effect_thermal">Thermal</string>
+    <string name="effect_fisheye">Fisheye</string>
+    <string name="effect_ripple">Ripple</string>
+    <string name="effect_mirror">Mirror</string>
+    <string name="effect_kaleidoscope">Kaleidoscope</string>
+    <string name="effect_barrel_distortion">Barrel Distortion</string>
+    <string name="effect_perspective_warp">Perspective Warp</string>
+    <string name="effect_3d_anaglyph">3D Anaglyph</string>
+    
+    <!-- New Futuristic & Sci-Fi Effects -->
+    <string name="effect_hologram">Hologram</string>
+    <string name="effect_matrix_rain">Matrix Rain</string>
+    <string name="effect_cyberpunk_scan">Cyberpunk Scan</string>
+    <string name="effect_energy_shield">Energy Shield</string>
+    <string name="effect_portal">Portal</string>
+    
+    <!-- New Dynamic & Particle Effects -->
+    <string name="effect_fire_effect">Fire Effect</string>
+    <string name="effect_lightning">Lightning</string>
+    <string name="effect_particle_explosion">Particle Explosion</string>
+    <string name="effect_dna_helix">DNA Helix</string>
+    <string name="effect_time_warp">Time Warp</string>
+
+    <!-- Advanced 3D & Particle Effects -->
+    <string name="effect_particle_explosion_3d">Particle Explosion 3D</string>
+    <string name="effect_depth_field_blur">Depth Field Blur</string>
+    <string name="effect_card_dance_3d">3D Card Dance</string>
+    <string name="effect_caustics_water">Caustics Water Effect</string>
+    <string name="effect_volumetric_light">Volumetric Light</string>
+    <string name="effect_particle_storm">Particle Storm</string>
+
+    <!-- Advanced Distortion & Morphing Effects -->
+    <string name="effect_mesh_warp">Mesh Warp</string>
+    <string name="effect_turbulent_displace">Turbulent Displace</string>
+    <string name="effect_displacement_map">Displacement Map</string>
+    <string name="effect_face_morphing_advanced">Advanced Face Morphing</string>
+    <string name="effect_liquid_distortion">Liquid Distortion</string>
+    <string name="effect_gravity_warp">Gravity Warp</string>
+
+    <!-- Interactive & Dynamic Advanced Effects -->
+    <string name="effect_time_warp_scan_advanced">Time Warp Scan Advanced</string>
+    <string name="effect_fluid_dynamics">Fluid Dynamics</string>
+    <string name="effect_force_field">Force Field</string>
+    <string name="effect_deflector_bounce">Deflector Bounce</string>
+    <string name="effect_motion_tracking">Motion Tracking</string>
+    <string name="effect_gesture_reactive">Gesture Reactive</string>
+    
+    <!-- Social Media Trending Effects -->
+    <string name="effect_time_warp_scan">Time Warp Scan</string>
+    <string name="effect_slow_zoom">Slow Zoom</string>
+    <string name="effect_retro_cam">Retro Camera</string>
+    <string name="effect_bling_sparkle">Bling Sparkle</string>
+    <string name="effect_disney_style">Disney Style</string>
+    <string name="effect_green_screen">Green Screen</string>
+    <string name="effect_tonal_cinematic">Tonal Cinematic</string>
+
+    <!-- Effect Categories -->
+    <string name="effect_category_light_glow">Light &amp; Glow</string>
+    <string name="effect_category_motion_blur">Motion &amp; Blur</string>
+    <string name="effect_category_glitch_vhs">Glitch &amp; VHS</string>
+    <string name="effect_category_texture_overlay">Texture &amp; Overlay</string>
+    <string name="effect_category_artistic">Artistic</string>
+    <string name="effect_category_special_color">Special Color</string>
+    <string name="effect_category_distortion_3d">3D &amp; Distortion</string>
+    <string name="effect_category_futuristic_sci_fi">Futuristic &amp; Sci-Fi</string>
+    <string name="effect_category_dynamic_particles">Dynamic &amp; Particles</string>
+    <string name="effect_category_face_beauty">Face &amp; Beauty</string>
+    <string name="effect_category_interactive">Interactive</string>
+    <string name="effect_category_social_trending">Social Trending</string>
+    <string name="effect_category_advanced_3d_particle">Advanced 3D &amp; Particle</string>
+    <string name="effect_category_advanced_distortion">Advanced Distortion</string>
+    <string name="effect_category_interactive_advanced">Interactive Advanced</string>
     <string name="photo_preview">Photo Preview</string>
     <string name="saving">Saving...</string>
     <string name="save">Save</string>
@@ -139,16 +251,15 @@
     
     <!-- Photo Adjustment Strings -->
     <string name="adjust">Adjust</string>
-    <string name="adjust_photo">Adjust Photo</string>
+    <string name="reset">Reset</string>
+    <string name="apply">Apply</string>
     <string name="brightness">Brightness</string>
     <string name="contrast">Contrast</string>
     <string name="saturation">Saturation</string>
-    <string name="warmth">Warmth</string>
-    <string name="tint">Tint</string>
     <string name="highlights">Highlights</string>
     <string name="shadows">Shadows</string>
-    <string name="reset">Reset</string>
-    <string name="apply">Apply</string>
+    <string name="warmth">Warmth</string>
+    <string name="tint">Tint</string>
     <string name="basic">Basic</string>
     <string name="advanced">Advanced</string>
 </resources>

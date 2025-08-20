@@ -63,7 +63,6 @@ Location: .cursor/rules/interactive-suggestion.mdc
 Purpose: User interaction cho feature approval
 Inputs: Suggestion list, user preferences
 Outputs: Approved features, updated planning
-Dependencies: Review Gate V2 (nếu có)
 ```
 
 ### Integration Architecture

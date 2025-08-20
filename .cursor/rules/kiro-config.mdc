@@ -53,21 +53,21 @@ alwaysApply: false
 - Acceptance Criteria: Minimum 2 testable criteria
 ```
 
-## Fallback Workflow Integration
+## Dynamic Workflow Integration
 
-### Automatic Fallback Detection
+### Automatic Dynamic Detection
 - **BẮT BUỘC** check for existence of required files:
   - `.kiro/specs/{project}/requirements.md`
   - `.kiro/specs/{project}/design.md`
   - `.kiro/specs/{project}/tasks.md`
-- **BẮT BUỘC** trigger fallback workflow if any missing
-- **KHUYẾN NGHỊ** use Kiro tools first before fallback
+- **BẮT BUỘC** trigger dynamic workflow if any missing
+- **KHUYẾN NGHỊ** use Kiro tools first before dynamic workflow
 
-### Fallback Execution
+### Dynamic Execution
 ```markdown
-## Fallback Workflow Steps
+## Dynamic Workflow Steps
 1. Detect missing files
-2. Update info-hub.md with fallback status
+2. Update info-hub.md with dynamic status
 3. Execute Brainstorm → Requirements → Design → Tasks
 4. Validate generated files
 5. Update info-hub.md with completion status
@@ -142,7 +142,7 @@ alwaysApply: false
 - Tasks completed per session
 - Average task completion time
 - Dependency resolution time
-- Fallback workflow frequency
+- Dynamic workflow frequency
 - Task failure rate
 
 ## Update info-hub with metrics weekly
@@ -194,7 +194,7 @@ alwaysApply: false
 ## Queue Health Checks
 - Alert if tasks pending > 24 hours
 - Warn if blocked tasks > 3
-- Notify if fallback triggered > 2/day
+- Notify if dynamic workflow triggered > 2/day
 ```
 
 ### Performance Alerts
@@ -221,7 +221,7 @@ alwaysApply: false
 ## Kiro Integration Testing
 - Info-hub update verification
 - Concurrent task execution
-- Fallback workflow trigger
+- Dynamic workflow trigger
 - Conflict detection accuracy
 ```
 
@@ -250,4 +250,4 @@ KIRO_DEBUG=true
 
 ---
 
-**Note**: This configuration ensures Kiro task system works seamlessly with info-hub synchronization while maintaining high quality through spec-driven development principles and fallback mechanisms.
+**Note**: This configuration ensures Kiro task system works seamlessly with info-hub synchronization while maintaining high quality through spec-driven development principles and dynamic workflow mechanisms.

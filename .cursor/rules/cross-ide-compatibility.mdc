@@ -23,10 +23,6 @@
 ├── File references đến .cursor/rules/
 ├── Kiro-specific configurations
 └── Spec-driven workflow aliases
-
-.appdexer/rules/   ← GLOBAL LAYER (Cross-project)
-├── Global project standards
-└── Cross-project rules
 ```
 
 ## 📋 Quy Trình Đồng Bộ
@@ -50,9 +46,6 @@ elif [ -d ".trae" ]; then
 elif [ -d ".kiro" ]; then
     IDE_TYPE="kiro"
     CONFIG_PATH=".kiro/steering"
-else
-    IDE_TYPE="generic"
-    CONFIG_PATH=".appdexer/rules"
 fi
 ```
 

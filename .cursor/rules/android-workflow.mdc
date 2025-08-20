@@ -430,7 +430,26 @@ class NetworkRepository {
 - ***KHUYẾN NGHỊ*** prefer lightweight alternatives khi có thể
 - ***KHUYẾN NGHỊ*** sử dụng `implementation` thay vì `api` trong Gradle
 
+## 🔴 CRITICAL: Error Prevention Integration
+
+### **BẮT BUỘC** - Apply Error Prevention Rules
+- **BẮT BUỘC** tuân thủ 100% [Android Error Prevention Rules](./android-error-prevention.mdc)
+- **BẮT BUỘC** sử dụng [AI Android Quality Enforcer](./ai-android-quality-enforcer.mdc) cho mọi code generation
+- **BẮT BUỘC** áp dụng [Real-time Error Detector](./android-realtime-error-detector.mdc) trong quá trình development
+
+### **Error Prevention Checklist (BẮT BUỘC 100%)**
+- [ ] **Type Safety**: Không có type inference errors
+- [ ] **Import Resolution**: Tất cả imports được resolve
+- [ ] **Null Safety**: Sử dụng safe calls cho nullable types
+- [ ] **Method Signatures**: Parameters và return types khớp
+- [ ] **When Expressions**: Exhaustive với else branches
+- [ ] **Resource Validation**: Tất cả R.* references tồn tại
+- [ ] **Error Handling**: Try-catch cho risky operations
+- [ ] **ViewBinding Cleanup**: Proper null assignment trong onDestroyView
+- [ ] **Lifecycle Awareness**: Coroutines sử dụng appropriate scopes
+
 ## Danh Sách Kiểm Tra Chất Lượng
+- [ ] **Error Prevention Compliance**: 100% tuân thủ error prevention rules
 - [ ] MVVM + Clean Architecture được implement đúng
 - [ ] Unidirectional Data Flow được đảm bảo
 - [ ] R8/ProGuard configuration hoạt động
@@ -447,4 +466,6 @@ class NetworkRepository {
 - [ ] Sử dụng các base classes khi thích hợp
 - [ ] UI components được tái sử dụng khi có thể
 - [ ] Blueprint được hoàn thiện trước khi viết code
-- [ ] Module Registry được cập nhật sau khi hoàn thành 
+- [ ] Module Registry được cập nhật sau khi hoàn thành
+- [ ] **AI Quality Enforcer**: Passed all validation checks
+- [ ] **Real-time Error Detection**: No critical issues detected

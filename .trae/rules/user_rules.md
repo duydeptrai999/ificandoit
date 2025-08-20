@@ -7,9 +7,9 @@
 ### Core Quality Rules (MANDATORY COMPLIANCE)
 
 - **[Mandatory Code Quality Enforcement](mandatory-code-quality.md)** - TRAE specific enforcement
-- **[AI Code Quality Automation](../../.cursor/rules/ai-code-quality-automation.mdc)** - Manual workflow
-- **[AI Manual Code Review Process](../../.cursor/rules/ai-manual-code-review-process.mdc)** - Review protocols
-- **[AI Execution Templates](../../.cursor/rules/ai-execution-templates.mdc)** - Execution templates
+- **[AI Code Quality Automation](../../.trae/rules/ai-code-quality-automation.md)** - Manual workflow
+- **[AI Manual Code Review Process](../../.trae/rules/ai-manual-code-review-process.md)** - Review protocols
+- **[AI Execution Templates](../../.trae/rules/ai-execution-templates.md)** - Execution templates
 
 ## 🔥 Core Principles
 
@@ -54,28 +54,28 @@ Các quy tắc chi tiết được định nghĩa trong:
 
 ### Core Development
 
-- **[Project Identity Enforcement](.cursor/rules/project-identity-enforcement.mdc)**
-- **[Base Rules](.cursor/rules/base-rules.mdc)**
-- **[Development Rules](.cursor/rules/development-rules.mdc)**
-- **[File Protection Rules](.cursor/rules/file-protection-rules.mdc)**
+- **[Project Identity Enforcement](.trae/rules/project-identity-enforcement.md)**
+- **[Base Rules](.trae/rules/base-rules.md)**
+- **[Development Rules](.trae/rules/development-rules.md)**
+- **[File Protection Rules](.trae/rules/file-protection-rules.md)**
 
 ### Platform Specific
 
-- **[Android Workflow](.cursor/rules/android-workflow.mdc)**
-- **[iOS Workflow](.cursor/rules/ios-workflow.mdc)**
-- **[Mobile Utility Workflow](.cursor/rules/mobile-utility-workflow.mdc)**
+- **[Android Workflow](.trae/rules/android-workflow.md)**
+- **[iOS Workflow](.trae/rules/ios-workflow.md)**
+- **[Mobile Utility Workflow](.trae/rules/mobile-utility-workflow.md)**
 
 ### Project Management
 
-- **[Planning Workflow](.cursor/rules/planning-workflow.mdc)**
-- **[Brainstorm Workflow](.cursor/rules/brainstorm-detailed-workflow.mdc)**
-- **[Memory Bank Workflow](.cursor/rules/memory-bank-workflow.mdc)**
+- **[Planning Workflow](.trae/rules/planning-workflow.md)**
+- **[Brainstorm Workflow](.trae/rules/brainstorm-detailed-workflow.md)**
+- **[Memory Bank Workflow](.trae/rules/memory-bank-workflow.md)**
 
 ### Quality & Testing
 
-- **[TDD Mobile Workflow](.cursor/rules/tdd-mobile-workflow.mdc)**
-- **[Code Deduplication](.cursor/rules/universal-code-deduplication.mdc)**
-- **[Review Gate V2](.cursor/rules/ReviewGateV2.mdc)**
+- **[TSDDR 2.0 Mobile Workflow](../../docs/TSDDR-2.0-Guide.md)**
+- **[Code Deduplication](.trae/rules/universal-code-deduplication.md)**
+- **[Review Gate V2](.trae/rules/ReviewGateV2.md)**
 
 > **📋 Xem danh sách đầy đủ trong `.cursor/rules/` directory**
 

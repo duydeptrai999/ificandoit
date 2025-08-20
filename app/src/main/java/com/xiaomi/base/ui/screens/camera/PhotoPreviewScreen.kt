@@ -35,6 +35,9 @@ import com.xiaomi.base.ui.screens.camera.components.FilterPreviewItem
 import com.xiaomi.base.ui.screens.camera.filter.FilterType
 import com.xiaomi.base.ui.screens.camera.filter.FilterManager
 import com.xiaomi.base.ui.screens.camera.utils.PhotoUtils
+import com.xiaomi.base.ui.screens.camera.effect.EffectSelectionPanel
+import com.xiaomi.base.ui.screens.camera.effect.EffectType
+import com.xiaomi.base.ui.screens.camera.effect.EffectManager
 import kotlinx.coroutines.launch
 
 /**
@@ -52,24 +55,26 @@ fun PhotoPreviewScreen(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    
+
     var isSaving by remember { mutableStateOf(false) }
     var showSaveDialog by remember { mutableStateOf(false) }
     var showDiscardDialog by remember { mutableStateOf(false) }
     var selectedEditOption by remember { mutableStateOf("") }
-    
+
     // Photo editing state
     data class PhotoEditState(
         val filter: FilterType = FilterType.ORIGINAL,
         val adjustmentValues: AdjustmentValues = AdjustmentValues(),
-        val hasAdjustments: Boolean = false
+        val hasAdjustments: Boolean = false,
+        val effect: EffectType = EffectType.ORIGINAL
     )
-    
+
     var editState by remember { mutableStateOf(PhotoEditState(initialFilter)) }
     var currentBitmap by remember { mutableStateOf(rawPhotoBitmap) }
     var showFilterPanel by remember { mutableStateOf(false) }
     var showAdjustView by remember { mutableStateOf(false) }
-    
+    var showEffectPanel by remember { mutableStateOf(false) }
+
     // Filter manager
     val filterManager = remember { FilterManager() }
     val availableFilters = remember {
@@ -93,30 +98,36 @@ fun PhotoPreviewScreen(
             FilterType.CHERRY_BLOSSOM
         )
     }
-    
+
     // Handle back gesture to show discard dialog
     BackHandler {
         showDiscardDialog = true
     }
-    
+
     var showCropView by remember { mutableStateOf(false) }
-    
-    // Apply filter and adjustments when edit state changes
+
+    // Apply filter, adjustments and effects when edit state changes
     LaunchedEffect(editState) {
         scope.launch {
             try {
                 var processedBitmap = rawPhotoBitmap
-                
+
                 // Step 1: Apply filter if not original
                 if (editState.filter != FilterType.ORIGINAL) {
                     processedBitmap = PhotoUtils.applyFilterToBitmap(processedBitmap, editState.filter) ?: processedBitmap
                 }
-                
+
                 // Step 2: Apply adjustments if any
                 if (editState.hasAdjustments) {
                     processedBitmap = PhotoUtils.applyAdjustments(processedBitmap, editState.adjustmentValues) ?: processedBitmap
                 }
-                
+
+                // Step 3: Apply effect if not original
+                if (editState.effect != EffectType.ORIGINAL) {
+                    val effectManager = EffectManager()
+                    processedBitmap = effectManager.applyEffect(processedBitmap, editState.effect, 1.0f) ?: processedBitmap
+                }
+
                 currentBitmap = processedBitmap
             } catch (e: Exception) {
                 Log.e("PhotoPreview", "Error applying edits", e)
@@ -124,7 +135,7 @@ fun PhotoPreviewScreen(
             }
         }
     }
-    
+
     // Show crop view when crop option is selected
     if (showCropView) {
         PhotoCropView(
@@ -142,9 +153,9 @@ fun PhotoPreviewScreen(
         )
         return
     }
-    
+
     // Remove the separate adjust view block - we'll integrate it into the main layout
-    
+
     // Sử dụng Column để layout theo chiều dọc
     Column(
         modifier = modifier
@@ -171,7 +182,7 @@ fun PhotoPreviewScreen(
                 .fillMaxWidth()
                 .statusBarsPadding()
         )
-        
+
         // Photo preview - chiếm 3/4 màn hình khi adjust view hiển thị, toàn bộ khi không
         Box(
             modifier = Modifier
@@ -188,7 +199,7 @@ fun PhotoPreviewScreen(
                     .padding(8.dp),
                 contentScale = ContentScale.Fit
             )
-            
+
             // Loading indicator when saving
             if (isSaving) {
                 Box(
@@ -204,7 +215,7 @@ fun PhotoPreviewScreen(
                 }
             }
         }
-        
+
         // Photo Adjust View - chiếm 1/4 màn hình khi hiển thị
         if (showAdjustView) {
 
@@ -236,7 +247,7 @@ fun PhotoPreviewScreen(
                     .background(Color.Black)
             )
         }
-        
+
         // Filter panel - hiển thị phía trên bottom bar với chiều cao cố định
         if (showFilterPanel) {
             FilterSelectionPanel(
@@ -244,8 +255,6 @@ fun PhotoPreviewScreen(
                     currentFilter = editState.filter,
                     onFilterSelected = { filter ->
                         editState = editState.copy(filter = filter)
-                        showFilterPanel = false
-                        selectedEditOption = ""
                     },
                     onDismiss = { showFilterPanel = false },
                 modifier = Modifier
@@ -254,17 +263,32 @@ fun PhotoPreviewScreen(
                     .background(Color.Black)
             )
         }
-        
+
+        // Effect panel - hiển thị phía trên bottom bar với chiều cao cố định
+        if (showEffectPanel) {
+            EffectSelectionPanel(
+                selectedEffect = editState.effect,
+                onEffectSelected = { effect ->
+                    editState = editState.copy(effect = effect)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp)
+                    .background(Color.Black)
+            )
+        }
+
         // Bottom edit options
         PhotoEditBottomBar(
             selectedOption = selectedEditOption,
-            onOptionSelected = { option -> 
+            onOptionSelected = { option ->
                 // Nếu nhấn vào option đã được chọn, thì tắt UI đó đi
                 if (selectedEditOption == option) {
                     selectedEditOption = ""
                     showFilterPanel = false
                     showAdjustView = false
                     showCropView = false
+                    showEffectPanel = false
                 } else {
                     selectedEditOption = option
                     when (option) {
@@ -282,12 +306,20 @@ fun PhotoPreviewScreen(
                             showAdjustView = true
                             showFilterPanel = false
                             showCropView = false
+                            showEffectPanel = false
+                        }
+                        "Effect" -> {
+                            showEffectPanel = true
+                            showFilterPanel = false
+                            showAdjustView = false
+                            showCropView = false
                         }
                         else -> {
                             // Handle other edit options
                             showFilterPanel = false
                             showAdjustView = false
                             showCropView = false
+                            showEffectPanel = false
                         }
                     }
                 }
@@ -297,17 +329,17 @@ fun PhotoPreviewScreen(
                 .navigationBarsPadding()
         )
     }
-    
+
     // Save success dialog
     if (showSaveDialog) {
         SaveSuccessDialog(
-            onDismiss = { 
+            onDismiss = {
                 showSaveDialog = false
                 onDiscardPhoto()
             }
         )
     }
-    
+
     // Discard confirmation dialog
     if (showDiscardDialog) {
         DiscardChangesDialog(
@@ -353,7 +385,7 @@ private fun PhotoEditTopBar(
                     modifier = Modifier.size(24.dp)
                 )
             }
-            
+
             // Title
             Text(
                 text = "Edit Photo",
@@ -363,7 +395,7 @@ private fun PhotoEditTopBar(
                 modifier = Modifier.weight(1f),
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
             )
-            
+
             // Action buttons
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 IconButton(
@@ -417,7 +449,7 @@ private fun PhotoEditBottomBar(
         EditOption("Effect", Icons.Default.AutoAwesome),
         EditOption("Cutout", Icons.Default.ContentCut)
     )
-    
+
     Surface(
         modifier = modifier
             .fillMaxWidth(),
@@ -452,9 +484,9 @@ private fun EditOptionItem(
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
             .background(
-                if (isSelected) 
+                if (isSelected)
                     MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
-                else 
+                else
                     Color.Transparent
             )
             .clickable { onClick() }
@@ -549,7 +581,7 @@ private fun FilterSelectionPanel(
                     color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 IconButton(
                     onClick = onDismiss,
                     modifier = Modifier.size(32.dp)
@@ -562,9 +594,9 @@ private fun FilterSelectionPanel(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             // Filter list
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -574,7 +606,7 @@ private fun FilterSelectionPanel(
                     FilterPreviewItem(
                         filterType = filter,
                         isSelected = filter == currentFilter,
-                        onClick = { 
+                        onClick = {
                             onFilterSelected(filter)
                         }
                     )

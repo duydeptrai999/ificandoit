@@ -121,8 +121,7 @@ Kiro provides specialized mobile development support:
 
 ```
 1. .cursor/rules/     ← PRIMARY SOURCE (Highest Priority)
-2. .appdexer/rules/   ← Secondary Reference  
-3. .kiro/steering/    ← Alias Layer (Lowest Priority)
+4. .kiro/steering/    ← Alias Layer (Lowest Priority)
 ```
 
 ### Manual Inclusion Rules

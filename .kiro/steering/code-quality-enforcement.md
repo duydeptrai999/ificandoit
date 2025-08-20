@@ -13,7 +13,7 @@
 
 ### KIRO-Specific Rules (REQUIRED)
 - **[Kiro System Overview](../../.cursor/rules/kiro-system-overview.mdc)** - System integration
-- **[Kiro Fallback Workflow](../../.cursor/rules/kiro-fallback-workflow.mdc)** - Fallback procedures
+- **[Kiro Dynamic Workflow](../../.cursor/rules/kiro-dynamic-workflow.mdc)** - Tự động tạo/cập nhật specs khi cần thiết
 
 ## 🤖 KIRO Code Quality Integration Points
 
@@ -332,4 +332,4 @@ daily_report_structure:
 **KIRO INTEGRATION STATUS**: 🔒 MANDATORY ENFORCEMENT
 **COMPLIANCE LEVEL**: 100% Required for all tasks
 **MONITORING**: Real-time, 24/7
-**ESCALATION**: Automatic với manual fallback 
+**ESCALATION**: Automatic với manual fallback

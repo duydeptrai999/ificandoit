@@ -4,6 +4,47 @@ All notable changes to this project will be documented in this file.
 
 ## [Latest] - 2024-12-19
 
+### Improve Effect and Filter Panel UI Behavior
+**Yêu cầu**: Sửa lỗi UI khi chọn effect/filter, panel selection bị ẩn đi ngay lập tức
+
+**Vấn đề**: 
+- Khi người dùng chọn một effect hoặc filter, panel selection tự động ẩn đi
+- Người dùng phải mở lại panel mỗi lần muốn thử effect/filter khác
+- Trải nghiệm không mượt mà và tốn nhiều thao tác
+
+**Giải pháp thực hiện**:
+- **PhotoPreviewScreen.kt**: Loại bỏ logic đặt `showEffectPanel = false` và `selectedEditOption = ""` khi chọn effect
+- **PhotoPreviewScreen.kt**: Loại bỏ logic đặt `showFilterPanel = false` và `selectedEditOption = ""` khi chọn filter
+- **Giữ panel hiển thị**: Panel chỉ ẩn khi người dùng chủ động chọn option khác hoặc nhấn lại cùng option
+
+**Kết quả**: 
+- Effect và Filter panels vẫn hiển thị sau khi chọn, cho phép thử nhiều options liên tiếp
+- Trải nghiệm người dùng mượt mà và hiệu quả hơn
+- Tiết kiệm thao tác và thời gian chỉnh sửa ảnh
+
+---
+
+### Fix Compilation Errors in Effect System
+**Yêu cầu**: Sửa các lỗi biên dịch trong hệ thống hiệu ứng ảnh
+
+**Vấn đề phát hiện**:
+- Lỗi "Bitmap.Config" có thể null tại nhiều vị trí trong EffectManager.kt
+- Lỗi "Conflicting overloads" do trùng lặp hàm applyOilPaintingEffect
+- Lỗi "Unresolved reference 'applyDuotoneEffect'" - thiếu implementation
+- Lỗi "No value passed for parameter 'selectedEffect'" trong EffectSelectionPanel
+- Lỗi "Unresolved reference 'applyEffect'" do gọi sai cách instance method
+
+**Giải pháp thực hiện**:
+- **Sửa Bitmap.Config null**: Thêm Elvis operator `?: Bitmap.Config.ARGB_8888` tại các dòng 405, 539, 600 trong EffectManager.kt
+- **Xóa hàm trùng lặp**: Loại bỏ hàm applyOilPaintingEffect thứ hai (dòng 468-487)
+- **Thêm applyDuotoneEffect**: Implement hàm tạo hiệu ứng hai tông màu với logic chuyển đổi màu sắc
+- **Sửa EffectSelectionPanel**: Thay đổi parameter từ `currentEffect` thành `selectedEffect` và loại bỏ `onDismiss`
+- **Sửa cách gọi EffectManager**: Thay đổi từ static method call thành instance method call
+
+**Kết quả**: Tất cả lỗi biên dịch đã được sửa, ứng dụng build thành công với exit code 0
+
+---
+
 ### Fix Photo Adjustment on Filtered Images
 **Yêu cầu**: Sửa lỗi khi áp dụng adjustment trên ảnh đã có filter, adjustment bị áp dụng lên ảnh gốc thay vì ảnh đã có filter
 

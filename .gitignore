@@ -90,6 +90,7 @@ yarn-error.log
 .env
 .env.test
 .env.production
+scripts/.env
 .serverless/
 .fusebox/
 .dynamodb/
@@ -307,3 +308,4 @@ temp/
 *.sublime-workspace
 .cursor/.DS_Store
 .DS_Store
+Note.md

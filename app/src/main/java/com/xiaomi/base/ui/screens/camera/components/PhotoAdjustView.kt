@@ -56,7 +56,7 @@ fun PhotoAdjustView(
     var adjustmentValues by remember { mutableStateOf(initialAdjustmentValues) }
     var adjustedBitmap by remember { mutableStateOf(originalBitmap) }
     var isProcessing by remember { mutableStateOf(false) }
-    
+
     // Apply adjustments when values change
     LaunchedEffect(adjustmentValues) {
         scope.launch {
@@ -75,7 +75,7 @@ fun PhotoAdjustView(
             }
         }
     }
-    
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -96,7 +96,7 @@ fun PhotoAdjustView(
                 )
             }
         }
-        
+
         // Adjustment controls - chiếm toàn bộ chiều cao còn lại
         AdjustmentControlsPanel(
             adjustmentValues = adjustmentValues,
@@ -145,7 +145,7 @@ private fun AdjustTopBar(
                     fontWeight = FontWeight.Medium
                 )
             }
-            
+
             // Title
             Text(
                 text = stringResource(R.string.adjust),
@@ -153,7 +153,7 @@ private fun AdjustTopBar(
                 color = Color.White,
                 fontWeight = FontWeight.Medium
             )
-            
+
             // Action buttons
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 TextButton(
@@ -165,7 +165,7 @@ private fun AdjustTopBar(
                         fontWeight = FontWeight.Medium
                     )
                 }
-                
+
                 TextButton(
                     onClick = onApply
                 ) {
@@ -212,7 +212,7 @@ private fun AdjustmentControlsPanel(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
-                
+
                 AdjustmentSlider(
                     label = stringResource(R.string.brightness),
                     value = adjustmentValues.brightness,
@@ -222,7 +222,7 @@ private fun AdjustmentControlsPanel(
                     valueRange = -100f..100f,
                     icon = Icons.Default.Brightness6
                 )
-                
+
                 AdjustmentSlider(
                     label = stringResource(R.string.contrast),
                     value = adjustmentValues.contrast,
@@ -232,7 +232,7 @@ private fun AdjustmentControlsPanel(
                     valueRange = -100f..100f,
                     icon = Icons.Default.Contrast
                 )
-                
+
                 AdjustmentSlider(
                     label = stringResource(R.string.saturation),
                     value = adjustmentValues.saturation,
@@ -242,9 +242,9 @@ private fun AdjustmentControlsPanel(
                     valueRange = -100f..100f,
                     icon = Icons.Default.Palette
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 // Advanced adjustments
                 Text(
                     text = stringResource(R.string.advanced),
@@ -253,7 +253,7 @@ private fun AdjustmentControlsPanel(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
-                
+
                 AdjustmentSlider(
                     label = stringResource(R.string.highlights),
                     value = adjustmentValues.highlights,
@@ -263,7 +263,7 @@ private fun AdjustmentControlsPanel(
                     valueRange = -100f..100f,
                     icon = Icons.Default.LightMode
                 )
-                
+
                 AdjustmentSlider(
                     label = stringResource(R.string.shadows),
                     value = adjustmentValues.shadows,
@@ -273,7 +273,7 @@ private fun AdjustmentControlsPanel(
                     valueRange = -100f..100f,
                     icon = Icons.Default.DarkMode
                 )
-                
+
                 AdjustmentSlider(
                     label = stringResource(R.string.warmth),
                     value = adjustmentValues.warmth,
@@ -283,7 +283,7 @@ private fun AdjustmentControlsPanel(
                     valueRange = -100f..100f,
                     icon = Icons.Default.Thermostat
                 )
-                
+
                 AdjustmentSlider(
                     label = stringResource(R.string.tint),
                     value = adjustmentValues.tint,
@@ -293,11 +293,11 @@ private fun AdjustmentControlsPanel(
                     valueRange = -100f..100f,
                     icon = Icons.Default.Colorize
                 )
-                
+
                 // Add some bottom padding for better scrolling
                 Spacer(modifier = Modifier.height(12.dp))
             }
-            
+
 
         }
     }
@@ -337,7 +337,7 @@ private fun AdjustmentSlider(
                     fontWeight = FontWeight.Medium
                 )
             }
-            
+
             Text(
                 text = "${value.toInt()}",
                 style = MaterialTheme.typography.bodySmall,
@@ -345,9 +345,9 @@ private fun AdjustmentSlider(
                 fontWeight = FontWeight.Bold
             )
         }
-        
+
         Spacer(modifier = Modifier.height(4.dp))
-        
+
         Slider(
             value = value,
             onValueChange = onValueChange,

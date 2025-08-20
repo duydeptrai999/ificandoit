@@ -33,7 +33,7 @@ import kotlin.math.sin
 object PhotoUtils {
     private const val TAG = "PhotoUtils"
     private const val PHOTO_QUALITY = 95
-    
+
     /**
      * Convert OpenGL pixel data to Bitmap
      * Handles proper orientation and color format conversion
@@ -46,7 +46,7 @@ object PhotoUtils {
         return try {
             // Create bitmap from pixel data
             val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            
+
             // Convert RGBA to ARGB and flip vertically
             // OpenGL has origin at bottom-left, Android bitmap has origin at top-left
             val pixels = IntArray(width * height)
@@ -55,29 +55,29 @@ object PhotoUtils {
                     val pixelIndex = (i * width + j) * 4
                     // Flip vertically: map row i to row (height - 1 - i)
                     val bitmapIndex = ((height - 1 - i) * width + j)
-                    
+
                     if (pixelIndex + 3 < pixelData.size) {
                         val r = pixelData[pixelIndex].toInt() and 0xFF
                         val g = pixelData[pixelIndex + 1].toInt() and 0xFF
                         val b = pixelData[pixelIndex + 2].toInt() and 0xFF
                         val a = pixelData[pixelIndex + 3].toInt() and 0xFF
-                        
+
                         pixels[bitmapIndex] = (a shl 24) or (r shl 16) or (g shl 8) or b
                     }
                 }
             }
-            
+
             bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
-            
+
             Log.d(TAG, "Bitmap created successfully: ${width}x${height} (flipped vertically)")
             bitmap
-            
+
         } catch (e: Exception) {
             Log.e(TAG, "Error converting pixel data to bitmap", e)
             null
         }
     }
-    
+
     /**
      * Rotate bitmap by specified degrees
      */
@@ -86,7 +86,7 @@ object PhotoUtils {
             val matrix = Matrix().apply {
                 postRotate(degrees)
             }
-            
+
             Bitmap.createBitmap(
                 bitmap, 0, 0,
                 bitmap.width, bitmap.height,
@@ -101,7 +101,7 @@ object PhotoUtils {
             bitmap
         }
     }
-    
+
     /**
      * Save bitmap to gallery
      * Uses MediaStore API for Android 10+ and legacy method for older versions
@@ -122,7 +122,7 @@ object PhotoUtils {
             null
         }
     }
-    
+
     /**
      * Save bitmap using MediaStore API (Android 10+)
      */
@@ -137,21 +137,21 @@ object PhotoUtils {
             put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/CameraApp")
             put(MediaStore.Images.Media.IS_PENDING, 1)
         }
-        
+
         val resolver = context.contentResolver
         val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-        
+
         return uri?.let { imageUri ->
             try {
                 resolver.openOutputStream(imageUri)?.use { outputStream ->
                     bitmap.compress(Bitmap.CompressFormat.JPEG, PHOTO_QUALITY, outputStream)
                 }
-                
+
                 // Mark as not pending
                 contentValues.clear()
                 contentValues.put(MediaStore.Images.Media.IS_PENDING, 0)
                 resolver.update(imageUri, contentValues, null, null)
-                
+
                 Log.d(TAG, "Photo saved to gallery: $imageUri")
                 imageUri
             } catch (e: Exception) {
@@ -161,7 +161,7 @@ object PhotoUtils {
             }
         }
     }
-    
+
     /**
      * Save bitmap using legacy file system method (Android 9 and below)
      */
@@ -172,18 +172,18 @@ object PhotoUtils {
     ): Uri? {
         val picturesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         val appDir = File(picturesDir, "CameraApp")
-        
+
         if (!appDir.exists()) {
             appDir.mkdirs()
         }
-        
+
         val file = File(appDir, filename)
-        
+
         return try {
             FileOutputStream(file).use { outputStream ->
                 bitmap.compress(Bitmap.CompressFormat.JPEG, PHOTO_QUALITY, outputStream)
             }
-            
+
             // Add to MediaStore
             val contentValues = ContentValues().apply {
                 put(MediaStore.Images.Media.DATA, file.absolutePath)
@@ -193,12 +193,12 @@ object PhotoUtils {
                 put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000)
                 put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
             }
-            
+
             val uri = context.contentResolver.insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 contentValues
             )
-            
+
             Log.d(TAG, "Photo saved to gallery (legacy): $uri")
             uri
         } catch (e: Exception) {
@@ -206,7 +206,7 @@ object PhotoUtils {
             null
         }
     }
-    
+
     /**
      * Generate unique filename for photo
      */
@@ -215,7 +215,7 @@ object PhotoUtils {
             .format(Date())
         return "IMG_${timestamp}.jpg"
     }
-    
+
     /**
      * Get file size in human readable format
      */
@@ -226,7 +226,7 @@ object PhotoUtils {
             else -> "${sizeInBytes / (1024 * 1024)} MB"
         }
     }
-    
+
     /**
      * Apply filter to bitmap using CPU-based processing
      * This is a simplified version for preview purposes
@@ -239,11 +239,11 @@ object PhotoUtils {
             if (filterType == FilterType.ORIGINAL) {
                 return@withContext originalBitmap.copy(originalBitmap.config ?: Bitmap.Config.ARGB_8888, false)
             }
-            
+
             val filteredBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true)
             val canvas = Canvas(filteredBitmap)
             val paint = Paint()
-            
+
             // Apply filter based on type
             when (filterType) {
                 FilterType.SEPIA -> {
@@ -259,14 +259,14 @@ object PhotoUtils {
                     }
                     paint.colorFilter = ColorMatrixColorFilter(sepiaMatrix)
                 }
-                
+
                 FilterType.BLACK_WHITE -> {
                     val bwMatrix = ColorMatrix().apply {
                         setSaturation(0f)
                     }
                     paint.colorFilter = ColorMatrixColorFilter(bwMatrix)
                 }
-                
+
                 FilterType.VINTAGE -> {
                     val vintageMatrix = ColorMatrix().apply {
                         setSaturation(0.8f)
@@ -280,7 +280,7 @@ object PhotoUtils {
                     }
                     paint.colorFilter = ColorMatrixColorFilter(vintageMatrix)
                 }
-                
+
                 FilterType.COOL -> {
                     val coolMatrix = ColorMatrix(floatArrayOf(
                         0.8f, 0f, 0f, 0f, 0f,
@@ -290,7 +290,7 @@ object PhotoUtils {
                     ))
                     paint.colorFilter = ColorMatrixColorFilter(coolMatrix)
                 }
-                
+
                 FilterType.WARM -> {
                     val warmMatrix = ColorMatrix(floatArrayOf(
                         1.3f, 0f, 0f, 0f, 0f,
@@ -300,7 +300,7 @@ object PhotoUtils {
                     ))
                     paint.colorFilter = ColorMatrixColorFilter(warmMatrix)
                 }
-                
+
                 FilterType.PINK_DREAM -> {
                     val pinkMatrix = ColorMatrix(floatArrayOf(
                         1.2f, 0f, 0f, 0f, 20f,
@@ -310,7 +310,7 @@ object PhotoUtils {
                     ))
                     paint.colorFilter = ColorMatrixColorFilter(pinkMatrix)
                 }
-                
+
                 FilterType.RETRO_80S -> {
                     val retroMatrix = ColorMatrix().apply {
                         setSaturation(1.8f)
@@ -324,7 +324,7 @@ object PhotoUtils {
                     }
                     paint.colorFilter = ColorMatrixColorFilter(retroMatrix)
                 }
-                
+
                 FilterType.OLD_FILM -> {
                     val filmMatrix = ColorMatrix().apply {
                         setSaturation(0.85f)
@@ -338,7 +338,7 @@ object PhotoUtils {
                     }
                     paint.colorFilter = ColorMatrixColorFilter(filmMatrix)
                 }
-                
+
                 FilterType.SPRING -> {
                     val springMatrix = ColorMatrix(floatArrayOf(
                         0.9f, 0f, 0f, 0f, 10f,
@@ -348,7 +348,7 @@ object PhotoUtils {
                     ))
                     paint.colorFilter = ColorMatrixColorFilter(springMatrix)
                 }
-                
+
                 FilterType.SUMMER -> {
                     val summerMatrix = ColorMatrix(floatArrayOf(
                         1.15f, 0f, 0f, 0f, 20f,
@@ -358,7 +358,7 @@ object PhotoUtils {
                     ))
                     paint.colorFilter = ColorMatrixColorFilter(summerMatrix)
                 }
-                
+
                 FilterType.AUTUMN -> {
                     val autumnMatrix = ColorMatrix(floatArrayOf(
                         1.3f, 0f, 0f, 0f, 15f,
@@ -368,7 +368,7 @@ object PhotoUtils {
                     ))
                     paint.colorFilter = ColorMatrixColorFilter(autumnMatrix)
                 }
-                
+
                 FilterType.WINTER -> {
                     val winterMatrix = ColorMatrix().apply {
                         setSaturation(0.7f)
@@ -382,7 +382,7 @@ object PhotoUtils {
                     }
                     paint.colorFilter = ColorMatrixColorFilter(winterMatrix)
                 }
-                
+
                 FilterType.NEON_NIGHTS -> {
                     val neonMatrix = ColorMatrix().apply {
                         setSaturation(2.0f)
@@ -396,7 +396,7 @@ object PhotoUtils {
                     }
                     paint.colorFilter = ColorMatrixColorFilter(neonMatrix)
                 }
-                
+
                 FilterType.GOLDEN_HOUR -> {
                     val goldenMatrix = ColorMatrix(floatArrayOf(
                         1.2f, 0f, 0f, 0f, 25f,
@@ -406,7 +406,7 @@ object PhotoUtils {
                     ))
                     paint.colorFilter = ColorMatrixColorFilter(goldenMatrix)
                 }
-                
+
                 FilterType.CYBERPUNK -> {
                     val cyberMatrix = ColorMatrix().apply {
                         setSaturation(1.5f)
@@ -420,7 +420,7 @@ object PhotoUtils {
                     }
                     paint.colorFilter = ColorMatrixColorFilter(cyberMatrix)
                 }
-                
+
                 FilterType.CHERRY_BLOSSOM -> {
                     val cherryMatrix = ColorMatrix(floatArrayOf(
                         1.1f, 0f, 0f, 0f, 15f,
@@ -430,25 +430,25 @@ object PhotoUtils {
                     ))
                     paint.colorFilter = ColorMatrixColorFilter(cherryMatrix)
                 }
-                
+
                 else -> {
                     // Default: no filter
                     paint.colorFilter = null
                 }
             }
-            
+
             // Draw the original bitmap with the filter applied
             canvas.drawBitmap(originalBitmap, 0f, 0f, paint)
-            
+
             Log.d(TAG, "Filter applied to bitmap: $filterType")
             filteredBitmap
-            
+
         } catch (e: Exception) {
             Log.e(TAG, "Error applying filter to bitmap", e)
             originalBitmap.copy(originalBitmap.config ?: Bitmap.Config.ARGB_8888, false)
         }
     }
-    
+
     /**
      * Clean up temporary files
      */
@@ -466,7 +466,7 @@ object PhotoUtils {
             Log.e(TAG, "Error cleaning up temp files", e)
         }
     }
-    
+
     /**
      * Apply color adjustments to bitmap
      */
@@ -480,10 +480,10 @@ object PhotoUtils {
             val adjustedBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(adjustedBitmap)
             val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-            
+
             // Create color matrix for adjustments
             val colorMatrix = ColorMatrix()
-            
+
             // Apply brightness
             if (adjustments.brightness != 0f) {
                 val brightnessMatrix = ColorMatrix()
@@ -496,7 +496,7 @@ object PhotoUtils {
                 ))
                 colorMatrix.postConcat(brightnessMatrix)
             }
-            
+
             // Apply contrast
             if (adjustments.contrast != 0f) {
                 val contrastMatrix = ColorMatrix()
@@ -510,7 +510,7 @@ object PhotoUtils {
                 ))
                 colorMatrix.postConcat(contrastMatrix)
             }
-            
+
             // Apply saturation
             if (adjustments.saturation != 0f) {
                 val saturationMatrix = ColorMatrix()
@@ -518,7 +518,7 @@ object PhotoUtils {
                 saturationMatrix.setSaturation(saturation)
                 colorMatrix.postConcat(saturationMatrix)
             }
-            
+
             // Apply warmth (temperature adjustment)
             if (adjustments.warmth != 0f) {
                 val warmthMatrix = ColorMatrix()
@@ -543,7 +543,7 @@ object PhotoUtils {
                 }
                 colorMatrix.postConcat(warmthMatrix)
             }
-            
+
             // Apply tint (magenta/green adjustment)
             if (adjustments.tint != 0f) {
                 val tintMatrix = ColorMatrix()
@@ -568,7 +568,7 @@ object PhotoUtils {
                 }
                 colorMatrix.postConcat(tintMatrix)
             }
-            
+
             // Apply highlights adjustment
             if (adjustments.highlights != 0f) {
                 val highlightsMatrix = ColorMatrix()
@@ -582,7 +582,7 @@ object PhotoUtils {
                 ))
                 colorMatrix.postConcat(highlightsMatrix)
             }
-            
+
             // Apply shadows adjustment
             if (adjustments.shadows != 0f) {
                 val shadowsMatrix = ColorMatrix()
@@ -596,11 +596,11 @@ object PhotoUtils {
                 ))
                 colorMatrix.postConcat(shadowsMatrix)
             }
-            
+
             // Apply the color matrix
             paint.colorFilter = ColorMatrixColorFilter(colorMatrix)
             canvas.drawBitmap(originalBitmap, 0f, 0f, paint)
-            
+
             adjustedBitmap
         } catch (e: Exception) {
             Log.e(TAG, "Error applying adjustments", e)

@@ -84,6 +84,8 @@
 
 #[[file:../../.cursor/rules/tech-stack-selection.mdc]]
 
+#[[file:../../.cursor/rules/nodejs-project-creation.mdc]]
+
 ### Advanced Features
 
 #[[file:../../.cursor/rules/memory-bank-workflow.mdc]]
@@ -114,8 +116,7 @@
 ## 🔄 Rules Hierarchy Priority
 
 1. `.cursor/rules/` - **PRIMARY SOURCE** (Highest Priority)
-2. `.appdexer/rules/` - Secondary reference
-3. `.kiro/steering/` - Alias/Link layer only (Lowest Priority)
+2. `.kiro/steering/` - Alias/Link layer only (Lowest Priority)
 
 ## Kiro AI Specific Configuration
 

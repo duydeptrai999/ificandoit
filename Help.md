@@ -39,6 +39,28 @@ Tính năng điều chỉnh ảnh cho phép người dùng chỉnh sửa các th
 4. Cuộn trong bảng điều chỉnh để truy cập tất cả các điều khiển
 5. Nhấn "Apply" để áp dụng hoặc "Cancel" để hủy bỏ
 
+## Tính năng Effect và Filter Selection
+
+### Mô tả
+Tính năng chọn Effect và Filter cho phép người dùng áp dụng các hiệu ứng và bộ lọc khác nhau lên ảnh.
+
+### Cải tiến UI/UX (Phiên bản mới)
+- **Panel vẫn hiển thị sau khi chọn**: Khi chọn effect hoặc filter, panel selection không tự động ẩn đi
+- **Trải nghiệm liên tục**: Người dùng có thể thử nhiều effect/filter liên tiếp mà không cần mở lại panel
+- **Tương tác tự nhiên**: Panel chỉ ẩn khi người dùng chủ động nhấn vào option khác hoặc nhấn lại cùng option
+
+### Cách hoạt động
+1. **Effect Selection**: Chọn "Effect" từ bottom bar → Panel hiển thị với các danh mục effect
+2. **Chọn effect**: Nhấn vào effect bất kỳ → Effect được áp dụng ngay lập tức, panel vẫn hiển thị
+3. **Thử nhiều effect**: Có thể chọn effect khác mà không cần mở lại panel
+4. **Filter Selection**: Tương tự với effect, filter panel cũng vẫn hiển thị sau khi chọn
+5. **Đóng panel**: Nhấn lại vào "Effect" hoặc "Filter" button, hoặc chọn option khác
+
+### Lợi ích
+- **Tiết kiệm thao tác**: Không cần mở lại panel mỗi lần muốn thử effect/filter khác
+- **Trải nghiệm mượt mà**: Workflow chỉnh sửa ảnh trở nên liên tục và tự nhiên hơn
+- **Tăng hiệu quả**: Người dùng có thể so sánh và thử nghiệm nhiều effect/filter nhanh chóng
+
 ### Workflow Filter + Adjustment
 **Tính năng mới**: Có thể áp dụng adjustment lên ảnh đã có filter
 

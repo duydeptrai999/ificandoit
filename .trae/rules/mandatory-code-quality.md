@@ -10,14 +10,14 @@
 
 ### Primary Rules (MANDATORY)
 
-- **[AI Code Quality Automation](../../.cursor/rules/ai-code-quality-automation.mdc)** - Manual workflow automation
-- **[AI Manual Code Review Process](../../.cursor/rules/ai-manual-code-review-process.mdc)** - Review protocols
-- **[AI Execution Templates](../../.cursor/rules/ai-execution-templates.mdc)** - Execution scripts
+- **[AI Code Quality Automation](../../.trae/rules/ai-code-quality-automation.md)** - Manual workflow automation
+- **[AI Manual Code Review Process](../../.trae/rules/ai-manual-code-review-process.md)** - Review protocols
+- **[AI Execution Templates](../../.trae/rules/ai-execution-templates.md)** - Execution scripts
 
 ### Supporting Rules (REQUIRED)
 
-- **[Android Workflow](../../.cursor/rules/android-workflow.mdc)** - Android-specific patterns
-- **[Universal Code Deduplication](../../.cursor/rules/universal-code-deduplication.mdc)** - Code quality standards
+- **[Android Workflow](../../.trae/rules/android-workflow.md)** - Android-specific patterns
+- **[Universal Code Deduplication](../../.trae/rules/universal-code-deduplication.md)** - Code quality standards
 
 ## 🤖 TRAE AI Specific Enforcement
 
