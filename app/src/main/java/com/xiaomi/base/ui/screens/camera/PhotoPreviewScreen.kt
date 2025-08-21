@@ -31,7 +31,10 @@ import com.xiaomi.base.R
 import com.xiaomi.base.ui.screens.camera.components.PhotoCropView
 import com.xiaomi.base.ui.screens.camera.components.PhotoAdjustView
 import com.xiaomi.base.ui.screens.camera.components.AdjustmentValues
+import com.xiaomi.base.ui.screens.camera.components.PhotoColorAdjustView
+import com.xiaomi.base.ui.screens.camera.components.ColorAdjustmentValues
 import com.xiaomi.base.ui.screens.camera.components.FilterPreviewItem
+import com.xiaomi.base.ui.screens.camera.utils.ColorAdjustmentUtils
 import com.xiaomi.base.ui.screens.camera.filter.FilterType
 import com.xiaomi.base.ui.screens.camera.filter.FilterManager
 import com.xiaomi.base.ui.screens.camera.utils.PhotoUtils
@@ -66,7 +69,9 @@ fun PhotoPreviewScreen(
         val filter: FilterType = FilterType.ORIGINAL,
         val adjustmentValues: AdjustmentValues = AdjustmentValues(),
         val hasAdjustments: Boolean = false,
-        val effect: EffectType = EffectType.ORIGINAL
+        val effect: EffectType = EffectType.ORIGINAL,
+        val colorAdjustmentValues: ColorAdjustmentValues = ColorAdjustmentValues(),
+        val hasColorAdjustments: Boolean = false
     )
 
     var editState by remember { mutableStateOf(PhotoEditState(initialFilter)) }
@@ -74,6 +79,7 @@ fun PhotoPreviewScreen(
     var showFilterPanel by remember { mutableStateOf(false) }
     var showAdjustView by remember { mutableStateOf(false) }
     var showEffectPanel by remember { mutableStateOf(false) }
+    var showColorAdjustView by remember { mutableStateOf(false) }
 
     // Filter manager
     val filterManager = remember { FilterManager() }
@@ -99,14 +105,20 @@ fun PhotoPreviewScreen(
         )
     }
 
-    // Handle back gesture to show discard dialog
+    // Handle back gesture - đóng Color Adjust View trước, nếu không có thì show discard dialog
     BackHandler {
-        showDiscardDialog = true
+        when {
+            showColorAdjustView -> {
+                showColorAdjustView = false
+                selectedEditOption = ""
+            }
+            else -> showDiscardDialog = true
+        }
     }
 
     var showCropView by remember { mutableStateOf(false) }
 
-    // Apply filter, adjustments and effects when edit state changes
+    // Apply filter, adjustments, color adjustments and effects when edit state changes
     LaunchedEffect(editState) {
         scope.launch {
             try {
@@ -122,7 +134,12 @@ fun PhotoPreviewScreen(
                     processedBitmap = PhotoUtils.applyAdjustments(processedBitmap, editState.adjustmentValues) ?: processedBitmap
                 }
 
-                // Step 3: Apply effect if not original
+                // Step 3: Apply color adjustments if any
+                if (editState.hasColorAdjustments) {
+                    processedBitmap = ColorAdjustmentUtils.applyColorAdjustments(processedBitmap, editState.colorAdjustmentValues) ?: processedBitmap
+                }
+
+                // Step 4: Apply effect if not original
                 if (editState.effect != EffectType.ORIGINAL) {
                     val effectManager = EffectManager()
                     processedBitmap = effectManager.applyEffect(processedBitmap, editState.effect, 1.0f) ?: processedBitmap
@@ -278,6 +295,24 @@ fun PhotoPreviewScreen(
             )
         }
 
+        // Color Adjust View - chiếm 1/4 màn hình khi hiển thị
+        if (showColorAdjustView) {
+            PhotoColorAdjustView(
+                originalBitmap = rawPhotoBitmap,
+                initialColorValues = editState.colorAdjustmentValues,
+                onColorAdjustmentApplied = { colorAdjustmentValues ->
+                    editState = editState.copy(
+                        colorAdjustmentValues = colorAdjustmentValues,
+                        hasColorAdjustments = colorAdjustmentValues.hasAnyAdjustments()
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .background(Color.Black)
+            )
+        }
+
         // Bottom edit options
         PhotoEditBottomBar(
             selectedOption = selectedEditOption,
@@ -289,6 +324,7 @@ fun PhotoPreviewScreen(
                     showAdjustView = false
                     showCropView = false
                     showEffectPanel = false
+                    showColorAdjustView = false
                 } else {
                     selectedEditOption = option
                     when (option) {
@@ -296,23 +332,36 @@ fun PhotoPreviewScreen(
                             showCropView = true
                             showFilterPanel = false
                             showAdjustView = false
+                            showEffectPanel = false
+                            showColorAdjustView = false
                         }
                         "Filter" -> {
                             showFilterPanel = true
                             showAdjustView = false
                             showCropView = false
+                            showEffectPanel = false
+                            showColorAdjustView = false
                         }
                         "Adjust" -> {
                             showAdjustView = true
                             showFilterPanel = false
                             showCropView = false
                             showEffectPanel = false
+                            showColorAdjustView = false
                         }
                         "Effect" -> {
                             showEffectPanel = true
                             showFilterPanel = false
                             showAdjustView = false
                             showCropView = false
+                            showColorAdjustView = false
+                        }
+                        "Color" -> {
+                            showColorAdjustView = true
+                            showFilterPanel = false
+                            showAdjustView = false
+                            showCropView = false
+                            showEffectPanel = false
                         }
                         else -> {
                             // Handle other edit options
@@ -320,6 +369,7 @@ fun PhotoPreviewScreen(
                             showAdjustView = false
                             showCropView = false
                             showEffectPanel = false
+                            showColorAdjustView = false
                         }
                     }
                 }
@@ -447,7 +497,7 @@ private fun PhotoEditBottomBar(
         EditOption("Filter", Icons.Default.PhotoFilter),
         EditOption("Adjust", Icons.Default.Tune),
         EditOption("Effect", Icons.Default.AutoAwesome),
-        EditOption("Cutout", Icons.Default.ContentCut)
+        EditOption("Color", Icons.Default.Palette)
     )
 
     Surface(

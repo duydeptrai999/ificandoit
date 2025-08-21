@@ -39,6 +39,51 @@ Tính năng điều chỉnh ảnh cho phép người dùng chỉnh sửa các th
 4. Cuộn trong bảng điều chỉnh để truy cập tất cả các điều khiển
 5. Nhấn "Apply" để áp dụng hoặc "Cancel" để hủy bỏ
 
+## Tính năng Color Adjustment (Điều chỉnh Màu sắc Chi tiết)
+
+### Mô tả
+Tính năng điều chỉnh màu sắc chi tiết cho phép người dùng chỉnh sửa từng kênh màu cụ thể (đỏ, cam, vàng, lục, lam, tím, hồng) với 3 thông số HSL (Hue, Saturation, Luminance) cho mỗi màu.
+
+### Thành phần chính
+- **PhotoColorAdjustView**: Component chính để điều chỉnh màu sắc chi tiết
+- **ColorAdjustmentValues**: Data class chứa giá trị HSL cho từng kênh màu
+- **ColorAdjustmentUtils**: Utility class để áp dụng điều chỉnh màu sắc lên bitmap
+- **ColorChannel**: Enum định nghĩa các kênh màu có thể điều chỉnh
+
+### Thiết kế UI/UX
+- **Color Selection Bar**: Thanh chọn màu ngang hiển thị 7 màu chính (đỏ, cam, vàng, lục, lam, tím, hồng)
+- **HSL Sliders**: 3 slider cho mỗi màu được chọn (Hue: -180 đến +180, Saturation: -100 đến +100, Luminance: -100 đến +100)
+- **Scrollable Panel**: Panel chiếm 1/4 màn hình, có thể cuộn để truy cập đầy đủ các điều khiển
+- **Real-time Preview**: Xem trước thay đổi ngay lập tức trên ảnh chính
+- **Responsive Design**: Tối ưu cho thiết bị di động với touch-friendly controls
+
+### Tính năng
+- **7 kênh màu**: Đỏ, Cam, Vàng, Lục, Lam, Tím, Hồng
+- **3 thông số HSL**: Hue (sắc độ), Saturation (độ bão hòa), Luminance (độ sáng)
+- **Selective Color Editing**: Chỉnh sửa từng màu cụ thể mà không ảnh hưởng đến màu khác
+- **Advanced Color Processing**: Xử lý màu sắc dựa trên thuật toán HSL với độ chính xác cao
+- **Performance Optimized**: Sử dụng preview bitmap nhỏ hơn để tăng hiệu năng
+- **Apply/Cancel**: Áp dụng hoặc hủy bỏ các thay đổi
+- **Reset Function**: Khôi phục về trạng thái ban đầu
+
+### Cách sử dụng
+1. Trong PhotoPreviewScreen, chọn tùy chọn "Color" từ bottom bar (thay thế cho "Cutout")
+2. Màn hình chia đôi: ảnh xem trước ở trên (3/4), bảng điều chỉnh màu ở dưới (1/4)
+3. Chọn màu muốn điều chỉnh từ thanh chọn màu ngang
+4. Kéo các slider HSL để điều chỉnh màu đã chọn:
+   - **Hue**: Thay đổi sắc độ màu (-180° đến +180°)
+   - **Saturation**: Tăng/giảm độ bão hòa màu (-100% đến +100%)
+   - **Luminance**: Tăng/giảm độ sáng của màu (-100% đến +100%)
+5. Thay đổi hiển thị ngay lập tức trên ảnh chính
+6. Cuộn trong panel để truy cập đầy đủ các điều khiển
+7. Nhấn "Apply" để áp dụng hoặc "Cancel" để hủy bỏ
+
+### Ví dụ sử dụng
+- **Tăng độ sống động của bầu trời**: Chọn màu Lam, tăng Saturation
+- **Làm ấm tông da**: Chọn màu Cam/Đỏ, điều chỉnh Hue và Luminance
+- **Làm nổi bật cây lá**: Chọn màu Lục, tăng Saturation và Luminance
+- **Tạo hiệu ứng sunset**: Chọn màu Vàng/Cam, điều chỉnh Hue về phía đỏ
+
 ## Tính năng Effect và Filter Selection
 
 ### Mô tả

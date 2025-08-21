@@ -262,4 +262,19 @@
     <string name="tint">Tint</string>
     <string name="basic">Basic</string>
     <string name="advanced">Advanced</string>
+    
+    <!-- Color Adjustment Strings -->
+    <string name="color_adjustment">Color Adjustment</string>
+    <string name="hue">Hue</string>
+    <string name="luminance">Luminance</string>
+    <string name="red_adjustments">Red Adjustments</string>
+    <string name="orange_adjustments">Orange Adjustments</string>
+    <string name="yellow_adjustments">Yellow Adjustments</string>
+    <string name="green_adjustments">Green Adjustments</string>
+    <string name="cyan_adjustments">Cyan Adjustments</string>
+    <string name="blue_adjustments">Blue Adjustments</string>
+    <string name="purple_adjustments">Purple Adjustments</string>
+    <string name="magenta_adjustments">Magenta Adjustments</string>
+    <string name="select_color">Select Color</string>
+    <string name="processing_image">Processing image...</string>
 </resources>
