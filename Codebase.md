@@ -37,16 +37,43 @@
   - Value display và real-time updates
   - Consistent styling across all adjustments
 
+- **PhotoColorAdjustView** (Advanced Color Adjustment Component - NEW)
+  - Selective color editing cho 7 kênh màu: Red, Orange, Yellow, Green, Cyan, Blue, Purple, Magenta
+  - ColorSelectionBar: thanh chọn màu ngang với visual indicators
+  - ColorAdjustmentControlsPanel: 3 HSL sliders cho mỗi màu
+  - Real-time preview với LaunchedEffect và coroutines
+  - Performance optimized với preview bitmap scaling
+  - Touch-friendly UI design cho mobile devices
+
 ### Utils
 - **PhotoUtils** (Utility class cho photo processing)
   - applyAdjustments: áp dụng các điều chỉnh lên bitmap
   - Support cho tất cả adjustment types
   - Error handling và performance optimization
 
+- **ColorAdjustmentUtils** (Advanced Color Processing Utility - NEW)
+  - applyColorAdjustments: áp dụng selective color adjustments lên bitmap
+  - HSL color space processing với high precision algorithms
+  - Color range detection và mapping cho từng kênh màu
+  - Performance optimized với coroutines và background processing
+  - interpolateAdjustments: smooth transitions giữa adjustment states
+  - hasAnyAdjustments: kiểm tra có adjustment nào được áp dụng
+
 ### Data Models
 - **AdjustmentValues** (Data class cho adjustment parameters)
   - brightness, contrast, saturation, highlights, shadows, warmth, tint
   - Default values và validation
+
+- **ColorAdjustmentValues** (Selective Color Adjustment Data Class - NEW)
+  - HSL values cho 8 kênh màu: Red, Orange, Yellow, Green, Cyan, Blue, Purple, Magenta
+  - Mỗi màu có 3 thông số: Hue (-180° to +180°), Saturation (-100% to +100%), Luminance (-100% to +100%)
+  - hasAnyAdjustments(): kiểm tra có adjustment nào được áp dụng
+  - Default values = 0f cho tất cả parameters
+
+- **ColorChannel** (Enum cho Color Selection - NEW)
+  - RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PURPLE, MAGENTA
+  - Mapping với ColorAdjustmentValues properties
+  - UI color representation cho selection bar
 
 ## Architecture Features
 
