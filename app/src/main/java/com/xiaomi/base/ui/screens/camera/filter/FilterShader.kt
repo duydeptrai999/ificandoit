@@ -31,6 +31,12 @@ interface FilterShader {
  * Enum representing different filter types
  */
 enum class FilterType {
+    // Retro vintage filters (priority at top)
+    RETRO_70S,
+    RETRO_80S_VINTAGE,
+    RETRO_90S,
+    VINTAGE_CAMERA,
+    
     ORIGINAL,
     SEPIA,
     BLACK_WHITE,
@@ -146,6 +152,372 @@ class SepiaFilter : BaseFilterShader() {
             fragColor = vec4(clamp(color, 0.0, 1.0), textureColor.a);
         }
     """
+}
+
+/**
+ * Retro 70s filter shader - Heavy vintage film effect with grain, scratches, and warm 70s color grading
+ * Optimized for performance while maintaining authentic vintage look
+ */
+
+class Retro70sFilterShader : FilterShader {
+    override val vertexShader: String = """#version 300 es
+layout (location = 0) in vec4 aPosition;
+layout (location = 1) in vec2 aTextureCoord;
+
+uniform mat4 uMVPMatrix;
+uniform mat4 uTexMatrix;
+
+out vec2 vTextureCoord;
+
+void main() {
+    gl_Position = uMVPMatrix * aPosition;
+    vTextureCoord = (uTexMatrix * vec4(aTextureCoord, 0.0, 1.0)).xy;
+}
+"""
+
+    override val fragmentShader: String = """#version 300 es
+#extension GL_OES_EGL_image_external_essl3 : require
+precision mediump float;
+
+in vec2 vTextureCoord;
+uniform samplerExternalOES uTexture;
+
+uniform float uGrainIntensity;
+uniform float uScratchIntensity;
+uniform float uFadeIntensity;
+uniform float uVintageIntensity;
+uniform float uTime;   // cần truyền vào thời gian để nhiễu chạy
+
+out vec4 fragColor;
+
+// Random noise
+float random(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898,78.233)) + uTime * 10.0) * 43758.5453);
+}
+
+void main() {
+    // distort ngang (horizontal wave) -> nhòe nhòe
+    float distortion = sin(vTextureCoord.y * 200.0 + uTime * 5.0) * 0.002;
+    vec2 uv = vTextureCoord + vec2(distortion, 0.0);
+
+    vec4 original = texture(uTexture, uv);
+    vec3 color = original.rgb;
+
+    // Sepia tone nhẹ
+    float gray = dot(color, vec3(0.3, 0.59, 0.11));
+    vec3 sepia = vec3(
+        gray * 0.9 + color.r * 0.1,
+        gray * 0.7 + color.g * 0.2,
+        gray * 0.4 + color.b * 0.1
+    );
+    color = mix(color, sepia, uVintageIntensity);
+
+    // Scanlines (xọc ngang TV cũ)
+    float scanline = sin(vTextureCoord.y * 800.0) * 0.04;
+    color -= scanline;
+
+    // Static noise
+    float noise = random(uv * 400.0) - 0.5;
+    color += noise * uGrainIntensity * 0.25;
+
+    // Vertical scratches random
+    float scratch = step(0.996, random(vec2(floor(uv.x * 200.0), uTime)));
+    color -= scratch * uScratchIntensity * 0.3;
+
+    // Fade
+    color *= (1.0 - uFadeIntensity * 0.3);
+
+    // Vignette nhẹ
+    vec2 center = vec2(0.5, 0.5);
+    float dist = distance(uv, center);
+    float vignette = smoothstep(0.7, 1.0, dist);
+    color *= (1.0 - vignette * 0.4);
+
+    fragColor = vec4(clamp(color, 0.0, 1.0), original.a);
+}
+"""
+
+    override fun getUniformValues(): Map<String, Any> =
+        mapOf(
+            "uGrainIntensity" to 0.7f,
+            "uScratchIntensity" to 0.6f,
+            "uFadeIntensity" to 0.3f,
+            "uVintageIntensity" to 0.8f,
+            "uTime" to 0f  // bạn phải update giá trị này theo thời gian
+        )
+
+    override fun getFilterType(): FilterType = FilterType.RETRO_70S
+}
+
+
+
+/**
+ * Retro 80s Vintage filter shader - VHS artifacts, color bleeding, scan lines
+ */
+class Retro80sVintageFilterShader : FilterShader {
+    override val vertexShader: String = """#version 300 es
+layout (location = 0) in vec4 aPosition;
+layout (location = 1) in vec2 aTextureCoord;
+
+uniform mat4 uMVPMatrix;
+uniform mat4 uTexMatrix;
+
+out vec2 vTextureCoord;
+
+void main() {
+    gl_Position = uMVPMatrix * aPosition;
+    vTextureCoord = (uTexMatrix * vec4(aTextureCoord, 0.0, 1.0)).xy;
+}
+"""
+
+    override val fragmentShader: String = """#version 300 es
+#extension GL_OES_EGL_image_external_essl3 : require
+precision mediump float;
+
+in vec2 vTextureCoord;
+uniform samplerExternalOES uTexture;
+uniform float uVHSIntensity;
+uniform float uScanlineIntensity;
+uniform float uColorBleedIntensity;
+
+out vec4 fragColor;
+
+float random(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+}
+
+void main() {
+    vec2 uv = vTextureCoord;
+    
+    // VHS horizontal distortion
+    float distortion = sin(uv.y * 50.0) * 0.002 * uVHSIntensity;
+    uv.x += distortion;
+    
+    vec4 color = texture(uTexture, uv);
+    
+    // Color channel separation for VHS effect
+    float rOffset = 0.003 * uColorBleedIntensity;
+    float bOffset = -0.003 * uColorBleedIntensity;
+    
+    color.r = texture(uTexture, uv + vec2(rOffset, 0.0)).r;
+    color.b = texture(uTexture, uv + vec2(bOffset, 0.0)).b;
+    
+    // Scan lines
+    float scanline = sin(uv.y * 800.0) * 0.5 + 0.5;
+    color.rgb *= mix(1.0, scanline, uScanlineIntensity);
+    
+    // VHS color palette - boost magenta and cyan
+    color.r *= 1.2;
+    color.b *= 1.1;
+    color.g *= 0.9;
+    
+    // Add VHS noise
+    float noise = random(uv * 100.0 + fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453));
+    color.rgb += (noise - 0.5) * 0.1 * uVHSIntensity;
+    
+    // Horizontal static lines
+    float staticLine = step(0.995, random(vec2(0.0, floor(uv.y * 300.0))));
+    color.rgb += staticLine * 0.3 * uVHSIntensity;
+    
+    // Reduce overall brightness for aged look
+    color.rgb *= 0.85;
+    
+    // Add slight vignette
+    vec2 center = vec2(0.5, 0.5);
+    float dist = distance(uv, center);
+    float vignette = 1.0 - smoothstep(0.5, 1.0, dist);
+    color.rgb *= mix(0.7, 1.0, vignette);
+    
+    fragColor = color;
+}
+"""
+
+    override fun getUniformValues(): Map<String, Any> =
+        mapOf(
+            "uVHSIntensity" to 0.8f,
+            "uScanlineIntensity" to 0.4f,
+            "uColorBleedIntensity" to 0.6f,
+        )
+
+    override fun getFilterType(): FilterType = FilterType.RETRO_80S_VINTAGE
+}
+
+/**
+ * Retro 90s filter shader - Digital artifacts, pixelation, early digital camera look
+ */
+class Retro90sFilterShader : FilterShader {
+    override val vertexShader: String = """#version 300 es
+layout (location = 0) in vec4 aPosition;
+layout (location = 1) in vec2 aTextureCoord;
+
+uniform mat4 uMVPMatrix;
+uniform mat4 uTexMatrix;
+
+out vec2 vTextureCoord;
+
+void main() {
+    gl_Position = uMVPMatrix * aPosition;
+    vTextureCoord = (uTexMatrix * vec4(aTextureCoord, 0.0, 1.0)).xy;
+}
+"""
+
+    override val fragmentShader: String = """#version 300 es
+#extension GL_OES_EGL_image_external_essl3 : require
+precision mediump float;
+
+in vec2 vTextureCoord;
+uniform samplerExternalOES uTexture;
+uniform float uPixelationIntensity;
+uniform float uDigitalNoiseIntensity;
+uniform float uCompressionIntensity;
+
+out vec4 fragColor;
+
+float random(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+}
+
+void main() {
+    vec2 uv = vTextureCoord;
+    
+    // Pixelation effect for early digital camera look
+    float pixelSize = 0.003 * uPixelationIntensity;
+    uv = floor(uv / pixelSize) * pixelSize;
+    
+    vec4 color = texture(uTexture, uv);
+    
+    // Reduce color depth for 90s digital look
+    color.rgb = floor(color.rgb * 32.0) / 32.0;
+    
+    // Add digital compression artifacts
+    float blockX = floor(vTextureCoord.x * 40.0) / 40.0;
+    float blockY = floor(vTextureCoord.y * 30.0) / 30.0;
+    float blockNoise = random(vec2(blockX, blockY)) * uCompressionIntensity;
+    color.rgb += (blockNoise - 0.5) * 0.1;
+    
+    // Digital noise pattern
+    float digitalNoise = random(vTextureCoord * 200.0);
+    color.rgb += (digitalNoise - 0.5) * uDigitalNoiseIntensity;
+    
+    // Color channel quantization
+    color.r = floor(color.r * 16.0) / 16.0;
+    color.g = floor(color.g * 16.0) / 16.0;
+    color.b = floor(color.b * 16.0) / 16.0;
+    
+    // Slight green tint (common in 90s digital cameras)
+    color.g *= 1.1;
+    
+    // Add CCD sensor artifacts
+    float ccdNoise = sin(vTextureCoord.x * 1000.0) * sin(vTextureCoord.y * 1000.0);
+    color.rgb += ccdNoise * 0.02 * uDigitalNoiseIntensity;
+    
+    // Reduce saturation slightly
+    float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
+    color.rgb = mix(vec3(gray), color.rgb, 0.8);
+    
+    // Add slight blue tint for LCD screen look
+    color.rgb *= vec3(0.95, 0.98, 1.05);
+    
+    fragColor = color;
+}
+"""
+
+    override fun getUniformValues(): Map<String, Any> =
+        mapOf(
+            "uPixelationIntensity" to 0.5f,
+            "uDigitalNoiseIntensity" to 0.08f,
+            "uCompressionIntensity" to 0.3f,
+        )
+
+    override fun getFilterType(): FilterType = FilterType.RETRO_90S
+}
+
+/**
+ * Vintage Camera filter shader - Extreme aging, heavy scratches, dust, light leaks
+ */
+class VintageCameraFilterShader : FilterShader {
+    override val vertexShader: String = """#version 300 es
+    layout (location = 0) in vec4 aPosition;
+    layout (location = 1) in vec2 aTextureCoord;
+
+    uniform mat4 uMVPMatrix;
+    uniform mat4 uTexMatrix;
+
+    out vec2 vTextureCoord;
+
+    void main() {
+        gl_Position = uMVPMatrix * aPosition;
+        vTextureCoord = (uTexMatrix * vec4(aTextureCoord, 0.0, 1.0)).xy;
+    }
+    """
+
+    override val fragmentShader: String = """#version 300 es
+    #extension GL_OES_EGL_image_external_essl3 : require
+    precision mediump float;
+
+    in vec2 vTextureCoord;
+    uniform samplerExternalOES uTexture;
+    uniform float uTime;               // Thời gian, cho animation động
+    uniform float uIntensity;          // Độ mạnh filter tổng
+
+    out vec4 fragColor;
+
+    // Random đơn giản, không lỗi biên
+    float rand(vec2 co) {
+        return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+    }
+
+    void main() {
+        vec4 color = texture(uTexture, vTextureCoord);
+
+        // 1. Chuyển về grayscale nhẹ
+        float gray = dot(color.rgb, vec3(0.3, 0.59, 0.11));
+        color.rgb = mix(color.rgb, vec3(gray), 0.5 * uIntensity);
+
+        // 2. Áp sepia vàng úa
+        vec3 sepia = vec3(
+            dot(color.rgb, vec3(0.393, 0.769, 0.189)),
+            dot(color.rgb, vec3(0.349, 0.686, 0.168)),
+            dot(color.rgb, vec3(0.272, 0.534, 0.131))
+        );
+        color.rgb = mix(color.rgb, sepia, 0.8 * uIntensity);
+
+        // 3. Thêm noise (film grain động)
+        float grain = rand(vTextureCoord * uTime * 50.0) - 0.5;
+        color.rgb += grain * 0.15 * uIntensity;
+
+        // 4. Light leak đỏ cam từ cạnh trái/phải
+        float leakLeft = smoothstep(0.0, 0.4, vTextureCoord.x);
+        float leakRight = smoothstep(0.0, 0.4, 1.0 - vTextureCoord.x);
+        color.rgb += vec3(0.9, 0.5, 0.3) * (1.0 - leakLeft) * 0.3 * uIntensity;
+        color.rgb += vec3(0.9, 0.6, 0.4) * (1.0 - leakRight) * 0.25 * uIntensity;
+
+        // 5. Vignette (tối viền)
+        float dist = distance(vTextureCoord, vec2(0.5, 0.5));
+        float vignette = smoothstep(0.8, 0.4, dist);
+        color.rgb *= vignette;
+
+        // 6. Blur nhẹ mô phỏng ống kính cũ
+        float offset = 0.002;
+        vec3 blur = (
+            texture(uTexture, vTextureCoord + vec2(offset, 0.0)).rgb +
+            texture(uTexture, vTextureCoord - vec2(offset, 0.0)).rgb +
+            texture(uTexture, vTextureCoord + vec2(0.0, offset)).rgb +
+            texture(uTexture, vTextureCoord - vec2(0.0, offset)).rgb
+        ) * 0.25;
+        color.rgb = mix(color.rgb, blur, 0.3 * uIntensity);
+
+        fragColor = vec4(color.rgb, 1.0);
+    }
+    """
+
+    override fun getUniformValues(): Map<String, Any> =
+        mapOf(
+            "uTime" to System.currentTimeMillis() % 10000 / 1000f, // animation theo thời gian
+            "uIntensity" to 1.0f                                   // độ mạnh filter
+        )
+
+    override fun getFilterType(): FilterType = FilterType.VINTAGE_CAMERA
 }
 
 /**

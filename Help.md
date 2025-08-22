@@ -39,6 +39,43 @@ Tính năng điều chỉnh ảnh cho phép người dùng chỉnh sửa các th
 4. Cuộn trong bảng điều chỉnh để truy cập tất cả các điều khiển
 5. Nhấn "Apply" để áp dụng hoặc "Cancel" để hủy bỏ
 
+## Tính năng Retro 70s Filter (Bộ lọc Retro thập niên 70)
+
+### Mô tả
+Bộ lọc Retro 70s được tối ưu để mang lại hiệu ứng vintage mạnh mẽ, mô phỏng chất lượng phim ảnh thập niên 70 với nhiễu hạt, xước và tông màu ấm đặc trưng, đồng thời đảm bảo hiệu năng ổn định.
+
+### Đặc điểm nổi bật
+- **Hiệu ứng nhiễu mạnh**: 2 lớp grain tối ưu với simple noise
+- **Xước vintage**: Xước dọc, ngang mô phỏng hư hỏng phim thật
+- **Tông màu sepia**: Sử dụng ma trận màu sepia chuẩn thập niên 70
+- **Loại bỏ hoàn toàn màu xanh/cyan**: Tăng cường màu đỏ/cam/vàng
+- **Hiệu ứng vignetting mạnh**: Làm tối góc ảnh đậm chất vintage
+- **Vết bẩn và light leaks**: Mô phỏng hư hỏng và rò rỉ ánh sáng thật
+
+### Thành phần kỹ thuật
+- **Retro70sFilterShader**: Shader được tối ưu với 10 bước xử lý
+- **Optimized grain**: Sử dụng 2-layer noise function
+- **Sepia color grading**: Ma trận màu sepia + heavy desaturation
+- **Damage simulation**: 3 lớp xước dọc + 2 lớp xước ngang
+- **Corner burn effect**: 4 góc với độ tối khác nhau
+- **Large stains**: 3 vết bẩn lớn ở các vị trí khác nhau
+
+### Cải tiến hiệu năng
+- **Loại bỏ vòng lặp fractal noise**: Giảm thiểu lag và tăng tốc độ xử lý
+- **Giảm số lượng tính toán phức tạp**: Tối ưu uniform values cho ổn định
+- **Vẫn giữ được hiệu ứng vintage mạnh**: Đảm bảo chất lượng visual không bị giảm
+
+### Cách sử dụng
+1. Trong CameraScreen hoặc PhotoPreviewScreen, chọn bộ lọc "Retro 70s"
+2. Bộ lọc sẽ áp dụng ngay lập tức với hiệu ứng vintage mạnh và ổn định
+3. Điều chỉnh intensity các hiệu ứng:
+   - Grain Intensity: 0.4 (mạnh và ổn định)
+   - Scratch Intensity: 0.6 (nặng)
+   - Fade Intensity: 0.7 (phai màu vừa phải)
+   - Vintage Intensity: 0.8 (cao)
+4. Có thể kết hợp với các điều chỉnh khác để tùy chỉnh thêm
+5. Phù hợp nhất cho ảnh chân dung và phong cảnh muốn có chất retro authentic
+
 ## Tính năng Color Adjustment (Điều chỉnh Màu sắc Chi tiết)
 
 ### Mô tả

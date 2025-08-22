@@ -4,6 +4,62 @@ All notable changes to this project will be documented in this file.
 
 ## [Latest] - 2024-12-19
 
+### 🔧 Sửa lỗi shader Retro 70s - Tối ưu hiệu năng và khắc phục lỗi preview camera
+
+**Vấn đề phát hiện**: Shader Retro70s quá phức tạp với 15 bước xử lý, vòng lặp fractal noise gây lag và có thể crash camera preview
+
+**Thay đổi chính**:
+- ✅ **Tối ưu shader**: Giảm từ 15 bước xuống 10 bước chính
+- ✅ **Loại bỏ vòng lặp**: Xóa extremeGrain với 6 octaves gây lag
+- ✅ **Giảm scratch layers**: Từ 13 xuống 5 layers để tăng hiệu năng
+- ✅ **Đơn giản hóa noise**: Loại bỏ turbulentNoise phức tạp
+- ✅ **Giảm intensity**: Tránh over-processing gây crash
+- ✅ **Tối ưu vignette**: Đơn giản hóa tính toán corner burn
+
+**Files được cập nhật**:
+- `FilterShader.kt` - Tối ưu Retro70sFilterShader
+- Giảm uniform values: grain 0.25f, scratch 0.35f để ổn định
+
+**Cải tiến kỹ thuật**:
+- Thay thế fractal noise bằng simple noise function
+- Giảm số lượng random calculations
+- Tối ưu uniform values cho hiệu năng tốt hơn
+- Vẫn giữ được hiệu ứng vintage mạnh nhưng ổn định
+
+**Kết quả**: ✅ Build thành công, shader hoạt động ổn định, không crash camera, vẫn đạt hiệu ứng vintage 70s
+
+---
+
+### 🎞️ Tạo lại hoàn toàn Retro 70s Filter - Extreme Vintage Effect
+
+**Yêu cầu**: Sửa lại bộ lọc Retro 70s để có hiệu ứng nhiễu và xước cực mạnh, loại bỏ màu xanh, tăng cường chất vintage thập niên 70
+
+**Thay đổi chính**:
+- ✅ **Viết lại hoàn toàn shader**: 15 bước xử lý từ đầu đến cuối
+- ✅ **Hiệu ứng nhiễu cực mạnh**: 4 lớp grain (extremeGrain, turbulentNoise, random, fractal)
+- ✅ **Xước đa chiều**: 5 lớp dọc + 4 lớp ngang + 3 lớp chéo
+- ✅ **Tông màu authentic**: Ma trận Kodachrome thật từ thập niên 70
+- ✅ **Loại bỏ hoàn toàn màu xanh**: Boost đỏ 1.6x, xanh chỉ còn 0.4x
+- ✅ **Vignetting cực mạnh**: Corner darkening từ 0.15 đến 1.0
+- ✅ **Damage simulation**: Corner burn, light leaks, stains, spots
+- ✅ **Color grading**: Brown overlay, contrast crush, gamma correction
+
+**Files được cập nhật**:
+- `FilterShader.kt` - Tạo lại hoàn toàn Retro70sFilterShader
+- Tăng uniform values: grain 0.35f, scratch 0.5f, fade 0.8f, vintage 0.9f
+
+**Kỹ thuật nâng cao**:
+- Multi-octave fractal noise với 6 iterations
+- Turbulent noise cho realistic grain texture
+- Advanced scratch patterns với random distribution
+- Authentic Kodachrome color matrix
+- Extreme warm tint với selective color boosting
+- Multiple damage layers (burns, leaks, stains)
+
+**Kết quả**: ✅ Build thành công, bộ lọc Retro 70s có hiệu ứng vintage cực mạnh đúng như yêu cầu
+
+---
+
 ### 🎚️ Tinh chỉnh kích thước Slider - Ultra Compact
 
 **Yêu cầu**: Thu nhỏ thanh slider thêm nữa để giao diện gọn gàng hơn

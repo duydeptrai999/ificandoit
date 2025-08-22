@@ -31,6 +31,43 @@ class FilterManager {
             ),
         )
 
+        // RETRO FILTERS - PRIORITY DISPLAY AT TOP
+        // Retro 70s filter - Heavy grain, warm sepia, scratches
+        addFilter(
+            FilterConfig(
+                type = FilterType.RETRO_70S,
+                name = "Retro 70s",
+                shader = Retro70sFilterShader(),
+            ),
+        )
+
+        // Retro 80s Vintage filter - VHS artifacts, color bleeding, scan lines
+        addFilter(
+            FilterConfig(
+                type = FilterType.RETRO_80S_VINTAGE,
+                name = "Retro 80s VHS",
+                shader = Retro80sVintageFilterShader(),
+            ),
+        )
+
+        // Retro 90s filter - Digital artifacts, pixelation, early digital camera look
+        addFilter(
+            FilterConfig(
+                type = FilterType.RETRO_90S,
+                name = "Retro 90s",
+                shader = Retro90sFilterShader(),
+            ),
+        )
+
+        // Vintage Camera filter - Extreme aging, heavy scratches, dust, light leaks
+        addFilter(
+            FilterConfig(
+                type = FilterType.VINTAGE_CAMERA,
+                name = "Vintage Camera",
+                shader = VintageCameraFilterShader(),
+            ),
+        )
+
         // Sepia filter
         addFilter(
             FilterConfig(
@@ -224,6 +261,30 @@ class FilterManager {
     }
 
     /**
+     * Get filter configurations with retro filters prioritized at the top
+     */
+    fun getFilterConfigsWithRetroFirst(): List<FilterConfig> {
+        val retro70s = filterConfigs[FilterType.RETRO_70S]
+        val retro80sVintage = filterConfigs[FilterType.RETRO_80S_VINTAGE]
+        val retro90s = filterConfigs[FilterType.RETRO_90S]
+        val vintageCamera = filterConfigs[FilterType.VINTAGE_CAMERA]
+        val original = filterConfigs[FilterType.ORIGINAL]
+        
+        val priorityFilters = listOfNotNull(original, retro70s, retro80sVintage, retro90s, vintageCamera)
+        val otherFilters = filterConfigs.values.filter { config ->
+            config.type !in setOf(
+                FilterType.ORIGINAL,
+                FilterType.RETRO_70S,
+                FilterType.RETRO_80S_VINTAGE, 
+                FilterType.RETRO_90S,
+                FilterType.VINTAGE_CAMERA
+            )
+        }.sortedBy { it.type.ordinal }
+        
+        return priorityFilters + otherFilters
+    }
+
+    /**
      * Remove filter
      */
     fun removeFilter(type: FilterType) {
@@ -239,6 +300,10 @@ class FilterManager {
         val defaultTypes =
             setOf(
                 FilterType.ORIGINAL,
+                FilterType.RETRO_70S,
+                FilterType.RETRO_80S_VINTAGE,
+                FilterType.RETRO_90S,
+                FilterType.VINTAGE_CAMERA,
                 FilterType.SEPIA,
                 FilterType.BLACK_WHITE,
                 FilterType.VINTAGE,

@@ -66,16 +66,21 @@ fun CameraScreen(
     // Camera texture view reference
     var cameraTextureView by remember { mutableStateOf<CameraTextureView?>(null) }
 
-    // Available filters
+    // Available filters - RETRO FILTERS PRIORITIZED AT TOP
     val availableFilters = remember {
         listOf(
             FilterType.ORIGINAL,
+            // RETRO FILTERS - PRIORITY DISPLAY
+            FilterType.RETRO_70S,
+            FilterType.RETRO_80S_VINTAGE,
+            FilterType.RETRO_90S,
+            FilterType.VINTAGE_CAMERA,
+            // Other filters
             FilterType.SEPIA,
             FilterType.BLACK_WHITE,
             FilterType.VINTAGE,
             FilterType.COOL,
             FilterType.WARM,
-            // New filters
             FilterType.PINK_DREAM,
             FilterType.RETRO_80S,
             FilterType.OLD_FILM,

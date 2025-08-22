@@ -111,6 +111,11 @@ private fun getFilterDisplayName(filterType: FilterType): String {
         FilterType.GOLDEN_HOUR -> stringResource(R.string.filter_golden_hour)
         FilterType.CYBERPUNK -> stringResource(R.string.filter_cyberpunk)
         FilterType.CHERRY_BLOSSOM -> stringResource(R.string.filter_cherry_blossom)
+        // RETRO FILTERS - NEW ADDITIONS
+        FilterType.RETRO_70S -> "Retro 70s"
+        FilterType.RETRO_80S_VINTAGE -> "Retro 80s VHS"
+        FilterType.RETRO_90S -> "Retro 90s"
+        FilterType.VINTAGE_CAMERA -> "Vintage Camera"
     }
 }
 
@@ -138,6 +143,11 @@ private fun FilterPreviewContent(
         FilterType.GOLDEN_HOUR -> Color(0xFFFFB347) // Peach
         FilterType.CYBERPUNK -> Color(0xFF9400D3) // Violet
         FilterType.CHERRY_BLOSSOM -> Color(0xFFFFB6C1) // Light pink
+        // RETRO FILTERS - NEW ADDITIONS
+        FilterType.RETRO_70S -> Color(0xFF8B4513) // Saddle brown - 70s earth tones
+        FilterType.RETRO_80S_VINTAGE -> Color(0xFFFF00FF) // Magenta - 80s neon
+        FilterType.RETRO_90S -> Color(0xFF9932CC) // Dark orchid - 90s digital
+        FilterType.VINTAGE_CAMERA -> Color(0xFF696969) // Dim gray - old camera
     }
 
     Box(
@@ -378,6 +388,67 @@ private fun FilterPreviewContent(
                                     Color(0xFFFFB6C1),
                                     Color(0xFFFFC0CB),
                                     Color(0xFFFFE4E1)
+                                )
+                            )
+                        )
+                )
+            }
+            // RETRO FILTERS - NEW ADDITIONS
+            FilterType.RETRO_70S -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.radialGradient(
+                                colors = listOf(
+                                    Color(0xFF8B4513), // Saddle brown
+                                    Color(0xFFD2691E), // Chocolate
+                                    Color(0xFFCD853F)  // Peru
+                                )
+                            )
+                        )
+                )
+            }
+            FilterType.RETRO_80S_VINTAGE -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.linearGradient(
+                                colors = listOf(
+                                    Color(0xFFFF00FF), // Magenta
+                                    Color(0xFF00FFFF), // Cyan
+                                    Color(0xFFFFFF00)  // Yellow
+                                )
+                            )
+                        )
+                )
+            }
+            FilterType.RETRO_90S -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.linearGradient(
+                                colors = listOf(
+                                    Color(0xFF9932CC), // Dark orchid
+                                    Color(0xFF00CED1), // Dark turquoise
+                                    Color(0xFFFF1493)  // Deep pink
+                                )
+                            )
+                        )
+                )
+            }
+            FilterType.VINTAGE_CAMERA -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            androidx.compose.ui.graphics.Brush.radialGradient(
+                                colors = listOf(
+                                    Color(0xFF696969), // Dim gray
+                                    Color(0xFF2F4F4F), // Dark slate gray
+                                    Color(0xFF708090)  // Slate gray
                                 )
                             )
                         )
